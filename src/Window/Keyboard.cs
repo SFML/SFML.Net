@@ -132,14 +132,14 @@ namespace SFML
             /// <param name="key">Key to check</param>
             /// <returns>True if the key is pressed, false otherwise</returns>
             ////////////////////////////////////////////////////////////
-            public static bool IsKeyDown(Key key)
+            public static bool IsKeyPressed(Key key)
             {
-                return sfKeyboard_IsKeyDown(key);
+                return sfKeyboard_IsKeyPressed(key);
             }
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfKeyboard_IsKeyDown(Key Key);
+            static extern bool sfKeyboard_IsKeyPressed(Key Key);
             #endregion
         }
     }
