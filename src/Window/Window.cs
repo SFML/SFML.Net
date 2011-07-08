@@ -193,31 +193,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Change the position of the mouse cursor
-            /// </summary>
-            /// <param name="x">Left coordinate of the cursor, relative to the window</param>
-            /// <param name="y">Top coordinate of the cursor, relative to the window</param>
-            ////////////////////////////////////////////////////////////
-            public virtual void SetCursorPosition(uint x, uint y)
-            {
-                sfWindow_SetCursorPosition(This, x, y);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Get the position of the mouse cursor
-            /// </summary>
-            /// <returns>The current position of the mouse cursor, relative to the window</returns>
-            ////////////////////////////////////////////////////////////
-            public virtual Vector2i GetCursorPosition()
-            {
-                Vector2i position;
-                sfWindow_GetCursorPosition(This, out position.X, out position.Y);
-                return position;
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Change the position of the window on screen.
             /// Only works for top-level windows
             /// </summary>
@@ -645,12 +620,6 @@ namespace SFML
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfWindow_ShowMouseCursor(IntPtr This, bool Show);
-
-            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetCursorPosition(IntPtr This, uint X, uint Y);
-
-            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_GetCursorPosition(IntPtr This, out int X, out int Y);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfWindow_SetPosition(IntPtr This, int X, int Y);

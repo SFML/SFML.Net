@@ -56,10 +56,7 @@ namespace SFML
             /// Get the current position of the mouse
             /// </summary>
             /// This function returns the current position of the mouse
-            /// cursor.
-            /// If the cursor is over a SFML window, the returned position
-            /// is relative to this window. Otherwise, the returned position
-            /// is in desktop coordinates.
+            /// cursor in desktop coordinates.
             /// <returns>Current position of the mouse</returns>
             ////////////////////////////////////////////////////////////
             public static Vector2i GetPosition()
@@ -69,12 +66,64 @@ namespace SFML
                 return position;
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Get the current position of the mouse
+            /// </summary>
+            /// This function returns the current position of the mouse
+            /// cursor relative to a window.
+            /// <param name="relativeTo">Reference window</param>
+            /// <returns>Current position of the mouse</returns>
+            ////////////////////////////////////////////////////////////
+            public static Vector2i GetPosition(Window relativeTo)
+            {
+                Vector2i position;
+                sfMouse_GetPosition(out position.X, out position.Y, relativeTo.This);
+                return position;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Set the current position of the mouse
+            /// </summary>
+            /// This function sets the current position of the mouse
+            /// cursor in desktop coordinates.
+            /// <param name="position">New position of the mouse</param>
+            ////////////////////////////////////////////////////////////
+            public static void SetPosition(Vector2i position)
+            {
+                sfMouse_SetPosition(position.X, position.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Set the current position of the mouse
+            /// </summary>
+            /// This function sets the current position of the mouse
+            /// cursor relative to a window.
+            /// <param name="position">New position of the mouse</param>
+            /// <param name="relativeTo">Reference window</param>
+            ////////////////////////////////////////////////////////////
+            public static void SetPosition(Vector2i position, Window relativeTo)
+            {
+                sfMouse_SetPosition(position.X, position.Y, relativeTo.This);
+            }
+
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfMouse_IsButtonPressed(Button button);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfMouse_GetPosition(out int x, out int y);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfMouse_GetPosition(out int x, out int y, IntPtr relativeTo);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfMouse_SetPosition(int x, int y);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfMouse_SetPosition(int x, int y, IntPtr relativeTo);
             #endregion
         }
     }

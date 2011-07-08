@@ -83,8 +83,8 @@ namespace opengl
                 Gl.glClear(Gl.GL_DEPTH_BUFFER_BIT);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
-                float x =  window.GetCursorPosition().X * 200.0F / window.Width  - 100.0F;
-                float y = -window.GetCursorPosition().Y * 200.0F / window.Height + 100.0F;
+                float x =  Mouse.GetPosition(window).X * 200.0F / window.Width  - 100.0F;
+                float y = -Mouse.GetPosition(window).Y * 200.0F / window.Height + 100.0F;
 
                 // Apply some transformations
                 time += window.GetFrameTime() / 1000.0F;

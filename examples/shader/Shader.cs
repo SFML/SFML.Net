@@ -150,8 +150,8 @@ namespace shader
                 window.DispatchEvents();
 
                 // Get the mouse position in the range [0, 1]
-                float x = window.GetCursorPosition().X / (float)window.Width;
-                float y = window.GetCursorPosition().Y / (float)window.Height;
+                float x = Mouse.GetPosition(window).X / (float)window.Width;
+                float y = Mouse.GetPosition(window).Y / (float)window.Height;
 
                 // Update the shaders
                 backgroundShader.Update(x, y);

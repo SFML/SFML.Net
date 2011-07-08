@@ -170,18 +170,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Change the position of the mouse cursor
-            /// </summary>
-            /// <param name="x">Left coordinate of the cursor, relative to the window</param>
-            /// <param name="y">Top coordinate of the cursor, relative to the window</param>
-            ////////////////////////////////////////////////////////////
-            public override void SetCursorPosition(uint x, uint y)
-            {
-                sfRenderWindow_SetCursorPosition(This, x, y);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Change the position of the window on screen.
             /// Only works for top-level windows
             /// </summary>
@@ -566,9 +554,6 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_ShowMouseCursor(IntPtr This, bool Show);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_SetCursorPosition(IntPtr This, uint X, uint Y);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_SetPosition(IntPtr This, int X, int Y);
