@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
+using SFML.Window;
 
 namespace SFML
 {
@@ -51,24 +52,16 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the font from a file in a stream
+            /// Construct the font from a custom stream
             /// </summary>
-            /// <param name="stream">Stream containing the file contents</param>
+            /// <param name="stream">Source stream to read from</param>
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
             public Font(Stream stream) :
                 base(IntPtr.Zero)
             {
-                unsafe
-                {
-                    stream.Position = 0;
-                    byte[] StreamData = new byte[stream.Length];
-                    uint Read = (uint)stream.Read(StreamData, 0, StreamData.Length);
-                    fixed (byte* dataPtr = StreamData)
-                    {
-                        SetThis(sfFont_CreateFromMemory((char*)dataPtr, Read));
-                    }
-                }
+                myStream = new StreamAdaptor(stream);
+                SetThis(sfFont_CreateFromStream(myStream.InputStreamPtr));
 
                 if (This == IntPtr.Zero)
                     throw new LoadingFailedException("font");
@@ -184,6 +177,7 @@ namespace SFML
                     {
                         foreach (Image image in myImages.Values)
                             image.Dispose();
+                        myStream.Dispose();
                     }
 
                     if (!disposing)
@@ -203,6 +197,7 @@ namespace SFML
             }
 
             private Dictionary<uint, Image> myImages = new Dictionary<uint, Image>();
+            private StreamAdaptor myStream;
             private static Font ourDefaultFont = null;
 
             #region Imports
@@ -210,7 +205,7 @@ namespace SFML
             static extern IntPtr sfFont_CreateFromFile(string Filename);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern IntPtr sfFont_CreateFromMemory(char* Data, uint SizeInBytes);
+            static extern IntPtr sfFont_CreateFromStream(IntPtr stream);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_Copy(IntPtr Font);

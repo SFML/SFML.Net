@@ -75,6 +75,7 @@
     <Compile Include="LoadingFailedException.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="ObjectBase.cs" />
+    <Compile Include="StreamAdaptor.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="VideoMode.cs" />
     <Compile Include="Window.cs" />

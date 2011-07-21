@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
+using SFML.Window;
 
 namespace SFML
 {
@@ -30,23 +31,16 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the music from a file in a stream
+            /// Construct the music from a custom stream
             /// </summary>
-            /// <param name="stream">Stream containing the file contents</param>
+            /// <param name="stream">Source stream to read from</param>
             ////////////////////////////////////////////////////////////
             public Music(Stream stream) :
                 base(IntPtr.Zero)
             {
-                stream.Position = 0;
-                byte[] StreamData = new byte[stream.Length];
-                uint Read = (uint)stream.Read(StreamData, 0, StreamData.Length);
-                unsafe
-                {
-                    fixed (byte* dataPtr = StreamData)
-                    {
-                        SetThis(sfMusic_CreateFromMemory((char*)dataPtr, Read));
-                    }
-                }
+                myStream = new StreamAdaptor(stream);
+                SetThis(sfMusic_CreateFromStream(myStream.InputStreamPtr));
+
                 if (This == IntPtr.Zero)
                     throw new LoadingFailedException("music");
             }
@@ -246,15 +240,20 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
+                if (disposing)
+                    myStream.Dispose();
+
                 sfMusic_Destroy(This);
             }
+
+            private StreamAdaptor myStream;
 
             #region Imports
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfMusic_CreateFromFile(string Filename);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern IntPtr sfMusic_CreateFromMemory(char* Data, uint SizeInBytes);
+            unsafe static extern IntPtr sfMusic_CreateFromStream(IntPtr stream);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfMusic_Destroy(IntPtr MusicStream);

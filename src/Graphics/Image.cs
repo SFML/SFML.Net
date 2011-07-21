@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
 using System.Runtime.ConstrainedExecution;
+using SFML.Window;
 
 namespace SFML
 {
@@ -69,16 +70,11 @@ namespace SFML
             public Image(Stream stream) :
                 base(IntPtr.Zero)
             {
-                stream.Position = 0;
-                byte[] StreamData = new byte[stream.Length];
-                uint Read = (uint)stream.Read(StreamData, 0, StreamData.Length);
-                unsafe
+                using (StreamAdaptor adaptor = new StreamAdaptor(stream))
                 {
-                    fixed (byte* dataPtr = StreamData)
-                    {
-                        SetThis(sfImage_CreateFromMemory((char*)dataPtr, Read));
-                    }
+                    SetThis(sfImage_CreateFromStream(adaptor.InputStreamPtr));
                 }
+
                 if (This == IntPtr.Zero)
                     throw new LoadingFailedException("image");
             }
@@ -410,10 +406,10 @@ namespace SFML
             static extern IntPtr sfImage_CreateFromFile(string Filename);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfImage_Copy(IntPtr Image);
+            unsafe static extern IntPtr sfImage_CreateFromStream(IntPtr stream);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern IntPtr sfImage_CreateFromMemory(char* Data, uint Size);
+            static extern IntPtr sfImage_Copy(IntPtr Image);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfImage_Destroy(IntPtr This);

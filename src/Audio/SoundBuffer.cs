@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
+using SFML.Window;
 
 namespace SFML
 {
@@ -32,23 +33,19 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the sound buffer from a file in a stream
+            /// Load the sound buffer from a custom stream
             /// </summary>
-            /// <param name="stream">Stream containing the file contents</param>
+            /// <param name="stream">Source stream to read from</param>
+            /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
             public SoundBuffer(Stream stream) :
                 base(IntPtr.Zero)
             {
-                stream.Position = 0;
-                byte[] StreamData = new byte[stream.Length];
-                uint Read = (uint)stream.Read(StreamData, 0, StreamData.Length);
-                unsafe
+                using (StreamAdaptor adaptor = new StreamAdaptor(stream))
                 {
-                    fixed (byte* dataPtr = StreamData)
-                    {
-                        SetThis(sfSoundBuffer_CreateFromMemory((char*)dataPtr, Read));
-                    }
+                    SetThis(sfSoundBuffer_CreateFromStream(adaptor.InputStreamPtr));
                 }
+
                 if (This == IntPtr.Zero)
                     throw new LoadingFailedException("sound buffer");
             }
@@ -175,7 +172,7 @@ namespace SFML
             static extern IntPtr sfSoundBuffer_CreateFromFile(string Filename);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern IntPtr sfSoundBuffer_CreateFromMemory(char* Data, uint SizeInBytes);
+            unsafe static extern IntPtr sfSoundBuffer_CreateFromStream(IntPtr stream);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern IntPtr sfSoundBuffer_CreateFromSamples(short* Samples, uint SamplesCount, uint ChannelsCount, uint SampleRate);

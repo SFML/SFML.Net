@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Collections.Generic;
@@ -27,6 +28,25 @@ namespace SFML
             {
                 if (This == IntPtr.Zero)
                     throw new LoadingFailedException("shader", filename);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Load the shader from a custom stream
+            /// </summary>
+            /// <param name="stream">Source stream to read from</param>
+            /// <exception cref="LoadingFailedException" />
+            ////////////////////////////////////////////////////////////
+            public Shader(Stream stream) :
+                base(IntPtr.Zero)
+            {
+                using (StreamAdaptor adaptor = new StreamAdaptor(stream))
+                {
+                    SetThis(sfShader_CreateFromStream(adaptor.InputStreamPtr));
+                }
+
+                if (This == IntPtr.Zero)
+                    throw new LoadingFailedException("shader");
             }
 
             ////////////////////////////////////////////////////////////
@@ -227,6 +247,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfShader_CreateFromMemory(string Shader);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern IntPtr sfShader_CreateFromStream(IntPtr stream);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfShader_Copy(IntPtr Shader);
