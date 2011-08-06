@@ -447,6 +447,16 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Capture the current contents of the window into an image
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public Image Capture()
+            {
+                return new Image(sfRenderWindow_Capture(This));
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -608,6 +618,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfRenderWindow_GetSystemHandle(IntPtr This);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern IntPtr sfRenderWindow_Capture(IntPtr This);
 
             #endregion
         }

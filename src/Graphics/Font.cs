@@ -120,15 +120,15 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get the image containing the glyphs of a given size
+            /// Get the texture containing the glyphs of a given size
             /// </summary>
             /// <param name="characterSize">Character size</param>
-            /// <returns>Image storing the glyphs for the given size</returns>
+            /// <returns>Texture storing the glyphs for the given size</returns>
             ////////////////////////////////////////////////////////////
-            public Image GetImage(uint characterSize)
+            public Texture GetTexture(uint characterSize)
             {
-                myImages[characterSize] = new Image(sfFont_GetImage(This, characterSize));
-                return myImages[characterSize];
+                myTextures[characterSize] = new Texture(sfFont_GetTexture(This, characterSize));
+                return myTextures[characterSize];
             }
 
             ////////////////////////////////////////////////////////////
@@ -175,8 +175,8 @@ namespace SFML
 
                     if (disposing)
                     {
-                        foreach (Image image in myImages.Values)
-                            image.Dispose();
+                        foreach (Texture texture in myTextures.Values)
+                            texture.Dispose();
                         myStream.Dispose();
                     }
 
@@ -196,7 +196,7 @@ namespace SFML
             {
             }
 
-            private Dictionary<uint, Image> myImages = new Dictionary<uint, Image>();
+            private Dictionary<uint, Texture> myTextures = new Dictionary<uint, Texture>();
             private StreamAdaptor myStream;
             private static Font ourDefaultFont = null;
 
@@ -223,7 +223,7 @@ namespace SFML
             static extern int sfFont_GetLineSpacing(IntPtr This, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfFont_GetImage(IntPtr This, uint characterSize);
+            static extern IntPtr sfFont_GetTexture(IntPtr This, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_GetDefaultFont();

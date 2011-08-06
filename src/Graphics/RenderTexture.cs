@@ -11,65 +11,64 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Simple wrapper for Window that allows easy
-        /// 2D rendering
+        /// Target for off-screen 2D rendering into an texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public class RenderImage : ObjectBase, RenderTarget
+        public class RenderTexture : ObjectBase, RenderTarget
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Create the render image with the given dimensions
+            /// Create the render-texture with the given dimensions
             /// </summary>
-            /// <param name="width">Width of the render image</param>
-            /// <param name="height">Height of the render image</param>
+            /// <param name="width">Width of the render-texture</param>
+            /// <param name="height">Height of the render-texture</param>
             ////////////////////////////////////////////////////////////
-            public RenderImage(uint width, uint height) :
+            public RenderTexture(uint width, uint height) :
                 this(width, height, false)
             {
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Create the render image with the given dimensions and
+            /// Create the render-texture with the given dimensions and
             /// an optional depth-buffer attached
             /// </summary>
-            /// <param name="width">Width of the render image</param>
-            /// <param name="height">Height of the render image</param>
+            /// <param name="width">Width of the render-texture</param>
+            /// <param name="height">Height of the render-texture</param>
             /// <param name="depthBuffer">Do you want a depth-buffer attached?</param>
             ////////////////////////////////////////////////////////////
-            public RenderImage(uint width, uint height, bool depthBuffer) :
-                base(sfRenderImage_Create(width, height, depthBuffer))
+            public RenderTexture(uint width, uint height, bool depthBuffer) :
+                base(sfRenderTexture_Create(width, height, depthBuffer))
             {
-                myDefaultView = new View(sfRenderImage_GetDefaultView(This));
-                myImage       = new Image(sfRenderImage_GetImage(This));
+                myDefaultView = new View(sfRenderTexture_GetDefaultView(This));
+                myTexture = new Texture(sfRenderTexture_GetTexture(This));
                 GC.SuppressFinalize(myDefaultView);
-                GC.SuppressFinalize(myImage);
+                GC.SuppressFinalize(myTexture);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Width of the rendering region of the image
+            /// Width of the rendering region of the texture
             /// </summary>
             ////////////////////////////////////////////////////////////
             public uint Width
             {
-                get {return sfRenderImage_GetWidth(This);}
+                get {return sfRenderTexture_GetWidth(This);}
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Height of the rendering region of the image
+            /// Height of the rendering region of the texture
             /// </summary>
             ////////////////////////////////////////////////////////////
             public uint Height
             {
-                get {return sfRenderImage_GetHeight(This);}
+                get {return sfRenderTexture_GetHeight(This);}
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Activate of deactivate the render image as the current target
+            /// Activate of deactivate the render texture as the current target
             /// for rendering
             /// </summary>
             /// <param name="active">True to activate, false to deactivate (true by default)</param>
@@ -77,12 +76,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool SetActive(bool active)
             {
-                return sfRenderImage_SetActive(This, active);
+                return sfRenderTexture_SetActive(This, active);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Default view of the render image
+            /// Default view of the render texture
             /// </summary>
             ////////////////////////////////////////////////////////////
             public View DefaultView
@@ -98,7 +97,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public View GetView()
             {
-                return new View(sfRenderImage_GetView(This));
+                return new View(sfRenderTexture_GetView(This));
             }
 
             ////////////////////////////////////////////////////////////
@@ -109,7 +108,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetView(View view)
             {
-                sfRenderImage_SetView(This, view.This);
+                sfRenderTexture_SetView(This, view.This);
             }
 
             ////////////////////////////////////////////////////////////
@@ -121,7 +120,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public IntRect GetViewport(View view)
             {
-                return sfRenderImage_GetViewport(This, view.This);
+                return sfRenderTexture_GetViewport(This, view.This);
             }
 
             ////////////////////////////////////////////////////////////
@@ -153,35 +152,35 @@ namespace SFML
             public Vector2f ConvertCoords(uint x, uint y, View view)
             {
                 Vector2f point;
-                sfRenderImage_ConvertCoords(This, x, y, out point.X, out point.Y, view.This);
+                sfRenderTexture_ConvertCoords(This, x, y, out point.X, out point.Y, view.This);
 
                 return point;
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Clear the entire render image with black color
+            /// Clear the entire render texture with black color
             /// </summary>
             ////////////////////////////////////////////////////////////
             public void Clear()
             {
-                sfRenderImage_Clear(This, Color.Black);
+                sfRenderTexture_Clear(This, Color.Black);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Clear the entire render image with a single color
+            /// Clear the entire render texture with a single color
             /// </summary>
-            /// <param name="color">Color to use to clear the image</param>
+            /// <param name="color">Color to use to clear the texture</param>
             ////////////////////////////////////////////////////////////
             public void Clear(Color color)
             {
-                sfRenderImage_Clear(This, color);
+                sfRenderTexture_Clear(This, color);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Draw something into the render image
+            /// Draw something into the render texture
             /// </summary>
             /// <param name="objectToDraw">Object to draw</param>
             ////////////////////////////////////////////////////////////
@@ -192,7 +191,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Draw something into the render image with a shader
+            /// Draw something into the render texture with a shader
             /// </summary>
             /// <param name="objectToDraw">Object to draw</param>
             /// <param name="shader">Shader to apply</param>
@@ -209,7 +208,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SaveGLStates()
             {
-                sfRenderImage_SaveGLStates(This);
+                sfRenderTexture_SaveGLStates(This);
             }
 
             ////////////////////////////////////////////////////////////
@@ -219,27 +218,27 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void RestoreGLStates()
             {
-                sfRenderImage_RestoreGLStates(This);
+                sfRenderTexture_RestoreGLStates(This);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Update the contents of the target image
+            /// Update the contents of the target texture
             /// </summary>
             ////////////////////////////////////////////////////////////
             public void Display()
             {
-                sfRenderImage_Display(This);
+                sfRenderTexture_Display(This);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Target image of the render image
+            /// Target texture of the render texture
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Image Image
+            public Texture Texture
             {
-                get {return myImage;}
+                get { return myTexture; }
             }
 
             ////////////////////////////////////////////////////////////
@@ -250,10 +249,10 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override string ToString()
             {
-                return "[RenderImage]" +
+                return "[RenderTexture]" +
                        " Width(" + Width + ")" +
                        " Height(" + Height + ")" +
-                       " Image(" + Image + ")" +
+                       " Texture(" + Texture + ")" +
                        " DefaultView(" + DefaultView + ")" +
                        " View(" + GetView() + ")";
             }
@@ -269,66 +268,66 @@ namespace SFML
                 if (!disposing)
                     Context.Global.SetActive(true);
 
-                sfRenderImage_Destroy(This);
+                sfRenderTexture_Destroy(This);
 
                 if (disposing)
                 {
                     myDefaultView.Dispose();
-                    myImage.Dispose();
+                    myTexture.Dispose();
                 }
 
                 if (!disposing)
                     Context.Global.SetActive(false);
             }
 
-            private View  myDefaultView = null;
-            private Image myImage       = null;
+            private View myDefaultView = null;
+            private Texture myTexture = null;
 
             #region Imports
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfRenderImage_Create(uint Width, uint Height, bool DepthBuffer);
+            static extern IntPtr sfRenderTexture_Create(uint Width, uint Height, bool DepthBuffer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_Destroy(IntPtr This);
+            static extern void sfRenderTexture_Destroy(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_Clear(IntPtr This, Color ClearColor);
+            static extern void sfRenderTexture_Clear(IntPtr This, Color ClearColor);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfRenderImage_GetWidth(IntPtr This);
+            static extern uint sfRenderTexture_GetWidth(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfRenderImage_GetHeight(IntPtr This);
+            static extern uint sfRenderTexture_GetHeight(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderImage_SetActive(IntPtr This, bool Active);
+            static extern bool sfRenderTexture_SetActive(IntPtr This, bool Active);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderImage_SaveGLStates(IntPtr This);
+            static extern bool sfRenderTexture_SaveGLStates(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderImage_RestoreGLStates(IntPtr This);
+            static extern bool sfRenderTexture_RestoreGLStates(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderImage_Display(IntPtr This);
+            static extern bool sfRenderTexture_Display(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_SetView(IntPtr This, IntPtr View);
+            static extern void sfRenderTexture_SetView(IntPtr This, IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfRenderImage_GetView(IntPtr This);
+            static extern IntPtr sfRenderTexture_GetView(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfRenderImage_GetDefaultView(IntPtr This);
+            static extern IntPtr sfRenderTexture_GetDefaultView(IntPtr This);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntRect sfRenderImage_GetViewport(IntPtr This, IntPtr TargetView);
+            static extern IntRect sfRenderTexture_GetViewport(IntPtr This, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_ConvertCoords(IntPtr This, uint WindowX, uint WindowY, out float ViewX, out float ViewY, IntPtr TargetView);
+            static extern void sfRenderTexture_ConvertCoords(IntPtr This, uint WindowX, uint WindowY, out float ViewX, out float ViewY, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfRenderImage_GetImage(IntPtr This);
+            static extern IntPtr sfRenderTexture_GetTexture(IntPtr This);
 
             #endregion
         }

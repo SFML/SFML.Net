@@ -58,7 +58,7 @@ namespace SFML
             public Shader(Shader copy) :
                 base(sfShader_Copy(copy.This))
             {
-                foreach (KeyValuePair<string, Image> pair in copy.myTextures)
+                foreach (KeyValuePair<string, Texture> pair in copy.myTextures)
                     myTextures[pair.Key] = copy.myTextures[pair.Key];
             }
 
@@ -149,9 +149,9 @@ namespace SFML
             /// Set a texture parameter
             /// </summary>
             /// <param name="name">Name of the texture in the shader</param>
-            /// <param name="texture">Image to set</param>
+            /// <param name="texture">Texture to set</param>
             ////////////////////////////////////////////////////////////
-            public void SetTexture(string name, Image texture)
+            public void SetTexture(string name, Texture texture)
             {
                 myTextures[name] = texture;
                 sfShader_SetTexture(This, name, texture.This);
@@ -238,7 +238,7 @@ namespace SFML
             {
             }
 
-            Dictionary<string, Image> myTextures = new Dictionary<string, Image>();
+            Dictionary<string, Texture> myTextures = new Dictionary<string, Texture>();
 
             #region Imports
            

@@ -407,17 +407,17 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Render the object into the given render image
+            /// Render the object into the given render texture
             /// </summary>
-            /// <param name="target">Target render image</param>
+            /// <param name="target">Target render texture</param>
             /// <param name="shader">Shader to apply</param>
             ////////////////////////////////////////////////////////////
-            internal override void Render(RenderImage target, Shader shader)
+            internal override void Render(RenderTexture target, Shader shader)
             {
                 if (shader == null)
-                    sfRenderImage_DrawShape(target.This, This);
+                    sfRenderTexture_DrawShape(target.This, This);
                 else
-                    sfRenderImage_DrawShapeWithShader(target.This, This, shader.This);
+                    sfRenderTexture_DrawShapeWithShader(target.This, This, shader.This);
             }
 
             ////////////////////////////////////////////////////////////
@@ -510,10 +510,10 @@ namespace SFML
             static extern void sfRenderWindow_DrawShapeWithShader(IntPtr This, IntPtr Shape, IntPtr Shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_DrawShape(IntPtr This, IntPtr Shape);
+            static extern void sfRenderTexture_DrawShape(IntPtr This, IntPtr Shape);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_DrawShapeWithShader(IntPtr This, IntPtr Shape, IntPtr Shader);
+            static extern void sfRenderTexture_DrawShapeWithShader(IntPtr This, IntPtr Shape, IntPtr Shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfShape_CreateLine(float P1X, float P1Y, float P2X, float P2Y, float Thickness, Color Col, float Outline, Color OutlineCol);

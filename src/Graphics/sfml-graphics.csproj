@@ -73,13 +73,14 @@
     <Compile Include="Font.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Rect.cs" />
-    <Compile Include="RenderImage.cs" />
     <Compile Include="RenderTarget.cs" />
+    <Compile Include="RenderTexture.cs" />
     <Compile Include="RenderWindow.cs" />
     <Compile Include="Shader.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Text.cs" />
+    <Compile Include="Texture.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>

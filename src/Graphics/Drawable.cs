@@ -108,12 +108,12 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Render the object into the given render image
+            /// Render the object into the given render texture
             /// </summary>
-            /// <param name="target">Target render image</param>
+            /// <param name="target">Target render texture</param>
             /// <param name="shader">Shader to apply</param>
             ////////////////////////////////////////////////////////////
-            internal abstract void Render(RenderImage target, Shader shader);
+            internal abstract void Render(RenderTexture target, Shader shader);
 
             ////////////////////////////////////////////////////////////
             /// <summary>

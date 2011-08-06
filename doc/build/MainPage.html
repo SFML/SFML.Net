@@ -35,8 +35,8 @@ Here is a short example in C#, to show you how simple it is to use SFML.Net :
             window.Closed += <span style="color:blue">new</span> <span style="color:#2B91AF">EventHandler</span>(OnClose);
 
             <span style="color:#008000">// Load a sprite to display</span>
-            <span style="color:#2B91AF">Image</span>  image  = <span style="color:blue">new</span> <span style="color:#2B91AF">Image</span>(<span style="color:#A31515">"cute_image.jpg"</span>);
-            <span style="color:#2B91AF">Sprite</span> sprite = <span style="color:blue">new</span> <span style="color:#2B91AF">Sprite</span>(image);
+            <span style="color:#2B91AF">Texture</span> texture = <span style="color:blue">new</span> <span style="color:#2B91AF">Texture</span>(<span style="color:#A31515">"cute_image.jpg"</span>);
+            <span style="color:#2B91AF">Sprite</span> sprite = <span style="color:blue">new</span> <span style="color:#2B91AF">Sprite</span>(texture);
 
             <span style="color:#008000">// Create a graphical string to display</span>
             <span style="color:#2B91AF">Font</span> font = <span style="color:blue">new</span> <span style="color:#2B91AF">Font</span>(<span style="color:#A31515">"arial.ttf"</span>);

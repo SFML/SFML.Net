@@ -330,17 +330,17 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Render the object into the given render image
+            /// Render the object into the given render texture
             /// </summary>
-            /// <param name="target">Target render image</param>
+            /// <param name="target">Target render texture</param>
             /// <param name="shader">Shader to apply</param>
             ////////////////////////////////////////////////////////////
-            internal override void Render(RenderImage target, Shader shader)
+            internal override void Render(RenderTexture target, Shader shader)
             {
                 if (shader == null)
-                    sfRenderImage_DrawText(target.This, This);
+                    sfRenderTexture_DrawText(target.This, This);
                 else
-                    sfRenderImage_DrawTextWithShader(target.This, This, shader.This);
+                    sfRenderTexture_DrawTextWithShader(target.This, This, shader.This);
             }
 
             ////////////////////////////////////////////////////////////
@@ -424,10 +424,10 @@ namespace SFML
             static extern void sfRenderWindow_DrawTextWithShader(IntPtr This, IntPtr String, IntPtr Shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_DrawText(IntPtr This, IntPtr String);
+            static extern void sfRenderTexture_DrawText(IntPtr This, IntPtr String);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderImage_DrawTextWithShader(IntPtr This, IntPtr String, IntPtr Shader);
+            static extern void sfRenderTexture_DrawTextWithShader(IntPtr This, IntPtr String, IntPtr Shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfText_SetUnicodeString(IntPtr This, IntPtr Text);

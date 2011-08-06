@@ -82,21 +82,20 @@ namespace shader
                 return;
             }
 
-            // Create the render image
-            RenderImage image = new RenderImage(window.Width, window.Height);
+            // Create the render-texture
+            RenderTexture texture = new RenderTexture(window.Width, window.Height);
 
             // Load a background image to display
-            Sprite background = new Sprite(new Image("resources/background.jpg"));
-            background.Image.Smooth = false;
+            Sprite background = new Sprite(new Texture("resources/background.jpg"));
 
             // Load a sprite which we'll move into the scene
-            Sprite entity = new Sprite(new Image("resources/sprite.png"));
+            Sprite entity = new Sprite(new Texture("resources/sprite.png"));
 
             // Load the text font
             Font font = new Font("resources/arial.ttf");
 
-            // Load the image needed for the wave effect
-            Image waveImage = new Image("resources/wave.jpg");
+            // Load the texture needed for the wave effect
+            Texture waveTexture = new Texture("resources/wave.jpg");
 
             // Load all effects
             shaders = new Dictionary<string, Shader>();
@@ -118,7 +117,7 @@ namespace shader
             shaders["colorize"].SetParameter("color", 1.0F, 1.0F, 1.0F);
             shaders["fisheye"].SetCurrentTexture("texture");
             shaders["wave"].SetCurrentTexture("texture");
-            shaders["wave"].SetTexture("wave", waveImage);
+            shaders["wave"].SetTexture("wave", waveTexture);
             shaders["pixelate"].SetCurrentTexture("texture");
 
             // Define a string for displaying current effect description
@@ -166,12 +165,12 @@ namespace shader
                 entity.Rotation = time * 100;
 
                 // Draw the background and the moving entity to the render image
-                image.Draw(background, backgroundShader.Shader);
-                image.Draw(entity, entityShader.Shader);
-                image.Display();
+                texture.Draw(background, backgroundShader.Shader);
+                texture.Draw(entity, entityShader.Shader);
+                texture.Display();
 
                 // Draw the contents of the render image to the window
-                window.Draw(new Sprite(image.Image), globalShader.Shader);
+                window.Draw(new Sprite(texture.Texture), globalShader.Shader);
 
                 // Draw interface texts
                 window.Draw(shaderText);
