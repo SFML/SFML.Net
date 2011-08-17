@@ -241,12 +241,15 @@ namespace SFML
             protected override void Destroy(bool disposing)
             {
                 if (disposing)
-                    myStream.Dispose();
+                {
+                    if (myStream != null)
+                        myStream.Dispose();
+                }
 
                 sfMusic_Destroy(This);
             }
 
-            private StreamAdaptor myStream;
+            private StreamAdaptor myStream = null;
 
             #region Imports
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

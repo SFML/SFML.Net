@@ -177,7 +177,9 @@ namespace SFML
                     {
                         foreach (Texture texture in myTextures.Values)
                             texture.Dispose();
-                        myStream.Dispose();
+
+                        if (myStream != null)
+                            myStream.Dispose();
                     }
 
                     if (!disposing)
@@ -197,7 +199,7 @@ namespace SFML
             }
 
             private Dictionary<uint, Texture> myTextures = new Dictionary<uint, Texture>();
-            private StreamAdaptor myStream;
+            private StreamAdaptor myStream = null;
             private static Font ourDefaultFont = null;
 
             #region Imports
