@@ -201,7 +201,24 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Copy(Image source, uint destX, uint destY, IntRect sourceRect)
             {
-                sfImage_CopyImage(This, source.This, destX, destY, sourceRect);
+                Copy(source, destX, destY, sourceRect, false);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Copy pixels from another image onto this one.
+            /// This function does a slow pixel copy and should only
+            /// be used at initialization time
+            /// </summary>
+            /// <param name="source">Source image to copy</param>
+            /// <param name="destX">X coordinate of the destination position</param>
+            /// <param name="destY">Y coordinate of the destination position</param>
+            /// <param name="sourceRect">Sub-rectangle of the source image to copy</param>
+            /// <param name="applyAlpha">Should the copy take in account the source transparency?</param>
+            ////////////////////////////////////////////////////////////
+            public void Copy(Image source, uint destX, uint destY, IntRect sourceRect, bool applyAlpha)
+            {
+                sfImage_CopyImage(This, source.This, destX, destY, sourceRect, applyAlpha);
             }
 
             ////////////////////////////////////////////////////////////
@@ -348,7 +365,7 @@ namespace SFML
             static extern void sfImage_CreateMaskFromColor(IntPtr This, Color Col, byte Alpha);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfImage_CopyImage(IntPtr This, IntPtr Source, uint DestX, uint DestY, IntRect SourceRect);
+            static extern void sfImage_CopyImage(IntPtr This, IntPtr Source, uint DestX, uint DestY, IntRect SourceRect, bool applyAlpha);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfImage_SetPixel(IntPtr This, uint X, uint Y, Color Col);
