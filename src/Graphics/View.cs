@@ -57,7 +57,7 @@ namespace SFML
             /// <param name="copy">View to copy</param>
             ////////////////////////////////////////////////////////////
             public View(View copy) :
-                base(sfView_Copy(copy.This))
+                base(sfView_Copy(copy.CPointer))
             {
             }
 
@@ -68,8 +68,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f Center
             {
-                get {return new Vector2f(sfView_GetCenterX(This), sfView_GetCenterY(This));}
-                set {sfView_SetCenter(This, value.X, value.Y);}
+                get {return new Vector2f(sfView_GetCenterX(CPointer), sfView_GetCenterY(CPointer));}
+                set {sfView_SetCenter(CPointer, value.X, value.Y);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -79,8 +79,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f Size
             {
-                get {return new Vector2f(sfView_GetWidth(This), sfView_GetHeight(This));}
-                set {sfView_SetSize(This, value.X, value.Y);}
+                get {return new Vector2f(sfView_GetWidth(CPointer), sfView_GetHeight(CPointer));}
+                set {sfView_SetSize(CPointer, value.X, value.Y);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -90,8 +90,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Rotation
             {
-                get { return sfView_GetRotation(This); }
-                set { sfView_SetRotation(This, value); }
+                get { return sfView_GetRotation(CPointer); }
+                set { sfView_SetRotation(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -102,8 +102,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect Viewport
             {
-                get { return sfView_GetViewport(This); }
-                set { sfView_SetViewport(This, value); }
+                get { return sfView_GetViewport(CPointer); }
+                set { sfView_SetViewport(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -114,7 +114,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Reset(FloatRect rectangle)
             {
-                sfView_Reset(This, rectangle);
+                sfView_Reset(CPointer, rectangle);
             }
 
             ////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Move(Vector2f offset)
             {
-                sfView_Move(This, offset.X, offset.Y);
+                sfView_Move(CPointer, offset.X, offset.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Rotate(float angle)
             {
-                sfView_Rotate(This, angle);
+                sfView_Rotate(CPointer, angle);
             }
 
             ////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Zoom(float factor)
             {
-                sfView_Zoom(This, factor);
+                sfView_Zoom(CPointer, factor);
             }
 
             ////////////////////////////////////////////////////////////
@@ -169,10 +169,10 @@ namespace SFML
             /// <summary>
             /// Internal constructor for other classes which need to manipulate raw views
             /// </summary>
-            /// <param name="thisPtr">Direct pointer to the view object in the C library</param>
+            /// <param name="cPointer">Direct pointer to the view object in the C library</param>
             ////////////////////////////////////////////////////////////
-            internal View(IntPtr thisPtr) :
-                base(thisPtr)
+            internal View(IntPtr cPointer) :
+                base(cPointer)
             {
                 myExternal = true;
             }
@@ -186,7 +186,7 @@ namespace SFML
             protected override void Destroy(bool disposing)
             {
                 if (!myExternal)
-                    sfView_Destroy(This);
+                    sfView_Destroy(CPointer);
             }
 
             private bool myExternal = false;

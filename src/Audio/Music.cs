@@ -25,7 +25,7 @@ namespace SFML
             public Music(string filename) :
                 base(sfMusic_CreateFromFile(filename))
             {
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("music", filename);
             }
 
@@ -41,7 +41,7 @@ namespace SFML
                 myStream = new StreamAdaptor(stream);
                 SetThis(sfMusic_CreateFromStream(myStream.InputStreamPtr));
 
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("music");
             }
 
@@ -52,7 +52,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Play()
             {
-                sfMusic_Play(This);
+                sfMusic_Play(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Pause()
             {
-                sfMusic_Pause(This);
+                sfMusic_Pause(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -72,7 +72,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Stop()
             {
-                sfMusic_Stop(This);
+                sfMusic_Stop(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint SampleRate
             {
-                get {return sfMusic_GetSampleRate(This);}
+                get {return sfMusic_GetSampleRate(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -90,9 +90,9 @@ namespace SFML
             /// Number of channels (1 = mono, 2 = stereo)
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint ChannelsCount
+            public uint ChannelCount
             {
-                get {return sfMusic_GetChannelsCount(This);}
+                get {return sfMusic_GetChannelCount(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -102,17 +102,21 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public SoundStatus Status
             {
-                get {return sfMusic_GetStatus(This);}
+                get {return sfMusic_GetStatus(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Total duration of the music, in milliseconds
+            /// Total duration of the music
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint Duration
+            public TimeSpan Duration
             {
-                get {return sfMusic_GetDuration(This);}
+                get
+                {
+                    long microseconds = sfMusic_GetDuration(CPointer);
+                    return TimeSpan.FromTicks(microseconds * TimeSpan.TicksPerMillisecond / 1000);
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -122,8 +126,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Loop
             {
-                get {return sfMusic_GetLoop(This);}
-                set {sfMusic_SetLoop(This, value);}
+                get {return sfMusic_GetLoop(CPointer);}
+                set {sfMusic_SetLoop(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -133,8 +137,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Pitch
             {
-                get {return sfMusic_GetPitch(This);}
-                set {sfMusic_SetPitch(This, value);}
+                get {return sfMusic_GetPitch(CPointer);}
+                set {sfMusic_SetPitch(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -144,8 +148,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Volume
             {
-                get {return sfMusic_GetVolume(This);}
-                set {sfMusic_SetVolume(This, value);}
+                get {return sfMusic_GetVolume(CPointer);}
+                set {sfMusic_SetVolume(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -155,8 +159,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector3f Position
             {
-                get {Vector3f v; sfMusic_GetPosition(This, out v.X, out v.Y, out v.Z); return v;}
-                set {sfMusic_SetPosition(This, value.X, value.Y, value.Z);}
+                get {Vector3f v; sfMusic_GetPosition(CPointer, out v.X, out v.Y, out v.Z); return v;}
+                set {sfMusic_SetPosition(CPointer, value.X, value.Y, value.Z);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -168,8 +172,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool RelativeToListener
             {
-                get {return sfMusic_IsRelativeToListener(This);}
-                set {sfMusic_SetRelativeToListener(This, value);}
+                get {return sfMusic_IsRelativeToListener(CPointer);}
+                set {sfMusic_SetRelativeToListener(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -181,8 +185,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float MinDistance
             {
-                get {return sfMusic_GetMinDistance(This);}
-                set {sfMusic_SetMinDistance(This, value);}
+                get {return sfMusic_GetMinDistance(CPointer);}
+                set {sfMusic_SetMinDistance(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -194,19 +198,27 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Attenuation
             {
-                get {return sfMusic_GetAttenuation(This);}
-                set {sfMusic_SetAttenuation(This, value);}
+                get {return sfMusic_GetAttenuation(CPointer);}
+                set {sfMusic_SetAttenuation(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Current playing position, in milliseconds
+            /// Current playing position
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint PlayingOffset
+            public TimeSpan PlayingOffset
             {
-                get {return sfMusic_GetPlayingOffset(This);}
-                set {sfMusic_SetPlayingOffset(This, value);}
+                get
+                {
+                    long microseconds = sfMusic_GetPlayingOffset(CPointer);
+                    return TimeSpan.FromTicks(microseconds * TimeSpan.TicksPerMillisecond / 1000);
+                }
+                set
+                {
+                    long microseconds = value.Ticks / (TimeSpan.TicksPerMillisecond / 1000);
+                    sfMusic_SetPlayingOffset(CPointer, microseconds);
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -219,7 +231,7 @@ namespace SFML
             {
                 return "[Music]" +
                        " SampleRate(" + SampleRate + ")" +
-                       " ChannelsCount(" + ChannelsCount + ")" +
+                       " ChannelCount(" + ChannelCount + ")" +
                        " Status(" + Status + ")" +
                        " Duration(" + Duration + ")" +
                        " Loop(" + Loop + ")" +
@@ -246,7 +258,7 @@ namespace SFML
                         myStream.Dispose();
                 }
 
-                sfMusic_Destroy(This);
+                sfMusic_Destroy(CPointer);
             }
 
             private StreamAdaptor myStream = null;
@@ -274,10 +286,10 @@ namespace SFML
             static extern SoundStatus sfMusic_GetStatus(IntPtr Music);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfMusic_GetDuration(IntPtr Music);
+            static extern long sfMusic_GetDuration(IntPtr Music);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfMusic_GetChannelsCount(IntPtr Music);
+            static extern uint sfMusic_GetChannelCount(IntPtr Music);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern uint sfMusic_GetSampleRate(IntPtr Music);
@@ -304,7 +316,7 @@ namespace SFML
             static extern void sfMusic_SetAttenuation(IntPtr Music, float Attenuation);
             
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfMusic_SetPlayingOffset(IntPtr Music, uint TimeOffset);
+            static extern void sfMusic_SetPlayingOffset(IntPtr Music, long TimeOffset);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfMusic_GetLoop(IntPtr Music);
@@ -328,7 +340,8 @@ namespace SFML
             static extern float sfMusic_GetAttenuation(IntPtr Music);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfMusic_GetPlayingOffset(IntPtr Music);
+            static extern long sfMusic_GetPlayingOffset(IntPtr Music);
+
             #endregion
         }
     }

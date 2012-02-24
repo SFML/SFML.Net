@@ -6,62 +6,240 @@ using SFML.Window;
 
 namespace shader
 {
-    /// <summary>
-    /// A class to simplify shader selection
-    /// </summary>
-    class ShaderSelector
+    /// <summary>Base class for effects</summary>
+    abstract class Effect : Drawable
     {
-        // Constructor
-        public ShaderSelector(Dictionary<string, Shader> owner)
+        protected Effect(string name)
         {
-            myOwner = owner;
-            myIterator = owner.GetEnumerator();
-            myIterator.MoveNext();
+            myName = name;
         }
 
-        // Select the next shader
-        public void GotoNext()
+        public string Name
         {
-            if (myIterator.MoveNext() == false)
+            get {return myName;}
+        }
+
+        public void Update(float time, float x, float y)
+        {
+            if (Shader.IsAvailable)
+                OnUpdate(time, x, y);
+        }
+
+        public void Draw(RenderTarget target, RenderStates states)
+        {
+            if (Shader.IsAvailable)
             {
-                myIterator = myOwner.GetEnumerator();
-                myIterator.MoveNext();
+                OnDraw(target, states);
+            }
+            else
+            {
+                Text error = new Text("Shader not\nsupported");
+                error.Position = new Vector2f(320, 200);
+                error.CharacterSize = 36;
+                target.Draw(error, states);
             }
         }
 
-        // Update the shader parameters
-        public void Update(float x, float y)
+        protected abstract void OnUpdate(float time, float x, float y);
+        protected abstract void OnDraw(RenderTarget target, RenderStates states);
+
+        private string myName;
+    }
+
+    /// <summary>"Pixelate" fragment shader</summary>
+    class Pixelate : Effect
+    {
+        public Pixelate() : base("pixelate")
         {
-            if      (myIterator.Current.Key == "blur")     myIterator.Current.Value.SetParameter("offset", x * y * 0.05f);
-            else if (myIterator.Current.Key == "colorize") myIterator.Current.Value.SetParameter("color", 0.3f, x, y);
-            else if (myIterator.Current.Key == "fisheye")  myIterator.Current.Value.SetParameter("mouse", x, y);
-            else if (myIterator.Current.Key == "wave")     myIterator.Current.Value.SetParameter("offset", x, y);
-            else if (myIterator.Current.Key == "pixelate") myIterator.Current.Value.SetParameter("mouse", x, y);
+            // Load the texture and initialize the sprite
+            myTexture = new Texture("resources/background.jpg");
+            mySprite = new Sprite(myTexture);
+
+            // Load the shader
+            myShader = new Shader(null, "resources/pixelate.frag");
+            myShader.SetParameter("texture", Shader.CurrentTexture);
         }
 
-        // Get the name of the current shader
-        public string Name
+        protected override void OnUpdate(float time, float x, float y)
         {
-            get {return myIterator.Current.Key;}
+            myShader.SetParameter("pixel_threshold", (x + y) / 30);
         }
 
-        // Get the current shader
-        public Shader Shader
+        protected override void OnDraw(RenderTarget target, RenderStates states)
         {
-            get {return myIterator.Current.Value;}
+            states = new RenderStates(states);
+            states.Shader = myShader;
+            target.Draw(mySprite, states);
         }
 
-        private Dictionary<string, Shader> myOwner;
-        private Dictionary<string, Shader>.Enumerator myIterator;
-    };
+        private Texture myTexture = null;
+        private Sprite mySprite = null;
+        private Shader myShader = null;
+    }
 
+    /// <summary>"Wave" vertex shader + "blur" fragment shader</summary>
+    class WaveBlur : Effect
+    {
+        public WaveBlur() : base("wave + blur")
+        {
+            // Create the text
+            myText = new Text("Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
+                              "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
+                              "Praesent cursus ultrices justo, ut feugiat ante vehicula quis.\n" +
+                              "Donec fringilla scelerisque mauris et viverra.\n" +
+                              "Maecenas adipiscing ornare scelerisque. Nullam at libero elit.\n" +
+                              "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
+                              "Nullam leo urna, tincidunt id semper eget, ultricies sed mi.\n" +
+                              "Morbi mauris massa, commodo id dignissim vel, lobortis et elit.\n" +
+                              "Fusce vel libero sed neque scelerisque venenatis.\n" +
+                              "Integer mattis tincidunt quam vitae iaculis.\n" +
+                              "Vivamus fringilla sem non velit venenatis fermentum.\n" +
+                              "Vivamus varius tincidunt nisi id vehicula.\n" +
+                              "Integer ullamcorper, enim vitae euismod rutrum, massa nisl semper ipsum,\n" +
+                              "vestibulum sodales sem ante in massa.\n" +
+                              "Vestibulum in augue non felis convallis viverra.\n" +
+                              "Mauris ultricies dolor sed massa convallis sed aliquet augue fringilla.\n" +
+                              "Duis erat eros, porta in accumsan in, blandit quis sem.\n" +
+                              "In hac habitasse platea dictumst. Etiam fringilla est id odio dapibus sit amet semper dui laoreet.\n");
+            myText.CharacterSize = 22;
+            myText.Position = new Vector2f(30, 20);
+
+            // Load the shader
+            myShader = new Shader("resources/wave.vert", "resources/blur.frag");
+        }
+
+        protected override void OnUpdate(float time, float x, float y)
+        {
+            myShader.SetParameter("wave_phase", time);
+            myShader.SetParameter("wave_amplitude", x * 40, y * 40);
+            myShader.SetParameter("blur_radius", (x + y) * 0.008F);
+        }
+
+        protected override void OnDraw(RenderTarget target, RenderStates states)
+        {
+            states = new RenderStates(states);
+            states.Shader = myShader;
+            target.Draw(myText, states);
+        }
+
+        private Text myText = null;
+        private Shader myShader = null;
+    }
+
+    /// <summary>"Storm" vertex shader + "blink" fragment shader</summary>
+    class StormBlink : Effect
+    {
+        public StormBlink() : base("storm + blink")
+        {
+            Random random = new Random();
+
+            // Create the points
+            myPoints = new VertexArray(PrimitiveType.Points);
+            for (int i = 0; i < 40000; ++i)
+            {
+                float x = (float)random.Next(0, 800);
+                float y = (float)random.Next(0, 600);
+                byte r = (byte)random.Next(0, 255);
+                byte g = (byte)random.Next(0, 255);
+                byte b = (byte)random.Next(0, 255);
+                myPoints.Append(new Vertex(new Vector2f(x, y), new Color(r, g, b)));
+            }
+
+            // Load the shader
+            myShader = new Shader("resources/storm.vert", "resources/blink.frag");
+        }
+
+        protected override void OnUpdate(float time, float x, float y)
+        {
+            float radius = 200 + (float)Math.Cos(time) * 150;
+            myShader.SetParameter("storm_position", x * 800, y * 600);
+            myShader.SetParameter("storm_inner_radius", radius / 3);
+            myShader.SetParameter("storm_total_radius", radius);
+            myShader.SetParameter("blink_alpha", 0.5F + (float)Math.Cos(time * 3) * 0.25F);
+        }
+
+        protected override void OnDraw(RenderTarget target, RenderStates states)
+        {
+            states = new RenderStates(states);
+            states.Shader = myShader;
+            target.Draw(myPoints, states);
+        }
+
+        private VertexArray myPoints = null;
+        private Shader myShader = null;
+    }
+
+    /// <summary>"Edge" post-effect fragment shader</summary>
+    class Edge : Effect
+    {
+        public Edge() : base("edge post-effect")
+        {
+            // Create the off-screen surface
+            mySurface = new RenderTexture(800, 600);
+            mySurface.Smooth = true;
+
+            // Load the textures
+            myBackgroundTexture = new Texture("resources/sfml.png");
+            myBackgroundTexture.Smooth = true;
+            myEntityTexture = new Texture("resources/devices.png");
+            myEntityTexture.Smooth = true;
+
+            // Initialize the background sprite
+            myBackgroundSprite = new Sprite(myBackgroundTexture);
+            myBackgroundSprite.Position = new Vector2f(135, 100);
+
+            // Load the moving entities
+            myEntities = new Sprite[6];
+            for (int i = 0; i < myEntities.Length; ++i)
+            {
+                myEntities[i] = new Sprite(myEntityTexture, new IntRect(96 * i, 0, 96, 96));
+            }
+
+            // Load the shader
+            myShader = new Shader(null, "resources/edge.frag");
+            myShader.SetParameter("texture", Shader.CurrentTexture);
+        }
+
+        protected override void OnUpdate(float time, float x, float y)
+        {
+            myShader.SetParameter("edge_threshold", 1 - (x + y) / 2);
+
+            // Update the position of the moving entities
+            for (int i = 0; i < myEntities.Length; ++i)
+            {
+                float posX = (float)Math.Cos(0.25F * (time * i + (myEntities.Length - i))) * 300 + 350;
+                float posY = (float)Math.Sin(0.25F * (time * (myEntities.Length - i) + i)) * 200 + 250;
+                myEntities[i].Position = new Vector2f(posX, posY);
+            }
+
+            // Render the updated scene to the off-screen surface
+            mySurface.Clear(Color.White);
+            mySurface.Draw(myBackgroundSprite);
+            foreach (Sprite entity in myEntities)
+                mySurface.Draw(entity);
+            mySurface.Display();
+        }
+
+        protected override void OnDraw(RenderTarget target, RenderStates states)
+        {
+            states = new RenderStates(states);
+            states.Shader = myShader;
+            target.Draw(new Sprite(mySurface.Texture), states);
+        }
+
+        private RenderTexture mySurface = null;
+        private Texture myBackgroundTexture = null;
+        private Texture myEntityTexture = null;
+        private Sprite myBackgroundSprite = null;
+        Sprite[] myEntities = null;
+        private Shader myShader = null;
+    }
+    
     static class Program
     {
-        private static Dictionary<string, Shader> shaders;
-        private static ShaderSelector             backgroundShader;
-        private static ShaderSelector             entityShader;
-        private static ShaderSelector             globalShader;
-        private static Text                       shaderText;
+        private static Effect[] effects;
+        private static int current;
+        private static Text description;
 
         /// <summary>
         /// The main entry point for the application.
@@ -70,139 +248,64 @@ namespace shader
         {
             // Create the main window
             RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML.Net Shader");
+            window.EnableVerticalSync(true);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
             window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
 
-            // Check that the system can use shaders
-            if (Shader.IsAvailable == false)
+            // Create the effects
+            effects = new Effect[]
             {
-                DisplayError(window);
-                return;
-            }
+                new Pixelate(),
+                new WaveBlur(),
+                new StormBlink(),
+                new Edge()
+            };
+            current = 0;
 
-            // Create the render-texture
-            RenderTexture texture = new RenderTexture(window.Width, window.Height);
+            // Create the messages background
+            Texture textBackgroundTexture = new Texture("resources/text-background.png");
+            Sprite textBackground = new Sprite(textBackgroundTexture);
+            textBackground.Position = new Vector2f(0, 520);
+            textBackground.Color = new Color(255, 255, 255, 200);
 
-            // Load a background image to display
-            Sprite background = new Sprite(new Texture("resources/background.jpg"));
+            // Load the messages font
+            Font font = new Font("resources/sansation.ttf");
 
-            // Load a sprite which we'll move into the scene
-            Sprite entity = new Sprite(new Texture("resources/sprite.png"));
+            // Create the description text
+            description = new Text("Current effect: " + effects[current].Name, font, 20);
+            description.Position = new Vector2f(10, 530);
+            description.Color = new Color(80, 80, 80);
 
-            // Load the text font
-            Font font = new Font("resources/arial.ttf");
-
-            // Load the texture needed for the wave effect
-            Texture waveTexture = new Texture("resources/wave.jpg");
-
-            // Load all effects
-            shaders = new Dictionary<string, Shader>();
-            shaders["nothing"]  = new Shader("resources/nothing.sfx");
-            shaders["blur"]     = new Shader("resources/blur.sfx");
-            shaders["colorize"] = new Shader("resources/colorize.sfx");
-            shaders["fisheye"]  = new Shader("resources/fisheye.sfx");
-            shaders["wave"]     = new Shader("resources/wave.sfx");
-            shaders["pixelate"] = new Shader("resources/pixelate.sfx");
-            backgroundShader = new ShaderSelector(shaders);
-            entityShader     = new ShaderSelector(shaders);
-            globalShader     = new ShaderSelector(shaders);
-
-            // Do specific initializations
-            shaders["nothing"].SetCurrentTexture("texture");
-            shaders["blur"].SetCurrentTexture("texture");
-            shaders["blur"].SetParameter("offset", 0.0F);
-            shaders["colorize"].SetCurrentTexture("texture");
-            shaders["colorize"].SetParameter("color", 1.0F, 1.0F, 1.0F);
-            shaders["fisheye"].SetCurrentTexture("texture");
-            shaders["wave"].SetCurrentTexture("texture");
-            shaders["wave"].SetTexture("wave", waveTexture);
-            shaders["pixelate"].SetCurrentTexture("texture");
-
-            // Define a string for displaying current effect description
-            shaderText = new Text();
-            shaderText.Font = font;
-            shaderText.CharacterSize = 20;
-            shaderText.Position = new Vector2f(5.0F, 0.0F);
-            shaderText.Color = new Color(250, 100, 30);
-            shaderText.DisplayedString = "Background shader: \"" + backgroundShader.Name + "\"\n" +
-                                         "Flower shader: \"" + entityShader.Name + "\"\n" +
-                                         "Global shader: \"" + globalShader.Name + "\"\n";
-
-            // Define a string for displaying help
-            Text infoText = new Text();
-            infoText.Font = font;
-            infoText.CharacterSize = 20;
-            infoText.Position = new Vector2f(5.0F, 500.0F);
-            infoText.Color = new Color(250, 100, 30);
-            infoText.DisplayedString = "Move your mouse to change the shaders' parameters\n" +
-                                       "Press numpad 1 to change the background shader\n" +
-                                       "Press numpad 2 to change the flower shader\n" +
-                                       "Press numpad 3 to change the global shader";
+            // Create the instructions text
+            Text instructions = new Text("Press left and right arrows to change the current shader", font, 20);
+            instructions.Position = new Vector2f(280, 555);
+            instructions.Color = new Color(80, 80, 80);
 
             // Start the game loop
-            float time = 0.0F;
-            while (window.IsOpened())
+            int startTime = Environment.TickCount;
+            while (window.IsOpen())
             {
                 // Process events
                 window.DispatchEvents();
 
-                // Get the mouse position in the range [0, 1]
-                float x = Mouse.GetPosition(window).X / (float)window.Width;
-                float y = Mouse.GetPosition(window).Y / (float)window.Height;
-
-                // Update the shaders
-                backgroundShader.Update(x, y);
-                entityShader.Update(x, y);
-                globalShader.Update(x, y);
-
-                // Animate the sprite
-                time += window.GetFrameTime() / 1000.0F;
-                float entityX = (float)(Math.Cos(time * 1.3) + 1.2) * 300;
-                float entityY = (float)(Math.Cos(time * 0.8) + 1.2) * 200;
-                entity.Position = new Vector2f(entityX, entityY);
-                entity.Rotation = time * 100;
-
-                // Draw the background and the moving entity to the render image
-                texture.Draw(background, backgroundShader.Shader);
-                texture.Draw(entity, entityShader.Shader);
-                texture.Display();
-
-                // Draw the contents of the render image to the window
-                window.Draw(new Sprite(texture.Texture), globalShader.Shader);
-
-                // Draw interface texts
-                window.Draw(shaderText);
-                window.Draw(infoText);
-
-                // Finally, display the rendered frame on screen
-                window.Display();
-            }
-        }
-
-        /// <summary>
-        /// Fonction called when the post-effects are not supported ;
-        /// Display an error message and wait until the user exits
-        /// </summary>
-        private static void DisplayError(RenderWindow window)
-        {
-            // Define a string for displaying the error message
-            Text error = new Text("Sorry, your system doesn't support shaders");
-            error.Position = new Vector2f(100.0F, 250.0F);
-            error.Color = new Color(200, 100, 150);
-
-            // Start the game loop
-            while (window.IsOpened())
-            {
-                // Process events
-                window.DispatchEvents();
+                // Update the current example
+                float time = (Environment.TickCount - startTime) / 1000.0F;
+                float x = (float)Mouse.GetPosition(window).X / window.Width;
+                float y = (float)Mouse.GetPosition(window).Y / window.Height;
+                effects[current].Update(time, x, y);
 
                 // Clear the window
-                window.Clear();
+                window.Clear(new Color(255, 128, 0));
 
-                // Draw the error message
-                window.Draw(error);
+                // Draw the current example
+                window.Draw(effects[current]);
+
+                // Draw the text
+                window.Draw(textBackground);
+                window.Draw(instructions);
+                window.Draw(description);
 
                 // Finally, display the rendered frame on screen
                 window.Display();
@@ -227,20 +330,29 @@ namespace shader
 
             // Escape key : exit
             if (e.Code == Keyboard.Key.Escape)
-                window.Close();
-
-            // Numpad : switch effect
-            switch (e.Code)
             {
-                case Keyboard.Key.Numpad1: backgroundShader.GotoNext(); break;
-                case Keyboard.Key.Numpad2: entityShader.GotoNext(); break;
-                case Keyboard.Key.Numpad3: globalShader.GotoNext(); break;
+                window.Close();
             }
 
-            // Update the text
-            shaderText.DisplayedString = "Background shader: \"" + backgroundShader.Name + "\"\n" +
-                                         "Flower shader: \"" + entityShader.Name + "\"\n" +
-                                         "Global shader: \"" + globalShader.Name + "\"\n";
+            // Left arrow key: previous shader
+            if (e.Code == Keyboard.Key.Left)
+            {
+                if (current == 0)
+                    current = effects.Length - 1;
+                else
+                    current--;
+                description.DisplayedString = "Current effect: " + effects[current].Name;
+            }
+
+            // Right arrow key: next shader
+            if (e.Code == Keyboard.Key.Right)
+            {
+                if (current == effects.Length - 1)
+                    current = 0;
+                else
+                    current++;
+                description.DisplayedString = "Current effect: " + effects[current].Name;
+            }
         }
     }
 }

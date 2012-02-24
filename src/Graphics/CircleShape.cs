@@ -1,6 +1,6 @@
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
+using System.Security;
 using SFML.Window;
 
 namespace SFML
@@ -9,186 +9,148 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// This class defines a graphical 2D text, that can be drawn on screen
+        /// Specialized shape representing a circle
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public class Text : Transformable, Drawable
+        public class CircleShape : Transformable, Drawable
         {
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Enumerate the string drawing styles
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            [Flags]
-            public enum Styles
-            {
-                /// <summary>Regular characters, no style</summary>
-                Regular = 0,
-
-                /// <summary> Characters are bold</summary>
-                Bold = 1 << 0,
-
-                /// <summary>Characters are in italic</summary>
-                Italic = 1 << 1,
-
-                /// <summary>Characters are underlined</summary>
-                Underlined = 1 << 2
-            }
-
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Default constructor
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Text() :
-                this("")
+            public CircleShape() :
+                base(sfCircleShape_Create())
             {
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from a string
+            /// Construct the shape with an initial radius
             /// </summary>
-            /// <param name="str">String to display</param>
+            /// <param name="radius">Radius of the shape</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str) :
-                this(str, Font.DefaultFont)
+            public CircleShape(float radius) :
+                base(sfCircleShape_Create())
             {
+                Radius = radius;
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from a string and a font
+            /// Construct the shape with an initial radius and point count
             /// </summary>
-            /// <param name="str">String to display</param>
-            /// <param name="font">Font to use</param>
+            /// <param name="radius">Radius of the shape</param>
+            /// <param name="pointCount">Number of points of the shape</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str, Font font) :
-                this(str, font, 30)
+            public CircleShape(float radius, uint pointCount) :
+                base(sfCircleShape_Create())
             {
+                Radius = radius;
+                PointCount = PointCount;
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from a string, font and size
+            /// Construct the shape from another shape
             /// </summary>
-            /// <param name="str">String to display</param>
-            /// <param name="font">Font to use</param>
-            /// <param name="characterSize">Base characters size</param>
+            /// <param name="copy">Shape to copy</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str, Font font, uint characterSize) :
-                base(sfText_Create())
+            public CircleShape(CircleShape copy) :
+                base(sfCircleShape_Copy(copy.CPointer))
             {
-                DisplayedString = str;
-                Font = font;
-                CharacterSize = characterSize;
+                Texture = copy.Texture;
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from another text
+            /// Source texture of the shape
             /// </summary>
-            /// <param name="copy">Text to copy</param>
             ////////////////////////////////////////////////////////////
-            public Text(Text copy) :
-                base(sfText_Copy(copy.CPointer))
+            public Texture Texture
             {
-                Font = copy.Font;
+                get { return myTexture; }
+                set { myTexture = value; sfCircleShape_SetTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Global color of the object
+            /// Sub-rectangle of the texture that the shape will display
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Color Color
+            public IntRect TextureRect
             {
-                get { return sfText_GetColor(CPointer); }
-                set { sfText_SetColor(CPointer, value); }
+                get { return sfCircleShape_GetTextureRect(CPointer); }
+                set { sfCircleShape_SetTextureRect(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// String which is displayed
+            /// Fill color of the shape
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public string DisplayedString
+            public Color FillColor
             {
-                get
-                {
-                    // Get the number of characters
-                    // This is probably not the most optimized way; if anyone has a better solution...
-                    int length = Marshal.PtrToStringAnsi(sfText_GetString(CPointer)).Length;
-
-                    // Copy the characters
-                    byte[] characters = new byte[length * 4];
-                    Marshal.Copy(sfText_GetUnicodeString(CPointer), characters, 0, characters.Length);
-
-                    // Convert from UTF-32 to String (UTF-16)
-                    return System.Text.Encoding.UTF32.GetString(characters);
-                }
-
-                set
-                {
-                    // Convert from String (UTF-16) to UTF-32
-                    int[] characters = new int[value.Length];
-                    for (int i = 0; i < value.Length; ++i)
-                        characters[i] = Char.ConvertToUtf32(value, i);
-
-                    // Transform to raw and pass to the C API
-                    GCHandle handle = GCHandle.Alloc(characters, GCHandleType.Pinned);
-                    sfText_SetUnicodeString(CPointer, handle.AddrOfPinnedObject());
-                    handle.Free();
-                }
+                get { return sfCircleShape_GetFillColor(CPointer); }
+                set { sfCircleShape_SetFillColor(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Font used to display the text
+            /// Outline color of the shape
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Font Font
+            public Color OutlineColor
             {
-                get {return myFont;}
-                set {myFont = value; sfText_SetFont(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
+                get { return sfCircleShape_GetOutlineColor(CPointer); }
+                set { sfCircleShape_SetOutlineColor(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Base size of characters
+            /// Thickness of the shape's outline
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint CharacterSize
+            public float OutlineThickness
             {
-                get {return sfText_GetCharacterSize(CPointer);}
-                set {sfText_SetCharacterSize(CPointer, value);}
+                get { return sfCircleShape_GetOutlineThickness(CPointer); }
+                set { sfCircleShape_SetOutlineThickness(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Style of the text (see Styles enum)
+            /// The total number of points of the shape
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Styles Style
+            public uint PointCount
             {
-                get {return sfText_GetStyle(CPointer);}
-                set {sfText_SetStyle(CPointer, value);}
+                get { return sfCircleShape_GetPointCount(CPointer); }
+                set { sfCircleShape_SetPointCount(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Return the visual position of the Index-th character of the text,
-            /// in coordinates relative to the text
-            /// (note : translation, origin, rotation and scale are not applied)
+            /// The radius of the shape
             /// </summary>
-            /// <param name="index">Index of the character</param>
-            /// <returns>Position of the Index-th character (end of text if Index is out of range)</returns>
             ////////////////////////////////////////////////////////////
-            public Vector2f FindCharacterPos(uint index)
+            public float Radius
             {
-                Vector2f Pos;
-                sfText_FindCharacterPos(CPointer, index, out Pos.X, out Pos.Y);
-                return Pos;
+                get { return sfCircleShape_GetRadius(CPointer); }
+                set { sfCircleShape_SetRadius(CPointer, value); }
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Get a point of the shape.
+            ///
+            /// The result is undefined if index is out of the valid range.
+            /// </summary>
+            /// <param name="index">Index of the point to get, in range [0 .. PointCount - 1]</param>
+            /// <returns>Index-th point of the shape</returns>
+            ////////////////////////////////////////////////////////////
+            public Vector2f GetPoint(uint index)
+            {
+                return sfCircleShape_GetPoint(CPointer, index);
             }
 
             ////////////////////////////////////////////////////////////
@@ -205,7 +167,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             FloatRect GetLocalBounds()
             {
-                return sfText_GetLocalBounds(CPointer);
+                return sfCircleShape_GetLocalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -222,23 +184,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             FloatRect GetGlobalBounds()
             {
-                return sfText_GetGlobalBounds(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Provide a string describing the object
-            /// </summary>
-            /// <returns>String description of the object</returns>
-            ////////////////////////////////////////////////////////////
-            public override string ToString()
-            {
-                return "[Text]" +
-                       " Color(" + Color + ")" +
-                       " String(" + DisplayedString + ")" +
-                       " Font(" + Font + ")" +
-                       " CharacterSize(" + CharacterSize + ")" +
-                       " Style(" + Style + ")";
+                return sfCircleShape_GetGlobalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -259,11 +205,11 @@ namespace SFML
 
                 if (target is RenderWindow)
                 {
-                    sfRenderWindow_DrawText(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderWindow_DrawCircleShape(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
                 }
                 else if (target is RenderTexture)
                 {
-                    sfRenderWindow_DrawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderTexture_DrawCircleShape(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
                 }
             }
 
@@ -275,69 +221,75 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfText_Destroy(CPointer);
+                sfCircleShape_Destroy(CPointer);
             }
 
-            private Font myFont = Font.DefaultFont;
+            private Texture myTexture = null;
 
             #region Imports
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_Create();
+            static extern IntPtr sfCircleShape_Create();
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_Copy(IntPtr Text);
+            static extern IntPtr sfCircleShape_Copy(IntPtr Shape);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_Destroy(IntPtr CPointer);
+            static extern void sfCircleShape_Destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetColor(IntPtr CPointer, Color Color);
+            static extern void sfCircleShape_SetTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Color sfText_GetColor(IntPtr CPointer);
+            static extern void sfCircleShape_SetTextureRect(IntPtr CPointer, IntRect Rect);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_DrawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+            static extern IntRect sfCircleShape_GetTextureRect(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderTexture_DrawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+            static extern void sfCircleShape_SetFillColor(IntPtr CPointer, Color Color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetUnicodeString(IntPtr CPointer, IntPtr Text);
+            static extern Color sfCircleShape_GetFillColor(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetFont(IntPtr CPointer, IntPtr Font);
+            static extern void sfCircleShape_SetOutlineColor(IntPtr CPointer, Color Color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetCharacterSize(IntPtr CPointer, uint Size);
+            static extern Color sfCircleShape_GetOutlineColor(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetStyle(IntPtr CPointer, Styles Style);
+            static extern void sfCircleShape_SetOutlineThickness(IntPtr CPointer, float Thickness);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_GetString(IntPtr CPointer);
+            static extern float sfCircleShape_GetOutlineThickness(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_GetUnicodeString(IntPtr CPointer);
+            static extern void sfCircleShape_SetPointCount(IntPtr CPointer, uint PointCount);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfText_GetCharacterSize(IntPtr CPointer);
+            static extern uint sfCircleShape_GetPointCount(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Styles sfText_GetStyle(IntPtr CPointer);
+            static extern Vector2f sfCircleShape_GetPoint(IntPtr CPointer, uint Index);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetRect(IntPtr CPointer);
+            static extern void sfCircleShape_SetRadius(IntPtr CPointer, float radius);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_FindCharacterPos(IntPtr CPointer, uint Index, out float X, out float Y);
+            static extern float sfCircleShape_GetRadius(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetLocalBounds(IntPtr CPointer);
+            static extern FloatRect sfCircleShape_GetLocalBounds(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetGlobalBounds(IntPtr CPointer);
+            static extern FloatRect sfCircleShape_GetGlobalBounds(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderWindow_DrawCircleShape(IntPtr CPointer, IntPtr Shape, ref RenderStates.MarshalData states);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderTexture_DrawCircleShape(IntPtr CPointer, IntPtr Shape, ref RenderStates.MarshalData states);
 
             #endregion
         }

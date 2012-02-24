@@ -67,20 +67,30 @@
   </Target>
   -->
   <ItemGroup>
+    <Compile Include="BlendMode.cs" />
+    <Compile Include="CircleShape.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="ConvexShape.cs" />
     <Compile Include="Drawable.cs" />
     <Compile Include="Font.cs" />
+    <Compile Include="Glyph.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="PrimitiveType.cs" />
     <Compile Include="Rect.cs" />
+    <Compile Include="RectangleShape.cs" />
+    <Compile Include="RenderStates.cs" />
     <Compile Include="RenderTarget.cs" />
     <Compile Include="RenderTexture.cs" />
     <Compile Include="RenderWindow.cs" />
     <Compile Include="Shader.cs" />
-    <Compile Include="Shape.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="Transform.cs" />
+    <Compile Include="Transformable.cs" />
+    <Compile Include="Vertex.cs" />
+    <Compile Include="VertexArray.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>

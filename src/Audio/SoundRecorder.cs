@@ -49,7 +49,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Start(uint sampleRate)
             {
-                sfSoundRecorder_Start(This, sampleRate);
+                sfSoundRecorder_Start(CPointer, sampleRate);
             }
 
             ////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Stop()
             {
-                sfSoundRecorder_Stop(This);
+                sfSoundRecorder_Stop(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint SampleRate
             {
-                get {return sfSoundRecorder_GetSampleRate(This);}
+                get {return sfSoundRecorder_GetSampleRate(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfSoundRecorder_Destroy(This);
+                sfSoundRecorder_Destroy(CPointer);
             }
 
             ////////////////////////////////////////////////////////////

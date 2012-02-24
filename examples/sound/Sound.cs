@@ -30,9 +30,9 @@ namespace sound
 
             // Display sound informations
             Console.WriteLine("canary.wav :");
-            Console.WriteLine(" " + buffer.Duration      + " sec");
-            Console.WriteLine(" " + buffer.SampleRate    + " samples / sec");
-            Console.WriteLine(" " + buffer.ChannelsCount + " channels");
+            Console.WriteLine(" " + buffer.Duration     + " sec");
+            Console.WriteLine(" " + buffer.SampleRate   + " samples / sec");
+            Console.WriteLine(" " + buffer.ChannelCount + " channels");
 
             // Create a sound instance and play it
             Sound sound = new Sound(buffer);
@@ -60,9 +60,9 @@ namespace sound
 
             // Display music informations
             Console.WriteLine("orchestral.ogg :");
-            Console.WriteLine(" " + music.Duration      + " sec");
-            Console.WriteLine(" " + music.SampleRate    + " samples / sec");
-            Console.WriteLine(" " + music.ChannelsCount + " channels");
+            Console.WriteLine(" " + music.Duration     + " sec");
+            Console.WriteLine(" " + music.SampleRate   + " samples / sec");
+            Console.WriteLine(" " + music.ChannelCount + " channels");
 
             // Play it
             music.Play();

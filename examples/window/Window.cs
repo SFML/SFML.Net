@@ -14,6 +14,7 @@ namespace window
         {
             // Create the main window
             Window window = new Window(new VideoMode(640, 480, 32), "SFML.Net Window", Styles.Default, new ContextSettings(32, 0));
+            window.EnableVerticalSync(true);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
@@ -33,10 +34,10 @@ namespace window
             Gl.glLoadIdentity();
             Glu.gluPerspective(90.0F, 1.0F, 1.0F, 500.0F);
 
-            float time = 0.0F;
+            int startTime = Environment.TickCount;
 
             // Start the game loop
-            while (window.IsOpened())
+            while (window.IsOpen())
             {
                 // Process events
                 window.DispatchEvents();
@@ -50,7 +51,7 @@ namespace window
                 Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
 
                 // Apply some transformations
-                time += window.GetFrameTime() / 1000.0F;
+                float time = (Environment.TickCount - startTime) / 1000.0F;
                 Gl.glMatrixMode(Gl.GL_MODELVIEW);
                 Gl.glLoadIdentity();
                 Gl.glTranslatef(0.0F, 0.0F, -200.0F);

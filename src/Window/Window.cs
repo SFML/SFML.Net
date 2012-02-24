@@ -112,9 +112,9 @@ namespace SFML
             /// </summary>
             /// <returns>True if the window is opened</returns>
             ////////////////////////////////////////////////////////////
-            public virtual bool IsOpened()
+            public virtual bool IsOpen()
             {
-                return sfWindow_IsOpened(This);
+                return sfWindow_IsOpen(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void Close()
             {
-                sfWindow_Close(This);
+                sfWindow_Close(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void Display()
             {
-                sfWindow_Display(This);
+                sfWindow_Display(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -146,7 +146,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual uint Width
             {
-                get {return sfWindow_GetWidth(This);}
+                get {return sfWindow_GetWidth(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -156,7 +156,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual uint Height
             {
-                get {return sfWindow_GetHeight(This);}
+                get {return sfWindow_GetHeight(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual ContextSettings Settings
             {
-                get {return sfWindow_GetSettings(This);}
+                get {return sfWindow_GetSettings(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -177,7 +177,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void EnableVerticalSync(bool enable)
             {
-                sfWindow_EnableVerticalSync(This, enable);
+                sfWindow_EnableVerticalSync(CPointer, enable);
             }
 
             ////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void ShowMouseCursor(bool show)
             {
-                sfWindow_ShowMouseCursor(This, show);
+                sfWindow_ShowMouseCursor(CPointer, show);
             }
 
             ////////////////////////////////////////////////////////////
@@ -201,7 +201,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void SetPosition(int x, int y)
             {
-                sfWindow_SetPosition(This, x, y);
+                sfWindow_SetPosition(CPointer, x, y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -213,7 +213,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void SetSize(uint width, uint height)
             {
-                sfWindow_SetSize(This, width, height);
+                sfWindow_SetSize(CPointer, width, height);
             }
 
             ////////////////////////////////////////////////////////////
@@ -224,7 +224,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void SetTitle(string title)
             {
-                sfWindow_SetTitle(This, title);
+                sfWindow_SetTitle(CPointer, title);
             }
 
             ////////////////////////////////////////////////////////////
@@ -235,7 +235,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void Show(bool show)
             {
-                sfWindow_Show(This, show);
+                sfWindow_Show(CPointer, show);
             }
 
             ////////////////////////////////////////////////////////////
@@ -247,7 +247,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void EnableKeyRepeat(bool enable)
             {
-                sfWindow_EnableKeyRepeat(This, enable);
+                sfWindow_EnableKeyRepeat(CPointer, enable);
             }
 
             ////////////////////////////////////////////////////////////
@@ -264,7 +264,7 @@ namespace SFML
                 {
                     fixed (byte* PixelsPtr = pixels)
                     {
-                        sfWindow_SetIcon(This, width, height, PixelsPtr);
+                        sfWindow_SetIcon(CPointer, width, height, PixelsPtr);
                     }
                 }
             }
@@ -291,7 +291,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual bool SetActive(bool active)
             {
-                return sfWindow_SetActive(This, active);
+                return sfWindow_SetActive(CPointer, active);
             }
 
             ////////////////////////////////////////////////////////////
@@ -302,18 +302,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void SetFramerateLimit(uint limit)
             {
-                sfWindow_SetFramerateLimit(This, limit);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Get time elapsed since last frame
-            /// </summary>
-            /// <returns>Time elapsed, in milliseconds</returns>
-            ////////////////////////////////////////////////////////////
-            public virtual uint GetFrameTime()
-            {
-                return sfWindow_GetFrameTime(This);
+                sfWindow_SetFramerateLimit(CPointer, limit);
             }
 
             ////////////////////////////////////////////////////////////
@@ -325,7 +314,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void SetJoystickThreshold(float threshold)
             {
-                sfWindow_SetJoystickThreshold(This, threshold);
+                sfWindow_SetJoystickThreshold(CPointer, threshold);
             }
 
             ////////////////////////////////////////////////////////////
@@ -335,7 +324,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual IntPtr SystemHandle
             {
-                get {return sfWindow_GetSystemHandle(This);}
+                get {return sfWindow_GetSystemHandle(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -381,11 +370,11 @@ namespace SFML
             /// <summary>
             /// Constructor for derived classes
             /// </summary>
-            /// <param name="thisPtr">Pointer to the internal object</param>
+            /// <param name="cPointer">Pointer to the internal object in the C API</param>
             /// <param name="dummy">Internal hack :)</param>
             ////////////////////////////////////////////////////////////
-            protected Window(IntPtr thisPtr, int dummy) :
-                base(thisPtr)
+            protected Window(IntPtr cPointer, int dummy) :
+                base(cPointer)
             {
                 // TODO : find a cleaner way of separating this constructor from Window(IntPtr handle)
             }
@@ -399,7 +388,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected virtual bool PollEvent(out Event eventToFill)
             {
-                return sfWindow_PollEvent(This, out eventToFill);
+                return sfWindow_PollEvent(CPointer, out eventToFill);
             }
 
             ////////////////////////////////////////////////////////////
@@ -411,7 +400,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected virtual bool WaitEvent(out Event eventToFill)
             {
-                return sfWindow_WaitEvent(This, out eventToFill);
+                return sfWindow_WaitEvent(CPointer, out eventToFill);
             }
 
             ////////////////////////////////////////////////////////////
@@ -422,7 +411,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfWindow_Destroy(This);
+                sfWindow_Destroy(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -589,70 +578,70 @@ namespace SFML
             static extern IntPtr sfWindow_CreateFromHandle(IntPtr Handle, ref ContextSettings Params);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_Destroy(IntPtr This);
+            static extern void sfWindow_Destroy(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfWindow_IsOpened(IntPtr This);
+            static extern bool sfWindow_IsOpen(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_Close(IntPtr This);
+            static extern void sfWindow_Close(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfWindow_PollEvent(IntPtr This, out Event Evt);
+            static extern bool sfWindow_PollEvent(IntPtr CPointer, out Event Evt);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfWindow_WaitEvent(IntPtr This, out Event Evt);
+            static extern bool sfWindow_WaitEvent(IntPtr CPointer, out Event Evt);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_Display(IntPtr This);
+            static extern void sfWindow_Display(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfWindow_GetWidth(IntPtr This);
+            static extern uint sfWindow_GetWidth(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfWindow_GetHeight(IntPtr This);
+            static extern uint sfWindow_GetHeight(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern ContextSettings sfWindow_GetSettings(IntPtr This);
+            static extern ContextSettings sfWindow_GetSettings(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_EnableVerticalSync(IntPtr This, bool Enable);
+            static extern void sfWindow_EnableVerticalSync(IntPtr CPointer, bool Enable);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_ShowMouseCursor(IntPtr This, bool Show);
+            static extern void sfWindow_ShowMouseCursor(IntPtr CPointer, bool Show);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetPosition(IntPtr This, int X, int Y);
+            static extern void sfWindow_SetPosition(IntPtr CPointer, int X, int Y);
             
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetSize(IntPtr This, uint Width, uint Height);
+            static extern void sfWindow_SetSize(IntPtr CPointer, uint Width, uint Height);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetTitle(IntPtr This, string title);
+            static extern void sfWindow_SetTitle(IntPtr CPointer, string title);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_Show(IntPtr This, bool Show);
+            static extern void sfWindow_Show(IntPtr CPointer, bool Show);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_EnableKeyRepeat(IntPtr This, bool Enable);
+            static extern void sfWindow_EnableKeyRepeat(IntPtr CPointer, bool Enable);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern void sfWindow_SetIcon(IntPtr This, uint Width, uint Height, byte* Pixels);
+            unsafe static extern void sfWindow_SetIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfWindow_SetActive(IntPtr This, bool Active);
+            static extern bool sfWindow_SetActive(IntPtr CPointer, bool Active);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetFramerateLimit(IntPtr This, uint Limit);
+            static extern void sfWindow_SetFramerateLimit(IntPtr CPointer, uint Limit);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfWindow_GetFrameTime(IntPtr This);
+            static extern uint sfWindow_GetFrameTime(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetJoystickThreshold(IntPtr This, float Threshold);
+            static extern void sfWindow_SetJoystickThreshold(IntPtr CPointer, float Threshold);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfWindow_GetSystemHandle(IntPtr This);
+            static extern IntPtr sfWindow_GetSystemHandle(IntPtr CPointer);
             #endregion
         }
     }

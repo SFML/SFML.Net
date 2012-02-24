@@ -11,24 +11,6 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Structure describing a glyph (a visual character)
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Glyph
-        {
-            /// <summary>Offset to move horizontically to the next character</summary>
-            public int Advance;
-
-            /// <summary>Bounding rectangle of the glyph, in coordinates relative to the baseline</summary>
-            public IntRect Rectangle;
-
-            /// <summary>Texture coordinates of the glyph inside the font's image</summary>
-            public FloatRect TexCoords;
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
         /// Font is the low-level class for loading and
         /// manipulating character fonts. This class is meant to
         /// be used by String2D
@@ -46,7 +28,7 @@ namespace SFML
             public Font(string filename) :
                 base(sfFont_CreateFromFile(filename))
             {
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("font", filename);
             }
 
@@ -63,7 +45,7 @@ namespace SFML
                 myStream = new StreamAdaptor(stream);
                 SetThis(sfFont_CreateFromStream(myStream.InputStreamPtr));
 
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("font");
             }
 
@@ -74,7 +56,7 @@ namespace SFML
             /// <param name="copy">Font to copy</param>
             ////////////////////////////////////////////////////////////
             public Font(Font copy) :
-                base(sfFont_Copy(copy.This))
+                base(sfFont_Copy(copy.CPointer))
             {
             }
 
@@ -89,7 +71,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Glyph GetGlyph(uint codePoint, uint characterSize, bool bold)
             {
-                return sfFont_GetGlyph(This, codePoint, characterSize, bold);
+                return sfFont_GetGlyph(CPointer, codePoint, characterSize, bold);
             }
 
             ////////////////////////////////////////////////////////////
@@ -103,7 +85,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public int GetKerning(uint first, uint second, uint characterSize)
             {
-                return sfFont_GetKerning(This, first, second, characterSize);
+                return sfFont_GetKerning(CPointer, first, second, characterSize);
             }
 
             ////////////////////////////////////////////////////////////
@@ -115,7 +97,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public int GetLineSpacing(uint characterSize)
             {
-                return sfFont_GetLineSpacing(This, characterSize);
+                return sfFont_GetLineSpacing(CPointer, characterSize);
             }
 
             ////////////////////////////////////////////////////////////
@@ -127,7 +109,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Texture GetTexture(uint characterSize)
             {
-                myTextures[characterSize] = new Texture(sfFont_GetTexture(This, characterSize));
+                myTextures[characterSize] = new Texture(sfFont_GetTexture(CPointer, characterSize));
                 return myTextures[characterSize];
             }
 
@@ -171,7 +153,7 @@ namespace SFML
                     if (!disposing)
                         Context.Global.SetActive(true);
 
-                    sfFont_Destroy(This);
+                    sfFont_Destroy(CPointer);
 
                     if (disposing)
                     {
@@ -191,10 +173,10 @@ namespace SFML
             /// <summary>
             /// Internal constructor
             /// </summary>
-            /// <param name="thisPtr">Pointer to the object in C library</param>
+            /// <param name="cPointer">Pointer to the object in C library</param>
             ////////////////////////////////////////////////////////////
-            private Font(IntPtr thisPtr) :
-                base(thisPtr)
+            private Font(IntPtr cPointer) :
+                base(cPointer)
             {
             }
 
@@ -213,19 +195,19 @@ namespace SFML
             static extern IntPtr sfFont_Copy(IntPtr Font);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfFont_Destroy(IntPtr This);
+            static extern void sfFont_Destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Glyph sfFont_GetGlyph(IntPtr This, uint codePoint, uint characterSize, bool bold);
+            static extern Glyph sfFont_GetGlyph(IntPtr CPointer, uint codePoint, uint characterSize, bool bold);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern int sfFont_GetKerning(IntPtr This, uint first, uint second, uint characterSize);
+            static extern int sfFont_GetKerning(IntPtr CPointer, uint first, uint second, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern int sfFont_GetLineSpacing(IntPtr This, uint characterSize);
+            static extern int sfFont_GetLineSpacing(IntPtr CPointer, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfFont_GetTexture(IntPtr This, uint characterSize);
+            static extern IntPtr sfFont_GetTexture(IntPtr CPointer, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_GetDefaultFont();

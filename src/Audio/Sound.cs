@@ -60,7 +60,7 @@ namespace SFML
             /// <param name="copy">Sound to copy</param>
             ////////////////////////////////////////////////////////////
             public Sound(Sound copy) :
-                base(sfSound_Copy(copy.This))
+                base(sfSound_Copy(copy.CPointer))
             {
                 SoundBuffer = copy.SoundBuffer;
             }
@@ -72,7 +72,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Play()
             {
-                sfSound_Play(This);
+                sfSound_Play(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Pause()
             {
-                sfSound_Pause(This);
+                sfSound_Pause(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Stop()
             {
-                sfSound_Stop(This);
+                sfSound_Stop(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ namespace SFML
             public SoundBuffer SoundBuffer
             {
                 get {return myBuffer;}
-                set {myBuffer = value; sfSound_SetBuffer(This, value != null ? value.This : IntPtr.Zero);}
+                set {myBuffer = value; sfSound_SetBuffer(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public SoundStatus Status
             {
-                get {return sfSound_GetStatus(This);}
+                get {return sfSound_GetStatus(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -123,8 +123,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Loop
             {
-                get {return sfSound_GetLoop(This);}
-                set {sfSound_SetLoop(This, value);}
+                get {return sfSound_GetLoop(CPointer);}
+                set {sfSound_SetLoop(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -134,8 +134,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Pitch
             {
-                get {return sfSound_GetPitch(This);}
-                set {sfSound_SetPitch(This, value);}
+                get {return sfSound_GetPitch(CPointer);}
+                set {sfSound_SetPitch(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -145,8 +145,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Volume
             {
-                get {return sfSound_GetVolume(This);}
-                set {sfSound_SetVolume(This, value);}
+                get {return sfSound_GetVolume(CPointer);}
+                set {sfSound_SetVolume(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -154,10 +154,18 @@ namespace SFML
             /// Current playing position of the sound, in milliseconds
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint PlayingOffset
+            public TimeSpan PlayingOffset
             {
-                get {return sfSound_GetPlayingOffset(This);}
-                set {sfSound_SetPlayingOffset(This, value);}
+                get
+                {
+                    long microseconds = sfSound_GetPlayingOffset(CPointer);
+                    return TimeSpan.FromTicks(microseconds * TimeSpan.TicksPerMillisecond / 1000);
+                }
+                set
+                {
+                    long microseconds = value.Ticks / (TimeSpan.TicksPerMillisecond / 1000);
+                    sfSound_SetPlayingOffset(CPointer, microseconds);
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -167,8 +175,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector3f Position
             {
-                get {Vector3f v; sfSound_GetPosition(This, out v.X, out v.Y, out v.Z); return v;}
-                set {sfSound_SetPosition(This, value.X, value.Y, value.Z);}
+                get {Vector3f v; sfSound_GetPosition(CPointer, out v.X, out v.Y, out v.Z); return v;}
+                set {sfSound_SetPosition(CPointer, value.X, value.Y, value.Z);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -180,8 +188,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool RelativeToListener
             {
-                get {return sfSound_IsRelativeToListener(This);}
-                set {sfSound_SetRelativeToListener(This, value);}
+                get {return sfSound_IsRelativeToListener(CPointer);}
+                set {sfSound_SetRelativeToListener(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -193,8 +201,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float MinDistance
             {
-                get {return sfSound_GetMinDistance(This);}
-                set {sfSound_SetMinDistance(This, value);}
+                get {return sfSound_GetMinDistance(CPointer);}
+                set {sfSound_SetMinDistance(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -206,8 +214,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Attenuation
             {
-                get {return sfSound_GetAttenuation(This);}
-                set {sfSound_SetAttenuation(This, value);}
+                get {return sfSound_GetAttenuation(CPointer);}
+                set {sfSound_SetAttenuation(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -239,7 +247,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfSound_Destroy(This);
+                sfSound_Destroy(CPointer);
             }
 
             private SoundBuffer myBuffer;
@@ -297,7 +305,7 @@ namespace SFML
             static extern void sfSound_SetAttenuation(IntPtr Sound, float Attenuation);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetPlayingOffset(IntPtr Sound, uint TimeOffset);
+            static extern void sfSound_SetPlayingOffset(IntPtr Sound, long TimeOffset);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern float sfSound_GetPitch(IntPtr Sound);
@@ -318,7 +326,8 @@ namespace SFML
             static extern float sfSound_GetAttenuation(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSound_GetPlayingOffset(IntPtr Sound);
+            static extern long sfSound_GetPlayingOffset(IntPtr Sound);
+
             #endregion
         }
     }

@@ -15,11 +15,11 @@ namespace SFML
         /// <summary>
         /// Construct the object from a pointer to the C library object
         /// </summary>
-        /// <param name="thisPtr">Internal pointer to the object in the C libraries</param>
+        /// <param name="cPointer">Internal pointer to the object in the C libraries</param>
         ////////////////////////////////////////////////////////////
-        public ObjectBase(IntPtr thisPtr)
+        public ObjectBase(IntPtr cPointer)
         {
-            myThis = thisPtr;
+            myCPointer = cPointer;
         }
 
         ////////////////////////////////////////////////////////////
@@ -38,9 +38,9 @@ namespace SFML
         /// For internal use only
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public IntPtr This
+        public IntPtr CPointer
         {
-            get {return myThis;}
+            get { return myCPointer; }
         }
 
         ////////////////////////////////////////////////////////////
@@ -62,10 +62,10 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         private void Dispose(bool disposing)
         {
-            if (myThis != IntPtr.Zero)
+            if (myCPointer != IntPtr.Zero)
             {
                 Destroy(disposing);
-                myThis = IntPtr.Zero;
+                myCPointer = IntPtr.Zero;
             }
         }
 
@@ -81,13 +81,13 @@ namespace SFML
         /// <summary>
         /// Set the pointer to the internal object. For internal use only
         /// </summary>
-        /// <param name="thisPtr">Pointer to the internal object in C library</param>
+        /// <param name="cPointer">Pointer to the internal object in C library</param>
         ////////////////////////////////////////////////////////////
-        protected void SetThis(IntPtr thisPtr)
+        protected void SetThis(IntPtr cPointer)
         {
-            myThis = thisPtr;
+            myCPointer = cPointer;
         }
 
-        private IntPtr myThis = IntPtr.Zero;
+        private IntPtr myCPointer = IntPtr.Zero;
     }
 }

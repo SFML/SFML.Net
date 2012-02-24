@@ -22,10 +22,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public SoundBuffer SoundBuffer
             {
-                get
-                {
-                    return mySoundBuffer;
-                }
+                get {return mySoundBuffer;}
             }
 
             ////////////////////////////////////////////////////////////

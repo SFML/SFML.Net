@@ -78,7 +78,7 @@ namespace SFML
             public static Vector2i GetPosition(Window relativeTo)
             {
                 Vector2i position;
-                sfMouse_GetPosition(out position.X, out position.Y, relativeTo.This);
+                sfMouse_GetPosition(out position.X, out position.Y, relativeTo.CPointer);
                 return position;
             }
 
@@ -106,7 +106,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static void SetPosition(Vector2i position, Window relativeTo)
             {
-                sfMouse_SetPosition(position.X, position.Y, relativeTo.This);
+                sfMouse_SetPosition(position.X, position.Y, relativeTo.CPointer);
             }
 
             #region Imports

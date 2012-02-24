@@ -15,6 +15,7 @@ namespace opengl
         {
             // Create main window
             RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML.Net OpenGL", Styles.Default, new ContextSettings(32, 0));
+            window.EnableVerticalSync(true);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
@@ -57,10 +58,10 @@ namespace opengl
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
             Gl.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-            float time = 0.0F;
+            int startTime = Environment.TickCount;
 
             // Start game loop
-            while (window.IsOpened())
+            while (window.IsOpen())
             {
                 // Process events
                 window.DispatchEvents();
@@ -69,9 +70,9 @@ namespace opengl
                 window.Clear();
 
                 // Draw background
-                window.SaveGLStates();
+                window.PushGLStates();
                 window.Draw(background);
-                window.RestoreGLStates();
+                window.PopGLStates();
 
                 // Activate the window before using OpenGL commands.
                 // This is useless here because we have only one window which is
@@ -86,7 +87,7 @@ namespace opengl
                 float y = -Mouse.GetPosition(window).Y * 200.0F / window.Height + 100.0F;
 
                 // Apply some transformations
-                time += window.GetFrameTime() / 1000.0F;
+                float time = (Environment.TickCount - startTime) / 1000.0F;
                 Gl.glMatrixMode(Gl.GL_MODELVIEW);
                 Gl.glLoadIdentity();
                 Gl.glTranslatef(x, y, -100.0F);
@@ -131,9 +132,9 @@ namespace opengl
                 Gl.glEnd();
 
                 // Draw some text on top of our OpenGL object
-                window.SaveGLStates();
+                window.PushGLStates();
                 window.Draw(text);
-                window.RestoreGLStates();
+                window.PopGLStates();
 
                 // Finally, display the rendered frame on screen
                 window.Display();

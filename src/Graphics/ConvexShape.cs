@@ -1,6 +1,6 @@
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
+using System.Security;
 using SFML.Window;
 
 namespace SFML
@@ -9,186 +9,141 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// This class defines a graphical 2D text, that can be drawn on screen
+        /// Specialized shape representing a convex polygon
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public class Text : Transformable, Drawable
+        public class ConvexShape : Transformable, Drawable
         {
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Enumerate the string drawing styles
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            [Flags]
-            public enum Styles
-            {
-                /// <summary>Regular characters, no style</summary>
-                Regular = 0,
-
-                /// <summary> Characters are bold</summary>
-                Bold = 1 << 0,
-
-                /// <summary>Characters are in italic</summary>
-                Italic = 1 << 1,
-
-                /// <summary>Characters are underlined</summary>
-                Underlined = 1 << 2
-            }
-
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Default constructor
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Text() :
-                this("")
+            public ConvexShape() :
+                base(sfConvexShape_Create())
             {
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from a string
+            /// Construct the shape with an initial point count
             /// </summary>
-            /// <param name="str">String to display</param>
+            /// <param name="pointCount">Number of points of the shape</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str) :
-                this(str, Font.DefaultFont)
+            public ConvexShape(uint pointCount) :
+                base(sfConvexShape_Create())
             {
+                PointCount = PointCount;
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from a string and a font
+            /// Construct the shape from another shape
             /// </summary>
-            /// <param name="str">String to display</param>
-            /// <param name="font">Font to use</param>
+            /// <param name="copy">Shape to copy</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str, Font font) :
-                this(str, font, 30)
+            public ConvexShape(ConvexShape copy) :
+                base(sfConvexShape_Copy(copy.CPointer))
             {
+                Texture = copy.Texture;
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from a string, font and size
+            /// Source texture of the shape
             /// </summary>
-            /// <param name="str">String to display</param>
-            /// <param name="font">Font to use</param>
-            /// <param name="characterSize">Base characters size</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str, Font font, uint characterSize) :
-                base(sfText_Create())
+            public Texture Texture
             {
-                DisplayedString = str;
-                Font = font;
-                CharacterSize = characterSize;
+                get { return myTexture; }
+                set { myTexture = value; sfConvexShape_SetTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the text from another text
+            /// Sub-rectangle of the texture that the shape will display
             /// </summary>
-            /// <param name="copy">Text to copy</param>
             ////////////////////////////////////////////////////////////
-            public Text(Text copy) :
-                base(sfText_Copy(copy.CPointer))
+            public IntRect TextureRect
             {
-                Font = copy.Font;
+                get { return sfConvexShape_GetTextureRect(CPointer); }
+                set { sfConvexShape_SetTextureRect(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Global color of the object
+            /// Fill color of the shape
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Color Color
+            public Color FillColor
             {
-                get { return sfText_GetColor(CPointer); }
-                set { sfText_SetColor(CPointer, value); }
+                get { return sfConvexShape_GetFillColor(CPointer); }
+                set { sfConvexShape_SetFillColor(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// String which is displayed
+            /// Outline color of the shape
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public string DisplayedString
+            public Color OutlineColor
             {
-                get
-                {
-                    // Get the number of characters
-                    // This is probably not the most optimized way; if anyone has a better solution...
-                    int length = Marshal.PtrToStringAnsi(sfText_GetString(CPointer)).Length;
-
-                    // Copy the characters
-                    byte[] characters = new byte[length * 4];
-                    Marshal.Copy(sfText_GetUnicodeString(CPointer), characters, 0, characters.Length);
-
-                    // Convert from UTF-32 to String (UTF-16)
-                    return System.Text.Encoding.UTF32.GetString(characters);
-                }
-
-                set
-                {
-                    // Convert from String (UTF-16) to UTF-32
-                    int[] characters = new int[value.Length];
-                    for (int i = 0; i < value.Length; ++i)
-                        characters[i] = Char.ConvertToUtf32(value, i);
-
-                    // Transform to raw and pass to the C API
-                    GCHandle handle = GCHandle.Alloc(characters, GCHandleType.Pinned);
-                    sfText_SetUnicodeString(CPointer, handle.AddrOfPinnedObject());
-                    handle.Free();
-                }
+                get { return sfConvexShape_GetOutlineColor(CPointer); }
+                set { sfConvexShape_SetOutlineColor(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Font used to display the text
+            /// Thickness of the shape's outline
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public Font Font
+            public float OutlineThickness
             {
-                get {return myFont;}
-                set {myFont = value; sfText_SetFont(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
+                get { return sfConvexShape_GetOutlineThickness(CPointer); }
+                set { sfConvexShape_SetOutlineThickness(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Base size of characters
+            /// The total number of points of the shape
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint CharacterSize
+            public uint PointCount
             {
-                get {return sfText_GetCharacterSize(CPointer);}
-                set {sfText_SetCharacterSize(CPointer, value);}
+                get { return sfConvexShape_GetPointCount(CPointer); }
+                set { sfConvexShape_SetPointCount(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Style of the text (see Styles enum)
+            /// Get a point of the shape.
+            ///
+            /// The result is undefined if index is out of the valid range.
             /// </summary>
+            /// <param name="index">Index of the point to get, in range [0 .. PointCount - 1]</param>
+            /// <returns>Index-th point of the shape</returns>
             ////////////////////////////////////////////////////////////
-            public Styles Style
+            public Vector2f GetPoint(uint index)
             {
-                get {return sfText_GetStyle(CPointer);}
-                set {sfText_SetStyle(CPointer, value);}
+                return sfConvexShape_GetPoint(CPointer, index);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Return the visual position of the Index-th character of the text,
-            /// in coordinates relative to the text
-            /// (note : translation, origin, rotation and scale are not applied)
+            /// Set the position of a point.
+            ///
+            /// Don't forget that the polygon must remain convex, and
+            /// the points need to stay ordered!
+            /// PointCount must be set first in order to set the total
+            /// number of points. The result is undefined if index is out
+            /// of the valid range.
             /// </summary>
-            /// <param name="index">Index of the character</param>
-            /// <returns>Position of the Index-th character (end of text if Index is out of range)</returns>
+            /// <param name="index">Index of the point to change, in range [0 .. PointCount - 1]</param>
+            /// <param name="point">New position of the point</param>
             ////////////////////////////////////////////////////////////
-            public Vector2f FindCharacterPos(uint index)
+            public void SetPoint(uint index, Vector2f point)
             {
-                Vector2f Pos;
-                sfText_FindCharacterPos(CPointer, index, out Pos.X, out Pos.Y);
-                return Pos;
+                sfConvexShape_SetPoint(CPointer, index, point);
             }
 
             ////////////////////////////////////////////////////////////
@@ -205,7 +160,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             FloatRect GetLocalBounds()
             {
-                return sfText_GetLocalBounds(CPointer);
+                return sfConvexShape_GetLocalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -222,23 +177,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             FloatRect GetGlobalBounds()
             {
-                return sfText_GetGlobalBounds(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Provide a string describing the object
-            /// </summary>
-            /// <returns>String description of the object</returns>
-            ////////////////////////////////////////////////////////////
-            public override string ToString()
-            {
-                return "[Text]" +
-                       " Color(" + Color + ")" +
-                       " String(" + DisplayedString + ")" +
-                       " Font(" + Font + ")" +
-                       " CharacterSize(" + CharacterSize + ")" +
-                       " Style(" + Style + ")";
+                return sfConvexShape_GetGlobalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -259,11 +198,11 @@ namespace SFML
 
                 if (target is RenderWindow)
                 {
-                    sfRenderWindow_DrawText(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderWindow_DrawConvexShape(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
                 }
                 else if (target is RenderTexture)
                 {
-                    sfRenderWindow_DrawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderTexture_DrawConvexShape(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
                 }
             }
 
@@ -275,69 +214,72 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfText_Destroy(CPointer);
+                sfConvexShape_Destroy(CPointer);
             }
 
-            private Font myFont = Font.DefaultFont;
+            private Texture myTexture = null;
 
             #region Imports
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_Create();
+            static extern IntPtr sfConvexShape_Create();
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_Copy(IntPtr Text);
+            static extern IntPtr sfConvexShape_Copy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_Destroy(IntPtr CPointer);
+            static extern void sfConvexShape_Destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetColor(IntPtr CPointer, Color Color);
+            static extern void sfConvexShape_SetTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Color sfText_GetColor(IntPtr CPointer);
+            static extern void sfConvexShape_SetTextureRect(IntPtr CPointer, IntRect Rect);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_DrawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+            static extern IntRect sfConvexShape_GetTextureRect(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderTexture_DrawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+            static extern void sfConvexShape_SetFillColor(IntPtr CPointer, Color Color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetUnicodeString(IntPtr CPointer, IntPtr Text);
+            static extern Color sfConvexShape_GetFillColor(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetFont(IntPtr CPointer, IntPtr Font);
+            static extern void sfConvexShape_SetOutlineColor(IntPtr CPointer, Color Color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetCharacterSize(IntPtr CPointer, uint Size);
+            static extern Color sfConvexShape_GetOutlineColor(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetStyle(IntPtr CPointer, Styles Style);
+            static extern void sfConvexShape_SetOutlineThickness(IntPtr CPointer, float Thickness);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_GetString(IntPtr CPointer);
+            static extern float sfConvexShape_GetOutlineThickness(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_GetUnicodeString(IntPtr CPointer);
+            static extern void sfConvexShape_SetPointCount(IntPtr CPointer, uint PointCount);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfText_GetCharacterSize(IntPtr CPointer);
+            static extern uint sfConvexShape_GetPointCount(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Styles sfText_GetStyle(IntPtr CPointer);
+            static extern void sfConvexShape_SetPoint(IntPtr CPointer, uint Index, Vector2f Point);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetRect(IntPtr CPointer);
+            static extern Vector2f sfConvexShape_GetPoint(IntPtr CPointer, uint Index);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_FindCharacterPos(IntPtr CPointer, uint Index, out float X, out float Y);
+            static extern FloatRect sfConvexShape_GetLocalBounds(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetLocalBounds(IntPtr CPointer);
+            static extern FloatRect sfConvexShape_GetGlobalBounds(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetGlobalBounds(IntPtr CPointer);
+            static extern void sfRenderWindow_DrawConvexShape(IntPtr CPointer, IntPtr Shape, ref RenderStates.MarshalData states);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderTexture_DrawConvexShape(IntPtr CPointer, IntPtr Shape, ref RenderStates.MarshalData states);
 
             #endregion
         }

@@ -1,6 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
-using SFML.Window;
 
 namespace SFML
 {
@@ -8,123 +6,23 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Enumerate the blending modes available for drawable objects
+        /// Interface for every object that can be drawn to a render window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public enum BlendMode
-        {
-            /// <summary>Pixel = Src * a + Dest * (1 - a)</summary>
-            Alpha,
-
-            /// <summary>Pixel = Src + Dest</summary>
-            Add,
-
-            /// <summary>Pixel = Src * Dest</summary>
-            Multiply,
-
-            /// <summary>No blending</summary>
-            None
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Abstract base class for every object that can be drawn
-        /// into a render window
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        public abstract class Drawable : ObjectBase
+        public interface Drawable
         {
             ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Position of the object on screen
-            /// </summary>
+            /// <summmary>
+            /// Draw the object to a render target
+            ///
+            /// This is a pure virtual function that has to be implemented
+            /// by the derived class to define how the drawable should be
+            /// drawn.
+            /// </summmary>
+            /// <param name="target">Render target to draw to</param>
+            /// <param name="states">Current render states</param>
             ////////////////////////////////////////////////////////////
-            public abstract Vector2f Position { get; set; }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Rotation of the object, defined in degrees
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public abstract float Rotation {get; set;}
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Vertical and horizontal scale of the object
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public abstract Vector2f Scale { get; set; }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Origin of the transformation of the object
-            /// (center of translation, rotation and scale)
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public abstract Vector2f Origin { get; set; }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Global color of the object
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public abstract Color Color {get; set;}
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Blending mode of the object
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public abstract BlendMode BlendMode {get; set;}
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Transform a point from global coordinates into local coordinates
-            /// (ie it applies the inverse of object's origin, translation, rotation and scale to the point)
-            /// </summary>
-            /// <param name="point">Point to transform</param>
-            /// <returns>Transformed point</returns>
-            ////////////////////////////////////////////////////////////
-            public abstract Vector2f TransformToLocal(Vector2f point);
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Transform a point from local coordinates into global coordinates
-            /// (ie it applies the object's origin, translation, rotation and scale to the point)
-            /// </summary>
-            /// <param name="point">Point to transform</param>
-            /// <returns>Transformed point</returns>
-            ////////////////////////////////////////////////////////////
-            public abstract Vector2f TransformToGlobal(Vector2f point);
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Render the object into the given render window
-            /// </summary>
-            /// <param name="target">Target render window</param>
-            /// <param name="shader">Shader to apply</param>
-            ////////////////////////////////////////////////////////////
-            internal abstract void Render(RenderWindow target, Shader shader);
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Render the object into the given render texture
-            /// </summary>
-            /// <param name="target">Target render texture</param>
-            /// <param name="shader">Shader to apply</param>
-            ////////////////////////////////////////////////////////////
-            internal abstract void Render(RenderTexture target, Shader shader);
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Internal constructor, for derived classes
-            /// </summary>
-            /// <param name="thisPtr">Pointer to the object in C library</param>
-            ////////////////////////////////////////////////////////////
-            protected Drawable(IntPtr thisPtr) :
-                base(thisPtr)
-            {
-            }
+            void Draw(RenderTarget target, RenderStates states);
         }
     }
 }

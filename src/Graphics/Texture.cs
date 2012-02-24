@@ -27,7 +27,7 @@ namespace SFML
             public Texture(uint width, uint height) :
                 base(sfTexture_Create(width, height))
             {
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("texture");
             }
 
@@ -54,7 +54,7 @@ namespace SFML
             public Texture(string filename, IntRect area) :
                 base(sfTexture_CreateFromFile(filename, ref area))
             {
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("texture", filename);
             }
 
@@ -86,7 +86,7 @@ namespace SFML
                     SetThis(sfTexture_CreateFromStream(adaptor.InputStreamPtr, ref area));
                 }
 
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("texture");
             }
 
@@ -111,9 +111,9 @@ namespace SFML
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
             public Texture(Image image, IntRect area) :
-                base(sfTexture_CreateFromImage(image.This, ref area))
+                base(sfTexture_CreateFromImage(image.CPointer, ref area))
             {
-                if (This == IntPtr.Zero)
+                if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("texture");
             }
 
@@ -124,7 +124,7 @@ namespace SFML
             /// <param name="copy">Texture to copy</param>
             ////////////////////////////////////////////////////////////
             public Texture(Texture copy) :
-                base(sfTexture_Copy(copy.This))
+                base(sfTexture_Copy(copy.CPointer))
             {
             }
 
@@ -136,7 +136,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Image CopyToImage()
             {
-                return new Image(sfTexture_CopyToImage(This));
+                return new Image(sfTexture_CopyToImage(CPointer));
             }
 
             ////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ namespace SFML
                 {
                     fixed (byte* ptr = pixels)
                     {
-                        sfTexture_UpdateFromPixels(This, ptr, width, height, x, y);
+                        sfTexture_UpdateFromPixels(CPointer, ptr, width, height, x, y);
                     }
                 }
             }
@@ -192,7 +192,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Update(Image image, uint x, uint y)
             {
-                sfTexture_UpdateFromImage(This, image.This, x, y);
+                sfTexture_UpdateFromImage(CPointer, image.CPointer, x, y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -216,7 +216,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Update(SFML.Window.Window window, uint x, uint y)
             {
-                sfTexture_UpdateFromWindow(This, window.This, x, y);
+                sfTexture_UpdateFromWindow(CPointer, window.CPointer, x, y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -240,7 +240,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Update(RenderWindow window, uint x, uint y)
             {
-                sfTexture_UpdateFromRenderWindow(This, window.This, x, y);
+                sfTexture_UpdateFromRenderWindow(CPointer, window.CPointer, x, y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -250,7 +250,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Bind()
             {
-                sfTexture_Bind(This);
+                sfTexture_Bind(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -260,8 +260,19 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Smooth
             {
-                get {return sfTexture_IsSmooth(This);}
-                set {sfTexture_SetSmooth(This, value);}
+                get {return sfTexture_IsSmooth(CPointer);}
+                set {sfTexture_SetSmooth(CPointer, value);}
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Control the repeat mode
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public bool Repeated
+            {
+                get { return sfTexture_IsRepeated(CPointer); }
+                set { sfTexture_SetRepeated(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -271,7 +282,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint Width
             {
-                get {return sfTexture_GetWidth(This);}
+                get {return sfTexture_GetWidth(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -281,19 +292,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint Height
             {
-                get {return sfTexture_GetHeight(This);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Convert a rectangle of pixels into texture coordinates
-            /// </summary>
-            /// <param name="rectangle">Rectangle to convert</param>
-            /// <returns>Texture coordinates corresponding to the rectangle</returns>
-            ////////////////////////////////////////////////////////////
-            public FloatRect GetTexCoords(IntRect rectangle)
-            {
-                return sfTexture_GetTexCoords(This, rectangle);
+                get {return sfTexture_GetHeight(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -317,17 +316,18 @@ namespace SFML
                 return "[Texture]" +
                        " Width(" + Width + ")" +
                        " Height(" + Height + ")" +
-                       " Smooth(" + Smooth + ")";
+                       " Smooth(" + Smooth + ")" +
+                       " Repeated(" + Repeated + ")";
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Internal constructor
             /// </summary>
-            /// <param name="thisPtr">Pointer to the object in C library</param>
+            /// <param name="cPointer">Pointer to the object in C library</param>
             ////////////////////////////////////////////////////////////
-            internal Texture(IntPtr thisPtr) :
-                base(thisPtr)
+            internal Texture(IntPtr cPointer) :
+                base(cPointer)
             {
                 myExternal = true;
             }
@@ -345,7 +345,7 @@ namespace SFML
                     if (!disposing)
                         Context.Global.SetActive(true);
 
-                    sfTexture_Destroy(This);
+                    sfTexture_Destroy(CPointer);
 
                     if (!disposing)
                         Context.Global.SetActive(false);
@@ -402,6 +402,12 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfTexture_IsSmooth(IntPtr texture);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfTexture_SetRepeated(IntPtr texture, bool repeated);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfTexture_IsRepeated(IntPtr texture);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern FloatRect sfTexture_GetTexCoords(IntPtr texture, IntRect rectangle);
