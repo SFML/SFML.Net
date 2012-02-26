@@ -21,11 +21,11 @@
     <FrameworkVersion>.NET 2.0.50727</FrameworkVersion>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\..\src\Audio\sfml-audio.csproj" />
-      <DocumentationSource sourceFile="..\..\src\Graphics\sfml-graphics.csproj" />
-      <DocumentationSource sourceFile="..\..\src\Window\sfml-window.csproj" />
+      <DocumentationSource sourceFile="..\src\Audio\sfml-audio.csproj" />
+      <DocumentationSource sourceFile="..\src\Graphics\sfml-graphics.csproj" />
+      <DocumentationSource sourceFile="..\src\Window\sfml-window.csproj" />
     </DocumentationSources>
-    <SandcastlePath>..\..\..\..\programmes\sandcastle\</SandcastlePath>
+    <SandcastlePath>..\..\..\programmes\sandcastle\</SandcastlePath>
     <BuildLogFile />
     <HtmlHelp1xCompilerPath />
     <HtmlHelp2xCompilerPath />
