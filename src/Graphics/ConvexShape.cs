@@ -158,7 +158,7 @@ namespace SFML
             /// </summary>
             /// <returns>Local bounding rectangle of the entity</returns>
             ////////////////////////////////////////////////////////////
-            FloatRect GetLocalBounds()
+            public FloatRect GetLocalBounds()
             {
                 return sfConvexShape_GetLocalBounds(CPointer);
             }
@@ -175,7 +175,7 @@ namespace SFML
             /// </summary>
             /// <returns>Global bounding rectangle of the entity</returns>
             ////////////////////////////////////////////////////////////
-            FloatRect GetGlobalBounds()
+            public FloatRect GetGlobalBounds()
             {
                 return sfConvexShape_GetGlobalBounds(CPointer);
             }
