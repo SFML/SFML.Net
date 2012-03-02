@@ -60,6 +60,11 @@ namespace SFML
             public Sprite(Sprite copy) :
                 base(sfSprite_Copy(copy.CPointer))
             {
+                Origin = copy.Origin;
+                Position = copy.Position;
+                Rotation = copy.Rotation;
+                Scale = copy.Scale;
+
                 Texture = copy.Texture;
             }
 

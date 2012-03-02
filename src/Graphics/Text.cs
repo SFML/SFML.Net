@@ -93,6 +93,11 @@ namespace SFML
             public Text(Text copy) :
                 base(sfText_Copy(copy.CPointer))
             {
+                Origin = copy.Origin;
+                Position = copy.Position;
+                Rotation = copy.Rotation;
+                Scale = copy.Scale;
+
                 Font = copy.Font;
             }
 
