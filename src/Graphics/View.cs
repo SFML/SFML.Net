@@ -46,8 +46,8 @@ namespace SFML
             public View(Vector2f center, Vector2f size) :
                 base(sfView_Create())
             {
-                this.Center = center;
-                this.Size   = size;
+                Center = center;
+                Size = size;
             }
 
             ////////////////////////////////////////////////////////////
@@ -68,8 +68,16 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f Center
             {
-                get {return new Vector2f(sfView_GetCenterX(CPointer), sfView_GetCenterY(CPointer));}
-                set {sfView_SetCenter(CPointer, value.X, value.Y);}
+                get
+                {
+                    Vector2f center = new Vector2f();
+                    sfView_GetCenter(CPointer, out center.X, out center.Y);
+                    return center;
+                }
+                set
+                {
+                    sfView_SetCenter(CPointer, value.X, value.Y);
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -79,8 +87,16 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f Size
             {
-                get {return new Vector2f(sfView_GetWidth(CPointer), sfView_GetHeight(CPointer));}
-                set {sfView_SetSize(CPointer, value.X, value.Y);}
+                get
+                {
+                    Vector2f size = new Vector2f();
+                    sfView_GetSize(CPointer, out size.X, out size.Y);
+                    return size;
+                }
+                set
+                {
+                    sfView_SetSize(CPointer, value.X, value.Y);
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -190,6 +206,7 @@ namespace SFML
             }
 
             private bool myExternal = false;
+
             #region Imports
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfView_Create();
@@ -219,16 +236,10 @@ namespace SFML
             static extern void sfView_Reset(IntPtr View, FloatRect Rectangle);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfView_GetCenterX(IntPtr View);
+            static extern float sfView_GetCenter(IntPtr View, out float X, out float Y);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfView_GetCenterY(IntPtr View);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfView_GetWidth(IntPtr View);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfView_GetHeight(IntPtr View);
+            static extern float sfView_GetSize(IntPtr View, out float Width, out float Height);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern float sfView_GetRotation(IntPtr View);
