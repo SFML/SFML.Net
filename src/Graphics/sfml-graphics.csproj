@@ -84,6 +84,7 @@
     <Compile Include="RenderTexture.cs" />
     <Compile Include="RenderWindow.cs" />
     <Compile Include="Shader.cs" />
+    <Compile Include="Shape.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="Texture.cs" />
