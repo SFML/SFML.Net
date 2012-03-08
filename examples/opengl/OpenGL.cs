@@ -15,7 +15,7 @@ namespace opengl
         {
             // Create main window
             RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML.Net OpenGL", Styles.Default, new ContextSettings(32, 0));
-            window.EnableVerticalSync(true);
+            window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
@@ -83,8 +83,8 @@ namespace opengl
                 Gl.glClear(Gl.GL_DEPTH_BUFFER_BIT);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
-                float x =  Mouse.GetPosition(window).X * 200.0F / window.Width  - 100.0F;
-                float y = -Mouse.GetPosition(window).Y * 200.0F / window.Height + 100.0F;
+                float x =  Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F;
+                float y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F;
 
                 // Apply some transformations
                 float time = (Environment.TickCount - startTime) / 1000.0F;

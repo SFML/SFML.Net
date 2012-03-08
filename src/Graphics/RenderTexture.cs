@@ -48,26 +48,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Width of the rendering region of the texture
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public uint Width
-            {
-                get {return sfRenderTexture_GetWidth(CPointer);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Height of the rendering region of the texture
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public uint Height
-            {
-                get {return sfRenderTexture_GetHeight(CPointer);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Activate of deactivate the render texture as the current target
             /// for rendering
             /// </summary>
@@ -77,6 +57,16 @@ namespace SFML
             public bool SetActive(bool active)
             {
                 return sfRenderTexture_SetActive(CPointer, active);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Size of the rendering region of the render texture
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public Vector2u Size
+            {
+                get { return sfRenderTexture_GetSize(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -348,8 +338,7 @@ namespace SFML
             public override string ToString()
             {
                 return "[RenderTexture]" +
-                       " Width(" + Width + ")" +
-                       " Height(" + Height + ")" +
+                       " Size(" + Size + ")" +
                        " Texture(" + Texture + ")" +
                        " DefaultView(" + DefaultView + ")" +
                        " View(" + GetView() + ")";
@@ -392,10 +381,7 @@ namespace SFML
             static extern void sfRenderTexture_Clear(IntPtr CPointer, Color ClearColor);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfRenderTexture_GetWidth(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfRenderTexture_GetHeight(IntPtr CPointer);
+            static extern Vector2u sfRenderTexture_GetSize(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfRenderTexture_SetActive(IntPtr CPointer, bool Active);

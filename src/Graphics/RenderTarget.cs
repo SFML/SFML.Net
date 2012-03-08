@@ -16,21 +16,14 @@ namespace SFML
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Width of the rendering region of the window
+            /// Size of the rendering region of the target
             /// </summary>
             ////////////////////////////////////////////////////////////
-            uint Width {get;}
+            Vector2u Size { get; }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Height of the rendering region of the window
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            uint Height {get;}
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Default view of the window
+            /// Default view of the target
             /// </summary>
             ////////////////////////////////////////////////////////////
             View DefaultView {get;}
@@ -85,14 +78,14 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Clear the entire window with black color
+            /// Clear the entire target with black color
             /// </summary>
             ////////////////////////////////////////////////////////////
             void Clear();
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Clear the entire window with a single color
+            /// Clear the entire target with a single color
             /// </summary>
             /// <param name="color">Color to use to clear the window</param>
             ////////////////////////////////////////////////////////////

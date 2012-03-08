@@ -248,7 +248,7 @@ namespace shader
         {
             // Create the main window
             RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML.Net Shader");
-            window.EnableVerticalSync(true);
+            window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
@@ -292,8 +292,8 @@ namespace shader
 
                 // Update the current example
                 float time = (Environment.TickCount - startTime) / 1000.0F;
-                float x = (float)Mouse.GetPosition(window).X / window.Width;
-                float y = (float)Mouse.GetPosition(window).Y / window.Height;
+                float x = (float)Mouse.GetPosition(window).X / window.Size.X;
+                float y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
                 effects[current].Update(time, x, y);
 
                 // Clear the window

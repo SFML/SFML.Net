@@ -141,26 +141,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Width of the rendering region of the window
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public virtual uint Width
-            {
-                get {return sfWindow_GetWidth(CPointer);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Height of the rendering region of the window
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public virtual uint Height
-            {
-                get {return sfWindow_GetHeight(CPointer);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Creation settings of the window
             /// </summary>
             ////////////////////////////////////////////////////////////
@@ -171,49 +151,24 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Enable / disable vertical synchronization
+            /// Position of the window
             /// </summary>
-            /// <param name="enable">True to enable v-sync, false to deactivate</param>
             ////////////////////////////////////////////////////////////
-            public virtual void EnableVerticalSync(bool enable)
+            public virtual Vector2i Position
             {
-                sfWindow_EnableVerticalSync(CPointer, enable);
+                get { return sfWindow_GetPosition(CPointer); }
+                set { sfWindow_SetPosition(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Show or hide the mouse cursor
+            /// Size of the rendering region of the window
             /// </summary>
-            /// <param name="show">True to show, false to hide</param>
             ////////////////////////////////////////////////////////////
-            public virtual void ShowMouseCursor(bool show)
+            public virtual Vector2u Size
             {
-                sfWindow_ShowMouseCursor(CPointer, show);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Change the position of the window on screen.
-            /// Only works for top-level windows
-            /// </summary>
-            /// <param name="x">Left position</param>
-            /// <param name="y">Top position</param>
-            ////////////////////////////////////////////////////////////
-            public virtual void SetPosition(int x, int y)
-            {
-                sfWindow_SetPosition(CPointer, x, y);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Change the size of the rendering region of the window
-            /// </summary>
-            /// <param name="width">New width</param>
-            /// <param name="height">New height</param>
-            ////////////////////////////////////////////////////////////
-            public virtual void SetSize(uint width, uint height)
-            {
-                sfWindow_SetSize(CPointer, width, height);
+                get { return sfWindow_GetSize(CPointer); }
+                set { sfWindow_SetSize(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -225,29 +180,6 @@ namespace SFML
             public virtual void SetTitle(string title)
             {
                 sfWindow_SetTitle(CPointer, title);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Show or hide the window
-            /// </summary>
-            /// <param name="show">True to show, false to hide</param>
-            ////////////////////////////////////////////////////////////
-            public virtual void Show(bool show)
-            {
-                sfWindow_Show(CPointer, show);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Enable or disable automatic key-repeat.
-            /// Automatic key-repeat is enabled by default
-            /// </summary>
-            /// <param name="enable">True to enable, false to disable</param>
-            ////////////////////////////////////////////////////////////
-            public virtual void EnableKeyRepeat(bool enable)
-            {
-                sfWindow_EnableKeyRepeat(CPointer, enable);
             }
 
             ////////////////////////////////////////////////////////////
@@ -267,6 +199,51 @@ namespace SFML
                         sfWindow_SetIcon(CPointer, width, height, PixelsPtr);
                     }
                 }
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Show or hide the window
+            /// </summary>
+            /// <param name="visible">True to show the window, false to hide it</param>
+            ////////////////////////////////////////////////////////////
+            public virtual void SetVisible(bool visible)
+            {
+                sfWindow_SetVisible(CPointer, visible);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Show or hide the mouse cursor
+            /// </summary>
+            /// <param name="show">True to show, false to hide</param>
+            ////////////////////////////////////////////////////////////
+            public virtual void SetMouseCursorVisible(bool show)
+            {
+                sfWindow_SetMouseCursorVisible(CPointer, show);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Enable / disable vertical synchronization
+            /// </summary>
+            /// <param name="enable">True to enable v-sync, false to deactivate</param>
+            ////////////////////////////////////////////////////////////
+            public virtual void SetVerticalSyncEnabled(bool enable)
+            {
+                sfWindow_SetVerticalSyncEnabled(CPointer, enable);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Enable or disable automatic key-repeat.
+            /// Automatic key-repeat is enabled by default
+            /// </summary>
+            /// <param name="enable">True to enable, false to disable</param>
+            ////////////////////////////////////////////////////////////
+            public virtual void SetKeyRepeatEnabled(bool enable)
+            {
+                sfWindow_SetKeyRepeatEnabled(CPointer, enable);
             }
 
             ////////////////////////////////////////////////////////////
@@ -361,8 +338,8 @@ namespace SFML
             public override string ToString()
             {
                 return "[Window]" +
-                       " Width(" + Width + ")" +
-                       " Height(" + Height + ")" +
+                       " Size(" + Size + ")" +
+                       " Position(" + Position + ")" +
                        " Settings(" + Settings + ")";
             }
 
@@ -596,37 +573,37 @@ namespace SFML
             static extern void sfWindow_Display(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfWindow_GetWidth(IntPtr CPointer);
-
-            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfWindow_GetHeight(IntPtr CPointer);
-
-            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern ContextSettings sfWindow_GetSettings(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_EnableVerticalSync(IntPtr CPointer, bool Enable);
+            static extern Vector2i sfWindow_GetPosition(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_ShowMouseCursor(IntPtr CPointer, bool Show);
+            static extern void sfWindow_SetPosition(IntPtr CPointer, Vector2i position);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetPosition(IntPtr CPointer, int X, int Y);
-            
+            static extern Vector2u sfWindow_GetSize(IntPtr CPointer);
+
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_SetSize(IntPtr CPointer, uint Width, uint Height);
+            static extern void sfWindow_SetSize(IntPtr CPointer, Vector2u size);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfWindow_SetTitle(IntPtr CPointer, string title);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_Show(IntPtr CPointer, bool Show);
-
-            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfWindow_EnableKeyRepeat(IntPtr CPointer, bool Enable);
-
-            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern void sfWindow_SetIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_SetVisible(IntPtr CPointer, bool visible);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_SetMouseCursorVisible(IntPtr CPointer, bool Show);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_SetVerticalSyncEnabled(IntPtr CPointer, bool Enable);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_SetKeyRepeatEnabled(IntPtr CPointer, bool Enable);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfWindow_SetActive(IntPtr CPointer, bool Active);

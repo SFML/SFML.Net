@@ -14,7 +14,7 @@ namespace window
         {
             // Create the main window
             Window window = new Window(new VideoMode(640, 480, 32), "SFML.Net Window", Styles.Default, new ContextSettings(32, 0));
-            window.EnableVerticalSync(true);
+            window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
