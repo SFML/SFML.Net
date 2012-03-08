@@ -436,11 +436,13 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Draw(Vertex[] vertices, PrimitiveType type, RenderStates states)
             {
+                RenderStates.MarshalData marshaledStates = states.Marshal();
+
                 unsafe
                 {
                     fixed (Vertex* vertexPtr = vertices)
                     {
-                        sfRenderWindow_DrawPrimitives(CPointer, vertexPtr, (uint)vertices.Length, type, states.Marshal());
+                        sfRenderWindow_DrawPrimitives(CPointer, vertexPtr, (uint)vertices.Length, type, ref marshaledStates);
                     }
                 }
             }
@@ -691,7 +693,7 @@ namespace SFML
             static extern void sfRenderWindow_ConvertCoords(IntPtr CPointer, uint WindowX, uint WindowY, out float ViewX, out float ViewY, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern void sfRenderWindow_DrawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, RenderStates.MarshalData renderStates);
+            unsafe static extern void sfRenderWindow_DrawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_PushGLStates(IntPtr CPointer);

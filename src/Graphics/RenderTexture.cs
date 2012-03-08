@@ -254,11 +254,13 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Draw(Vertex[] vertices, PrimitiveType type, RenderStates states)
             {
+                RenderStates.MarshalData marshaledStates = states.Marshal();
+
                 unsafe
                 {
                     fixed (Vertex* vertexPtr = vertices)
                     {
-                        sfRenderTexture_DrawPrimitives(CPointer, vertexPtr, (uint)vertices.Length, type, states.Marshal());
+                        sfRenderTexture_DrawPrimitives(CPointer, vertexPtr, (uint)vertices.Length, type, ref marshaledStates);
                     }
                 }
             }
@@ -432,7 +434,7 @@ namespace SFML
             static extern bool sfRenderTexture_IsSmooth(IntPtr texture);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern void sfRenderTexture_DrawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, RenderStates.MarshalData renderSTates);
+            unsafe static extern void sfRenderTexture_DrawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderSTates);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderTexture_PushGLStates(IntPtr CPointer);
