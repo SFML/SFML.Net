@@ -68,16 +68,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f Center
             {
-                get
-                {
-                    Vector2f center = new Vector2f();
-                    sfView_GetCenter(CPointer, out center.X, out center.Y);
-                    return center;
-                }
-                set
-                {
-                    sfView_SetCenter(CPointer, value.X, value.Y);
-                }
+                get { return sfView_GetCenter(CPointer); }
+                set { sfView_SetCenter(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -87,16 +79,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f Size
             {
-                get
-                {
-                    Vector2f size = new Vector2f();
-                    sfView_GetSize(CPointer, out size.X, out size.Y);
-                    return size;
-                }
-                set
-                {
-                    sfView_SetSize(CPointer, value.X, value.Y);
-                }
+                get { return sfView_GetSize(CPointer); }
+                set { sfView_SetSize(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -141,7 +125,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Move(Vector2f offset)
             {
-                sfView_Move(CPointer, offset.X, offset.Y);
+                sfView_Move(CPointer, offset);
             }
 
             ////////////////////////////////////////////////////////////
@@ -221,10 +205,10 @@ namespace SFML
             static extern void sfView_Destroy(IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfView_SetCenter(IntPtr View, float X, float Y);
+            static extern void sfView_SetCenter(IntPtr View, Vector2f center);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfView_SetSize(IntPtr View, float Width, float Height);
+            static extern void sfView_SetSize(IntPtr View, Vector2f size);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfView_SetRotation(IntPtr View, float Angle);
@@ -236,10 +220,10 @@ namespace SFML
             static extern void sfView_Reset(IntPtr View, FloatRect Rectangle);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfView_GetCenter(IntPtr View, out float X, out float Y);
+            static extern Vector2f sfView_GetCenter(IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfView_GetSize(IntPtr View, out float Width, out float Height);
+            static extern Vector2f sfView_GetSize(IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern float sfView_GetRotation(IntPtr View);
@@ -248,7 +232,7 @@ namespace SFML
             static extern FloatRect sfView_GetViewport(IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfView_Move(IntPtr View, float OffsetX, float OffsetY);
+            static extern void sfView_Move(IntPtr View, Vector2f offset);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfView_Rotate(IntPtr View, float Angle);

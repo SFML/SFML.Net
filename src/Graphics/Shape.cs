@@ -226,18 +226,16 @@ namespace SFML
             /// Callback passed to the C API
             /// </summary>
             ////////////////////////////////////////////////////////////
-            private void InternalGetPoint(uint index, out float x, out float y, IntPtr userData)
+            private Vector2f InternalGetPoint(uint index, IntPtr userData)
             {
-                Vector2f point = GetPoint(index);
-                x = point.X;
-                y = point.Y;
+                return GetPoint(index);
             }
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             private delegate uint GetPointCountCallbackType(IntPtr UserData);
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            private delegate void GetPointCallbackType(uint index, out float x, out float y, IntPtr UserData);
+            private delegate Vector2f GetPointCallbackType(uint index, IntPtr UserData);
 
             private GetPointCountCallbackType myGetPointCountCallback;
             private GetPointCallbackType myGetPointCallback;
@@ -281,12 +279,6 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern float sfShape_GetOutlineThickness(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfShape_GetPointCount(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2f sfShape_GetPoint(IntPtr CPointer, uint Index);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern FloatRect sfShape_GetLocalBounds(IntPtr CPointer);

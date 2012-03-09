@@ -33,8 +33,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Vector3f Position
             {
-                get {Vector3f v; sfListener_GetPosition(out v.X, out v.Y, out v.Z); return v;}
-                set {sfListener_SetPosition(value.X, value.Y, value.Z);}
+                get {return sfListener_GetPosition();}
+                set {sfListener_SetPosition(value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -44,8 +44,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Vector3f Direction
             {
-                get {Vector3f v; sfListener_GetDirection(out v.X, out v.Y, out v.Z); return v;}
-                set {sfListener_SetDirection(value.X, value.Y, value.Z);}
+                get {return sfListener_GetDirection();}
+                set {sfListener_SetDirection(value);}
             }
 
             #region Imports
@@ -56,16 +56,16 @@ namespace SFML
             static extern float sfListener_GetGlobalVolume();
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfListener_SetPosition(float X, float Y, float Z);
+            static extern void sfListener_SetPosition(Vector3f position);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfListener_GetPosition(out float X, out float Y, out float Z);
+            static extern Vector3f sfListener_GetPosition();
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfListener_SetDirection(float X, float Y, float Z);
+            static extern void sfListener_SetDirection(Vector3f direction);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfListener_GetDirection(out float X, out float Y, out float Z);
+            static extern Vector3f sfListener_GetDirection();
             #endregion
         }
     }

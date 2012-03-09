@@ -159,8 +159,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector3f Position
             {
-                get {Vector3f v; sfMusic_GetPosition(CPointer, out v.X, out v.Y, out v.Z); return v;}
-                set {sfMusic_SetPosition(CPointer, value.X, value.Y, value.Z);}
+                get {return sfMusic_GetPosition(CPointer);;}
+                set {sfMusic_SetPosition(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -304,7 +304,7 @@ namespace SFML
             static extern void sfMusic_SetVolume(IntPtr Music, float Volume);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfMusic_SetPosition(IntPtr Music, float X, float Y, float Z);
+            static extern void sfMusic_SetPosition(IntPtr Music, Vector3f position);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfMusic_SetRelativeToListener(IntPtr Music, bool Relative);
@@ -328,7 +328,7 @@ namespace SFML
             static extern float sfMusic_GetVolume(IntPtr Music);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfMusic_GetPosition(IntPtr Music, out float X, out float Y, out float Z);
+            static extern Vector3f sfMusic_GetPosition(IntPtr Music);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfMusic_IsRelativeToListener(IntPtr Music);

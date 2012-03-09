@@ -61,9 +61,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Vector2i GetPosition()
             {
-                Vector2i position;
-                sfMouse_GetPosition(out position.X, out position.Y, IntPtr.Zero);
-                return position;
+                return GetPosition(null);
             }
 
             ////////////////////////////////////////////////////////////
@@ -77,9 +75,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Vector2i GetPosition(Window relativeTo)
             {
-                Vector2i position;
-                sfMouse_GetPosition(out position.X, out position.Y, relativeTo.CPointer);
-                return position;
+                return sfMouse_GetPosition(relativeTo != null ? relativeTo.CPointer : IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
@@ -92,7 +88,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static void SetPosition(Vector2i position)
             {
-                sfMouse_SetPosition(position.X, position.Y, IntPtr.Zero);
+                SetPosition(position, null);
             }
 
             ////////////////////////////////////////////////////////////
@@ -106,7 +102,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static void SetPosition(Vector2i position, Window relativeTo)
             {
-                sfMouse_SetPosition(position.X, position.Y, relativeTo.CPointer);
+                sfMouse_SetPosition(position, relativeTo != null ? relativeTo.CPointer : IntPtr.Zero);
             }
 
             #region Imports
@@ -114,10 +110,10 @@ namespace SFML
             static extern bool sfMouse_IsButtonPressed(Button button);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfMouse_GetPosition(out int x, out int y, IntPtr relativeTo);
+            static extern Vector2i sfMouse_GetPosition(IntPtr relativeTo);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfMouse_SetPosition(int x, int y, IntPtr relativeTo);
+            static extern void sfMouse_SetPosition(Vector2i position, IntPtr relativeTo);
             #endregion
         }
     }
