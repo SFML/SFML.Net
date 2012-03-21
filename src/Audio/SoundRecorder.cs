@@ -26,7 +26,7 @@ namespace SFML
                 myProcessCallback = new ProcessCallback(ProcessSamples);
                 myStopCallback    = new StopCallback(OnStop);
 
-                SetThis(sfSoundRecorder_Create(myStartCallback, myProcessCallback, myStopCallback, IntPtr.Zero));
+                SetThis(sfSoundRecorder_create(myStartCallback, myProcessCallback, myStopCallback, IntPtr.Zero));
             }
 
             ////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Start(uint sampleRate)
             {
-                sfSoundRecorder_Start(CPointer, sampleRate);
+                sfSoundRecorder_start(CPointer, sampleRate);
             }
 
             ////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Stop()
             {
-                sfSoundRecorder_Stop(CPointer);
+                sfSoundRecorder_stop(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint SampleRate
             {
-                get {return sfSoundRecorder_GetSampleRate(CPointer);}
+                get {return sfSoundRecorder_getSampleRate(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool IsAvailable
             {
-                get {return sfSoundRecorder_IsAvailable();}
+                get {return sfSoundRecorder_isAvailable();}
             }
 
             ////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfSoundRecorder_Destroy(CPointer);
+                sfSoundRecorder_destroy(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -170,22 +170,22 @@ namespace SFML
 
             #region Imports
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSoundRecorder_Create(StartCallback OnStart, ProcessCallback OnProcess, StopCallback OnStop, IntPtr UserData);
+            static extern IntPtr sfSoundRecorder_create(StartCallback OnStart, ProcessCallback OnProcess, StopCallback OnStop, IntPtr UserData);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSoundRecorder_Destroy(IntPtr SoundRecorder);
+            static extern void sfSoundRecorder_destroy(IntPtr SoundRecorder);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSoundRecorder_Start(IntPtr SoundRecorder, uint SampleRate);
+            static extern void sfSoundRecorder_start(IntPtr SoundRecorder, uint SampleRate);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSoundRecorder_Stop(IntPtr SoundRecorder);
+            static extern void sfSoundRecorder_stop(IntPtr SoundRecorder);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSoundRecorder_GetSampleRate(IntPtr SoundRecorder);
+            static extern uint sfSoundRecorder_getSampleRate(IntPtr SoundRecorder);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfSoundRecorder_IsAvailable();
+            static extern bool sfSoundRecorder_isAvailable();
             #endregion
         }
     }

@@ -37,7 +37,7 @@ namespace SFML
             /// </summary>
             ////////////////////////////////////////////////////////////
             public Sound() :
-                base(sfSound_Create())
+                base(sfSound_create())
             {
             }
 
@@ -48,7 +48,7 @@ namespace SFML
             /// <param name="buffer">Sound buffer to play</param>
             ////////////////////////////////////////////////////////////
             public Sound(SoundBuffer buffer) :
-                base(sfSound_Create())
+                base(sfSound_create())
             {
                 SoundBuffer = buffer;
             }
@@ -60,7 +60,7 @@ namespace SFML
             /// <param name="copy">Sound to copy</param>
             ////////////////////////////////////////////////////////////
             public Sound(Sound copy) :
-                base(sfSound_Copy(copy.CPointer))
+                base(sfSound_copy(copy.CPointer))
             {
                 SoundBuffer = copy.SoundBuffer;
             }
@@ -72,7 +72,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Play()
             {
-                sfSound_Play(CPointer);
+                sfSound_play(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Pause()
             {
-                sfSound_Pause(CPointer);
+                sfSound_pause(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Stop()
             {
-                sfSound_Stop(CPointer);
+                sfSound_stop(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -103,7 +103,7 @@ namespace SFML
             public SoundBuffer SoundBuffer
             {
                 get {return myBuffer;}
-                set {myBuffer = value; sfSound_SetBuffer(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
+                set {myBuffer = value; sfSound_setBuffer(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public SoundStatus Status
             {
-                get {return sfSound_GetStatus(CPointer);}
+                get {return sfSound_getStatus(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -123,8 +123,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Loop
             {
-                get {return sfSound_GetLoop(CPointer);}
-                set {sfSound_SetLoop(CPointer, value);}
+                get {return sfSound_getLoop(CPointer);}
+                set {sfSound_setLoop(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -134,8 +134,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Pitch
             {
-                get {return sfSound_GetPitch(CPointer);}
-                set {sfSound_SetPitch(CPointer, value);}
+                get {return sfSound_getPitch(CPointer);}
+                set {sfSound_setPitch(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -145,8 +145,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Volume
             {
-                get {return sfSound_GetVolume(CPointer);}
-                set {sfSound_SetVolume(CPointer, value);}
+                get {return sfSound_getVolume(CPointer);}
+                set {sfSound_setVolume(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -158,13 +158,13 @@ namespace SFML
             {
                 get
                 {
-                    long microseconds = sfSound_GetPlayingOffset(CPointer);
+                    long microseconds = sfSound_getPlayingOffset(CPointer);
                     return TimeSpan.FromTicks(microseconds * TimeSpan.TicksPerMillisecond / 1000);
                 }
                 set
                 {
                     long microseconds = value.Ticks / (TimeSpan.TicksPerMillisecond / 1000);
-                    sfSound_SetPlayingOffset(CPointer, microseconds);
+                    sfSound_setPlayingOffset(CPointer, microseconds);
                 }
             }
 
@@ -175,8 +175,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector3f Position
             {
-                get {return sfSound_GetPosition(CPointer);}
-                set {sfSound_SetPosition(CPointer, value);}
+                get {return sfSound_getPosition(CPointer);}
+                set {sfSound_setPosition(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -188,8 +188,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool RelativeToListener
             {
-                get {return sfSound_IsRelativeToListener(CPointer);}
-                set {sfSound_SetRelativeToListener(CPointer, value);}
+                get {return sfSound_isRelativeToListener(CPointer);}
+                set {sfSound_setRelativeToListener(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -201,8 +201,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float MinDistance
             {
-                get {return sfSound_GetMinDistance(CPointer);}
-                set {sfSound_SetMinDistance(CPointer, value);}
+                get {return sfSound_getMinDistance(CPointer);}
+                set {sfSound_setMinDistance(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -214,8 +214,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public float Attenuation
             {
-                get {return sfSound_GetAttenuation(CPointer);}
-                set {sfSound_SetAttenuation(CPointer, value);}
+                get {return sfSound_getAttenuation(CPointer);}
+                set {sfSound_setAttenuation(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -247,86 +247,86 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfSound_Destroy(CPointer);
+                sfSound_destroy(CPointer);
             }
 
             private SoundBuffer myBuffer;
 
             #region Imports
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSound_Create();
+            static extern IntPtr sfSound_create();
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSound_Copy(IntPtr Sound);
+            static extern IntPtr sfSound_copy(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_Destroy(IntPtr Sound);
+            static extern void sfSound_destroy(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_Play(IntPtr Sound);
+            static extern void sfSound_play(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_Pause(IntPtr Sound);
+            static extern void sfSound_pause(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_Stop(IntPtr Sound);
+            static extern void sfSound_stop(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetBuffer(IntPtr Sound, IntPtr Buffer);
+            static extern void sfSound_setBuffer(IntPtr Sound, IntPtr Buffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSound_GetBuffer(IntPtr Sound);
+            static extern IntPtr sfSound_getBuffer(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetLoop(IntPtr Sound, bool Loop);
+            static extern void sfSound_setLoop(IntPtr Sound, bool Loop);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfSound_GetLoop(IntPtr Sound);
+            static extern bool sfSound_getLoop(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern SoundStatus sfSound_GetStatus(IntPtr Sound);
+            static extern SoundStatus sfSound_getStatus(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetPitch(IntPtr Sound, float Pitch);
+            static extern void sfSound_setPitch(IntPtr Sound, float Pitch);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetVolume(IntPtr Sound, float Volume);
+            static extern void sfSound_setVolume(IntPtr Sound, float Volume);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetPosition(IntPtr Sound, Vector3f position);
+            static extern void sfSound_setPosition(IntPtr Sound, Vector3f position);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetRelativeToListener(IntPtr Sound, bool Relative);
+            static extern void sfSound_setRelativeToListener(IntPtr Sound, bool Relative);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetMinDistance(IntPtr Sound, float MinDistance);
+            static extern void sfSound_setMinDistance(IntPtr Sound, float MinDistance);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetAttenuation(IntPtr Sound, float Attenuation);
+            static extern void sfSound_setAttenuation(IntPtr Sound, float Attenuation);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSound_SetPlayingOffset(IntPtr Sound, long TimeOffset);
+            static extern void sfSound_setPlayingOffset(IntPtr Sound, long TimeOffset);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfSound_GetPitch(IntPtr Sound);
+            static extern float sfSound_getPitch(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfSound_GetVolume(IntPtr Sound);
+            static extern float sfSound_getVolume(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector3f sfSound_GetPosition(IntPtr Sound);
+            static extern Vector3f sfSound_getPosition(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfSound_IsRelativeToListener(IntPtr Sound);
+            static extern bool sfSound_isRelativeToListener(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfSound_GetMinDistance(IntPtr Sound);
+            static extern float sfSound_getMinDistance(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfSound_GetAttenuation(IntPtr Sound);
+            static extern float sfSound_getAttenuation(IntPtr Sound);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern long sfSound_GetPlayingOffset(IntPtr Sound);
+            static extern long sfSound_getPlayingOffset(IntPtr Sound);
 
             #endregion
         }

@@ -48,7 +48,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool IsButtonPressed(Button button)
             {
-                return sfMouse_IsButtonPressed(button);
+                return sfMouse_isButtonPressed(button);
             }
 
             ////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Vector2i GetPosition(Window relativeTo)
             {
-                return sfMouse_GetPosition(relativeTo != null ? relativeTo.CPointer : IntPtr.Zero);
+                return sfMouse_getPosition(relativeTo != null ? relativeTo.CPointer : IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
@@ -102,18 +102,18 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static void SetPosition(Vector2i position, Window relativeTo)
             {
-                sfMouse_SetPosition(position, relativeTo != null ? relativeTo.CPointer : IntPtr.Zero);
+                sfMouse_setPosition(position, relativeTo != null ? relativeTo.CPointer : IntPtr.Zero);
             }
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfMouse_IsButtonPressed(Button button);
+            static extern bool sfMouse_isButtonPressed(Button button);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2i sfMouse_GetPosition(IntPtr relativeTo);
+            static extern Vector2i sfMouse_getPosition(IntPtr relativeTo);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfMouse_SetPosition(Vector2i position, IntPtr relativeTo);
+            static extern void sfMouse_setPosition(Vector2i position, IntPtr relativeTo);
             #endregion
         }
     }

@@ -63,7 +63,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool IsConnected(uint joystick)
             {
-                return sfJoystick_IsConnected(joystick);
+                return sfJoystick_isConnected(joystick);
             }
 
             ////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static uint GetButtonCount(uint joystick)
             {
-                return sfJoystick_GetButtonCount(joystick);
+                return sfJoystick_getButtonCount(joystick);
             }
 
             ////////////////////////////////////////////////////////////
@@ -90,7 +90,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool HasAxis(uint joystick, Axis axis)
             {
-                return sfJoystick_HasAxis(joystick, axis);
+                return sfJoystick_hasAxis(joystick, axis);
             }
 
             ////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool IsButtonPressed(uint joystick, uint button)
             {
-                return sfJoystick_IsButtonPressed(joystick, button);
+                return sfJoystick_isButtonPressed(joystick, button);
             }
 
             ////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static float GetAxisPosition(uint joystick, Axis axis)
             {
-                return sfJoystick_GetAxisPosition(joystick, axis);
+                return sfJoystick_getAxisPosition(joystick, axis);
             }
 
             ////////////////////////////////////////////////////////////
@@ -132,27 +132,27 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static void Update()
             {
-                sfJoystick_Update();
+                sfJoystick_update();
             }
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfJoystick_IsConnected(uint joystick);
+            static extern bool sfJoystick_isConnected(uint joystick);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfJoystick_GetButtonCount(uint joystick);
+            static extern uint sfJoystick_getButtonCount(uint joystick);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfJoystick_HasAxis(uint joystick, Axis axis);
+            static extern bool sfJoystick_hasAxis(uint joystick, Axis axis);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfJoystick_IsButtonPressed(uint joystick, uint button);
+            static extern bool sfJoystick_isButtonPressed(uint joystick, uint button);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern float sfJoystick_GetAxisPosition(uint joystick, Axis axis);
+            static extern float sfJoystick_getAxisPosition(uint joystick, Axis axis);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfJoystick_Update();
+            static extern void sfJoystick_update();
             #endregion
         }
     }

@@ -22,7 +22,7 @@ namespace SFML
             /// </summary>
             ////////////////////////////////////////////////////////////
             public Transform() :
-                base(sfTransform_Create())
+                base(sfTransform_create())
             {
             }
 
@@ -43,7 +43,7 @@ namespace SFML
             public Transform(float a00, float a01, float a02,
                              float a10, float a11, float a12,
                              float a20, float a21, float a22) :
-                base(sfTransform_CreateFromMatrix(a00, a01, a02,
+                base(sfTransform_createFromMatrix(a00, a01, a02,
                                                   a10, a11, a12,
                                                   a20, a21, a22))
             {
@@ -56,7 +56,7 @@ namespace SFML
             /// <param name="transform">Transform to copy</param>
             ////////////////////////////////////////////////////////////
             public Transform(Transform transform) :
-                this(sfTransform_Copy(transform.CPointer))
+                this(sfTransform_copy(transform.CPointer))
             {
             }
 
@@ -73,7 +73,7 @@ namespace SFML
             public float[] GetMatrix()
             {
                 float[] matrix = new float[4 * 4];
-                Marshal.Copy(sfTransform_GetMatrix(CPointer), matrix, 0, matrix.Length);
+                Marshal.Copy(sfTransform_getMatrix(CPointer), matrix, 0, matrix.Length);
                 return matrix;
             }
 
@@ -89,7 +89,7 @@ namespace SFML
             public Transform GetInverse()
             {
                 IntPtr cPointer = IntPtr.Zero;
-                sfTransform_GetInverse(CPointer, out cPointer);
+                sfTransform_getInverse(CPointer, out cPointer);
                 return new Transform(cPointer);
             }
 
@@ -103,9 +103,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f TransformPoint(float x, float y)
             {
-                Vector2f result;
-                sfTransform_TransformPoint(CPointer, x, y, out result.X, out result.Y);
-                return result;
+                return TransformPoint(new Vector2f(x, y));
             }
 
             ////////////////////////////////////////////////////////////
@@ -117,7 +115,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f TransformPoint(Vector2f point)
             {
-                return TransformPoint(point.X, point.Y);
+                return sfTransform_transformPoint(CPointer, point);
             }
 
             ////////////////////////////////////////////////////////////
@@ -135,9 +133,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect TransformRect(FloatRect rectangle)
             {
-                FloatRect result = new FloatRect();
-                sfTransform_TransformRect(CPointer, rectangle, out result);
-                return result;
+                return sfTransform_transformRect(CPointer, rectangle);
             }
 
             ////////////////////////////////////////////////////////////
@@ -155,7 +151,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform Combine(Transform transform)
             {
-                sfTransform_Combine(CPointer, transform.CPointer);
+                sfTransform_combine(CPointer, transform.CPointer);
                 return this;
             }
 
@@ -172,7 +168,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform Translate(float x, float y)
             {
-                sfTransform_Translate(CPointer, x, y);
+                sfTransform_translate(CPointer, x, y);
                 return this;
             }
 
@@ -203,7 +199,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform Rotate(float angle)
             {
-                sfTransform_Rotate(CPointer, angle);
+                sfTransform_rotate(CPointer, angle);
                 return this;
             }
 
@@ -225,7 +221,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform Rotate(float angle, float centerX, float centerY)
             {
-                sfTransform_RotateWithCenter(CPointer, angle, centerX, centerY);
+                sfTransform_rotateWithCenter(CPointer, angle, centerX, centerY);
                 return this;
             }
 
@@ -262,7 +258,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform Scale(float scaleX, float scaleY)
             {
-                sfTransform_Scale(CPointer, scaleX, scaleY);
+                sfTransform_scale(CPointer, scaleX, scaleY);
                 return this;
             }
 
@@ -285,7 +281,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform Scale(float scaleX, float scaleY, float centerX, float centerY)
             {
-                sfTransform_ScaleWithCenter(CPointer, scaleX, scaleY, centerX, centerY);
+                sfTransform_scaleWithCenter(CPointer, scaleX, scaleY, centerX, centerY);
                 return this;
             }
 
@@ -391,53 +387,53 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfTransform_Destroy(CPointer);
+                sfTransform_destroy(CPointer);
             }
 
             #region Imports
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_Create();
+            static extern IntPtr sfTransform_create();
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_CreateFromMatrix(float a00, float a01, float a02,
+            static extern IntPtr sfTransform_createFromMatrix(float a00, float a01, float a02,
                                                               float a10, float a11, float a12,
                                                               float a20, float a21, float a22);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_Copy(IntPtr transform);
+            static extern IntPtr sfTransform_copy(IntPtr transform);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_Destroy(IntPtr transform);
+            static extern void sfTransform_destroy(IntPtr transform);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_GetMatrix(IntPtr transform);
+            static extern IntPtr sfTransform_getMatrix(IntPtr transform);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_GetInverse(IntPtr transform, out IntPtr inverse);
+            static extern void sfTransform_getInverse(IntPtr transform, out IntPtr inverse);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_TransformPoint(IntPtr transform, float x, float y, out float transformedX, out float transformedY);
+            static extern Vector2f sfTransform_transformPoint(IntPtr transform, Vector2f point);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_TransformRect(IntPtr transform, FloatRect rectangle, out FloatRect transformedRectangle);
+            static extern FloatRect sfTransform_transformRect(IntPtr transform, FloatRect rectangle);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_Combine(IntPtr transform, IntPtr other);
+            static extern void sfTransform_combine(IntPtr transform, IntPtr other);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_Translate(IntPtr transform, float x, float y);
+            static extern void sfTransform_translate(IntPtr transform, float x, float y);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_Rotate(IntPtr transform, float angle);
+            static extern void sfTransform_rotate(IntPtr transform, float angle);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_RotateWithCenter(IntPtr transform, float angle, float centerX, float centerY);
+            static extern void sfTransform_rotateWithCenter(IntPtr transform, float angle, float centerX, float centerY);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_Scale(IntPtr transform, float scaleX, float scaleY);
+            static extern void sfTransform_scale(IntPtr transform, float scaleX, float scaleY);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_ScaleWithCenter( IntPtr transform, float scaleX, float scaleY, float centerX, float centerY);
+            static extern void sfTransform_scaleWithCenter( IntPtr transform, float scaleX, float scaleY, float centerX, float centerY);
 
             #endregion
         }

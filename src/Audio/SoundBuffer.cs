@@ -25,7 +25,7 @@ namespace SFML
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
             public SoundBuffer(string filename) :
-                base(sfSoundBuffer_CreateFromFile(filename))
+                base(sfSoundBuffer_createFromFile(filename))
             {
                 if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("sound buffer", filename);
@@ -43,7 +43,7 @@ namespace SFML
             {
                 using (StreamAdaptor adaptor = new StreamAdaptor(stream))
                 {
-                    SetThis(sfSoundBuffer_CreateFromStream(adaptor.InputStreamPtr));
+                    SetThis(sfSoundBuffer_createFromStream(adaptor.InputStreamPtr));
                 }
 
                 if (CPointer == IntPtr.Zero)
@@ -66,7 +66,7 @@ namespace SFML
                 {
                     fixed (short* SamplesPtr = samples)
                     {
-                        SetThis(sfSoundBuffer_CreateFromSamples(SamplesPtr, (uint)samples.Length, channelCount, sampleRate));
+                        SetThis(sfSoundBuffer_createFromSamples(SamplesPtr, (uint)samples.Length, channelCount, sampleRate));
                     }
                 }
 
@@ -81,7 +81,7 @@ namespace SFML
             /// <param name="copy">Sound buffer to copy</param>
             ////////////////////////////////////////////////////////////
             public SoundBuffer(SoundBuffer copy) :
-                base(sfSoundBuffer_Copy(copy.CPointer))
+                base(sfSoundBuffer_copy(copy.CPointer))
             {
             }
 
@@ -94,7 +94,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool SaveToFile(string filename)
             {
-                return sfSoundBuffer_SaveToFile(CPointer, filename);
+                return sfSoundBuffer_saveToFile(CPointer, filename);
             }
 
             ////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint SampleRate
             {
-                get {return sfSoundBuffer_GetSampleRate(CPointer);}
+                get {return sfSoundBuffer_getSampleRate(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -114,7 +114,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint ChannelCount
             {
-                get {return sfSoundBuffer_GetChannelCount(CPointer);}
+                get {return sfSoundBuffer_getChannelCount(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -124,7 +124,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint Duration
             {
-                get {return sfSoundBuffer_GetDuration(CPointer);}
+                get {return sfSoundBuffer_getDuration(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -136,8 +136,8 @@ namespace SFML
             {
                 get
                 {
-                    short[] SamplesArray = new short[sfSoundBuffer_GetSampleCount(CPointer)];
-                    Marshal.Copy(sfSoundBuffer_GetSamples(CPointer), SamplesArray, 0, SamplesArray.Length);
+                    short[] SamplesArray = new short[sfSoundBuffer_getSampleCount(CPointer)];
+                    Marshal.Copy(sfSoundBuffer_getSamples(CPointer), SamplesArray, 0, SamplesArray.Length);
                     return SamplesArray;
                 }
             }
@@ -164,42 +164,42 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfSoundBuffer_Destroy(CPointer);
+                sfSoundBuffer_destroy(CPointer);
             }
 
             #region Imports
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSoundBuffer_CreateFromFile(string Filename);
+            static extern IntPtr sfSoundBuffer_createFromFile(string Filename);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern IntPtr sfSoundBuffer_CreateFromStream(IntPtr stream);
+            unsafe static extern IntPtr sfSoundBuffer_createFromStream(IntPtr stream);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern IntPtr sfSoundBuffer_CreateFromSamples(short* Samples, uint SampleCount, uint ChannelsCount, uint SampleRate);
+            unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, uint SampleCount, uint ChannelsCount, uint SampleRate);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSoundBuffer_Copy(IntPtr SoundBuffer);
+            static extern IntPtr sfSoundBuffer_copy(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSoundBuffer_Destroy(IntPtr SoundBuffer);
+            static extern void sfSoundBuffer_destroy(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfSoundBuffer_SaveToFile(IntPtr SoundBuffer, string Filename);
+            static extern bool sfSoundBuffer_saveToFile(IntPtr SoundBuffer, string Filename);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSoundBuffer_GetSamples(IntPtr SoundBuffer);
+            static extern IntPtr sfSoundBuffer_getSamples(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSoundBuffer_GetSampleCount(IntPtr SoundBuffer);
+            static extern uint sfSoundBuffer_getSampleCount(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSoundBuffer_GetSampleRate(IntPtr SoundBuffer);
+            static extern uint sfSoundBuffer_getSampleRate(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSoundBuffer_GetChannelCount(IntPtr SoundBuffer);
+            static extern uint sfSoundBuffer_getChannelCount(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSoundBuffer_GetDuration(IntPtr SoundBuffer);
+            static extern uint sfSoundBuffer_getDuration(IntPtr SoundBuffer);
             #endregion
         }
     }

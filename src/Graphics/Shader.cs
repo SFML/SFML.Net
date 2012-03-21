@@ -49,7 +49,7 @@ namespace SFML
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
             public Shader(string vertexShaderFilename, string fragmentShaderFilename) :
-                base(sfShader_CreateFromFile(vertexShaderFilename, fragmentShaderFilename))
+                base(sfShader_createFromFile(vertexShaderFilename, fragmentShaderFilename))
             {
                 if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("shader", vertexShaderFilename + " " + fragmentShaderFilename);
@@ -76,7 +76,7 @@ namespace SFML
             {
                 StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
                 StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
-                SetThis(sfShader_CreateFromStream(vertexAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr));
+                SetThis(sfShader_createFromStream(vertexAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr));
                 vertexAdaptor.Dispose();
                 fragmentAdaptor.Dispose();
 
@@ -103,7 +103,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Shader FromString(string vertexShader, string fragmentShader)
             {
-                IntPtr ptr = sfShader_CreateFromMemory(vertexShader, fragmentShader);
+                IntPtr ptr = sfShader_createFromMemory(vertexShader, fragmentShader);
                 if (ptr == IntPtr.Zero)
                     throw new LoadingFailedException("shader");
 
@@ -125,7 +125,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, float x)
             {
-                sfShader_SetFloatParameter(CPointer, name, x);
+                sfShader_setFloatParameter(CPointer, name, x);
             }
 
             ////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, float x, float y)
             {
-                sfShader_SetFloat2Parameter(CPointer, name, x, y);
+                sfShader_setFloat2Parameter(CPointer, name, x, y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, float x, float y, float z)
             {
-                sfShader_SetFloat3Parameter(CPointer, name, x, y, z);
+                sfShader_setFloat3Parameter(CPointer, name, x, y, z);
             }
 
             ////////////////////////////////////////////////////////////
@@ -179,7 +179,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, float x, float y, float z, float w)
             {
-                sfShader_SetFloat4Parameter(CPointer, name, x, y, z, w);
+                sfShader_setFloat4Parameter(CPointer, name, x, y, z, w);
             }
 
             ////////////////////////////////////////////////////////////
@@ -211,7 +211,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, Color color)
             {
-                sfShader_SetColorParameter(CPointer, name, color);
+                sfShader_setColorParameter(CPointer, name, color);
             }
 
             ////////////////////////////////////////////////////////////
@@ -227,7 +227,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, Transform transform)
             {
-                sfShader_SetTransformParameter(CPointer, name, transform.CPointer);
+                sfShader_setTransformParameter(CPointer, name, transform.CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -251,7 +251,7 @@ namespace SFML
             public void SetParameter(string name, Texture texture)
             {
                 myTextures[name] = texture;
-                sfShader_SetTextureParameter(CPointer, name, texture.CPointer);
+                sfShader_setTextureParameter(CPointer, name, texture.CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -270,7 +270,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, CurrentTextureType current)
             {
-                sfShader_SetCurrentTextureParameter(CPointer, name);
+                sfShader_setCurrentTextureParameter(CPointer, name);
             }
 
             ////////////////////////////////////////////////////////////
@@ -284,7 +284,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Bind()
             {
-                sfShader_Bind(CPointer);
+                sfShader_bind(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -298,7 +298,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Unbind()
             {
-                sfShader_Unbind(CPointer);
+                sfShader_unbind(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -312,7 +312,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool IsAvailable
             {
-                get {return sfShader_IsAvailable();}
+                get {return sfShader_isAvailable();}
             }
 
             ////////////////////////////////////////////////////////////
@@ -338,7 +338,7 @@ namespace SFML
                     Context.Global.SetActive(true);
 
                 myTextures.Clear();
-                sfShader_Destroy(CPointer);
+                sfShader_destroy(CPointer);
 
                 if (!disposing)
                     Context.Global.SetActive(false);
@@ -360,49 +360,49 @@ namespace SFML
             #region Imports
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfShader_CreateFromFile(string vertexShaderFilename, string fragmentShaderFilename);
+            static extern IntPtr sfShader_createFromFile(string vertexShaderFilename, string fragmentShaderFilename);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfShader_CreateFromMemory(string vertexShader, string fragmentShader);
+            static extern IntPtr sfShader_createFromMemory(string vertexShader, string fragmentShader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfShader_CreateFromStream(IntPtr vertexShaderStream, IntPtr fragmentShaderStream);
+            static extern IntPtr sfShader_createFromStream(IntPtr vertexShaderStream, IntPtr fragmentShaderStream);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_Destroy(IntPtr shader);
+            static extern void sfShader_destroy(IntPtr shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetFloatParameter(IntPtr shader, string name, float x);
+            static extern void sfShader_setFloatParameter(IntPtr shader, string name, float x);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetFloat2Parameter(IntPtr shader, string name, float x, float y);
+            static extern void sfShader_setFloat2Parameter(IntPtr shader, string name, float x, float y);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetFloat3Parameter(IntPtr shader, string name, float x, float y, float z);
+            static extern void sfShader_setFloat3Parameter(IntPtr shader, string name, float x, float y, float z);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetFloat4Parameter(IntPtr shader, string name, float x, float y, float z, float w);
+            static extern void sfShader_setFloat4Parameter(IntPtr shader, string name, float x, float y, float z, float w);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetColorParameter(IntPtr shader, string name, Color color);
+            static extern void sfShader_setColorParameter(IntPtr shader, string name, Color color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetTransformParameter(IntPtr shader, string name, IntPtr transform);
+            static extern void sfShader_setTransformParameter(IntPtr shader, string name, IntPtr transform);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetTextureParameter(IntPtr shader, string name, IntPtr texture);
+            static extern void sfShader_setTextureParameter(IntPtr shader, string name, IntPtr texture);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_SetCurrentTextureParameter(IntPtr shader, string name);
+            static extern void sfShader_setCurrentTextureParameter(IntPtr shader, string name);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_Bind(IntPtr shader);
+            static extern void sfShader_bind(IntPtr shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_Unbind(IntPtr shader);
+            static extern void sfShader_unbind(IntPtr shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfShader_IsAvailable();
+            static extern bool sfShader_isAvailable();
 
             #endregion
         }

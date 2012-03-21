@@ -77,7 +77,7 @@ namespace SFML
             /// <param name="characterSize">Base characters size</param>
             ////////////////////////////////////////////////////////////
             public Text(string str, Font font, uint characterSize) :
-                base(sfText_Create())
+                base(sfText_create())
             {
                 DisplayedString = str;
                 Font = font;
@@ -91,7 +91,7 @@ namespace SFML
             /// <param name="copy">Text to copy</param>
             ////////////////////////////////////////////////////////////
             public Text(Text copy) :
-                base(sfText_Copy(copy.CPointer))
+                base(sfText_copy(copy.CPointer))
             {
                 Origin = copy.Origin;
                 Position = copy.Position;
@@ -108,8 +108,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Color Color
             {
-                get { return sfText_GetColor(CPointer); }
-                set { sfText_SetColor(CPointer, value); }
+                get { return sfText_getColor(CPointer); }
+                set { sfText_setColor(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -123,11 +123,11 @@ namespace SFML
                 {
                     // Get the number of characters
                     // This is probably not the most optimized way; if anyone has a better solution...
-                    int length = Marshal.PtrToStringAnsi(sfText_GetString(CPointer)).Length;
+                    int length = Marshal.PtrToStringAnsi(sfText_getString(CPointer)).Length;
 
                     // Copy the characters
                     byte[] characters = new byte[length * 4];
-                    Marshal.Copy(sfText_GetUnicodeString(CPointer), characters, 0, characters.Length);
+                    Marshal.Copy(sfText_getUnicodeString(CPointer), characters, 0, characters.Length);
 
                     // Convert from UTF-32 to String (UTF-16)
                     return System.Text.Encoding.UTF32.GetString(characters);
@@ -142,7 +142,7 @@ namespace SFML
 
                     // Transform to raw and pass to the C API
                     GCHandle handle = GCHandle.Alloc(characters, GCHandleType.Pinned);
-                    sfText_SetUnicodeString(CPointer, handle.AddrOfPinnedObject());
+                    sfText_setUnicodeString(CPointer, handle.AddrOfPinnedObject());
                     handle.Free();
                 }
             }
@@ -155,7 +155,7 @@ namespace SFML
             public Font Font
             {
                 get {return myFont;}
-                set {myFont = value; sfText_SetFont(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
+                set {myFont = value; sfText_setFont(CPointer, value != null ? value.CPointer : IntPtr.Zero);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -165,8 +165,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint CharacterSize
             {
-                get {return sfText_GetCharacterSize(CPointer);}
-                set {sfText_SetCharacterSize(CPointer, value);}
+                get {return sfText_getCharacterSize(CPointer);}
+                set {sfText_setCharacterSize(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -176,8 +176,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Styles Style
             {
-                get {return sfText_GetStyle(CPointer);}
-                set {sfText_SetStyle(CPointer, value);}
+                get {return sfText_getStyle(CPointer);}
+                set {sfText_setStyle(CPointer, value);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f FindCharacterPos(uint index)
             {
-                return sfText_FindCharacterPos(CPointer, index);
+                return sfText_findCharacterPos(CPointer, index);
             }
 
             ////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect GetLocalBounds()
             {
-                return sfText_GetLocalBounds(CPointer);
+                return sfText_getLocalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -225,7 +225,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect GetGlobalBounds()
             {
-                return sfText_GetGlobalBounds(CPointer);
+                return sfText_getGlobalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -262,11 +262,11 @@ namespace SFML
 
                 if (target is RenderWindow)
                 {
-                    sfRenderWindow_DrawText(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderWindow_drawText(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
                 }
                 else if (target is RenderTexture)
                 {
-                    sfRenderWindow_DrawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderWindow_drawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
                 }
             }
 
@@ -278,7 +278,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfText_Destroy(CPointer);
+                sfText_destroy(CPointer);
             }
 
             private Font myFont = Font.DefaultFont;
@@ -286,61 +286,61 @@ namespace SFML
             #region Imports
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_Create();
+            static extern IntPtr sfText_create();
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_Copy(IntPtr Text);
+            static extern IntPtr sfText_copy(IntPtr Text);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_Destroy(IntPtr CPointer);
+            static extern void sfText_destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetColor(IntPtr CPointer, Color Color);
+            static extern void sfText_setColor(IntPtr CPointer, Color Color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Color sfText_GetColor(IntPtr CPointer);
+            static extern Color sfText_getColor(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_DrawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+            static extern void sfRenderWindow_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderTexture_DrawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+            static extern void sfRenderTexture_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetUnicodeString(IntPtr CPointer, IntPtr Text);
+            static extern void sfText_setUnicodeString(IntPtr CPointer, IntPtr Text);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetFont(IntPtr CPointer, IntPtr Font);
+            static extern void sfText_setFont(IntPtr CPointer, IntPtr Font);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetCharacterSize(IntPtr CPointer, uint Size);
+            static extern void sfText_setCharacterSize(IntPtr CPointer, uint Size);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfText_SetStyle(IntPtr CPointer, Styles Style);
+            static extern void sfText_setStyle(IntPtr CPointer, Styles Style);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_GetString(IntPtr CPointer);
+            static extern IntPtr sfText_getString(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfText_GetUnicodeString(IntPtr CPointer);
+            static extern IntPtr sfText_getUnicodeString(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfText_GetCharacterSize(IntPtr CPointer);
+            static extern uint sfText_getCharacterSize(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Styles sfText_GetStyle(IntPtr CPointer);
+            static extern Styles sfText_getStyle(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetRect(IntPtr CPointer);
+            static extern FloatRect sfText_getRect(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2f sfText_FindCharacterPos(IntPtr CPointer, uint Index);
+            static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, uint Index);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetLocalBounds(IntPtr CPointer);
+            static extern FloatRect sfText_getLocalBounds(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfText_GetGlobalBounds(IntPtr CPointer);
+            static extern FloatRect sfText_getGlobalBounds(IntPtr CPointer);
 
             #endregion
         }

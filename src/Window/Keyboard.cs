@@ -134,12 +134,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool IsKeyPressed(Key key)
             {
-                return sfKeyboard_IsKeyPressed(key);
+                return sfKeyboard_isKeyPressed(key);
             }
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfKeyboard_IsKeyPressed(Key Key);
+            static extern bool sfKeyboard_isKeyPressed(Key Key);
             #endregion
         }
     }

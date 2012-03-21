@@ -21,7 +21,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Context()
             {
-                myThis = sfContext_Create();
+                myThis = sfContext_create();
             }
 
             ////////////////////////////////////////////////////////////
@@ -31,7 +31,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             ~Context()
             {
-                sfContext_Destroy(myThis);
+                sfContext_destroy(myThis);
             }
 
             ////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetActive(bool active)
             {
-                sfContext_SetActive(myThis, active);
+                sfContext_setActive(myThis, active);
             }
 
             ////////////////////////////////////////////////////////////
@@ -78,13 +78,13 @@ namespace SFML
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfContext_Create();
+            static extern IntPtr sfContext_create();
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfContext_Destroy(IntPtr View);
+            static extern void sfContext_destroy(IntPtr View);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfContext_SetActive(IntPtr View, bool Active);
+            static extern void sfContext_setActive(IntPtr View, bool Active);
             #endregion
         }
     }

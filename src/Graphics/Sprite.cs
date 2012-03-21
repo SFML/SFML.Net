@@ -21,7 +21,7 @@ namespace SFML
             /// </summary>
             ////////////////////////////////////////////////////////////
             public Sprite() :
-                base(sfSprite_Create())
+                base(sfSprite_create())
             {
             }
 
@@ -32,7 +32,7 @@ namespace SFML
             /// <param name="texture">Source texture to assign to the sprite</param>
             ////////////////////////////////////////////////////////////
             public Sprite(Texture texture) :
-                base(sfSprite_Create())
+                base(sfSprite_create())
             {
                 Texture = texture;
             }
@@ -45,7 +45,7 @@ namespace SFML
             /// <param name="rectangle">Sub-rectangle of the texture to assign to the sprite</param>
             ////////////////////////////////////////////////////////////
             public Sprite(Texture texture, IntRect rectangle) :
-                base(sfSprite_Create())
+                base(sfSprite_create())
             {
                 Texture = texture;
                 TextureRect = rectangle;
@@ -58,7 +58,7 @@ namespace SFML
             /// <param name="copy">Sprite to copy</param>
             ////////////////////////////////////////////////////////////
             public Sprite(Sprite copy) :
-                base(sfSprite_Copy(copy.CPointer))
+                base(sfSprite_copy(copy.CPointer))
             {
                 Origin = copy.Origin;
                 Position = copy.Position;
@@ -75,8 +75,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Color Color
             {
-                get { return sfSprite_GetColor(CPointer); }
-                set { sfSprite_SetColor(CPointer, value); }
+                get { return sfSprite_getColor(CPointer); }
+                set { sfSprite_setColor(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ namespace SFML
             public Texture Texture
             {
                 get { return myTexture; }
-                set { myTexture = value; sfSprite_SetTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
+                set { myTexture = value; sfSprite_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -97,8 +97,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public IntRect TextureRect
             {
-                get { return sfSprite_GetTextureRect(CPointer); }
-                set { sfSprite_SetTextureRect(CPointer, value); }
+                get { return sfSprite_getTextureRect(CPointer); }
+                set { sfSprite_setTextureRect(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -115,7 +115,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect GetLocalBounds()
             {
-                return sfSprite_GetLocalBounds(CPointer);
+                return sfSprite_getLocalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -132,7 +132,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect GetGlobalBounds()
             {
-                return sfSprite_GetGlobalBounds(CPointer);
+                return sfSprite_getGlobalBounds(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -167,11 +167,11 @@ namespace SFML
 
                 if (target is RenderWindow)
                 {
-                    sfRenderWindow_DrawSprite(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderWindow_drawSprite(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
                 }
                 else if (target is RenderTexture)
                 {
-                    sfRenderTexture_DrawSprite(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderTexture_drawSprite(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
                 }
             }
 
@@ -183,7 +183,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                sfSprite_Destroy(CPointer);
+                sfSprite_destroy(CPointer);
             }
 
             private Texture myTexture = null;
@@ -191,40 +191,40 @@ namespace SFML
             #region Imports
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSprite_Create();
+            static extern IntPtr sfSprite_create();
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfSprite_Copy(IntPtr Sprite);
+            static extern IntPtr sfSprite_copy(IntPtr Sprite);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSprite_Destroy(IntPtr CPointer);
+            static extern void sfSprite_destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSprite_SetColor(IntPtr CPointer, Color Color);
+            static extern void sfSprite_setColor(IntPtr CPointer, Color Color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Color sfSprite_GetColor(IntPtr CPointer);
+            static extern Color sfSprite_getColor(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_DrawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
+            static extern void sfRenderWindow_drawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderTexture_DrawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
+            static extern void sfRenderTexture_drawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSprite_SetTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
+            static extern void sfSprite_setTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfSprite_SetTextureRect(IntPtr CPointer, IntRect Rect);
+            static extern void sfSprite_setTextureRect(IntPtr CPointer, IntRect Rect);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntRect sfSprite_GetTextureRect(IntPtr CPointer);
+            static extern IntRect sfSprite_getTextureRect(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfSprite_GetLocalBounds(IntPtr CPointer);
+            static extern FloatRect sfSprite_getLocalBounds(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfSprite_GetGlobalBounds(IntPtr CPointer);
+            static extern FloatRect sfSprite_getGlobalBounds(IntPtr CPointer);
 
             #endregion
         }

@@ -51,7 +51,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool IsValid()
             {
-                return sfVideoMode_IsValid(this);
+                return sfVideoMode_isValid(this);
             }
 
             ////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ namespace SFML
                     unsafe
                     {
                         uint Count;
-                        VideoMode* ModesPtr = sfVideoMode_GetFullscreenModes(out Count);
+                        VideoMode* ModesPtr = sfVideoMode_getFullscreenModes(out Count);
                         VideoMode[] Modes = new VideoMode[Count];
                         for (uint i = 0; i < Count; ++i)
                             Modes[i] = ModesPtr[i];
@@ -83,7 +83,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static VideoMode DesktopMode
             {
-                get {return sfVideoMode_GetDesktopMode();}
+                get {return sfVideoMode_getDesktopMode();}
             }
 
             ////////////////////////////////////////////////////////////
@@ -111,13 +111,13 @@ namespace SFML
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern VideoMode sfVideoMode_GetDesktopMode();
+            static extern VideoMode sfVideoMode_getDesktopMode();
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            unsafe static extern VideoMode* sfVideoMode_GetFullscreenModes(out uint Count);
+            unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out uint Count);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfVideoMode_IsValid(VideoMode Mode);
+            static extern bool sfVideoMode_isValid(VideoMode Mode);
             #endregion
         }
     }
