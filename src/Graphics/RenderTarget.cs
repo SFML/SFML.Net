@@ -56,25 +56,23 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Convert a point in target coordinates into view coordinates
-            /// This version uses the current view of the window
+            /// This version uses the current view of the target
             /// </summary>
-            /// <param name="x">X coordinate of the point to convert, relative to the target</param>
-            /// <param name="y">Y coordinate of the point to convert, relative to the target</param>
+            /// <param name="point">Point to convert, relative to the target</param>
             /// <returns>Converted point</returns>
             ////////////////////////////////////////////////////////////
-            Vector2f ConvertCoords(uint x, uint y);
+            Vector2f ConvertCoords(Vector2i point);
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Convert a point in target coordinates into view coordinates
             /// This version uses the given view
             /// </summary>
-            /// <param name="x">X coordinate of the point to convert, relative to the target</param>
-            /// <param name="y">Y coordinate of the point to convert, relative to the target</param>
+            /// <param name="point">Point to convert, relative to the target</param>
             /// <param name="view">Target view to convert the point to</param>
             /// <returns>Converted point</returns>
             ////////////////////////////////////////////////////////////
-            Vector2f ConvertCoords(uint x, uint y, View view);
+            Vector2f ConvertCoords(Vector2i point, View view);
 
             ////////////////////////////////////////////////////////////
             /// <summary>

@@ -316,16 +316,15 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Convert a point in target coordinates into view coordinates
-            /// This version uses the current view of the window
+            /// This version uses the current view of the target
             /// </summary>
-            /// <param name="x">X coordinate of the point to convert, relative to the target</param>
-            /// <param name="y">Y coordinate of the point to convert, relative to the target</param>
+            /// <param name="point">Point to convert, relative to the target</param>
             /// <returns>Converted point</returns>
             ///
             ////////////////////////////////////////////////////////////
-            public Vector2f ConvertCoords(uint x, uint y)
+            public Vector2f ConvertCoords(Vector2i point)
             {
-                return ConvertCoords(x, y, GetView());
+                return ConvertCoords(point, GetView());
             }
 
             ////////////////////////////////////////////////////////////
@@ -333,18 +332,14 @@ namespace SFML
             /// Convert a point in target coordinates into view coordinates
             /// This version uses the given view
             /// </summary>
-            /// <param name="x">X coordinate of the point to convert, relative to the target</param>
-            /// <param name="y">Y coordinate of the point to convert, relative to the target</param>
+            /// <param name="point">Point to convert, relative to the target</param>
             /// <param name="view">Target view to convert the point to</param>
             /// <returns>Converted point</returns>
             ///
             ////////////////////////////////////////////////////////////
-            public Vector2f ConvertCoords(uint x, uint y, View view)
+            public Vector2f ConvertCoords(Vector2i point, View view)
             {
-                Vector2f point;
-                sfRenderWindow_convertCoords(CPointer, x, y, out point.X, out point.Y, view.CPointer);
-
-                return point;
+                return sfRenderWindow_convertCoords(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
@@ -667,7 +662,7 @@ namespace SFML
             static extern IntRect sfRenderWindow_getViewport(IntPtr CPointer, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_convertCoords(IntPtr CPointer, uint WindowX, uint WindowY, out float ViewX, out float ViewY, IntPtr TargetView);
+            static extern Vector2f sfRenderWindow_convertCoords(IntPtr CPointer, Vector2i point, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern void sfRenderWindow_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
