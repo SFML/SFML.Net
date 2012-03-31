@@ -258,7 +258,8 @@ namespace SFML
             {
                 get
                 {
-                    byte[] PixelsPtr = new byte[Width * Height * 4];
+                    Vector2u size = Size;
+                    byte[] PixelsPtr = new byte[size.X * size.Y * 4];
                     Marshal.Copy(sfImage_getPixelsPtr(CPointer), PixelsPtr, 0, PixelsPtr.Length);
                     return PixelsPtr;
                 }
@@ -266,22 +267,12 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Width of the image, in pixels
+            /// Size of the image, in pixels
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint Width
+            public Vector2u Size
             {
-                get {return sfImage_getWidth(CPointer);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Height of the image, in pixels
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public uint Height
-            {
-                get {return sfImage_getHeight(CPointer);}
+                get {return sfImage_getSize(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -313,8 +304,7 @@ namespace SFML
             public override string ToString()
             {
                 return "[Image]" +
-                       " Width(" + Width + ")" +
-                       " Height(" + Height + ")";
+                       " Size(" + Size + ")";
             }
 
             ////////////////////////////////////////////////////////////
@@ -377,10 +367,7 @@ namespace SFML
             static extern IntPtr sfImage_getPixelsPtr(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfImage_getWidth(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfImage_getHeight(IntPtr CPointer);
+            static extern Vector2u sfImage_getSize(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern uint sfImage_flipHorizontally(IntPtr CPointer);

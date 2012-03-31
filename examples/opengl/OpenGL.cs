@@ -38,7 +38,7 @@ namespace opengl
             {
                 Gl.glGenTextures(1, out texture);
                 Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-                Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, (int)image.Width, (int)image.Height, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, image.Pixels);
+                Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, (int)image.Size.X, (int)image.Size.Y, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, image.Pixels);
                 Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR);
                 Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR);
             }

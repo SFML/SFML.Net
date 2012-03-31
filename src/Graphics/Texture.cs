@@ -147,7 +147,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Update(byte[] pixels)
             {
-                Update(pixels, Width, Height, 0, 0);
+                Vector2u size = Size;
+                Update(pixels, size.X, size.Y, 0, 0);
             }
 
             ////////////////////////////////////////////////////////////
@@ -277,22 +278,12 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Width of the texture, in pixels
+            /// Size of the texture, in pixels
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint Width
+            public Vector2u Size
             {
-                get {return sfTexture_getWidth(CPointer);}
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Height of the texture, in pixels
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public uint Height
-            {
-                get {return sfTexture_getHeight(CPointer);}
+                get {return sfTexture_getSize(CPointer);}
             }
 
             ////////////////////////////////////////////////////////////
@@ -314,8 +305,7 @@ namespace SFML
             public override string ToString()
             {
                 return "[Texture]" +
-                       " Width(" + Width + ")" +
-                       " Height(" + Height + ")" +
+                       " Size(" + Size + ")" +
                        " Smooth(" + Smooth + ")" +
                        " Repeated(" + Repeated + ")";
             }
@@ -374,10 +364,7 @@ namespace SFML
             static extern void sfTexture_destroy(IntPtr texture);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfTexture_getWidth(IntPtr texture);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfTexture_getHeight(IntPtr texture);
+            static extern Vector2u sfTexture_getSize(IntPtr texture);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfTexture_copyToImage(IntPtr texture);
