@@ -266,7 +266,7 @@ namespace SFML
                 }
                 else if (target is RenderTexture)
                 {
-                    sfRenderWindow_drawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                    sfRenderTexture_drawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
                 }
             }
 
