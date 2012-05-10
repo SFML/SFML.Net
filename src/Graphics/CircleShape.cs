@@ -31,7 +31,7 @@ namespace SFML
             /// <param name="radius">Radius of the shape</param>
             ////////////////////////////////////////////////////////////
             public CircleShape(float radius) :
-                this(0, 30)
+                this(radius, 30)
             {
             }
 
