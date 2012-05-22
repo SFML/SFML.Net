@@ -31,7 +31,7 @@ namespace SFML
             /// <param name="transform">Transform to use</param>
             ////////////////////////////////////////////////////////////
             public RenderStates(Transform transform) :
-                this(BlendMode.Alpha, new Transform(transform), null, null)
+                this(BlendMode.Alpha, transform, null, null)
             {
 
             }
@@ -86,7 +86,7 @@ namespace SFML
             public RenderStates(RenderStates copy)
             {
                 BlendMode = copy.BlendMode;
-                Transform = new Transform(copy.Transform);
+                Transform = copy.Transform;
                 Texture = copy.Texture;
                 Shader = copy.Shader;
             }
@@ -116,7 +116,7 @@ namespace SFML
             {
                 MarshalData data = new MarshalData();
                 data.blendMode = BlendMode;
-                data.transform = Transform != null ? Transform.CPointer : IntPtr.Zero;
+                data.transform = Transform;
                 data.texture = Texture != null ? Texture.CPointer : IntPtr.Zero;
                 data.shader = Shader != null ? Shader.CPointer : IntPtr.Zero;
 
@@ -127,7 +127,7 @@ namespace SFML
             internal struct MarshalData
             {
                 public BlendMode blendMode;
-                public IntPtr transform;
+                public Transform transform;
                 public IntPtr texture;
                 public IntPtr shader;
             }

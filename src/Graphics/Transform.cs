@@ -12,20 +12,9 @@ namespace SFML
         /// Define a 3x3 transform matrix
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public class Transform : ObjectBase
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Transform
         {
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Default constructor.
-            ///
-            /// Creates an identity transform (a transform that does nothing).
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public Transform() :
-                base(sfTransform_create())
-            {
-            }
-
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Construct a transform from a 3x3 matrix
@@ -42,39 +31,11 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform(float a00, float a01, float a02,
                              float a10, float a11, float a12,
-                             float a20, float a21, float a22) :
-                base(sfTransform_createFromMatrix(a00, a01, a02,
-                                                  a10, a11, a12,
-                                                  a20, a21, a22))
+                             float a20, float a21, float a22)
             {
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Construct the transform from another
-            /// </summary>
-            /// <param name="transform">Transform to copy</param>
-            ////////////////////////////////////////////////////////////
-            public Transform(Transform transform) :
-                this(sfTransform_copy(transform.CPointer))
-            {
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Return the transform as a 4x4 matrix.
-            /// 
-            /// This function returns an array of 16 floats containing
-            /// the transform elements as a 4x4 matrix, which
-            /// is directly compatible with OpenGL functions.
-            /// </summary>
-            /// <returns>Array containing the 4x4 matrix</returns>
-            ////////////////////////////////////////////////////////////
-            public float[] GetMatrix()
-            {
-                float[] matrix = new float[4 * 4];
-                Marshal.Copy(sfTransform_getMatrix(CPointer), matrix, 0, matrix.Length);
-                return matrix;
+                m00 = a00; m01 = a01; m02 = a02;
+                m10 = a10; m11 = a11; m12 = a12;
+                m20 = a20; m21 = a21; m22 = a22;
             }
 
             ////////////////////////////////////////////////////////////
@@ -88,9 +49,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Transform GetInverse()
             {
-                IntPtr cPointer = IntPtr.Zero;
-                sfTransform_getInverse(CPointer, out cPointer);
-                return new Transform(cPointer);
+                return sfTransform_getInverse(ref this);
             }
 
             ////////////////////////////////////////////////////////////
@@ -115,7 +74,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f TransformPoint(Vector2f point)
             {
-                return sfTransform_transformPoint(CPointer, point);
+                return sfTransform_transformPoint(ref this, point);
             }
 
             ////////////////////////////////////////////////////////////
@@ -133,7 +92,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect TransformRect(FloatRect rectangle)
             {
-                return sfTransform_transformRect(CPointer, rectangle);
+                return sfTransform_transformRect(ref this, rectangle);
             }
 
             ////////////////////////////////////////////////////////////
@@ -143,64 +102,46 @@ namespace SFML
             /// The result is a transform that is equivalent to applying
             /// this followed by transform. Mathematically, it is
             /// equivalent to a matrix multiplication.
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
             /// </summary>
             /// <param name="transform">Transform to combine to this transform</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Combine(Transform transform)
+            public void Combine(Transform transform)
             {
-                sfTransform_combine(CPointer, transform.CPointer);
-                return this;
+                sfTransform_combine(ref this, ref transform);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Combine the current transform with a translation.
-            /// 
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
             /// </summary>
             /// <param name="x">Offset to apply on X axis</param>
             /// <param name="y">Offset to apply on Y axis</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Translate(float x, float y)
+            public void Translate(float x, float y)
             {
-                sfTransform_translate(CPointer, x, y);
-                return this;
+                sfTransform_translate(ref this, x, y);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Combine the current transform with a translation.
-            /// 
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
             /// </summary>
             /// <param name="offset">Translation offset to apply</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Translate(Vector2f offset)
+            public void Translate(Vector2f offset)
             {
-                return Translate(offset.X, offset.Y);
+                Translate(offset.X, offset.Y);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Combine the current transform with a rotation.
-            /// 
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
             /// </summary>
             /// <param name="angle">Rotation angle, in degrees</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Rotate(float angle)
+            public void Rotate(float angle)
             {
-                sfTransform_rotate(CPointer, angle);
-                return this;
+                sfTransform_rotate(ref this, angle);
             }
 
             ////////////////////////////////////////////////////////////
@@ -210,19 +151,15 @@ namespace SFML
             /// The center of rotation is provided for convenience as a second
             /// argument, so that you can build rotations around arbitrary points
             /// more easily (and efficiently) than the usual
-            /// Translate(-center).Rotate(angle).Translate(center).
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
+            /// Translate(-center); Rotate(angle); Translate(center).
             /// </summary>
             /// <param name="angle">Rotation angle, in degrees</param>
             /// <param name="centerX">X coordinate of the center of rotation</param>
             /// <param name="centerY">Y coordinate of the center of rotation</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Rotate(float angle, float centerX, float centerY)
+            public void Rotate(float angle, float centerX, float centerY)
             {
-                sfTransform_rotateWithCenter(CPointer, angle, centerX, centerY);
-                return this;
+                sfTransform_rotateWithCenter(ref this, angle, centerX, centerY);
             }
 
             ////////////////////////////////////////////////////////////
@@ -232,34 +169,26 @@ namespace SFML
             /// The center of rotation is provided for convenience as a second
             /// argument, so that you can build rotations around arbitrary points
             /// more easily (and efficiently) than the usual
-            /// Translate(-center).Rotate(angle).Translate(center).
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
+            /// Translate(-center); Rotate(angle); Translate(center).
             /// </summary>
             /// <param name="angle">Rotation angle, in degrees</param>
             /// <param name="center">Center of rotation</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Rotate(float angle, Vector2f center)
+            public void Rotate(float angle, Vector2f center)
             {
-                return Rotate(angle, center.X, center.Y);
+                Rotate(angle, center.X, center.Y);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Combine the current transform with a scaling.
-            /// 
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
             /// </summary>
             /// <param name="scaleX">Scaling factor on the X axis</param>
             /// <param name="scaleY">Scaling factor on the Y axis</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Scale(float scaleX, float scaleY)
+            public void Scale(float scaleX, float scaleY)
             {
-                sfTransform_scale(CPointer, scaleX, scaleY);
-                return this;
+                sfTransform_scale(ref this, scaleX, scaleY);
             }
 
             ////////////////////////////////////////////////////////////
@@ -269,35 +198,27 @@ namespace SFML
             /// The center of scaling is provided for convenience as a second
             /// argument, so that you can build scaling around arbitrary points
             /// more easily (and efficiently) than the usual
-            /// Translate(-center).Scale(factors).Translate(center).
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
+            /// Translate(-center); Scale(factors); Translate(center).
             /// </summary>
             /// <param name="scaleX">Scaling factor on X axis</param>
             /// <param name="scaleY">Scaling factor on Y axis</param>
             /// <param name="centerX">X coordinate of the center of scaling</param>
             /// <param name="centerY">Y coordinate of the center of scaling</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Scale(float scaleX, float scaleY, float centerX, float centerY)
+            public void Scale(float scaleX, float scaleY, float centerX, float centerY)
             {
-                sfTransform_scaleWithCenter(CPointer, scaleX, scaleY, centerX, centerY);
-                return this;
+                sfTransform_scaleWithCenter(ref this, scaleX, scaleY, centerX, centerY);
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Combine the current transform with a scaling.
-            /// 
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
             /// </summary>
             /// <param name="factors">Scaling factors</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Scale(Vector2f factors)
+            public void Scale(Vector2f factors)
             {
-                return Scale(factors.X, factors.Y);
+                Scale(factors.X, factors.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -307,17 +228,14 @@ namespace SFML
             /// The center of scaling is provided for convenience as a second
             /// argument, so that you can build scaling around arbitrary points
             /// more easily (and efficiently) than the usual
-            /// Translate(-center).Scale(factors).Translate(center).
-            /// This function returns a reference to self, so that calls
-            /// can be chained.
+            /// Translate(-center); Scale(factors); Translate(center).
             /// </summary>
             /// <param name="factors">Scaling factors</param>
             /// <param name="center">Center of scaling</param>
-            /// <returns>Reference to self</returns>
             ////////////////////////////////////////////////////////////
-            public Transform Scale(Vector2f factors, Vector2f center)
+            public void Scale(Vector2f factors, Vector2f center)
             {
-                return Scale(factors.X, factors.Y, center.X, center.Y);
+                Scale(factors.X, factors.Y, center.X, center.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -331,7 +249,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Transform operator *(Transform left, Transform right)
             {
-                return new Transform(left).Combine(right);
+                left.Combine(right);
+                return left;
             }
 
             ////////////////////////////////////////////////////////////
@@ -353,7 +272,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Transform Identity
             {
-                get { return new Transform(); }
+                get
+                {
+                    return new Transform(1, 0, 0,
+                                         0, 1, 0,
+                                         0, 0, 1);
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -365,75 +289,45 @@ namespace SFML
             public override string ToString()
             {
                 return "[Transform]" +
-                       " Matrix(" + GetMatrix() + ")";
+                       " Matrix(" +
+                       m00 + ", " + m01 + ", " + m02 +
+                       m10 + ", " + m11 + ", " + m12 +
+                       m20 + ", " + m21 + ", " + m22 +
+                       ")";
             }
 
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Internal constructor
-            /// </summary>
-            /// <param name="cPointer">Pointer to the object in C library</param>
-            ////////////////////////////////////////////////////////////
-            internal Transform(IntPtr cPointer) :
-                base(cPointer)
-            {
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Handle the destruction of the object
-            /// </summary>
-            /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
-            ////////////////////////////////////////////////////////////
-            protected override void Destroy(bool disposing)
-            {
-                sfTransform_destroy(CPointer);
-            }
+            float m00, m01, m02;
+            float m10, m11, m12;
+            float m20, m21, m22;
 
             #region Imports
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_create();
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_createFromMatrix(float a00, float a01, float a02,
-                                                              float a10, float a11, float a12,
-                                                              float a20, float a21, float a22);
+            static extern Transform sfTransform_getInverse(ref Transform transform);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_copy(IntPtr transform);
+            static extern Vector2f sfTransform_transformPoint(ref Transform transform, Vector2f point);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_destroy(IntPtr transform);
+            static extern FloatRect sfTransform_transformRect(ref Transform transform, FloatRect rectangle);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfTransform_getMatrix(IntPtr transform);
+            static extern void sfTransform_combine(ref Transform transform, ref Transform other);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_getInverse(IntPtr transform, out IntPtr inverse);
+            static extern void sfTransform_translate(ref Transform transform, float x, float y);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2f sfTransform_transformPoint(IntPtr transform, Vector2f point);
+            static extern void sfTransform_rotate(ref Transform transform, float angle);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfTransform_transformRect(IntPtr transform, FloatRect rectangle);
+            static extern void sfTransform_rotateWithCenter(ref Transform transform, float angle, float centerX, float centerY);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_combine(IntPtr transform, IntPtr other);
+            static extern void sfTransform_scale(ref Transform transform, float scaleX, float scaleY);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_translate(IntPtr transform, float x, float y);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_rotate(IntPtr transform, float angle);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_rotateWithCenter(IntPtr transform, float angle, float centerX, float centerY);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_scale(IntPtr transform, float scaleX, float scaleY);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfTransform_scaleWithCenter( IntPtr transform, float scaleX, float scaleY, float centerX, float centerY);
+            static extern void sfTransform_scaleWithCenter(ref Transform transform, float scaleX, float scaleY, float centerX, float centerY);
 
             #endregion
         }

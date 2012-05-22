@@ -227,7 +227,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void SetParameter(string name, Transform transform)
             {
-                sfShader_setTransformParameter(CPointer, name, transform.CPointer);
+                sfShader_setTransformParameter(CPointer, name, transform);
             }
 
             ////////////////////////////////////////////////////////////
@@ -387,7 +387,7 @@ namespace SFML
             static extern void sfShader_setColorParameter(IntPtr shader, string name, Color color);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_setTransformParameter(IntPtr shader, string name, IntPtr transform);
+            static extern void sfShader_setTransformParameter(IntPtr shader, string name, Transform transform);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfShader_setTextureParameter(IntPtr shader, string name, IntPtr texture);

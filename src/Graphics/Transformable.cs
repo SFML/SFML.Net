@@ -51,8 +51,8 @@ namespace SFML
                 set
                 {
                     myPosition = value;
-                    myTransform = null;
-                    myInverseTransform = null;
+                    myTransformNeedUpdate = true;
+                    myInverseNeedUpdate = true;
                 }
             }
 
@@ -70,8 +70,8 @@ namespace SFML
                 set
                 {
                     myRotation = value;
-                    myTransform = null;
-                    myInverseTransform = null;
+                    myTransformNeedUpdate = true;
+                    myInverseNeedUpdate = true;
                 }
             }
 
@@ -89,8 +89,8 @@ namespace SFML
                 set
                 {
                     myScale = value;
-                    myTransform = null;
-                    myInverseTransform = null;
+                    myTransformNeedUpdate = true;
+                    myInverseNeedUpdate = true;
                 }
             }
 
@@ -112,8 +112,8 @@ namespace SFML
                 set
                 {
                     myOrigin = value;
-                    myTransform = null;
-                    myInverseTransform = null;
+                    myTransformNeedUpdate = true;
+                    myInverseNeedUpdate = true;
                 }
             }
 
@@ -126,8 +126,10 @@ namespace SFML
             {
                 get
                 {
-                    if (myTransform == null)
+                    if (myTransformNeedUpdate)
                     {
+                        myTransformNeedUpdate = false;
+
                         float angle  = -myRotation * 3.141592654F / 180.0F;
                         float cosine = (float)Math.Cos(angle);
                         float sine   = (float)Math.Sin(angle);
@@ -155,8 +157,11 @@ namespace SFML
             {
                 get
                 {
-                    if (myInverseTransform == null)
+                    if (myInverseNeedUpdate)
+                    {
+                        myTransformNeedUpdate = false;
                         myInverseTransform = Transform.GetInverse();
+                    }
                     return myInverseTransform;
                 }
             }
@@ -184,12 +189,14 @@ namespace SFML
                 // or not the final object (if used as a base for a drawable class)
             }
 
-            private Vector2f  myOrigin           = new Vector2f(0, 0);
-            private Vector2f  myPosition         = new Vector2f(0, 0);
-            private float     myRotation         = 0;
-            private Vector2f  myScale            = new Vector2f(1, 1);
-            private Transform myTransform        = null;
-            private Transform myInverseTransform = null;
-       }
+            private Vector2f  myOrigin              = new Vector2f(0, 0);
+            private Vector2f  myPosition            = new Vector2f(0, 0);
+            private float     myRotation            = 0;
+            private Vector2f  myScale               = new Vector2f(1, 1);
+            private Transform myTransform;
+            private Transform myInverseTransform;
+            private bool      myTransformNeedUpdate = true;
+            private bool      myInverseNeedUpdate   = true;
+        }
     }
 }
