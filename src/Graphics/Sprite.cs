@@ -132,7 +132,9 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect GetGlobalBounds()
             {
-                return sfSprite_getGlobalBounds(CPointer);
+                // we don't use the native getGlobalBounds function,
+                // because we override the object's transform
+                return Transform.TransformRect(GetLocalBounds());
             }
 
             ////////////////////////////////////////////////////////////
@@ -222,9 +224,6 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern FloatRect sfSprite_getLocalBounds(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfSprite_getGlobalBounds(IntPtr CPointer);
 
             #endregion
         }

@@ -119,7 +119,9 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public FloatRect GetGlobalBounds()
             {
-                return sfShape_getGlobalBounds(CPointer);
+                // we don't use the native getGlobalBounds function,
+                // because we override the object's transform
+                return Transform.TransformRect(GetLocalBounds());
             }
 
             ////////////////////////////////////////////////////////////
@@ -282,9 +284,6 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern FloatRect sfShape_getLocalBounds(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern FloatRect sfShape_getGlobalBounds(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfShape_update(IntPtr CPointer);
