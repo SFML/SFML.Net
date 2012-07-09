@@ -20,7 +20,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public enum Key
             {
-                A,            // The A key
+                Unknown = -1, // Unhandled key
+                A = 0,        // The A key
                 B,            // The B key
                 C,            // The C key
                 D,            // The D key
