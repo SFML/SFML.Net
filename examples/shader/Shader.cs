@@ -33,17 +33,28 @@ namespace shader
             }
             else
             {
-                Text error = new Text("Shader not\nsupported");
+                Text error = new Text("Shader not\nsupported", GetFont());
                 error.Position = new Vector2f(320, 200);
                 error.CharacterSize = 36;
                 target.Draw(error, states);
             }
         }
 
+        public static void SetFont(Font font)
+        {
+            ourFont = font;
+        }
+
         protected abstract void OnUpdate(float time, float x, float y);
         protected abstract void OnDraw(RenderTarget target, RenderStates states);
 
+        protected Font GetFont()
+        {
+            return ourFont;
+        }
+
         private string myName;
+        private static Font ourFont = null;
     }
 
     /// <summary>"Pixelate" fragment shader</summary>
@@ -83,24 +94,26 @@ namespace shader
         public WaveBlur() : base("wave + blur")
         {
             // Create the text
-            myText = new Text("Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
-                              "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
-                              "Praesent cursus ultrices justo, ut feugiat ante vehicula quis.\n" +
-                              "Donec fringilla scelerisque mauris et viverra.\n" +
-                              "Maecenas adipiscing ornare scelerisque. Nullam at libero elit.\n" +
-                              "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
-                              "Nullam leo urna, tincidunt id semper eget, ultricies sed mi.\n" +
-                              "Morbi mauris massa, commodo id dignissim vel, lobortis et elit.\n" +
-                              "Fusce vel libero sed neque scelerisque venenatis.\n" +
-                              "Integer mattis tincidunt quam vitae iaculis.\n" +
-                              "Vivamus fringilla sem non velit venenatis fermentum.\n" +
-                              "Vivamus varius tincidunt nisi id vehicula.\n" +
-                              "Integer ullamcorper, enim vitae euismod rutrum, massa nisl semper ipsum,\n" +
-                              "vestibulum sodales sem ante in massa.\n" +
-                              "Vestibulum in augue non felis convallis viverra.\n" +
-                              "Mauris ultricies dolor sed massa convallis sed aliquet augue fringilla.\n" +
-                              "Duis erat eros, porta in accumsan in, blandit quis sem.\n" +
-                              "In hac habitasse platea dictumst. Etiam fringilla est id odio dapibus sit amet semper dui laoreet.\n");
+            myText = new Text();
+            myText.DisplayedString = "Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
+                                     "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
+                                     "Praesent cursus ultrices justo, ut feugiat ante vehicula quis.\n" +
+                                     "Donec fringilla scelerisque mauris et viverra.\n" +
+                                     "Maecenas adipiscing ornare scelerisque. Nullam at libero elit.\n" +
+                                     "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
+                                     "Nullam leo urna, tincidunt id semper eget, ultricies sed mi.\n" +
+                                     "Morbi mauris massa, commodo id dignissim vel, lobortis et elit.\n" +
+                                     "Fusce vel libero sed neque scelerisque venenatis.\n" +
+                                     "Integer mattis tincidunt quam vitae iaculis.\n" +
+                                     "Vivamus fringilla sem non velit venenatis fermentum.\n" +
+                                     "Vivamus varius tincidunt nisi id vehicula.\n" +
+                                     "Integer ullamcorper, enim vitae euismod rutrum, massa nisl semper ipsum,\n" +
+                                     "vestibulum sodales sem ante in massa.\n" +
+                                     "Vestibulum in augue non felis convallis viverra.\n" +
+                                     "Mauris ultricies dolor sed massa convallis sed aliquet augue fringilla.\n" +
+                                     "Duis erat eros, porta in accumsan in, blandit quis sem.\n" +
+                                     "In hac habitasse platea dictumst. Etiam fringilla est id odio dapibus sit amet semper dui laoreet.\n";
+            myText.Font = GetFont();
             myText.CharacterSize = 22;
             myText.Position = new Vector2f(30, 20);
 
@@ -254,6 +267,10 @@ namespace shader
             window.Closed     += new EventHandler(OnClosed);
             window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
 
+            // Load the application font and pass it to the Effect class
+            Font font = new Font("resources/sansation.ttf");
+            Effect.SetFont(font);
+
             // Create the effects
             effects = new Effect[]
             {
@@ -269,9 +286,6 @@ namespace shader
             Sprite textBackground = new Sprite(textBackgroundTexture);
             textBackground.Position = new Vector2f(0, 520);
             textBackground.Color = new Color(255, 255, 255, 200);
-
-            // Load the messages font
-            Font font = new Font("resources/sansation.ttf");
 
             // Create the description text
             description = new Text("Current effect: " + effects[current].Name, font, 20);

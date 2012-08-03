@@ -41,18 +41,7 @@ namespace SFML
             /// </summary>
             ////////////////////////////////////////////////////////////
             public Text() :
-                this("")
-            {
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Construct the text from a string
-            /// </summary>
-            /// <param name="str">String to display</param>
-            ////////////////////////////////////////////////////////////
-            public Text(string str) :
-                this(str, Font.DefaultFont)
+                this("", null)
             {
             }
 
@@ -283,7 +272,7 @@ namespace SFML
                 sfText_destroy(CPointer);
             }
 
-            private Font myFont = Font.DefaultFont;
+            private Font myFont = null;
 
             #region Imports
 

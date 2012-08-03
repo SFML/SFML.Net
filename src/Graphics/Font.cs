@@ -115,22 +115,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Default built-in font
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public static Font DefaultFont
-            {
-                get
-                {
-                    if (ourDefaultFont == null)
-                        ourDefaultFont = new Font(sfFont_getDefaultFont());
-
-                    return ourDefaultFont;
-                }
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -148,25 +132,22 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
-                if (this != ourDefaultFont)
+                if (!disposing)
+                    Context.Global.SetActive(true);
+
+                sfFont_destroy(CPointer);
+
+                if (disposing)
                 {
-                    if (!disposing)
-                        Context.Global.SetActive(true);
+                    foreach (Texture texture in myTextures.Values)
+                        texture.Dispose();
 
-                    sfFont_destroy(CPointer);
-
-                    if (disposing)
-                    {
-                        foreach (Texture texture in myTextures.Values)
-                            texture.Dispose();
-
-                        if (myStream != null)
-                            myStream.Dispose();
-                    }
-
-                    if (!disposing)
-                        Context.Global.SetActive(false);
+                    if (myStream != null)
+                        myStream.Dispose();
                 }
+
+                if (!disposing)
+                    Context.Global.SetActive(false);
             }
 
             ////////////////////////////////////////////////////////////
@@ -182,7 +163,6 @@ namespace SFML
 
             private Dictionary<uint, Texture> myTextures = new Dictionary<uint, Texture>();
             private StreamAdaptor myStream = null;
-            private static Font ourDefaultFont = null;
 
             #region Imports
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -208,9 +188,6 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_getTexture(IntPtr CPointer, uint characterSize);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfFont_getDefaultFont();
             #endregion
         }
     }

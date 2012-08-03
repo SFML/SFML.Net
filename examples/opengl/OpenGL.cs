@@ -26,7 +26,7 @@ namespace opengl
             Sprite background = new Sprite(new Texture("resources/background.jpg"));
 
             // Create a text to display
-            Text text = new Text("SFML / OpenGL demo");
+            Text text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
             text.Position = new Vector2f(250.0F, 450.0F);
             text.Color = new Color(255, 255, 255, 170);
 
