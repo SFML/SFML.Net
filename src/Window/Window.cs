@@ -382,6 +382,32 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Internal function to get the mouse position relatively to the window.
+            /// This function is public because it is called by another class of
+            /// another module, it is not meant to be called by users.
+            /// </summary>
+            /// <returns>Relative mouse position</returns>
+            ////////////////////////////////////////////////////////////
+            public virtual Vector2i InternalGetMousePosition()
+            {
+                return sfMouse_getPosition(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Internal function to set the mouse position relatively to the window.
+            /// This function is public because it is called by another class of
+            /// another module, it is not meant to be called by users.
+            /// </summary>
+            /// <param name="position">Relative mouse position</param>
+            ////////////////////////////////////////////////////////////
+            public virtual void InternalSetMousePosition(Vector2i position)
+            {
+                sfMouse_setPosition(position, CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Handle the destruction of the object
             /// </summary>
             /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
@@ -619,6 +645,12 @@ namespace SFML
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfWindow_getSystemHandle(IntPtr CPointer);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
 
             #endregion
         }

@@ -574,6 +574,32 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Internal function to get the mouse position relatively to the window.
+            /// This function is public because it is called by another class,
+            /// it is not meant to be called by users.
+            /// </summary>
+            /// <returns>Relative mouse position</returns>
+            ////////////////////////////////////////////////////////////
+            public override Vector2i InternalGetMousePosition()
+            {
+                return sfMouse_getPositionRenderWindow(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Internal function to set the mouse position relatively to the window.
+            /// This function is public because it is called by another class,
+            /// it is not meant to be called by users.
+            /// </summary>
+            /// <param name="position">Relative mouse position</param>
+            ////////////////////////////////////////////////////////////
+            public override void InternalSetMousePosition(Vector2i position)
+            {
+                sfMouse_setPositionRenderWindow(position, CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Handle the destruction of the object
             /// </summary>
             /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
@@ -710,6 +736,12 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfRenderWindow_capture(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern Vector2i sfMouse_getPositionRenderWindow(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfMouse_setPositionRenderWindow(Vector2i position, IntPtr CPointer);
 
             #endregion
         }
