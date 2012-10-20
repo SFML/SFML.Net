@@ -289,20 +289,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Unbind the shader (deactivate it)
-            ///
-            /// This function is normally for internal use only, unless
-            /// you want to use the shader with a custom OpenGL rendering
-            /// instead of a SFML drawable.
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public void Unbind()
-            {
-                sfShader_unbind(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Tell whether or not the system supports shaders.
             ///
             /// This property should always be checked before using
@@ -397,9 +383,6 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfShader_bind(IntPtr shader);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfShader_unbind(IntPtr shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfShader_isAvailable();
