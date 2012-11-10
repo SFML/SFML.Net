@@ -315,31 +315,96 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Convert a point in target coordinates into view coordinates
-            /// This version uses the current view of the target
-            /// </summary>
-            /// <param name="point">Point to convert, relative to the target</param>
-            /// <returns>Converted point</returns>
+            /// Convert a point from target coordinates to world
+            /// coordinates, using the current view
             ///
+            /// This function is an overload of the MapPixelToCoords
+            /// function that implicitely uses the current view.
+            /// It is equivalent to:
+            /// target.MapPixelToCoords(point, target.GetView());
+            /// </summary>
+            /// <param name="point">Pixel to convert</param>
+            /// <returns>The converted point, in "world" coordinates</returns>
             ////////////////////////////////////////////////////////////
-            public Vector2f ConvertCoords(Vector2i point)
+            public Vector2f MapPixelToCoords(Vector2i point)
             {
-                return ConvertCoords(point, GetView());
+                return MapPixelToCoords(point, GetView());
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Convert a point in target coordinates into view coordinates
-            /// This version uses the given view
-            /// </summary>
-            /// <param name="point">Point to convert, relative to the target</param>
-            /// <param name="view">Target view to convert the point to</param>
-            /// <returns>Converted point</returns>
+            /// Convert a point from target coordinates to world coordinates
             ///
+            /// This function finds the 2D position that matches the
+            /// given pixel of the render-target. In other words, it does
+            /// the inverse of what the graphics card does, to find the
+            /// initial position of a rendered pixel.
+            ///
+            /// Initially, both coordinate systems (world units and target pixels)
+            /// match perfectly. But if you define a custom view or resize your
+            /// render-target, this assertion is not true anymore, ie. a point
+            /// located at (10, 50) in your render-target may map to the point
+            /// (150, 75) in your 2D world -- if the view is translated by (140, 25).
+            ///
+            /// For render-windows, this function is typically used to find
+            /// which point (or object) is located below the mouse cursor.
+            ///
+            /// This version uses a custom view for calculations, see the other
+            /// overload of the function if you want to use the current view of the
+            /// render-target.
+            /// </summary>
+            /// <param name="point">Pixel to convert</param>
+            /// <param name="view">The view to use for converting the point</param>
+            /// <returns>The converted point, in "world" coordinates</returns>
             ////////////////////////////////////////////////////////////
-            public Vector2f ConvertCoords(Vector2i point, View view)
+            public Vector2f MapPixelToCoords(Vector2i point, View view)
             {
-                return sfRenderWindow_convertCoords(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
+                return sfRenderWindow_mapPixelToCoords(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Convert a point from world coordinates to target
+            /// coordinates, using the current view
+            ///
+            /// This function is an overload of the mapCoordsToPixel
+            /// function that implicitely uses the current view.
+            /// It is equivalent to:
+            /// target.MapCoordsToPixel(point, target.GetView());
+            /// </summary>
+            /// <param name="point">Point to convert</param>
+            /// <returns>The converted point, in target coordinates (pixels)</returns>
+            ////////////////////////////////////////////////////////////
+            public Vector2i MapCoordsToPixel(Vector2f point)
+            {
+                return MapCoordsToPixel(point, GetView());
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Convert a point from world coordinates to target coordinates
+            ///
+            /// This function finds the pixel of the render-target that matches
+            /// the given 2D point. In other words, it goes through the same process
+            /// as the graphics card, to compute the final position of a rendered point.
+            ///
+            /// Initially, both coordinate systems (world units and target pixels)
+            /// match perfectly. But if you define a custom view or resize your
+            /// render-target, this assertion is not true anymore, ie. a point
+            /// located at (150, 75) in your 2D world may map to the pixel
+            /// (10, 50) of your render-target -- if the view is translated by (140, 25).
+            ///
+            /// This version uses a custom view for calculations, see the other
+            /// overload of the function if you want to use the current view of the
+            /// render-target.
+            /// </summary>
+            /// <param name="point">Point to convert</param>
+            /// <param name="view">The view to use for converting the point</param>
+            /// <returns>The converted point, in target coordinates (pixels)</returns>
+            ////////////////////////////////////////////////////////////
+            public Vector2i MapCoordsToPixel(Vector2f point, View view)
+            {
+                return sfRenderWindow_mapCoordsToPixel(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
@@ -717,7 +782,10 @@ namespace SFML
             static extern IntRect sfRenderWindow_getViewport(IntPtr CPointer, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2f sfRenderWindow_convertCoords(IntPtr CPointer, Vector2i point, IntPtr TargetView);
+            static extern Vector2i sfRenderWindow_mapCoordsToPixel(IntPtr CPointer, Vector2f point, IntPtr View);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern Vector2f sfRenderWindow_mapPixelToCoords(IntPtr CPointer, Vector2i point, IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern void sfRenderWindow_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
