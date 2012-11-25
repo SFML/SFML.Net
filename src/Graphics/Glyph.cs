@@ -20,7 +20,7 @@ namespace SFML
             public IntRect Bounds;
 
             /// <summary>Texture coordinates of the glyph inside the font's texture</summary>
-            public FloatRect TextureRect;
+            public IntRect TextureRect;
         }
     }
 }
