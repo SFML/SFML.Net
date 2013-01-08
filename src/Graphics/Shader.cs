@@ -275,16 +275,13 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Bind the shader for rendering (activate it)
-            ///
-            /// This function is normally for internal use only, unless
-            /// you want to use the shader with a custom OpenGL rendering
-            /// instead of a SFML drawable.
+            /// Bind a shader for rendering
             /// </summary>
+            /// <param name="shader">Shader to bind (can be null to use no shader)</param>
             ////////////////////////////////////////////////////////////
-            public void Bind()
+            public static void Bind(Shader shader)
             {
-                sfShader_bind(CPointer);
+                sfShader_bind(shader != null ? shader.CPointer : IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////

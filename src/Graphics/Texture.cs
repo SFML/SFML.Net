@@ -246,16 +246,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Bind the texture for rendering
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public void Bind()
-            {
-                sfTexture_bind(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Control the smooth filter
             /// </summary>
             ////////////////////////////////////////////////////////////
@@ -284,6 +274,17 @@ namespace SFML
             public Vector2u Size
             {
                 get {return sfTexture_getSize(CPointer);}
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Bind a texture for rendering
+            /// </summary>
+            /// <param name="texture">Shader to bind (can be null to use no texture)</param>
+            ////////////////////////////////////////////////////////////
+            public static void Bind(Texture texture)
+            {
+                sfTexture_bind(texture != null ? texture.CPointer : IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
