@@ -119,6 +119,19 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Operator != overload ; check vector inequality
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 + v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector2f v1, Vector2f v2)
+            {
+                return !(v1 == v2);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -251,6 +264,19 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Operator != overload ; check vector inequality
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 + v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector2i v1, Vector2i v2)
+            {
+                return !(v1 == v2);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -367,6 +393,19 @@ namespace SFML
             public static bool operator ==(Vector2u v1, Vector2u v2)
             {
                 return v1.X == v2.X && v1.Y == v2.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check vector inequality
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 + v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector2u v1, Vector2u v2)
+            {
+                return !(v1 == v2);
             }
 
             ////////////////////////////////////////////////////////////
