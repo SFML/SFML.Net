@@ -103,6 +103,7 @@ namespace SFML
             public void SetPoint(uint index, Vector2f point)
             {
                 myPoints[index] = point;
+                Update();
             }
 
             private Vector2f[] myPoints;
