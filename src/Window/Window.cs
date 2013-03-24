@@ -77,9 +77,19 @@ namespace SFML
             /// <param name="settings">Creation parameters</param>
             ////////////////////////////////////////////////////////////
             public Window(VideoMode mode, string title, Styles style, ContextSettings settings) :
-                base(sfWindow_create(mode, title, style, ref settings))
+                base(IntPtr.Zero)
             {
-            }
+                 // Copy the title to a null-terminated UTF-32 byte array
+                byte[] titleAsUtf32 = System.Text.Encoding.UTF32.GetBytes(title + '\0');
+
+                unsafe
+                {
+                    fixed (byte* titlePtr = titleAsUtf32)
+                    {
+                        SetThis(sfWindow_createUnicode(mode, (IntPtr)titlePtr, style, ref settings));
+                    }
+                }
+           }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -179,7 +189,16 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public virtual void SetTitle(string title)
             {
-                sfWindow_setTitle(CPointer, title);
+                 // Copy the title to a null-terminated UTF-32 byte array
+                byte[] titleAsUtf32 = System.Text.Encoding.UTF32.GetBytes(title + '\0');
+
+                unsafe
+                {
+                    fixed (byte* titlePtr = titleAsUtf32)
+                    {
+                        sfWindow_setUnicodeTitle(CPointer, (IntPtr)titlePtr);
+                    }
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -578,6 +597,9 @@ namespace SFML
             static extern IntPtr sfWindow_create(VideoMode Mode, string Title, Styles Style, ref ContextSettings Params);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern IntPtr sfWindow_createUnicode(VideoMode Mode, IntPtr Title, Styles Style, ref ContextSettings Params);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfWindow_createFromHandle(IntPtr Handle, ref ContextSettings Params);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -615,6 +637,9 @@ namespace SFML
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfWindow_setTitle(IntPtr CPointer, string title);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_setUnicodeTitle(IntPtr CPointer, IntPtr title);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern void sfWindow_setIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
