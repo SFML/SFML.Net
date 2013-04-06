@@ -1,7 +1,7 @@
 SFML.Net
 --------
 
-SFML.Net - Copyright (c) 2007-2011 Laurent Gomila - laurent.gom@gmail.com
+SFML.Net - Copyright (C) 2007-2013 Laurent Gomila - laurent.gom@gmail.com
 
 This software is provided 'as-is', without any express or
 implied warranty. In no event will the authors be held
@@ -28,4 +28,4 @@ it freely, subject to the following restrictions:
 External libraries used by SFML.Net
 -----------------------------------
 
-* SFML is under the zlib/png license
+* CSFML is under the zlib/png license
