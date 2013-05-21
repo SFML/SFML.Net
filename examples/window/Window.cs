@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using SFML;
 using SFML.Window;
 using Tao.OpenGl;
@@ -12,9 +13,15 @@ namespace window
         /// </summary>
         static void Main()
         {
+            // Request a 32-bits depth buffer when creating the window
+            ContextSettings contextSettings = new ContextSettings();
+            contextSettings.DepthBits = 32;
+
             // Create the main window
-            Window window = new Window(new VideoMode(640, 480, 32), "SFML.Net Window", Styles.Default, new ContextSettings(32, 0));
-            window.SetVerticalSyncEnabled(true);
+            Window window = new Window(new VideoMode(640, 480), "SFML window with OpenGL", Styles.Default, contextSettings);
+
+            // Make it the active window for OpenGL calls
+            window.SetActive();
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
@@ -22,17 +29,82 @@ namespace window
             window.Resized    += new EventHandler<SizeEventArgs>(OnResized);
 
             // Set the color and depth clear values
-            Gl.glClearDepth(1.0F);
-            Gl.glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
+            Gl.glClearDepth(1);
+            Gl.glClearColor(0, 0, 0, 1);
 
             // Enable Z-buffer read and write
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glDepthMask(Gl.GL_TRUE);
 
+            // Disable lighting and texturing
+            Gl.glDisable(Gl.GL_LIGHTING);
+            Gl.glDisable(Gl.GL_TEXTURE_2D);
+
+            // Configure the viewport (the same size as the window)
+            Gl.glViewport(0, 0, (int)window.Size.X, (int)window.Size.Y);
+
             // Setup a perspective projection
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluPerspective(90.0F, 1.0F, 1.0F, 500.0F);
+            float ratio = (float)(window.Size.X) / window.Size.Y;
+            Gl.glFrustum(-ratio, ratio, -1, 1, 1, 500);
+
+            // Define a 3D cube (8 faces made of 2 triangles composed by 3 vertices)
+            float[] cube = new float[]
+            {
+                // positions    // colors (r, g, b, a)
+                -50, -50, -50,  0, 0, 1, 1,
+                -50,  50, -50,  0, 0, 1, 1,
+                -50, -50,  50,  0, 0, 1, 1,
+                -50, -50,  50,  0, 0, 1, 1,
+                -50,  50, -50,  0, 0, 1, 1,
+                -50,  50,  50,  0, 0, 1, 1,
+
+                 50, -50, -50,  0, 1, 0, 1,
+                 50,  50, -50,  0, 1, 0, 1,
+                 50, -50,  50,  0, 1, 0, 1,
+                 50, -50,  50,  0, 1, 0, 1,
+                 50,  50, -50,  0, 1, 0, 1,
+                 50,  50,  50,  0, 1, 0, 1,
+
+                -50, -50, -50,  1, 0, 0, 1,
+                 50, -50, -50,  1, 0, 0, 1,
+                -50, -50,  50,  1, 0, 0, 1,
+                -50, -50,  50,  1, 0, 0, 1,
+                 50, -50, -50,  1, 0, 0, 1,
+                 50, -50,  50,  1, 0, 0, 1,
+
+                -50,  50, -50,  0, 1, 1, 1,
+                 50,  50, -50,  0, 1, 1, 1,
+                -50,  50,  50,  0, 1, 1, 1,
+                -50,  50,  50,  0, 1, 1, 1,
+                 50,  50, -50,  0, 1, 1, 1,
+                 50,  50,  50,  0, 1, 1, 1,
+
+                -50, -50, -50,  1, 0, 1, 1,
+                 50, -50, -50,  1, 0, 1, 1,
+                -50,  50, -50,  1, 0, 1, 1,
+                -50,  50, -50,  1, 0, 1, 1,
+                 50, -50, -50,  1, 0, 1, 1,
+                 50,  50, -50,  1, 0, 1, 1,
+
+                -50, -50,  50,  1, 1, 0, 1,
+                 50, -50,  50,  1, 1, 0, 1,
+                -50,  50,  50,  1, 1, 0, 1,
+                -50,  50,  50,  1, 1, 0, 1,
+                 50, -50,  50,  1, 1, 0, 1,
+                 50,  50,  50,  1, 1, 0, 1,
+            };
+
+            // Enable position and color vertex components
+            Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
+            Gl.glEnableClientState(Gl.GL_COLOR_ARRAY);
+            Gl.glVertexPointer(3, Gl.GL_FLOAT, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
+            Gl.glColorPointer(4, Gl.GL_FLOAT, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
+
+            // Disable normal and texture coordinates vertex components
+            Gl.glDisableClientState(Gl.GL_NORMAL_ARRAY);
+            Gl.glDisableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
 
             int startTime = Environment.TickCount;
 
@@ -41,11 +113,6 @@ namespace window
             {
                 // Process events
                 window.DispatchEvents();
-
-                // Activate the window before using OpenGL commands.
-                // This is useless here because we have only one window which is
-                // always the active one, but don't forget it if you use multiple windows
-                window.SetActive();
 
                 // Clear color and depth buffer
                 Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
@@ -59,46 +126,8 @@ namespace window
                 Gl.glRotatef(time * 30, 0.0F, 1.0F, 0.0F);
                 Gl.glRotatef(time * 90, 0.0F, 0.0F, 1.0F);
 
-                // Draw a cube
-                Gl.glBegin(Gl.GL_QUADS);
-
-                    Gl.glColor3f(1.0F, 0.0F, 0.0F);
-                    Gl.glVertex3f(-50.0F, -50.0F, -50.0F);
-                    Gl.glVertex3f(-50.0F,  50.0F, -50.0F);
-                    Gl.glVertex3f( 50.0F,  50.0F, -50.0F);
-                    Gl.glVertex3f( 50.0F, -50.0F, -50.0F);
-
-                    Gl.glColor3f(1.0F, 0.0F, 0.0F);
-                    Gl.glVertex3f(-50.0F, -50.0F, 50.0F);
-                    Gl.glVertex3f(-50.0F,  50.0F, 50.0F);
-                    Gl.glVertex3f( 50.0F,  50.0F, 50.0F);
-                    Gl.glVertex3f( 50.0F, -50.0F, 50.0F);
-
-                    Gl.glColor3f(0.0F, 1.0F, 0.0F);
-                    Gl.glVertex3f(-50.0F, -50.0F, -50.0F);
-                    Gl.glVertex3f(-50.0F,  50.0F, -50.0F);
-                    Gl.glVertex3f(-50.0F,  50.0F,  50.0F);
-                    Gl.glVertex3f(-50.0F, -50.0F,  50.0F);
-
-                    Gl.glColor3f(0.0F, 1.0F, 0.0F);
-                    Gl.glVertex3f(50.0F, -50.0F, -50.0F);
-                    Gl.glVertex3f(50.0F,  50.0F, -50.0F);
-                    Gl.glVertex3f(50.0F,  50.0F,  50.0F);
-                    Gl.glVertex3f(50.0F, -50.0F,  50.0F);
-
-                    Gl.glColor3f(0.0F, 0.0F, 1.0F);
-                    Gl.glVertex3f(-50.0F, -50.0F,  50.0F);
-                    Gl.glVertex3f(-50.0F, -50.0F, -50.0F);
-                    Gl.glVertex3f( 50.0F, -50.0F, -50.0F);
-                    Gl.glVertex3f( 50.0F, -50.0F,  50.0F);
-
-                    Gl.glColor3f(0.0F, 0.0F, 1.0F);
-                    Gl.glVertex3f(-50.0F, 50.0F,  50.0F);
-                    Gl.glVertex3f(-50.0F, 50.0F, -50.0F);
-                    Gl.glVertex3f( 50.0F, 50.0F, -50.0F);
-                    Gl.glVertex3f( 50.0F, 50.0F,  50.0F);
-
-                Gl.glEnd();
+                // Draw the cube
+                Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
 
                 // Finally, display the rendered frame on screen
                 window.Display();

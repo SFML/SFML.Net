@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using SFML;
 using SFML.Graphics;
 using SFML.Window;
@@ -13,9 +14,16 @@ namespace opengl
         /// </summary>
         static void Main()
         {
-            // Create main window
-            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML.Net OpenGL", Styles.Default, new ContextSettings(32, 0));
+            // Request a 32-bits depth buffer when creating the window
+            ContextSettings contextSettings = new ContextSettings();
+            contextSettings.DepthBits = 32;
+
+            // Create the main window
+            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML graphcis with OpenGL", Styles.Default, contextSettings);
             window.SetVerticalSyncEnabled(true);
+
+            // Make it the active window for OpenGL calls
+            window.SetActive();
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
@@ -25,13 +33,13 @@ namespace opengl
             // Create a sprite for the background
             Sprite background = new Sprite(new Texture("resources/background.jpg"));
 
-            // Create a text to display
+            // Create a text to display on top of the OpenGL object
             Text text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
-            text.Position = new Vector2f(250.0F, 450.0F);
+            text.Position = new Vector2f(250, 450);
             text.Color = new Color(255, 255, 255, 170);
 
             // Load an OpenGL texture.
-            // We could directly use a sf::Texture as an OpenGL texture (with its Bind() member function),
+            // We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
             // but here we want more control on it (generate mipmaps, ...) so we create a new one
             int texture = 0;
             using (Image image = new Image("resources/texture.jpg"))
@@ -46,17 +54,80 @@ namespace opengl
             // Enable Z-buffer read and write
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glDepthMask(Gl.GL_TRUE);
-            Gl.glClearDepth(1.0F);
+            Gl.glClearDepth(1);
+
+            // Disable lighting
+            Gl.glDisable(Gl.GL_LIGHTING);
+
+            // Configure the viewport (the same size as the window)
+            Gl.glViewport(0, 0, (int)window.Size.X, (int)window.Size.Y);
 
             // Setup a perspective projection
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluPerspective(90.0F, 1.0F, 1.0F, 500.0F);
+            float ratio = (float)(window.Size.X) / window.Size.Y;
+            Gl.glFrustum(-ratio, ratio, -1, 1, 1, 500);
 
-            // Bind our texture
+            // Bind the texture
             Gl.glEnable(Gl.GL_TEXTURE_2D);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-            Gl.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+            // Define a 3D cube (8 faces made of 2 triangles composed by 3 vertices)
+            float[] cube = new float[]
+            {
+                // positions    // texture coordinates
+                -20, -20, -20,  0, 0,
+                -20,  20, -20,  1, 0,
+                -20, -20,  20,  0, 1,
+                -20, -20,  20,  0, 1,
+                -20,  20, -20,  1, 0,
+                -20,  20,  20,  1, 1,
+
+                 20, -20, -20,  0, 0,
+                 20,  20, -20,  1, 0,
+                 20, -20,  20,  0, 1,
+                 20, -20,  20,  0, 1,
+                 20,  20, -20,  1, 0,
+                 20,  20,  20,  1, 1,
+
+                -20, -20, -20,  0, 0,
+                 20, -20, -20,  1, 0,
+                -20, -20,  20,  0, 1,
+                -20, -20,  20,  0, 1,
+                 20, -20, -20,  1, 0,
+                 20, -20,  20,  1, 1,
+
+                -20,  20, -20,  0, 0,
+                 20,  20, -20,  1, 0,
+                -20,  20,  20,  0, 1,
+                -20,  20,  20,  0, 1,
+                 20,  20, -20,  1, 0,
+                 20,  20,  20,  1, 1,
+
+                -20, -20, -20,  0, 0,
+                 20, -20, -20,  1, 0,
+                -20,  20, -20,  0, 1,
+                -20,  20, -20,  0, 1,
+                 20, -20, -20,  1, 0,
+                 20,  20, -20,  1, 1,
+
+                -20, -20,  20,  0, 0,
+                 20, -20,  20,  1, 0,
+                -20,  20,  20,  0, 1,
+                -20,  20,  20,  0, 1,
+                 20, -20,  20,  1, 0,
+                 20,  20,  20,  1, 1
+            };
+
+            // Enable position and texture coordinates vertex components
+            Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
+            Gl.glEnableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
+            Gl.glVertexPointer(3, Gl.GL_FLOAT, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
+            Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
+
+            // Disable normal and color vertex components
+            Gl.glDisableClientState(Gl.GL_NORMAL_ARRAY);
+            Gl.glDisableClientState(Gl.GL_COLOR_ARRAY);
 
             int startTime = Environment.TickCount;
 
@@ -74,12 +145,7 @@ namespace opengl
                 window.Draw(background);
                 window.PopGLStates();
 
-                // Activate the window before using OpenGL commands.
-                // This is useless here because we have only one window which is
-                // always the active one, but don't forget it if you use multiple windows
-                window.SetActive();
-
-                // Clear depth buffer
+                // Clear the depth buffer
                 Gl.glClear(Gl.GL_DEPTH_BUFFER_BIT);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
@@ -95,41 +161,8 @@ namespace opengl
                 Gl.glRotatef(time * 30, 0.0F, 1.0F, 0.0F);
                 Gl.glRotatef(time * 90, 0.0F, 0.0F, 1.0F);
 
-                // Draw a cube
-                float size = 20.0F;
-                Gl.glBegin(Gl.GL_QUADS);
-
-                    Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-size, -size, -size);
-                    Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-size,  size, -size);
-                    Gl.glTexCoord2f(1, 1); Gl.glVertex3f( size,  size, -size);
-                    Gl.glTexCoord2f(1, 0); Gl.glVertex3f( size, -size, -size);
-
-                    Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-size, -size, size);
-                    Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-size,  size, size);
-                    Gl.glTexCoord2f(1, 1); Gl.glVertex3f( size,  size, size);
-                    Gl.glTexCoord2f(1, 0); Gl.glVertex3f( size, -size, size);
-
-                    Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-size, -size, -size);
-                    Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-size,  size, -size);
-                    Gl.glTexCoord2f(1, 1); Gl.glVertex3f(-size,  size,  size);
-                    Gl.glTexCoord2f(1, 0); Gl.glVertex3f(-size, -size,  size);
-
-                    Gl.glTexCoord2f(0, 0); Gl.glVertex3f(size, -size, -size);
-                    Gl.glTexCoord2f(0, 1); Gl.glVertex3f(size,  size, -size);
-                    Gl.glTexCoord2f(1, 1); Gl.glVertex3f(size,  size,  size);
-                    Gl.glTexCoord2f(1, 0); Gl.glVertex3f(size, -size,  size);
-
-                    Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-size, -size,  size);
-                    Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-size, -size, -size);
-                    Gl.glTexCoord2f(1, 0); Gl.glVertex3f( size, -size, -size);
-                    Gl.glTexCoord2f(1, 1); Gl.glVertex3f( size, -size,  size);
-
-                    Gl.glTexCoord2f(0, 1); Gl.glVertex3f(-size, size,  size);
-                    Gl.glTexCoord2f(0, 0); Gl.glVertex3f(-size, size, -size);
-                    Gl.glTexCoord2f(1, 0); Gl.glVertex3f( size, size, -size);
-                    Gl.glTexCoord2f(1, 1); Gl.glVertex3f( size, size,  size);
-
-                Gl.glEnd();
+                // Draw the cube
+                Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
 
                 // Draw some text on top of our OpenGL object
                 window.PushGLStates();
