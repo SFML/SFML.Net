@@ -159,8 +159,8 @@ namespace SFML
                 {
                     if (myInverseNeedUpdate)
                     {
-                        myTransformNeedUpdate = false;
                         myInverseTransform = Transform.GetInverse();
+                        myInverseNeedUpdate = false;
                     }
                     return myInverseTransform;
                 }
