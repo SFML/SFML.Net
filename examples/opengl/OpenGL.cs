@@ -72,7 +72,7 @@ namespace opengl
             Gl.glEnable(Gl.GL_TEXTURE_2D);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
 
-            // Define a 3D cube (8 faces made of 2 triangles composed by 3 vertices)
+            // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
             float[] cube = new float[]
             {
                 // positions    // texture coordinates

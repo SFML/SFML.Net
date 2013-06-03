@@ -49,7 +49,7 @@ namespace window
             float ratio = (float)(window.Size.X) / window.Size.Y;
             Gl.glFrustum(-ratio, ratio, -1, 1, 1, 500);
 
-            // Define a 3D cube (8 faces made of 2 triangles composed by 3 vertices)
+            // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
             float[] cube = new float[]
             {
                 // positions    // colors (r, g, b, a)
