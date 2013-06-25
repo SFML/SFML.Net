@@ -105,6 +105,9 @@ namespace SFML
 
             /// <summary>Predefined cyan color</summary>
             public static readonly Color Cyan = new Color(0, 255, 255);
+            
+            /// <summary>Predefined transparent (black) color</summary>
+            public static readonly Color Transparent = new Color(0, 0, 0, 0);
         }
     }
 }
