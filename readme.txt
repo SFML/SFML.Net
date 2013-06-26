@@ -20,8 +20,8 @@ Learn
 -----
 
 There is no tutorial for SFML.Net, but since it's a binding you can use the C++ resources:
-* The official tutorials (http://www.sfml-dev.org/tutorials.php)
-* The online API documentation (http://www.sfml-dev.org/documentation.php)
+* The official tutorials (http://www.sfml-dev.org/resources.php#tutorials)
+* The online API documentation (http://www.sfml-dev.org/resources.php#documentation)
 * The community wiki (https://github.com/LaurentGomila/SFML/wiki/)
 * The community forum (http://en.sfml-dev.org/forums/) (or http://fr.sfml-dev.org/forums/ for french people)
 
