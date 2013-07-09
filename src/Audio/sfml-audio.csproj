@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Listener.cs" />
     <Compile Include="Music.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sound.cs" />
     <Compile Include="SoundBuffer.cs" />
     <Compile Include="SoundBufferRecorder.cs" />
@@ -83,6 +84,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <Reference Include="System" />
   </ItemGroup>
 </Project>

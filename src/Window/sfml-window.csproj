@@ -75,12 +75,13 @@
     <Compile Include="LoadingFailedException.cs" />
     <Compile Include="Mouse.cs" />
     <Compile Include="ObjectBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamAdaptor.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="VideoMode.cs" />
     <Compile Include="Window.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <Reference Include="System" />
   </ItemGroup>
 </Project>
