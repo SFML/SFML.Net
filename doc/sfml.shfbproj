@@ -25,11 +25,12 @@
       <DocumentationSource sourceFile="..\src\Graphics\sfml-graphics.csproj" />
       <DocumentationSource sourceFile="..\src\Window\sfml-window.csproj" />
     </DocumentationSources>
-    <SandcastlePath>..\..\..\programmes\sandcastle\</SandcastlePath>
+    <SandcastlePath>D:\programmes\sandcastle\</SandcastlePath>
     <BuildLogFile />
     <HtmlHelp1xCompilerPath />
     <HtmlHelp2xCompilerPath />
-    <WorkingPath />
+    <WorkingPath>
+    </WorkingPath>
     <HelpTitle>SFML.Net API documentation</HelpTitle>
     <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, TypeParameter, AutoDocumentDispose</MissingTags>
     <ProductTitle>SFML.Net</ProductTitle>
@@ -37,7 +38,7 @@
     </ProjectSummary>
     <NamingMethod>MemberName</NamingMethod>
     <FeedbackEMailAddress>laurent%40sfml-dev.org</FeedbackEMailAddress>
-    <CopyrightText>Copyright 2007 - 2012 Laurent Gomila</CopyrightText>
+    <CopyrightText>Copyright 2007 - 2013 Laurent Gomila</CopyrightText>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional
