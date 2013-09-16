@@ -19,7 +19,7 @@ namespace opengl
             contextSettings.DepthBits = 32;
 
             // Create the main window
-            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML graphcis with OpenGL", Styles.Default, contextSettings);
+            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML graphics with OpenGL", Styles.Default, contextSettings);
             window.SetVerticalSyncEnabled(true);
 
             // Make it the active window for OpenGL calls
