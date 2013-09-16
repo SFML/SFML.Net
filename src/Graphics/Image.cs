@@ -89,12 +89,19 @@ namespace SFML
             public Image(Color[,] pixels) :
                 base(IntPtr.Zero)
             {
+                uint Width = (uint)pixels.GetLength(0);
+                uint Height = (uint)pixels.GetLength(1);
+
+                // Transpose the array (.Net gives dimensions in reverse order of what SFML expects)
+                Color[,] transposed = new Color[Height, Width];
+                for (int x = 0; x < Width; ++x)
+                    for (int y = 0; y < Height; ++y)
+                        transposed[y, x] = pixels[x, y];
+
                 unsafe
                 {
-                    fixed (Color* PixelsPtr = pixels)
+                    fixed (Color* PixelsPtr = transposed)
                     {
-                        uint Width  = (uint)pixels.GetLength(0);
-                        uint Height = (uint)pixels.GetLength(1);
                         SetThis(sfImage_createFromPixels(Width, Height, (byte*)PixelsPtr));
                     }
                 }
