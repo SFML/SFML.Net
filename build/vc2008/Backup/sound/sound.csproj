@@ -1,22 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9D4738F7-34EA-433A-A765-AF85A52A174D}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{16E177F3-A0FF-4091-8521-562E0EBAA3AB}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>shader</RootNamespace>
-    <AssemblyName>shader</AssemblyName>
+    <RootNamespace>sound</RootNamespace>
+    <AssemblyName>sound</AssemblyName>
+    <StartupObject>sound.Program</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <StartupObject>shader.Program</StartupObject>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,9 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Graphics\sfml-graphics.csproj">
-      <Project>{46786269-57B9-48E7-AA4F-8F4D84609FE6}</Project>
-      <Name>sfml-graphics</Name>
+    <ProjectReference Include="..\..\src\Audio\sfml-audio.csproj">
+      <Project>{0B202C4D-A457-47FE-84A3-031DD878C6BE}</Project>
+      <Name>sfml-audio</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Window\sfml-window.csproj">
       <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
@@ -61,7 +59,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shader.cs" />
+    <Compile Include="Sound.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
