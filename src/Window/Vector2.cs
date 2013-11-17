@@ -122,6 +122,41 @@ namespace SFML
  
             /// <summary>Y (vertical) component of the vector</summary>
             public float Y;
+
+            /// <summary>Vector2f with X and Y set to 0</summary>
+            private static Vector2f zero = new Vector2f(0, 0);
+
+            /// <summary>Vector2f with X and Y set to 0</summary>
+            public static Vector2f Zero { get { return zero; } }
+
+            /// <summary>
+            /// Checks if the passed obj's value equals this objects's value
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns>true if equal, false if not equal</returns>
+            public override bool Equals(object obj)
+            {
+                if (obj is Vector2f)
+                {
+                    return ((Vector2f)obj).X == X && ((Vector2f)obj).Y == Y;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            /// <summary>
+            /// Returns this objects hash code
+            /// </summary>
+            /// <returns>int hash code</returns>
+            public override int GetHashCode()
+            {
+                int hash = 17;
+                hash = hash * 23 + X.GetHashCode();
+                hash = hash * 23 + Y.GetHashCode();
+                return hash;
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -241,6 +276,41 @@ namespace SFML
  
             /// <summary>Y (vertical) component of the vector</summary>
             public int Y;
+
+            /// <summary>Vector2i with X and Y set to 0</summary>
+            private static Vector2i zero = new Vector2i(0, 0);
+
+            /// <summary>Vector2i with X and Y set to 0</summary>
+            public static Vector2i Zero { get { return zero; } }
+
+            /// <summary>
+            /// Checks if the passed obj's value equals this objects's value
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns>true if equal, false if not equal</returns>
+            public override bool Equals(object obj)
+            {
+                if (obj is Vector2i)
+                {
+                    return ((Vector2i)obj).X == X && ((Vector2i)obj).Y == Y;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            /// <summary>
+            /// Returns this objects hash code
+            /// </summary>
+            /// <returns>int hash code</returns>
+            public override int GetHashCode()
+            {
+                int hash = 17;
+                hash = hash * 23 + X.GetHashCode();
+                hash = hash * 23 + Y.GetHashCode();
+                return hash;
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -348,6 +418,41 @@ namespace SFML
 
             /// <summary>Y (vertical) component of the vector</summary>
             public uint Y;
+
+            /// <summary>Vector2u with X and Y set to 0</summary>
+            private static Vector2u zero = new Vector2u(0, 0);
+
+            /// <summary>Vector2u with X and Y set to 0</summary>
+            public static Vector2u Zero { get { return zero; } }
+
+            /// <summary>
+            /// Checks if the passed obj's value equals this objects's value
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns>true if equal, false if not equal</returns>
+            public override bool Equals(object obj)
+            {
+                if (obj is Vector2u)
+                {
+                    return ((Vector2u)obj).X == X && ((Vector2u)obj).Y == Y;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            /// <summary>
+            /// Returns this objects hash code
+            /// </summary>
+            /// <returns>int hash code</returns>
+            public override int GetHashCode()
+            {
+                int hash = 17;
+                hash = hash * 23 + X.GetHashCode();
+                hash = hash * 23 + Y.GetHashCode();
+                return hash;
+            }
         }
     }
 }
