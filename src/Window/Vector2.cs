@@ -106,6 +106,32 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Operator == overload ; check if two vectors are equal
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 == v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(Vector2f v1, Vector2f v2)
+            {
+                return v1.X == v2.X && v1.Y == v2.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check if two vectors are not equal
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 != v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector2f v1, Vector2f v2)
+            {
+                return v1.X != v2.X || v1.Y != v2.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -119,7 +145,7 @@ namespace SFML
 
             /// <summary>X (horizontal) component of the vector</summary>
             public float X;
- 
+
             /// <summary>Y (vertical) component of the vector</summary>
             public float Y;
         }
@@ -225,6 +251,32 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Operator == overload ; check if two vectors are equal
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 == v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(Vector2i v1, Vector2i v2)
+            {
+                return v1.X == v2.X && v1.Y == v2.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check if two vectors are not equal
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 != v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector2i v1, Vector2i v2)
+            {
+                return v1.X != v2.X || v1.Y != v2.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -238,7 +290,7 @@ namespace SFML
 
             /// <summary>X (horizontal) component of the vector</summary>
             public int X;
- 
+
             /// <summary>Y (vertical) component of the vector</summary>
             public int Y;
         }
@@ -328,6 +380,32 @@ namespace SFML
             public static Vector2u operator /(Vector2u v, uint x)
             {
                 return new Vector2u(v.X / x, v.Y / x);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator == overload ; check if two vectors are equal
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 == v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(Vector2u v1, Vector2u v2)
+            {
+                return v1.X == v2.X && v1.Y == v2.Y;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check if two vectors are not equal
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 != v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector2u v1, Vector2u v2)
+            {
+                return v1.X != v2.X || v1.Y != v2.Y;
             }
 
             ////////////////////////////////////////////////////////////
