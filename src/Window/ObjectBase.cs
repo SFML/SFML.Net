@@ -11,6 +11,9 @@ namespace SFML
     ////////////////////////////////////////////////////////////
     public abstract class ObjectBase : IDisposable
     {
+        private static System.Collections.Generic.List<ObjectBase> garbageCollectedObjects = new System.Collections.Generic.List<ObjectBase>();
+        private ObjectBaseSafeHandle objectSafeHandle;
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Construct the object from a pointer to the C library object
@@ -19,17 +22,7 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         public ObjectBase(IntPtr cPointer)
         {
-            myCPointer = cPointer;
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Dispose the object
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        ~ObjectBase()
-        {
-            Dispose(false);
+            objectSafeHandle = new ObjectBaseSafeHandle(cPointer, this);
         }
 
         ////////////////////////////////////////////////////////////
@@ -40,7 +33,7 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         public IntPtr CPointer
         {
-            get { return myCPointer; }
+            get { return objectSafeHandle.Ptr; }
         }
 
         ////////////////////////////////////////////////////////////
@@ -62,10 +55,10 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         private void Dispose(bool disposing)
         {
-            if (myCPointer != IntPtr.Zero)
+            if (!objectSafeHandle.IsInvalid)
             {
                 Destroy(disposing);
-                myCPointer = IntPtr.Zero;
+                objectSafeHandle.Ptr = IntPtr.Zero;
             }
         }
 
@@ -85,9 +78,69 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         protected void SetThis(IntPtr cPointer)
         {
-            myCPointer = cPointer;
+            objectSafeHandle = new ObjectBaseSafeHandle(cPointer, this);
         }
 
-        private IntPtr myCPointer = IntPtr.Zero;
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Dispose garbage collected Objects on current thread
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static void DisposeGarbageCollectedObjects()
+        {
+            if (garbageCollectedObjects.Count > 0)
+            {
+                ObjectBase[] garbageCollectedObjectsCopy;
+                lock (garbageCollectedObjects)
+                {
+                    garbageCollectedObjectsCopy = new ObjectBase[garbageCollectedObjects.Count];
+                    garbageCollectedObjects.CopyTo(garbageCollectedObjectsCopy);
+                    garbageCollectedObjects.Clear();
+                }
+                foreach (var garbageCollectedObject in garbageCollectedObjectsCopy) 
+                {
+                    try 
+                    {
+                        garbageCollectedObject.Dispose ();
+                    } catch (Exception e) 
+                    {
+                        Console.WriteLine (e.Message + " at " + e.StackTrace);
+                    }
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Safe handle class to ensure all objects are eventually disposed
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        private sealed class ObjectBaseSafeHandle : System.Runtime.InteropServices.SafeHandle
+        {
+            private ObjectBase objectBase;
+            public IntPtr Ptr;
+            public ObjectBaseSafeHandle(IntPtr ptr, ObjectBase objectBase)
+                : base(IntPtr.Zero, true)
+            {
+                this.Ptr = ptr;
+                this.objectBase = objectBase;
+            }
+
+            public override bool IsInvalid
+            {
+                get
+                {
+                    return Ptr == IntPtr.Zero;
+                }
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                //GC will wait here until all threads hit a safe point. Thus avoiding a deadlock.
+                lock (garbageCollectedObjects)
+                    garbageCollectedObjects.Add(objectBase);
+                return true;
+            }
+        }
     }
 }
