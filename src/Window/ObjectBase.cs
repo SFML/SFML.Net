@@ -9,8 +9,11 @@ namespace SFML
     /// SFML object. It's meant for internal use only
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public abstract class ObjectBase : IDisposable
+	public abstract class ObjectBase : SafeHandle, IDisposable
     {
+        private static System.Collections.Generic.List<ObjectBase> garbageCollectedObjects = new System.Collections.Generic.List<ObjectBase>();
+		private IntPtr cPointer;
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Construct the object from a pointer to the C library object
@@ -18,18 +21,9 @@ namespace SFML
         /// <param name="cPointer">Internal pointer to the object in the C libraries</param>
         ////////////////////////////////////////////////////////////
         public ObjectBase(IntPtr cPointer)
+			: base(IntPtr.Zero, true)
         {
-            myCPointer = cPointer;
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Dispose the object
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        ~ObjectBase()
-        {
-            Dispose(false);
+			this.cPointer = cPointer;
         }
 
         ////////////////////////////////////////////////////////////
@@ -40,7 +34,7 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         public IntPtr CPointer
         {
-            get { return myCPointer; }
+			get { return cPointer; }
         }
 
         ////////////////////////////////////////////////////////////
@@ -62,10 +56,10 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         private void Dispose(bool disposing)
         {
-            if (myCPointer != IntPtr.Zero)
+            if (!IsInvalid)
             {
                 Destroy(disposing);
-                myCPointer = IntPtr.Zero;
+				cPointer = IntPtr.Zero;
             }
         }
 
@@ -85,9 +79,65 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         protected void SetThis(IntPtr cPointer)
         {
-            myCPointer = cPointer;
+			if (!IsInvalid)
+				throw new ArgumentException("Possible mem leak");
+			this.cPointer = cPointer;
         }
 
-        private IntPtr myCPointer = IntPtr.Zero;
+		////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Gets whether object references a C resource 
+		/// (used by SafeHandle to determine whether object is truly disposed)
+		/// </summary>
+		////////////////////////////////////////////////////////////
+		public override bool IsInvalid
+		{
+			get
+			{
+				return cPointer == IntPtr.Zero;
+			}
+		}
+
+		////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Marks the C resource for disposal
+		/// </summary>
+		////////////////////////////////////////////////////////////
+		protected override bool ReleaseHandle()
+		{
+			//GC will wait here until all threads hit a safe point. Thus avoiding a deadlock.
+			lock (garbageCollectedObjects)
+				garbageCollectedObjects.Add(this);
+			return true;
+		}
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Dispose garbage collected Objects on current thread
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static void DisposeGarbageCollectedObjects()
+        {
+            if (garbageCollectedObjects.Count > 0)
+            {
+                ObjectBase[] garbageCollectedObjectsCopy;
+                lock (garbageCollectedObjects)
+                {
+                    garbageCollectedObjectsCopy = new ObjectBase[garbageCollectedObjects.Count];
+                    garbageCollectedObjects.CopyTo(garbageCollectedObjectsCopy);
+                    garbageCollectedObjects.Clear();
+                }
+                foreach (var garbageCollectedObject in garbageCollectedObjectsCopy) 
+                {
+                    try 
+                    {
+                        garbageCollectedObject.Dispose ();
+                    } catch (Exception e) 
+                    {
+                        Console.WriteLine (e.Message + " at " + e.StackTrace);
+                    }
+                }
+            }
+        }
     }
 }

@@ -346,6 +346,7 @@ namespace SFML
                 Event e;
                 while (PollEvent(out e))
                     CallEventHandler(e);
+                ObjectBase.DisposeGarbageCollectedObjects();
             }
 
             ////////////////////////////////////////////////////////////
