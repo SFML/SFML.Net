@@ -79,7 +79,7 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         protected void SetThis(IntPtr cPointer)
         {
-			if (value != IntPtr.Zero && !IsInvalid)
+			if (cPointer != IntPtr.Zero && !IsInvalid)
 				throw new ArgumentException("Possible mem leak");
 			this.cPointer = cPointer;
         }
