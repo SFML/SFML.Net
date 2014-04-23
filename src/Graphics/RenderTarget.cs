@@ -30,19 +30,10 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Return the current active view
+            /// Current active view of the target
             /// </summary>
-            /// <returns>The current view</returns>
             ////////////////////////////////////////////////////////////
-            View GetView();
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Change the current active view
-            /// </summary>
-            /// <param name="view">New view</param>
-            ////////////////////////////////////////////////////////////
-            void SetView(View view);
+            View View { get; set; }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
