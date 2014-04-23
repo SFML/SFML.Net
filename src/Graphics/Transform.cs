@@ -288,12 +288,14 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override string ToString()
             {
-                return "[Transform]" +
+                return string.Format("[Transform]" +
                        " Matrix(" +
-                       m00 + ", " + m01 + ", " + m02 +
-                       m10 + ", " + m11 + ", " + m12 +
-                       m20 + ", " + m21 + ", " + m22 +
-                       ")";
+                       "{0}, {1}, {2}," +
+                       "{3}, {4}, {5}," +
+                       "{6}, {7}, {8}, )",
+                       m00, m01, m02,
+                       m10, m11, m12,
+                       m20, m21, m22);
             }
 
             float m00, m01, m02;
