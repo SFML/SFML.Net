@@ -81,24 +81,13 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Return the current active view
+            /// Current active view of the render texture
             /// </summary>
-            /// <returns>The current view</returns>
             ////////////////////////////////////////////////////////////
-            public View GetView()
+            public View View
             {
-                return new View(sfRenderTexture_getView(CPointer));
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Change the current active view
-            /// </summary>
-            /// <param name="view">New view</param>
-            ////////////////////////////////////////////////////////////
-            public void SetView(View view)
-            {
-                sfRenderTexture_setView(CPointer, view.CPointer);
+                get { return new View(sfRenderTexture_getView(CPointer)); }
+                set { sfRenderTexture_setView(CPointer, value.CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -128,7 +117,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f MapPixelToCoords(Vector2i point)
             {
-                return MapPixelToCoords(point, GetView());
+                return MapPixelToCoords(point, View);
             }
 
             ////////////////////////////////////////////////////////////
@@ -177,7 +166,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2i MapCoordsToPixel(Vector2f point)
             {
-                return MapCoordsToPixel(point, GetView());
+                return MapCoordsToPixel(point, View);
             }
 
             ////////////////////////////////////////////////////////////
@@ -430,7 +419,7 @@ namespace SFML
                        " Size(" + Size + ")" +
                        " Texture(" + Texture + ")" +
                        " DefaultView(" + DefaultView + ")" +
-                       " View(" + GetView() + ")";
+                       " View(" + View + ")";
             }
 
             ////////////////////////////////////////////////////////////
