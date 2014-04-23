@@ -44,20 +44,19 @@ namespace SFML
             public ConvexShape(ConvexShape copy) :
                 base(copy)
             {
-                SetPointCount(copy.GetPointCount());
-                for (uint i = 0; i < copy.GetPointCount(); ++i)
+                SetPointCount(copy.PointCount);
+                for (uint i = 0; i < copy.PointCount; ++i)
                     SetPoint(i, copy.GetPoint(i));
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get the total number of points of the shape
+            /// The total number of points of the shape
             /// </summary>
-            /// <returns>The total point count</returns>
             ////////////////////////////////////////////////////////////
-            public override uint GetPointCount()
+            public override uint PointCount
             {
-                return (uint)myPoints.Length;
+                get { return (uint)myPoints.Length; }
             }
 
             ////////////////////////////////////////////////////////////

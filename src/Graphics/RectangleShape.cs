@@ -60,13 +60,12 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get the total number of points of the shape
+            /// The total number of points of the shape
             /// </summary>
-            /// <returns>The total point count</returns>
             ////////////////////////////////////////////////////////////
-            public override uint GetPointCount()
+            public override uint PointCount
             {
-                return 4;
+                get { return 4; }
             }
 
             ////////////////////////////////////////////////////////////
