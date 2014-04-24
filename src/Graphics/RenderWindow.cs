@@ -99,9 +99,9 @@ namespace SFML
             /// </summary>
             /// <returns>True if the window is opened</returns>
             ////////////////////////////////////////////////////////////
-            public override bool IsOpen()
+            public override bool IsOpen
             {
-                return sfRenderWindow_isOpen(CPointer);
+                get { return sfRenderWindow_isOpen(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////

@@ -122,9 +122,9 @@ namespace SFML
             /// </summary>
             /// <returns>True if the window is opened</returns>
             ////////////////////////////////////////////////////////////
-            public virtual bool IsOpen()
+            public virtual bool IsOpen
             {
-                return sfWindow_isOpen(CPointer);
+                get { return sfWindow_isOpen(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
