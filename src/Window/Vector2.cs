@@ -143,6 +143,30 @@ namespace SFML
                        " Y(" + Y + ")";
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2i(Vector2f v)
+            {
+                return new Vector2i((int)v.X, (int)v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2u(Vector2f v)
+            {
+                return new Vector2u((uint)v.X, (uint)v.Y);
+            }
+
             /// <summary>X (horizontal) component of the vector</summary>
             public float X;
  
@@ -288,6 +312,30 @@ namespace SFML
                        " Y(" + Y + ")";
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2f(Vector2i v)
+            {
+                return new Vector2f((float)v.X, (float)v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2u(Vector2i v)
+            {
+                return new Vector2u((uint)v.X, (uint)v.Y);
+            }
+
             /// <summary>X (horizontal) component of the vector</summary>
             public int X;
  
@@ -419,6 +467,30 @@ namespace SFML
                 return "[Vector2u]" +
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2i(Vector2u v)
+            {
+                return new Vector2i((int)v.X, (int)v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2f(Vector2u v)
+            {
+                return new Vector2f((float)v.X, (float)v.Y);
             }
 
             /// <summary>X (horizontal) component of the vector</summary>
