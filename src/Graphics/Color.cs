@@ -69,6 +69,31 @@ namespace SFML
                        " A(" + A + ")";
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two colors and checks if they are equal
+            /// </summary>
+            /// <returns>Colors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(Color left, Color right)
+            {
+                return (left.R == right.R) &&
+                       (left.G == right.G) &&
+                       (left.B == right.B) &&
+                       (left.A == right.A);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two colors and checks if they are not equal
+            /// </summary>
+            /// <returns>Colors are not equal</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Color left, Color right)
+            {
+                return !(left == right);
+            }
+
             /// <summary>Red component of the color</summary>
             public byte R;
 
