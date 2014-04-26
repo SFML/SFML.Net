@@ -11,7 +11,7 @@ namespace SFML
         /// Give access to the real-time state of the keyboard
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public class Keyboard
+        public static class Keyboard
         {
             ////////////////////////////////////////////////////////////
             /// <summary>

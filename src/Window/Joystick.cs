@@ -11,7 +11,7 @@ namespace SFML
         /// Give access to the real-time state of the joysticks
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public class Joystick
+        public static class Joystick
         {
             /// <summary>Maximum number of supported joysticks</summary>
             public static readonly uint Count = 8;
