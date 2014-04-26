@@ -156,11 +156,10 @@ namespace SFML
             /// This function returns the axis-aligned rectangle that
             /// contains all the vertices of the array.
             /// </summmary>
-            /// <returns>Bounding rectangle of the vertex array</returns>
             ////////////////////////////////////////////////////////////
-            public FloatRect GetBounds()
+            public FloatRect Bounds
             {
-                return sfVertexArray_getBounds(CPointer);
+                get { return sfVertexArray_getBounds(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
