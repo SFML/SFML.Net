@@ -71,6 +71,36 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Returns a unique hash code for this color
+            /// </summary>
+            /// <returns>A unique hash code for this color</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return A << 24 + R << 16 + G << 8 + B;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Determines whether this color is equal to the specified
+            /// object
+            /// </summary>
+            /// <param name="obj">The object to compare against</param>
+            /// <returns>True if the given object is an identical color.
+            /// False if the given object is not a color, or a different
+            /// color.</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                if (obj is Color)
+                {
+                    return this == (Color)obj;
+                }
+                else return false;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Compare two colors and checks if they are equal
             /// </summary>
             /// <returns>Colors are equal</returns>
