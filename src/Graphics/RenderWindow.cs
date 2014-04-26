@@ -664,7 +664,7 @@ namespace SFML
             /// </summary>
             /// <returns>Relative mouse position</returns>
             ////////////////////////////////////////////////////////////
-            public override Vector2i InternalGetMousePosition()
+            protected override Vector2i InternalGetMousePosition()
             {
                 return sfMouse_getPositionRenderWindow(CPointer);
             }
@@ -677,7 +677,7 @@ namespace SFML
             /// </summary>
             /// <param name="position">Relative mouse position</param>
             ////////////////////////////////////////////////////////////
-            public override void InternalSetMousePosition(Vector2i position)
+            protected override void InternalSetMousePosition(Vector2i position)
             {
                 sfMouse_setPositionRenderWindow(position, CPointer);
             }
