@@ -41,7 +41,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Contains(int x, int y)
             {
-                return (x >= Left) && (x < Left + Width) && (y >= Top) && (y < Top + Height);
+                int minX = Math.Min(Left, Left + Width);
+                int maxX = Math.Max(Left, Left + Width);
+                int minY = Math.Min(Top, Top + Height);
+                int maxY = Math.Max(Top, Top + Height);
+
+                return (x >= minX) && (x < maxX) && (y >= minY) && (y < maxY);
             }
 
             ////////////////////////////////////////////////////////////
@@ -53,13 +58,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Intersects(IntRect rect)
             {
-                // Compute the intersection boundaries
-                int left   = Math.Max(Left,         rect.Left);
-                int top    = Math.Max(Top,          rect.Top);
-                int right  = Math.Min(Left + Width, rect.Left + rect.Width);
-                int bottom = Math.Min(Top + Height, rect.Top + rect.Height);
-            
-                return (left < right) && (top < bottom);
+                IntRect overlap;
+                return Intersects(rect, out overlap);
             }
 
             ////////////////////////////////////////////////////////////
@@ -72,19 +72,33 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Intersects(IntRect rect, out IntRect overlap)
             {
+                // Rectangles with negative dimensions are allowed, so we must handle them correctly
+
+                // Compute the min and max of the first rectangle on both axes
+                int r1MinX = Math.Min(Left, Left + Width);
+                int r1MaxX = Math.Max(Left, Left + Width);
+                int r1MinY = Math.Min(Top, Top + Height);
+                int r1MaxY = Math.Max(Top, Top + Height);
+
+                // Compute the min and max of the second rectangle on both axes
+                int r2MinX = Math.Min(rect.Left, rect.Left + rect.Width);
+                int r2MaxX = Math.Max(rect.Left, rect.Left + rect.Width);
+                int r2MinY = Math.Min(rect.Top, rect.Top + rect.Height);
+                int r2MaxY = Math.Max(rect.Top, rect.Top + rect.Height);
+
                 // Compute the intersection boundaries
-                int left   = Math.Max(Left,         rect.Left);
-                int top    = Math.Max(Top,          rect.Top);
-                int right  = Math.Min(Left + Width, rect.Left + rect.Width);
-                int bottom = Math.Min(Top + Height, rect.Top + rect.Height);
+                int interLeft = Math.Max(r1MinX, r2MinX);
+                int interTop = Math.Max(r1MinY, r2MinY);
+                int interRight = Math.Min(r1MaxX, r2MaxX);
+                int interBottom = Math.Min(r1MaxY, r2MaxY);
 
                 // If the intersection is valid (positive non zero area), then there is an intersection
-                if ((left < right) && (top < bottom))
+                if ((interLeft < interRight) && (interTop < interBottom))
                 {
-                    overlap.Left   = left;
-                    overlap.Top    = top;
-                    overlap.Width  = right - left;
-                    overlap.Height = bottom - top;
+                    overlap.Left   = interLeft;
+                    overlap.Top    = interTop;
+                    overlap.Width  = interRight - interLeft;
+                    overlap.Height = interBottom - interTop;
                     return true;
                 }
                 else
@@ -160,7 +174,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Contains(float x, float y)
             {
-                return (x >= Left) && (x < Left + Width) && (y >= Top) && (y < Top + Height);
+                float minX = Math.Min(Left, Left + Width);
+                float maxX = Math.Max(Left, Left + Width);
+                float minY = Math.Min(Top, Top + Height);
+                float maxY = Math.Max(Top, Top + Height);
+
+                return (x >= minX) && (x < maxX) && (y >= minY) && (y < maxY);
             }
 
             ////////////////////////////////////////////////////////////
@@ -172,13 +191,8 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Intersects(FloatRect rect)
             {
-                // Compute the intersection boundaries
-                float left   = Math.Max(Left,         rect.Left);
-                float top    = Math.Max(Top,          rect.Top);
-                float right  = Math.Min(Left + Width, rect.Left + rect.Width);
-                float bottom = Math.Min(Top + Height, rect.Top + rect.Height);
-            
-                return (left < right) && (top < bottom);
+                FloatRect overlap;
+                return Intersects(rect, out overlap);
             }
 
             ////////////////////////////////////////////////////////////
@@ -191,19 +205,33 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public bool Intersects(FloatRect rect, out FloatRect overlap)
             {
+                // Rectangles with negative dimensions are allowed, so we must handle them correctly
+
+                // Compute the min and max of the first rectangle on both axes
+                float r1MinX = Math.Min(Left, Left + Width);
+                float r1MaxX = Math.Max(Left, Left + Width);
+                float r1MinY = Math.Min(Top, Top + Height);
+                float r1MaxY = Math.Max(Top, Top + Height);
+
+                // Compute the min and max of the second rectangle on both axes
+                float r2MinX = Math.Min(rect.Left, rect.Left + rect.Width);
+                float r2MaxX = Math.Max(rect.Left, rect.Left + rect.Width);
+                float r2MinY = Math.Min(rect.Top, rect.Top + rect.Height);
+                float r2MaxY = Math.Max(rect.Top, rect.Top + rect.Height);
+
                 // Compute the intersection boundaries
-                float left   = Math.Max(Left,         rect.Left);
-                float top    = Math.Max(Top,          rect.Top);
-                float right  = Math.Min(Left + Width, rect.Left + rect.Width);
-                float bottom = Math.Min(Top + Height, rect.Top + rect.Height);
+                float interLeft = Math.Max(r1MinX, r2MinX);
+                float interTop = Math.Max(r1MinY, r2MinY);
+                float interRight = Math.Min(r1MaxX, r2MaxX);
+                float interBottom = Math.Min(r1MaxY, r2MaxY);
 
                 // If the intersection is valid (positive non zero area), then there is an intersection
-                if ((left < right) && (top < bottom))
+                if ((interLeft < interRight) && (interTop < interBottom))
                 {
-                    overlap.Left   = left;
-                    overlap.Top    = top;
-                    overlap.Width  = right - left;
-                    overlap.Height = bottom - top;
+                    overlap.Left   = interLeft;
+                    overlap.Top    = interTop;
+                    overlap.Width  = interRight - interLeft;
+                    overlap.Height = interBottom - interTop;
                     return true;
                 }
                 else
