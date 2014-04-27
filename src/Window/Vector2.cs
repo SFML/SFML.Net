@@ -14,6 +14,8 @@ namespace SFML
         [StructLayout(LayoutKind.Sequential)]
         public struct Vector2f
         {
+            public static readonly Vector2f Zero = new Vector2f(0, 0);
+            
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Construct the vector from its coordinates
@@ -183,6 +185,8 @@ namespace SFML
         [StructLayout(LayoutKind.Sequential)]
         public struct Vector2i
         {
+            public static readonly Vector2i Zero = new Vector2i(0, 0);
+            
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Construct the vector from its coordinates
@@ -352,6 +356,8 @@ namespace SFML
         [StructLayout(LayoutKind.Sequential)]
         public struct Vector2u
         {
+            public static readonly Vector2u Zero = new Vector2u(0, 0);
+            
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Construct the vector from its coordinates
