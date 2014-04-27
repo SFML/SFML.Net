@@ -94,6 +94,36 @@ namespace SFML
                 return !(left == right);
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// This operator returns the component-wise sum of two colors.
+            /// Components that exceed 255 are clamped to 255.
+            /// </summary>
+            /// <returns>Result of left + right</returns>
+            ////////////////////////////////////////////////////////////
+            public static Color operator +(Color left, Color right)
+            {
+                return new Color((byte)Math.Min(left.R + right.R, 255),
+                                 (byte)Math.Min(left.G + right.G, 255),
+                                 (byte)Math.Min(left.B + right.B, 255),
+                                 (byte)Math.Min(left.A + right.A, 255));
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// This operator returns the component-wise subtraction of two colors.
+            /// Components below 0 are clamped to 0.
+            /// </summary>
+            /// <returns>Result of left - right</returns>
+            ////////////////////////////////////////////////////////////
+            public static Color operator -(Color left, Color right)
+            {
+                return new Color((byte)Math.Max(left.R - right.R, 0),
+                                 (byte)Math.Max(left.G - right.G, 0),
+                                 (byte)Math.Max(left.B - right.B, 0),
+                                 (byte)Math.Max(left.A - right.A, 0));
+            }
+
             /// <summary>Red component of the color</summary>
             public byte R;
 
