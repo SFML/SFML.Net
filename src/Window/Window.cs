@@ -402,12 +402,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Internal function to get the mouse position relatively to the window.
-            /// This function is public because it is called by another class of
+            /// This function is protected because it is called by another class of
             /// another module, it is not meant to be called by users.
             /// </summary>
             /// <returns>Relative mouse position</returns>
             ////////////////////////////////////////////////////////////
-            public virtual Vector2i InternalGetMousePosition()
+            protected internal virtual Vector2i InternalGetMousePosition()
             {
                 return sfMouse_getPosition(CPointer);
             }
@@ -415,12 +415,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Internal function to set the mouse position relatively to the window.
-            /// This function is public because it is called by another class of
+            /// This function is protected because it is called by another class of
             /// another module, it is not meant to be called by users.
             /// </summary>
             /// <param name="position">Relative mouse position</param>
             ////////////////////////////////////////////////////////////
-            public virtual void InternalSetMousePosition(Vector2i position)
+            protected internal virtual void InternalSetMousePosition(Vector2i position)
             {
                 sfMouse_setPosition(position, CPointer);
             }
