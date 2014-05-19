@@ -78,8 +78,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                if (obj is Color) return Equals(this);
-                return false;
+                return (obj is Color) && Equals(this);
             }
             
             ///////////////////////////////////////////////////////////
