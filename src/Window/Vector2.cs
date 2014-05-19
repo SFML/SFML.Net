@@ -12,7 +12,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2f
+        public struct Vector2f : IEquatable<Vector2f>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -142,6 +142,42 @@ namespace SFML
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
             }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector2f) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector2f other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() + Y.GetHashCode();
+            }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -181,7 +217,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2i
+        public struct Vector2i : IEquatable<Vector2i>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -311,6 +347,42 @@ namespace SFML
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
             }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector2i) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector2i other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() + Y.GetHashCode();
+            }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -350,7 +422,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2u
+        public struct Vector2u : IEquatable<Vector2u>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -467,6 +539,42 @@ namespace SFML
                 return "[Vector2u]" +
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector2u) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector2u other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() + Y.GetHashCode();
             }
 
             ////////////////////////////////////////////////////////////
