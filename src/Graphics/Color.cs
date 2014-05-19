@@ -11,7 +11,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Color
+        public struct Color : IEquatable<Color>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -68,6 +68,50 @@ namespace SFML
                        " B(" + B + ")" +
                        " A(" + A + ")";
             }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare color and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and color are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+    		{
+    			if (obj is Color)
+    				return Equals(this);
+    
+    			return false;
+    		}
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two colors and checks if they are equal
+            /// </summary>
+            /// <param name="color">Color to check</param>
+            /// <returns>Colors are equal</returns>
+            ////////////////////////////////////////////////////////////
+    		public bool Equals(Color other)
+    		{
+    			return (R == other.R) &&
+                       (G == other.G) &&
+                       (B == other.B) &&
+                       (A == other.A);
+    		}
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+    		public override int GetHashCode()
+    		{
+    			return R.GetHashCode() +
+    			       G.GetHashCode() +
+    			       B.GetHashCode() +
+    			       A.GetHashCode();
+    		}
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -77,10 +121,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool operator ==(Color left, Color right)
             {
-                return (left.R == right.R) &&
-                       (left.G == right.G) &&
-                       (left.B == right.B) &&
-                       (left.A == right.A);
+                return left.Equals(right);
             }
 
             ////////////////////////////////////////////////////////////
@@ -91,7 +132,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static bool operator !=(Color left, Color right)
             {
-                return !(left == right);
+                return !left.Equals(right);
             }
 
             ////////////////////////////////////////////////////////////
@@ -123,6 +164,36 @@ namespace SFML
                                  (byte)Math.Max(left.B - right.B, 0),
                                  (byte)Math.Max(left.A - right.A, 0));
             }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// This operator returns the component-wise multiplication of two colors.
+            /// Components above 255 are clamped to 255.
+            /// </summary>
+            /// <returns>Result of left * right</returns>
+            ////////////////////////////////////////////////////////////
+            public static Color operator *(Color left, Color right)
+    		{
+    		    return new Color((byte)Math.Min(left.R * right.R, 255),
+                                 (byte)Math.Min(left.G * right.G, 255),
+                                 (byte)Math.Min(left.B * right.B, 255),
+                                 (byte)Math.Min(left.A * right.A, 255));
+    		}
+    		
+    		////////////////////////////////////////////////////////////
+            /// <summary>
+            /// This operator returns the component-wise division of two colors.
+            /// Components below 0 are clamped to 0.
+            /// </summary>
+            /// <returns>Result of left / right</returns>
+            ////////////////////////////////////////////////////////////
+            public static Color operator /(Color left, Color right)
+    		{
+    		    return new Color((byte)Math.Max(left.R / right.R, 0),
+                                 (byte)Math.Max(left.G / right.G, 0),
+                                 (byte)Math.Max(left.B / right.B, 0),
+                                 (byte)Math.Max(left.A / right.A, 0));
+    		}
 
             /// <summary>Red component of the color</summary>
             public byte R;
