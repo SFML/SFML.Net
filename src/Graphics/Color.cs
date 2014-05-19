@@ -77,27 +77,25 @@ namespace SFML
             /// <returns>Object and color are equal</returns>
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
-    		{
-    			if (obj is Color)
-    				return Equals(this);
-    
-    			return false;
-    		}
+            {
+                if (obj is Color) return Equals(this);
+                return false;
+            }
             
             ///////////////////////////////////////////////////////////
             /// <summary>
             /// Compare two colors and checks if they are equal
             /// </summary>
-            /// <param name="color">Color to check</param>
+            /// <param name="other">Color to check</param>
             /// <returns>Colors are equal</returns>
             ////////////////////////////////////////////////////////////
-    		public bool Equals(Color other)
-    		{
-    			return (R == other.R) &&
+            public bool Equals(Color other)
+            {
+                return (R == other.R) &&
                        (G == other.G) &&
                        (B == other.B) &&
                        (A == other.A);
-    		}
+            }
             
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -105,13 +103,13 @@ namespace SFML
             /// </summary>
             /// <returns>Integer description of the object</returns>
             ////////////////////////////////////////////////////////////
-    		public override int GetHashCode()
-    		{
-    			return R.GetHashCode() +
-    			       G.GetHashCode() +
-    			       B.GetHashCode() +
-    			       A.GetHashCode();
-    		}
+            public override int GetHashCode()
+            {
+                return R.GetHashCode() +
+                       G.GetHashCode() +
+                       B.GetHashCode() +
+                       A.GetHashCode();
+            }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -173,27 +171,12 @@ namespace SFML
             /// <returns>Result of left * right</returns>
             ////////////////////////////////////////////////////////////
             public static Color operator *(Color left, Color right)
-    		{
-    		    return new Color((byte)Math.Min(left.R * right.R, 255),
+            {
+                return new Color((byte)Math.Min(left.R * right.R, 255),
                                  (byte)Math.Min(left.G * right.G, 255),
                                  (byte)Math.Min(left.B * right.B, 255),
                                  (byte)Math.Min(left.A * right.A, 255));
-    		}
-    		
-    		////////////////////////////////////////////////////////////
-            /// <summary>
-            /// This operator returns the component-wise division of two colors.
-            /// Components below 0 are clamped to 0.
-            /// </summary>
-            /// <returns>Result of left / right</returns>
-            ////////////////////////////////////////////////////////////
-            public static Color operator /(Color left, Color right)
-    		{
-    		    return new Color((byte)Math.Max(left.R / right.R, 0),
-                                 (byte)Math.Max(left.G / right.G, 0),
-                                 (byte)Math.Max(left.B / right.B, 0),
-                                 (byte)Math.Max(left.A / right.A, 0));
-    		}
+            }
 
             /// <summary>Red component of the color</summary>
             public byte R;
