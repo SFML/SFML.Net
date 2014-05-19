@@ -105,10 +105,10 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override int GetHashCode()
             {
-                return R.GetHashCode() +
-                       G.GetHashCode() +
-                       B.GetHashCode() +
-                       A.GetHashCode();
+                return (int)(R << 24) |
+                       (int)(G << 16) |
+                       (int)(B << 8)  |
+                       (int)A;
             }
 
             ////////////////////////////////////////////////////////////
