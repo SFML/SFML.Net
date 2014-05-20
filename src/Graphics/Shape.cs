@@ -71,11 +71,10 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get the total number of points of the shape
+            /// The total number of points of the shape
             /// </summary>
-            /// <returns>The total point count</returns>
             ////////////////////////////////////////////////////////////
-            public abstract uint GetPointCount();
+            public abstract uint PointCount { get; }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -220,7 +219,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             private uint InternalGetPointCount(IntPtr userData)
             {
-                return GetPointCount();
+                return PointCount;
             }
 
             ////////////////////////////////////////////////////////////
