@@ -169,6 +169,32 @@ namespace SFML
 			
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Operator == overload ; check rect equality
+            /// </summary>
+            /// <param name="v1">First rect</param>
+            /// <param name="v2">Second rect</param>
+            /// <returns>r1 == r2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(IntRect r1, IntRect r2)
+            {
+                return r1.Equals(r2);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check rect inequality
+            /// </summary>
+            /// <param name="v1">First rect</param>
+            /// <param name="v2">Second rect</param>
+            /// <returns>r1 != r2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(IntRect r1, IntRect r2)
+            {
+                return !r1.Equals(r2);
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Explicit casting to another rectangle type
             /// </summary>
             /// <param name="r">Rectangle being casted</param>
@@ -354,6 +380,32 @@ namespace SFML
                        (((uint)Top << 13) | ((uint)Top >> 19)) ^
                        (((uint)Width << 26) | ((uint)Width >>  6)) ^
                        (((uint)Height <<  7) | ((uint)Height >> 25))));
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator == overload ; check rect equality
+            /// </summary>
+            /// <param name="v1">First rect</param>
+            /// <param name="v2">Second rect</param>
+            /// <returns>r1 == r2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(FloatRect r1, FloatRect r2)
+            {
+                return r1.Equals(r2);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check rect inequality
+            /// </summary>
+            /// <param name="v1">First rect</param>
+            /// <param name="v2">Second rect</param>
+            /// <returns>r1 != r2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(FloatRect r1, FloatRect r2)
+            {
+                return !r1.Equals(r2);
             }
 			
             ////////////////////////////////////////////////////////////
