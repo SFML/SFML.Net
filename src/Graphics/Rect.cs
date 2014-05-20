@@ -12,7 +12,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct IntRect
+        public struct IntRect : IEquatable<IntRect>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -125,6 +125,62 @@ namespace SFML
                        " Width(" + Width + ")" +
                        " Height(" + Height + ")";
             }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare rectangle and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and rectangle are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is IntRect) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two rectangles and checks if they are equal
+            /// </summary>
+            /// <param name="other">Rectangle to check</param>
+            /// <returns>Rectangles are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(IntRect other)
+            {
+                return (Left == other.Left) &&
+                       (Top == other.Top) &&
+                       (Width == other.Width) &&
+                       (Height == other.Height);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return unchecked((int)((uint)Left ^
+                       (((uint)Top << 13) | ((uint)Top >> 19)) ^
+                       (((uint)Width << 26) | ((uint)Width >>  6)) ^
+                       (((uint)Height <<  7) | ((uint)Height >> 25))));
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another rectangle type
+            /// </summary>
+            /// <param name="r">Rectangle being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator FloatRect(IntRect r)
+            {
+                return new FloatRect((float)r.Left,
+                                     (float)r.Top,
+                                     (float)r.Width,
+                                     (float)r.Height);
+            }
 
             /// <summary>Left coordinate of the rectangle</summary>
             public int Left;
@@ -145,7 +201,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct FloatRect
+        public struct FloatRect : IEquatable<FloatRect>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -257,6 +313,62 @@ namespace SFML
                        " Top(" + Top + ")" +
                        " Width(" + Width + ")" +
                        " Height(" + Height + ")";
+            }
+			
+			////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare rectangle and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and rectangle are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is FloatRect) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two rectangles and checks if they are equal
+            /// </summary>
+            /// <param name="other">Rectangle to check</param>
+            /// <returns>Rectangles are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(FloatRect other)
+            {
+                return (Left == other.Left) &&
+                       (Top == other.Top) &&
+                       (Width == other.Width) &&
+                       (Height == other.Height);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return unchecked((int)((uint)Left ^
+                       (((uint)Top << 13) | ((uint)Top >> 19)) ^
+                       (((uint)Width << 26) | ((uint)Width >>  6)) ^
+                       (((uint)Height <<  7) | ((uint)Height >> 25))));
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another rectangle type
+            /// </summary>
+            /// <param name="r">Rectangle being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator IntRect(FloatRect r)
+            {
+                return new IntRect((int)r.Left,
+                                   (int)r.Top,
+                                   (int)r.Width,
+                                   (int)r.Height);
             }
 
             /// <summary>Left coordinate of the rectangle</summary>

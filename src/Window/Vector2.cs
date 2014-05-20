@@ -12,7 +12,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2f
+        public struct Vector2f : IEquatable<Vector2f>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -110,7 +110,7 @@ namespace SFML
             /// </summary>
             /// <param name="v1">First vector</param>
             /// <param name="v2">Second vector</param>
-            /// <returns>v1 + v2</returns>
+            /// <returns>v1 == v2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator ==(Vector2f v1, Vector2f v2)
             {
@@ -123,7 +123,7 @@ namespace SFML
             /// </summary>
             /// <param name="v1">First vector</param>
             /// <param name="v2">Second vector</param>
-            /// <returns>v1 + v2</returns>
+            /// <returns>v1 != v2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator !=(Vector2f v1, Vector2f v2)
             {
@@ -141,6 +141,43 @@ namespace SFML
                 return "[Vector2f]" +
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector2f) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector2f other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() ^
+                       Y.GetHashCode();
             }
 
             ////////////////////////////////////////////////////////////
@@ -181,7 +218,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2i
+        public struct Vector2i : IEquatable<Vector2i>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -279,7 +316,7 @@ namespace SFML
             /// </summary>
             /// <param name="v1">First vector</param>
             /// <param name="v2">Second vector</param>
-            /// <returns>v1 + v2</returns>
+            /// <returns>v1 == v2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator ==(Vector2i v1, Vector2i v2)
             {
@@ -292,7 +329,7 @@ namespace SFML
             /// </summary>
             /// <param name="v1">First vector</param>
             /// <param name="v2">Second vector</param>
-            /// <returns>v1 + v2</returns>
+            /// <returns>v1 != v2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator !=(Vector2i v1, Vector2i v2)
             {
@@ -310,6 +347,43 @@ namespace SFML
                 return "[Vector2i]" +
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector2i) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector2i other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() ^
+                       Y.GetHashCode();
             }
 
             ////////////////////////////////////////////////////////////
@@ -350,7 +424,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2u
+        public struct Vector2u : IEquatable<Vector2u>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -436,7 +510,7 @@ namespace SFML
             /// </summary>
             /// <param name="v1">First vector</param>
             /// <param name="v2">Second vector</param>
-            /// <returns>v1 + v2</returns>
+            /// <returns>v1 == v2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator ==(Vector2u v1, Vector2u v2)
             {
@@ -449,7 +523,7 @@ namespace SFML
             /// </summary>
             /// <param name="v1">First vector</param>
             /// <param name="v2">Second vector</param>
-            /// <returns>v1 + v2</returns>
+            /// <returns>v1 != v2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator !=(Vector2u v1, Vector2u v2)
             {
@@ -467,6 +541,43 @@ namespace SFML
                 return "[Vector2u]" +
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector2u) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector2u other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() ^
+                       Y.GetHashCode();
             }
 
             ////////////////////////////////////////////////////////////
