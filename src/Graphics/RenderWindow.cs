@@ -297,27 +297,16 @@ namespace SFML
             {
                 get {return myDefaultView;}
             }
-
-            ////////////////////////////////////////////////////////////
+			
+			////////////////////////////////////////////////////////////
             /// <summary>
-            /// Return the current active view
+            /// Current active view of the target
             /// </summary>
-            /// <returns>The current view</returns>
             ////////////////////////////////////////////////////////////
-            public View GetView()
+            public View View
             {
-                return new View(sfRenderWindow_getView(CPointer));
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Change the current active view
-            /// </summary>
-            /// <param name="view">New view</param>
-            ////////////////////////////////////////////////////////////
-            public void SetView(View view)
-            {
-                sfRenderWindow_setView(CPointer, view.CPointer);
+                get {return myView;}
+                set {myView = value; myViewNeedsUpdate = true;}
             }
 
             ////////////////////////////////////////////////////////////
@@ -347,7 +336,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2f MapPixelToCoords(Vector2i point)
             {
-                return MapPixelToCoords(point, GetView());
+                return MapPixelToCoords(point, myView);
             }
 
             ////////////////////////////////////////////////////////////
@@ -396,7 +385,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector2i MapCoordsToPixel(Vector2f point)
             {
-                return MapCoordsToPixel(point, GetView());
+                return MapCoordsToPixel(point, myView);
             }
 
             ////////////////////////////////////////////////////////////
@@ -467,6 +456,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Draw(Drawable drawable, RenderStates states)
             {
+                if (myViewNeedsUpdate)
+                {
+                    sfRenderWindow_setView(CPointer, myView.CPointer);
+                    myViewNeedsUpdate = false;
+                }
+
                 drawable.Draw(this, states);
             }
 
@@ -521,6 +516,12 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type, RenderStates states)
             {
+                if (myViewNeedsUpdate)
+                {
+                    sfRenderWindow_setView(CPointer, myView.CPointer);
+                    myViewNeedsUpdate = false;
+                }
+
                 RenderStates.MarshalData marshaledStates = states.Marshal();
 
                 unsafe
@@ -629,7 +630,7 @@ namespace SFML
                        " Position(" + Position + ")" +
                        " Settings(" + Settings + ")" +
                        " DefaultView(" + DefaultView + ")" +
-                       " View(" + GetView() + ")";
+                       " View(" + View + ")";
             }
 
             ////////////////////////////////////////////////////////////
@@ -703,11 +704,14 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             private void Initialize()
             {
+                myView = new View(sfRenderWindow_getView(CPointer));
                 myDefaultView = new View(sfRenderWindow_getDefaultView(CPointer));
                 GC.SuppressFinalize(myDefaultView);
             }
 
             private View myDefaultView = null;
+            private View myView = null;
+            private View myViewNeedsUpdate = true;
 
             #region Imports
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
