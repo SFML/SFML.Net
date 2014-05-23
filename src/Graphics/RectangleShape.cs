@@ -60,9 +60,10 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get the total number of points of the shape
+            /// Get the total number of points of the rectangle.
             /// </summary>
-            /// <returns>The total point count</returns>
+            /// <returns>The total point count. For rectangle shapes, 
+            /// this number is always 4.</returns>
             ////////////////////////////////////////////////////////////
             public override uint GetPointCount()
             {
@@ -71,12 +72,15 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get a point of the shape.
+            /// Get the position of a point
             ///
+            /// The returned point is in local coordinates, that is,
+            /// the shape's transforms (position, rotation, scale) are
+            /// not taken into account.
             /// The result is undefined if index is out of the valid range.
             /// </summary>
-            /// <param name="index">Index of the point to get, in range [0 .. PointCount - 1]</param>
-            /// <returns>Index-th point of the shape</returns>
+            /// <param name="index">Index of the point to get, in range [0 .. 3]</param>
+            /// <returns>index-th point of the shape</returns>
             ////////////////////////////////////////////////////////////
             public override Vector2f GetPoint(uint index)
             {

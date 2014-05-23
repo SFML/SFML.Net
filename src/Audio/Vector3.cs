@@ -12,7 +12,7 @@ namespace SFML
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
-        public struct Vector3f
+        public struct Vector3f : IEquatable<Vector3f>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -105,6 +105,32 @@ namespace SFML
             {
                 return new Vector3f(v.X / x, v.Y / x, v.Z / x);
             }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator == overload ; check vector equality
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 == v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator ==(Vector3f v1, Vector3f v2)
+            {
+                return v1.Equals(v2);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Operator != overload ; check vector inequality
+            /// </summary>
+            /// <param name="v1">First vector</param>
+            /// <param name="v2">Second vector</param>
+            /// <returns>v1 != v2</returns>
+            ////////////////////////////////////////////////////////////
+            public static bool operator !=(Vector3f v1, Vector3f v2)
+            {
+                return !v1.Equals(v2);
+            }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -118,6 +144,45 @@ namespace SFML
                        " X(" + X + ")" +
                        " Y(" + Y + ")" +
                        " Z(" + Z + ")";
+            }
+			
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare vector and object and checks if they are equal
+            /// </summary>
+            /// <param name="obj">Object to check</param>
+            /// <returns>Object and vector are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool Equals(object obj)
+            {
+                return (obj is Vector3f) && Equals(this);
+            }
+            
+            ///////////////////////////////////////////////////////////
+            /// <summary>
+            /// Compare two vectors and checks if they are equal
+            /// </summary>
+            /// <param name="other">Vector to check</param>
+            /// <returns>Vectors are equal</returns>
+            ////////////////////////////////////////////////////////////
+            public bool Equals(Vector3f other)
+            {
+                return (X == other.X) &&
+                       (Y == other.Y) &&
+                       (Z == other.Z);
+            }
+            
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return X.GetHashCode() ^
+                       Y.GetHashCode() ^
+                       Z.GetHashCode();
             }
 
             /// <summary>X (horizontal) component of the vector</summary>
