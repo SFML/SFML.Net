@@ -79,12 +79,15 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Get a point of the shape.
+            /// Get the position of a point
             ///
+            /// The returned point is in local coordinates, that is,
+            /// the shape's transforms (position, rotation, scale) are
+            /// not taken into account.
             /// The result is undefined if index is out of the valid range.
             /// </summary>
             /// <param name="index">Index of the point to get, in range [0 .. PointCount - 1]</param>
-            /// <returns>Index-th point of the shape</returns>
+            /// <returns>index-th point of the shape</returns>
             ////////////////////////////////////////////////////////////
             public abstract Vector2f GetPoint(uint index);
 
