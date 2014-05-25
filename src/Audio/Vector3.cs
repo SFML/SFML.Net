@@ -155,7 +155,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is Vector3f) && Equals(this);
+                return (obj is Vector3f) && obj.Equals(this);
             }
             
             ///////////////////////////////////////////////////////////
