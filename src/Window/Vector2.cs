@@ -152,7 +152,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is Vector2f) && Equals(this);
+                return (obj is Vector2f) && obj.Equals(this);
             }
             
             ///////////////////////////////////////////////////////////
@@ -358,7 +358,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is Vector2i) && Equals(this);
+                return (obj is Vector2i) && obj.Equals(this);
             }
             
             ///////////////////////////////////////////////////////////
@@ -552,7 +552,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is Vector2u) && Equals(this);
+                return (obj is Vector2u) && obj.Equals(this);
             }
             
             ///////////////////////////////////////////////////////////

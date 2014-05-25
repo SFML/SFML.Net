@@ -135,7 +135,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is IntRect) && Equals(this);
+                return (obj is IntRect) && obj.Equals(this);
             }
             
             ///////////////////////////////////////////////////////////
@@ -350,7 +350,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is FloatRect) && Equals(this);
+                return (obj is FloatRect) && obj.Equals(this);
             }
             
             ///////////////////////////////////////////////////////////
