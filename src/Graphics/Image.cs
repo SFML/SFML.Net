@@ -81,6 +81,29 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the image from a file in memory
+            /// </summary>
+            /// <param name="bytes">Byte array containing the file contents</param>
+            /// <exception cref="LoadingFailedException" />
+            ////////////////////////////////////////////////////////////
+            public Image(byte[] bytes) : 
+                base(IntPtr.Zero)
+            {
+                GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+                try 
+                {
+                    SetThis(sfImage_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                } 
+                finally 
+                {
+                    pin.Free();
+                }
+                if (CPointer == IntPtr.Zero)
+                    throw new LoadingFailedException("image");
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the image directly from an array of pixels
             /// </summary>
             /// <param name="pixels">2 dimensions array containing the pixels</param>
@@ -348,6 +371,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern IntPtr sfImage_createFromStream(IntPtr stream);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, ulong size);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfImage_copy(IntPtr Image);

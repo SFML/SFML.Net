@@ -52,6 +52,29 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the sound buffer and load it from a file in memory
+            /// </summary>
+            /// <param name="bytes">Byte array containing the file contents</param>
+            /// <exception cref="LoadingFailedException" />
+            ////////////////////////////////////////////////////////////
+            public SoundBuffer(byte[] bytes) : 
+                base(IntPtr.Zero)
+            {
+                GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+                try 
+                {
+                    SetThis(sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                } 
+                finally 
+                {
+                    pin.Free();
+                }
+                if (CPointer == IntPtr.Zero)
+                    throw new LoadingFailedException("sound buffer");
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the sound buffer from an array of samples
             /// </summary>
             /// <param name="samples">Array of samples</param>
@@ -173,6 +196,9 @@ namespace SFML
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern IntPtr sfSoundBuffer_createFromStream(IntPtr stream);
+
+            [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, ulong size);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, uint SampleCount, uint ChannelsCount, uint SampleRate);
