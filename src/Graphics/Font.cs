@@ -51,6 +51,29 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the font from a file in memory
+            /// </summary>
+            /// <param name="bytes">Byte array containing the file contents</param>
+            /// <exception cref="LoadingFailedException" />
+            ////////////////////////////////////////////////////////////
+            public Font(byte[] bytes) : 
+                base(IntPtr.Zero)
+            {
+                GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+                try 
+                {
+                    SetThis(sfFont_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                } 
+                finally 
+                {
+                    pin.Free();
+                }
+                if (CPointer == IntPtr.Zero)
+                    throw new LoadingFailedException("font");
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the font from another font
             /// </summary>
             /// <param name="copy">Font to copy</param>
@@ -170,6 +193,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_createFromStream(IntPtr stream);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern IntPtr sfFont_createFromMemory(IntPtr data, ulong size);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_copy(IntPtr Font);
