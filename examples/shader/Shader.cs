@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SFML;
 using SFML.Graphics;
 using SFML.Window;
+using SFML.System;
 
 namespace shader
 {
@@ -299,7 +300,7 @@ namespace shader
 
             // Start the game loop
             int startTime = Environment.TickCount;
-            while (window.IsOpen())
+            while (window.IsOpen)
             {
                 // Process events
                 window.DispatchEvents();

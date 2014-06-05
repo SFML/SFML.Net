@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
 using SFML.Window;
+using SFML.System;
 
 namespace SFML
 {

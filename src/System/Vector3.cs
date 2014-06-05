@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace SFML
 {
-    namespace Audio
+    namespace System
     {
         ////////////////////////////////////////////////////////////
         /// <summary>

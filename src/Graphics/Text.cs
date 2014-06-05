@@ -1,7 +1,9 @@
 using System;
 using System.Security;
 using System.Runtime.InteropServices;
+using System.Text;
 using SFML.Window;
+using SFML.System;
 
 namespace SFML
 {
@@ -129,13 +131,13 @@ namespace SFML
                     Marshal.Copy(source, sourceBytes, 0, sourceBytes.Length);
 
                     // Convert it to a C# string
-                    return System.Text.Encoding.UTF32.GetString(sourceBytes);
+                    return Encoding.UTF32.GetString(sourceBytes);
                 }
 
                 set
                 {
                     // Copy the string to a null-terminated UTF-32 byte array
-                    byte[] utf32 = System.Text.Encoding.UTF32.GetBytes(value + '\0');
+                    byte[] utf32 = Encoding.UTF32.GetBytes(value + '\0');
 
                     // Pass it to the C API
                     unsafe

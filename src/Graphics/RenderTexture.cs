@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security;
 using SFML.Window;
+using SFML.System;
 
 namespace SFML
 {

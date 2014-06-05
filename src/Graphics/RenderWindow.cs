@@ -3,7 +3,9 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security;
+using System.Text;
 using SFML.Window;
+using SFML.System;
 
 namespace SFML
 {
@@ -55,7 +57,7 @@ namespace SFML
                 base(IntPtr.Zero, 0)
             {
                  // Copy the string to a null-terminated UTF-32 byte array
-                byte[] titleAsUtf32 = System.Text.Encoding.UTF32.GetBytes(title + '\0');
+                byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
                 unsafe
                 {
@@ -167,7 +169,7 @@ namespace SFML
             public override void SetTitle(string title)
             {
                 // Copy the title to a null-terminated UTF-32 byte array
-                byte[] titleAsUtf32 = System.Text.Encoding.UTF32.GetBytes(title + '\0');
+                byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
                 unsafe
                 {

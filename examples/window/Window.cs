@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using SFML;
 using SFML.Window;
+using SFML.System;
 using Tao.OpenGl;
 
 namespace window
@@ -109,7 +110,7 @@ namespace window
             int startTime = Environment.TickCount;
 
             // Start the game loop
-            while (window.IsOpen())
+            while (window.IsOpen)
             {
                 // Process events
                 window.DispatchEvents();
