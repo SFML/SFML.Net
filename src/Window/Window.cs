@@ -1,7 +1,9 @@
 using System;
+using System.Text;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Security;
+using SFML.System;
 
 namespace SFML
 {
@@ -80,7 +82,7 @@ namespace SFML
                 base(IntPtr.Zero)
             {
                  // Copy the title to a null-terminated UTF-32 byte array
-                byte[] titleAsUtf32 = System.Text.Encoding.UTF32.GetBytes(title + '\0');
+                byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
                 unsafe
                 {
@@ -190,7 +192,7 @@ namespace SFML
             public virtual void SetTitle(string title)
             {
                  // Copy the title to a null-terminated UTF-32 byte array
-                byte[] titleAsUtf32 = System.Text.Encoding.UTF32.GetBytes(title + '\0');
+                byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
                 unsafe
                 {

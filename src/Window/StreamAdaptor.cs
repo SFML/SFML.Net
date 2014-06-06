@@ -131,7 +131,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             private long Seek(long position, IntPtr userData)
             {
-                return myStream.Seek(position, System.IO.SeekOrigin.Begin);
+                return myStream.Seek(position, SeekOrigin.Begin);
             }
 
             ////////////////////////////////////////////////////////////

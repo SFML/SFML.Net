@@ -49,6 +49,10 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\System\sfml-system.csproj">
+      <Project>{31D24303-F6A9-4D53-BB03-A73EDCB3186D}</Project>
+      <Name>sfml-system</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Window\sfml-window.csproj">
       <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
       <Name>sfml-window</Name>

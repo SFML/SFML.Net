@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace SFML
 {
-    namespace Window
+    namespace System
     {
         ////////////////////////////////////////////////////////////
         /// <summary>

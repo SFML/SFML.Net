@@ -4,6 +4,7 @@ using System.Security;
 using System.IO;
 using System.Runtime.ConstrainedExecution;
 using SFML.Window;
+using SFML.System;
 
 namespace SFML
 {

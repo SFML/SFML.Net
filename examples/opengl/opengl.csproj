@@ -53,6 +53,10 @@
       <Project>{46786269-57B9-48E7-AA4F-8F4D84609FE6}</Project>
       <Name>sfml-graphics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\System\sfml-system.csproj">
+      <Project>{31D24303-F6A9-4D53-BB03-A73EDCB3186D}</Project>
+      <Name>sfml-system</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Window\sfml-window.csproj">
       <Project>{D17DE83D-A592-461F-8AF2-53F9E22E1D0F}</Project>
       <Name>sfml-window</Name>
