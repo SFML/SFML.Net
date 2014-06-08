@@ -171,8 +171,8 @@ namespace SFML
             /// <summary>
             /// Operator == overload ; check rect equality
             /// </summary>
-            /// <param name="v1">First rect</param>
-            /// <param name="v2">Second rect</param>
+            /// <param name="r1">First rect</param>
+            /// <param name="r2">Second rect</param>
             /// <returns>r1 == r2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator ==(IntRect r1, IntRect r2)
@@ -184,8 +184,8 @@ namespace SFML
             /// <summary>
             /// Operator != overload ; check rect inequality
             /// </summary>
-            /// <param name="v1">First rect</param>
-            /// <param name="v2">Second rect</param>
+            /// <param name="r1">First rect</param>
+            /// <param name="r2">Second rect</param>
             /// <returns>r1 != r2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator !=(IntRect r1, IntRect r2)
@@ -386,8 +386,8 @@ namespace SFML
             /// <summary>
             /// Operator == overload ; check rect equality
             /// </summary>
-            /// <param name="v1">First rect</param>
-            /// <param name="v2">Second rect</param>
+            /// <param name="r1">First rect</param>
+            /// <param name="r2">Second rect</param>
             /// <returns>r1 == r2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator ==(FloatRect r1, FloatRect r2)
@@ -399,8 +399,8 @@ namespace SFML
             /// <summary>
             /// Operator != overload ; check rect inequality
             /// </summary>
-            /// <param name="v1">First rect</param>
-            /// <param name="v2">Second rect</param>
+            /// <param name="r1">First rect</param>
+            /// <param name="r2">Second rect</param>
             /// <returns>r1 != r2</returns>
             ////////////////////////////////////////////////////////////
             public static bool operator !=(FloatRect r1, FloatRect r2)
