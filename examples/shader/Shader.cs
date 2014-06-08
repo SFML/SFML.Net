@@ -299,17 +299,16 @@ namespace shader
             instructions.Color = new Color(80, 80, 80);
 
             // Start the game loop
-            int startTime = Environment.TickCount;
+            Clock clock = new Clock();
             while (window.IsOpen)
             {
                 // Process events
                 window.DispatchEvents();
 
                 // Update the current example
-                float time = (Environment.TickCount - startTime) / 1000.0F;
                 float x = (float)Mouse.GetPosition(window).X / window.Size.X;
                 float y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
-                effects[current].Update(time, x, y);
+                effects[current].Update(clock.ElapsedTime.AsSeconds(), x, y);
 
                 // Clear the window
                 window.Clear(new Color(255, 128, 0));

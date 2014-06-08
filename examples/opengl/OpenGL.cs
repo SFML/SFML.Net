@@ -130,7 +130,7 @@ namespace opengl
             Gl.glDisableClientState(Gl.GL_NORMAL_ARRAY);
             Gl.glDisableClientState(Gl.GL_COLOR_ARRAY);
 
-            int startTime = Environment.TickCount;
+            Clock clock = new Clock();
 
             // Start game loop
             while (window.IsOpen)
@@ -154,13 +154,12 @@ namespace opengl
                 float y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F;
 
                 // Apply some transformations
-                float time = (Environment.TickCount - startTime) / 1000.0F;
                 Gl.glMatrixMode(Gl.GL_MODELVIEW);
                 Gl.glLoadIdentity();
                 Gl.glTranslatef(x, y, -100.0F);
-                Gl.glRotatef(time * 50, 1.0F, 0.0F, 0.0F);
-                Gl.glRotatef(time * 30, 0.0F, 1.0F, 0.0F);
-                Gl.glRotatef(time * 90, 0.0F, 0.0F, 1.0F);
+                Gl.glRotatef(clock.ElapsedTime.AsSeconds() * 50, 1.0F, 0.0F, 0.0F);
+                Gl.glRotatef(clock.ElapsedTime.AsSeconds() * 30, 0.0F, 1.0F, 0.0F);
+                Gl.glRotatef(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F);
 
                 // Draw the cube
                 Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
