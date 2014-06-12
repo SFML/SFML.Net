@@ -69,9 +69,8 @@ namespace opengl
             float ratio = (float)(window.Size.X) / window.Size.Y;
             Gl.glFrustum(-ratio, ratio, -1, 1, 1, 500);
 
-            // Bind the texture
+            // Enable 2D Textures
             Gl.glEnable(Gl.GL_TEXTURE_2D);
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
 
             // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
             float[] cube = new float[]
@@ -161,6 +160,9 @@ namespace opengl
                 Gl.glRotatef(time * 50, 1.0F, 0.0F, 0.0F);
                 Gl.glRotatef(time * 30, 0.0F, 1.0F, 0.0F);
                 Gl.glRotatef(time * 90, 0.0F, 0.0F, 1.0F);
+
+                // Bind the texture
+                Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
 
                 // Draw the cube
                 Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
