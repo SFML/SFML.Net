@@ -14,6 +14,13 @@ namespace SFML.System
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Predefined "zero" time value
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static readonly Time Zero = FromMicroseconds(0);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Construct a time value from a number of seconds
         /// </summary>
         /// <param name="seconds">Number of seconds</param>
