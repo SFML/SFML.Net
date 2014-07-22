@@ -80,7 +80,7 @@ namespace SFML
                 Dash,         // The - key
                 Space,        // The Space key
                 Return,       // The Return key
-                Back,         // The Backspace key
+                BackSpace,    // The Backspace key
                 Tab,          // The Tabulation key
                 PageUp,       // The Page up key
                 PageDown,     // The Page down key
@@ -88,10 +88,10 @@ namespace SFML
                 Home,         // The Home key
                 Insert,       // The Insert key
                 Delete,       // The Delete key
-                Add,          // +
-                Subtract,     // -
-                Multiply,     // *
-                Divide,       // /
+                Add,          // The + key
+                Subtract,     // The - key
+                Multiply,     // The * key
+                Divide,       // The / key
                 Left,         // Left arrow
                 Right,        // Right arrow
                 Up,           // Up arrow
@@ -114,7 +114,7 @@ namespace SFML
                 F6,           // The F6 key
                 F7,           // The F7 key
                 F8,           // The F8 key
-                F9,           // The F8 key
+                F9,           // The F9 key
                 F10,          // The F10 key
                 F11,          // The F11 key
                 F12,          // The F12 key
