@@ -77,7 +77,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public View DefaultView
             {
-                get {return myDefaultView;}
+                get { return new View(myDefaultView); }
             }
 
             ////////////////////////////////////////////////////////////
