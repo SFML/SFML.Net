@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using SFML.System;
 
 namespace SFML
 {
@@ -29,6 +30,18 @@ namespace SFML
                 Top    = top;
                 Width  = width;
                 Height = height;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the rectangle from position and size
+            /// </summary>
+            /// <param name="position">Position of the top-left corner of the rectangle</param>
+            /// <param name="size">Size of the rectangle</param>
+            ////////////////////////////////////////////////////////////
+            public IntRect(Vector2i position, Vector2i size)
+                : this(position.X, position.Y, size.X, size.Y)
+            {
             }
 
             ////////////////////////////////////////////////////////////
@@ -244,6 +257,18 @@ namespace SFML
                 Top    = top;
                 Width  = width;
                 Height = height;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Construct the rectangle from position and size
+            /// </summary>
+            /// <param name="position">Position of the top-left corner of the rectangle</param>
+            /// <param name="size">Size of the rectangle</param>
+            ////////////////////////////////////////////////////////////
+            public FloatRect(Vector2f position, Vector2f size)
+                : this(position.X, position.Y, size.X, size.Y)
+            {
             }
 
             ////////////////////////////////////////////////////////////
