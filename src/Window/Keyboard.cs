@@ -20,6 +20,9 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public enum Key
             {
+
+#pragma warning disable 1591 // Disable warnings for missing XML comments
+
                 Unknown = -1, // Unhandled key
                 A = 0,        // The A key
                 B,            // The B key
@@ -124,6 +127,9 @@ namespace SFML
                 Pause,        // The Pause key
 
                 KeyCount      // Keep last -- the total number of keyboard keys
+
+#pragma warning restore 1591 // Restore warnings for missing XML comments
+
             };
 
             ////////////////////////////////////////////////////////////
