@@ -232,6 +232,18 @@ namespace SFML
 
             /// <summary>Height of the rectangle</summary>
             public int Height;
+
+			/// <summary> Right coordinate of the rectangle </summary>
+	        public int Right {
+				get { return Left + Width; }
+				set { Left = value - Width; }
+	        }
+
+			/// <summary> Bottom coordinate of the rectangle </summary>
+	        public int Bottom {
+				get { return Top + Height; }
+				set { Top = value - Width; }
+	        }
         }
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -459,6 +471,18 @@ namespace SFML
 
             /// <summary>Height of the rectangle</summary>
             public float Height;
+
+			/// <summary> Right coordinate of the rectangle </summary>
+			public float Right {
+				get { return Left + Width; }
+				set { Left = value - Width; }
+			}
+
+			/// <summary> Bottom coordinate of the rectangle </summary>
+			public float Bottom {
+				get { return Top + Height; }
+				set { Top = value - Width; }
+			}
         }
     }
 }

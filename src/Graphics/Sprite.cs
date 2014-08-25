@@ -1,6 +1,7 @@
 using System;
 using System.Security;
 using System.Runtime.InteropServices;
+using SFML.System;
 using SFML.Window;
 
 namespace SFML
@@ -39,6 +40,19 @@ namespace SFML
             {
                 Texture = texture;
             }
+
+			////////////////////////////////////////////////////////////
+	        /// <summary>
+	        /// Construct the sprite from a source texture and position
+	        /// </summary>
+	        /// <param name="texture">Source texture to assign to the sprite</param>
+	        /// <param name="position">The position of the sprite</param>
+	        ////////////////////////////////////////////////////////////
+			public Sprite(Texture texture, Vector2f position) :
+				base(sfSprite_create()) {
+				Texture = texture;
+				Position = position;
+			}
 
             ////////////////////////////////////////////////////////////
             /// <summary>

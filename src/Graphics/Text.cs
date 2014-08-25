@@ -50,19 +50,7 @@ namespace SFML
             {
             }
 
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Construct the text from a string and a font
-            /// </summary>
-            /// <param name="str">String to display</param>
-            /// <param name="font">Font to use</param>
-            ////////////////////////////////////////////////////////////
-            public Text(string str, Font font) :
-                this(str, font, 30)
-            {
-            }
-
-            ////////////////////////////////////////////////////////////
+	        ////////////////////////////////////////////////////////////
             /// <summary>
             /// Construct the text from a string, font and size
             /// </summary>
@@ -70,13 +58,30 @@ namespace SFML
             /// <param name="font">Font to use</param>
             /// <param name="characterSize">Base characters size</param>
             ////////////////////////////////////////////////////////////
-            public Text(string str, Font font, uint characterSize) :
+            public Text(string str, Font font, uint characterSize = 30) :
                 base(sfText_create())
             {
                 DisplayedString = str;
                 Font = font;
                 CharacterSize = characterSize;
             }
+
+			////////////////////////////////////////////////////////////
+	        /// <summary>
+	        /// Construct the text from a string, font, position and size
+	        /// </summary>
+	        /// <param name="str">String to display</param>
+	        /// <param name="font">Font to use</param>
+	        /// <param name="position">Position of the text</param>
+	        /// <param name="characterSize">Base characters size</param>
+	        ////////////////////////////////////////////////////////////
+			public Text(string str, Font font, Vector2f position, uint characterSize = 30) :
+				base(sfText_create()) {
+				DisplayedString = str;
+				Font = font;
+		        Position = position;
+				CharacterSize = characterSize;
+			}
 
             ////////////////////////////////////////////////////////////
             /// <summary>
