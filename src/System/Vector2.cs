@@ -27,6 +27,15 @@ namespace SFML
                 Y = y;
             }
 
+			/// <summary>
+			/// Construct the vector from one coordinate.
+			/// </summary>
+			/// <param name="value">Value to set both components to</param>
+			public Vector2f(float value) {
+				X = value;
+				Y = value;
+			}
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Operator - overload ; returns the opposite of a vector
@@ -78,8 +87,9 @@ namespace SFML
                 return new Vector2f(v.X * x, v.Y * x);
             }
 
-            ////////////////////////////////////////////////////////////
-            /// <summary>
+	        ////////////////////////////////////////////////////////////
+
+	        /// <summary>
             /// Operator * overload ; multiply a scalar value by a vector
             /// </summary>
             /// <param name="x">Scalar value</param>
@@ -91,7 +101,18 @@ namespace SFML
                 return new Vector2f(v.X * x, v.Y * x);
             }
 
-            ////////////////////////////////////////////////////////////
+	        /// <summary>
+	        /// Operator * overload ; multiply two vectors.
+	        /// Note that this is not dot nor cross product, but instead multiplies the components together.
+	        /// </summary>
+	        /// <param name="v1">First vector</param>
+	        /// <param name="v2">Second vector</param>
+	        /// <returns>v1 * v2</returns>
+	        public static Vector2f operator *(Vector2f v1, Vector2f v2) {
+		        return new Vector2f(v1.X * v2.X, v1.Y * v2.Y);
+	        }
+
+	        ////////////////////////////////////////////////////////////
             /// <summary>
             /// Operator / overload ; divide a vector by a scalar value
             /// </summary>
@@ -232,6 +253,15 @@ namespace SFML
                 X = x;
                 Y = y;
             }
+
+			/// <summary>
+			/// Construct the vector from one coordinate
+			/// </summary>
+			/// <param name="value">Value to set both components to</param>
+			public Vector2i(int value) {
+				X = value;
+				Y = value;
+			}
 
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -438,6 +468,15 @@ namespace SFML
                 X = x;
                 Y = y;
             }
+
+			/// <summary>
+			/// Construct the vector from one coordinate
+			/// </summary>
+			/// <param name="value">Value to set both components to</param>
+			public Vector2u(uint value) {
+				X = value;
+				Y = value;
+			}
 
             ////////////////////////////////////////////////////////////
             /// <summary>

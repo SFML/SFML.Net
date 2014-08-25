@@ -68,6 +68,15 @@ namespace SFML
                 TexCoords = texCoords;
             }
 
+			/// <summary>
+			/// Construct a vertex from a position as an operator.
+			/// </summary>
+			/// <param name="vector">The position</param>
+			/// <returns>A new Vertex from the position</returns>
+			public static explicit operator Vertex (Vector2f vector) {
+				return new Vertex(vector);
+			}
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Provide a string describing the object
