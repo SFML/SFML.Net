@@ -4,7 +4,7 @@ using SFML;
 using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
-using Tao.OpenGl;
+using OpenTK.Graphics.OpenGL;
 
 namespace opengl
 {
@@ -45,32 +45,33 @@ namespace opengl
             int texture = 0;
             using (Image image = new Image("resources/texture.jpg"))
             {
-                Gl.glGenTextures(1, out texture);
-                Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
-                Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, (int)image.Size.X, (int)image.Size.Y, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, image.Pixels);
-                Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR);
-                Gl.glTexParameteri(Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR);
+                GL.GenTextures(1, out texture);
+                GL.BindTexture(TextureTarget.Texture2D, texture);
+
+                // XXXGlu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, (int)image.Size.X, (int)image.Size.Y, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, image.Pixels);
+				GL.TexParameter (TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) All.Linear); 
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) All.LinearMipmapLinear);
             }
 
             // Enable Z-buffer read and write
-            Gl.glEnable(Gl.GL_DEPTH_TEST);
-            Gl.glDepthMask(Gl.GL_TRUE);
-            Gl.glClearDepth(1);
+			GL.Enable (EnableCap.DepthTest);
+			GL.DepthMask (true);
+            GL.ClearDepth(1);
 
             // Disable lighting
-            Gl.glDisable(Gl.GL_LIGHTING);
+            GL.Disable(EnableCap.Lighting);
 
             // Configure the viewport (the same size as the window)
-            Gl.glViewport(0, 0, (int)window.Size.X, (int)window.Size.Y);
+            GL.Viewport(0, 0, (int)window.Size.X, (int)window.Size.Y);
 
             // Setup a perspective projection
-            Gl.glMatrixMode(Gl.GL_PROJECTION);
-            Gl.glLoadIdentity();
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
             float ratio = (float)(window.Size.X) / window.Size.Y;
-            Gl.glFrustum(-ratio, ratio, -1, 1, 1, 500);
+            GL.Frustum(-ratio, ratio, -1, 1, 1, 500);
 
             // Enable 2D Textures
-            Gl.glEnable(Gl.GL_TEXTURE_2D);
+            GL.Enable(EnableCap.Texture2D);
 
             // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
             float[] cube = new float[]
@@ -120,14 +121,15 @@ namespace opengl
             };
 
             // Enable position and texture coordinates vertex components
-            Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
-            Gl.glEnableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
-            Gl.glVertexPointer(3, Gl.GL_FLOAT, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
-            Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.TextureCoordArray);
+			// XXX: Getting the pointer here to work might take some fiddling.
+            GL.VertexPointer(3, VertexPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
+            GL.TexCoordPointer(2, TexCoordPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
 
             // Disable normal and color vertex components
-            Gl.glDisableClientState(Gl.GL_NORMAL_ARRAY);
-            Gl.glDisableClientState(Gl.GL_COLOR_ARRAY);
+            GL.DisableClientState(ArrayCap.NormalArray);
+            GL.DisableClientState(ArrayCap.ColorArray);
 
             Clock clock = new Clock();
 
@@ -146,25 +148,25 @@ namespace opengl
                 window.PopGLStates();
 
                 // Clear the depth buffer
-                Gl.glClear(Gl.GL_DEPTH_BUFFER_BIT);
+                GL.Clear(ClearBufferMask.DepthBufferBit);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
                 float x =  Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F;
                 float y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F;
 
                 // Apply some transformations
-                Gl.glMatrixMode(Gl.GL_MODELVIEW);
-                Gl.glLoadIdentity();
-                Gl.glTranslatef(x, y, -100.0F);
-                Gl.glRotatef(clock.ElapsedTime.AsSeconds() * 50, 1.0F, 0.0F, 0.0F);
-                Gl.glRotatef(clock.ElapsedTime.AsSeconds() * 30, 0.0F, 1.0F, 0.0F);
-                Gl.glRotatef(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F);
+                GL.MatrixMode(MatrixMode.Modelview);
+                GL.LoadIdentity();
+                GL.Translate(x, y, -100.0F);
+                GL.Rotate(clock.ElapsedTime.AsSeconds() * 50, 1.0F, 0.0F, 0.0F);
+                GL.Rotate(clock.ElapsedTime.AsSeconds() * 30, 0.0F, 1.0F, 0.0F);
+                GL.Rotate(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F);
 
                 // Bind the texture
-                Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture);
+                GL.BindTexture(TextureTarget.Texture2D, texture);
 
                 // Draw the cube
-                Gl.glDrawArrays(Gl.GL_TRIANGLES, 0, 36);
+                GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, 0, 36);
 
                 // Draw some text on top of our OpenGL object
                 window.PushGLStates();
@@ -176,7 +178,7 @@ namespace opengl
             }
 
             // Don't forget to destroy our texture
-            Gl.glDeleteTextures(1, ref texture);
+            GL.DeleteTextures(1, ref texture);
         }
 
         /// <summary>
@@ -203,7 +205,7 @@ namespace opengl
         /// </summary>
         static void OnResized(object sender, SizeEventArgs e)
         {
-            Gl.glViewport(0, 0, (int)e.Width, (int)e.Height);
+            GL.Viewport(0, 0, (int)e.Width, (int)e.Height);
         }
     }
 }
