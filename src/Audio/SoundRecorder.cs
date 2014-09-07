@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using SFML.System;
 
 namespace SFML
 {
@@ -128,6 +129,24 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// The processing interval controls the period
+            /// between calls to the onProcessSamples function. You may
+            /// want to use a small interval if you want to process the
+            /// recorded data in real time, for example.
+            ///
+            /// Note: this is only a hint, the actual period may vary.
+            /// So don't rely on this parameter to implement precise timing.
+            ///
+            /// The default processing interval is 100 ms.
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            protected void SetProcessingInterval(Time interval)
+            {
+                sfSoundRecorder_setProcessingInterval(CPointer, interval);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Handle the destruction of the object
             /// </summary>
             /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
@@ -186,6 +205,9 @@ namespace SFML
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfSoundRecorder_isAvailable();
+
+            [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfSoundRecorder_setProcessingInterval(IntPtr SoundRecorder, Time Interval);
             #endregion
         }
     }
