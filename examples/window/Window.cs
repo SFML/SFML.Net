@@ -100,9 +100,9 @@ namespace window
             // Enable position and color vertex components
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.ColorArray);
-			// XXX: The marshal call to get the array pointer here might or might not be right.
-            //GL.VertexPointer(3, VertexPointerType.Float, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
-            //GL.ColorPointer(4, ColorPointerType.Float, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
+            // XXX: The marshal call to get the array pointer here might or might not be right.
+            GL.VertexPointer(3, VertexPointerType.Float, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
+            GL.ColorPointer(4, ColorPointerType.Float, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
 
             // Disable normal and texture coordinates vertex components
             GL.DisableClientState(ArrayCap.NormalArray);
@@ -117,7 +117,7 @@ namespace window
                 window.DispatchEvents();
 
                 // Clear color and depth buffer
-				GL.Clear (ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                GL.Clear (ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                 // Apply some transformations
                 GL.MatrixMode(MatrixMode.Modelview);

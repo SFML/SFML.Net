@@ -5,6 +5,7 @@ using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
 using OpenTK.Graphics.OpenGL;
+using Tao.OpenGl;
 
 namespace opengl
 {
@@ -48,14 +49,16 @@ namespace opengl
                 GL.GenTextures(1, out texture);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
 
-                // XXXGlu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, (int)image.Size.X, (int)image.Size.Y, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, image.Pixels);
-				GL.TexParameter (TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) All.Linear); 
-				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) All.LinearMipmapLinear);
+                Glu.gluBuild2DMipmaps(Gl.GL_TEXTURE_2D, Gl.GL_RGBA, (int)image.Size.X, (int)image.Size.Y, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, image.Pixels);
+                GL.GenerateMipmap (GenerateMipmapTarget.Texture2D);
+                GL.TexParameter (TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) All.Linear); 
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) All.LinearMipmapLinear);
+
             }
 
             // Enable Z-buffer read and write
-			GL.Enable (EnableCap.DepthTest);
-			GL.DepthMask (true);
+            GL.Enable (EnableCap.DepthTest);
+            GL.DepthMask (true);
             GL.ClearDepth(1);
 
             // Disable lighting
@@ -123,7 +126,7 @@ namespace opengl
             // Enable position and texture coordinates vertex components
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
-			// XXX: Getting the pointer here to work might take some fiddling.
+            // XXX: Getting the pointer here to work might take some fiddling.
             GL.VertexPointer(3, VertexPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
             GL.TexCoordPointer(2, TexCoordPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
 
