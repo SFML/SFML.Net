@@ -41,6 +41,7 @@ namespace SFML
         public IntPtr CPointer
         {
             get { return myCPointer; }
+            protected set { myCPointer = value; }
         }
 
         ////////////////////////////////////////////////////////////
@@ -76,17 +77,6 @@ namespace SFML
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
         protected abstract void Destroy(bool disposing);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Set the pointer to the internal object. For internal use only
-        /// </summary>
-        /// <param name="cPointer">Pointer to the internal object in C library</param>
-        ////////////////////////////////////////////////////////////
-        protected void SetThis(IntPtr cPointer)
-        {
-            myCPointer = cPointer;
-        }
 
         private IntPtr myCPointer = IntPtr.Zero;
     }

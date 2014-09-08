@@ -43,7 +43,7 @@ namespace SFML
             {
                 using (StreamAdaptor adaptor = new StreamAdaptor(stream))
                 {
-                    SetThis(sfSoundBuffer_createFromStream(adaptor.InputStreamPtr));
+                    CPointer = sfSoundBuffer_createFromStream(adaptor.InputStreamPtr);
                 }
 
                 if (CPointer == IntPtr.Zero)
@@ -63,7 +63,7 @@ namespace SFML
                 GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
                 try 
                 {
-                    SetThis(sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                    CPointer = sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
                 } 
                 finally 
                 {
@@ -89,7 +89,7 @@ namespace SFML
                 {
                     fixed (short* SamplesPtr = samples)
                     {
-                        SetThis(sfSoundBuffer_createFromSamples(SamplesPtr, (uint)samples.Length, channelCount, sampleRate));
+                        CPointer = sfSoundBuffer_createFromSamples(SamplesPtr, (uint)samples.Length, channelCount, sampleRate);
                     }
                 }
 

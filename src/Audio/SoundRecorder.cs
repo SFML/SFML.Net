@@ -26,7 +26,7 @@ namespace SFML
                 myProcessCallback = new ProcessCallback(ProcessSamples);
                 myStopCallback    = new StopCallback(OnStop);
 
-                SetThis(sfSoundRecorder_create(myStartCallback, myProcessCallback, myStopCallback, IntPtr.Zero));
+                CPointer = sfSoundRecorder_create(myStartCallback, myProcessCallback, myStopCallback, IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////

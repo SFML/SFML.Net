@@ -84,7 +84,7 @@ namespace SFML
             {
                 using (StreamAdaptor adaptor = new StreamAdaptor(stream))
                 {
-                    SetThis(sfTexture_createFromStream(adaptor.InputStreamPtr, ref area));
+                    CPointer = sfTexture_createFromStream(adaptor.InputStreamPtr, ref area);
                 }
 
                 if (CPointer == IntPtr.Zero)
@@ -132,7 +132,7 @@ namespace SFML
                 try 
                 {
                     IntRect rect = new IntRect(0, 0, 0, 0);
-                    SetThis(sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref rect));
+                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref rect);
                 } 
                 finally 
                 {

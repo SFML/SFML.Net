@@ -222,7 +222,7 @@ namespace SFML
             {
                 myGetDataCallback = new GetDataCallbackType(GetData);
                 mySeekCallback    = new SeekCallbackType(Seek);
-                SetThis(sfSoundStream_create(myGetDataCallback, mySeekCallback, channelCount, sampleRate, IntPtr.Zero));
+                CPointer = sfSoundStream_create(myGetDataCallback, mySeekCallback, channelCount, sampleRate, IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
