@@ -105,7 +105,7 @@ namespace SFML
             {
                 return new Vector3f(v.X / x, v.Y / x, v.Z / x);
             }
-			
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Operator == overload ; check vector equality
@@ -145,7 +145,7 @@ namespace SFML
                        " Y(" + Y + ")" +
                        " Z(" + Z + ")";
             }
-			
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Compare vector and object and checks if they are equal
@@ -157,7 +157,7 @@ namespace SFML
             {
                 return (obj is Vector3f) && obj.Equals(this);
             }
-            
+
             ///////////////////////////////////////////////////////////
             /// <summary>
             /// Compare two vectors and checks if they are equal
@@ -171,7 +171,7 @@ namespace SFML
                        (Y == other.Y) &&
                        (Z == other.Z);
             }
-            
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Provide a integer describing the object
@@ -187,10 +187,10 @@ namespace SFML
 
             /// <summary>X (horizontal) component of the vector</summary>
             public float X;
- 
+
             /// <summary>Y (vertical) component of the vector</summary>
             public float Y;
- 
+
             /// <summary>Z (depth) component of the vector</summary>
             public float Z;
         }

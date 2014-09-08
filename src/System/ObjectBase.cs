@@ -58,7 +58,7 @@ namespace SFML
         /// <summary>
         /// Destroy the object
         /// </summary>
-        /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        /// <param name="disposing">Is the GC disposing the object, or is it an explicit call?</param>
         ////////////////////////////////////////////////////////////
         private void Dispose(bool disposing)
         {
@@ -73,7 +73,7 @@ namespace SFML
         /// <summary>
         /// Destroy the object (implementation is left to each derived class)
         /// </summary>
-        /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        /// <param name="disposing">Is the GC disposing the object, or is it an explicit call?</param>
         ////////////////////////////////////////////////////////////
         protected abstract void Destroy(bool disposing);
 

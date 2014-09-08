@@ -39,10 +39,7 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public Time ElapsedTime
         {
-            get
-            {
-                return sfClock_getElapsedTime(CPointer);
-            }
+            get { return sfClock_getElapsedTime(CPointer); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -57,7 +54,6 @@ namespace SFML.System
         }
 
         #region Imports
-
         [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfClock_create();
 
@@ -69,7 +65,6 @@ namespace SFML.System
 
         [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Time sfClock_restart(IntPtr Clock);
-
         #endregion
     }
 }
