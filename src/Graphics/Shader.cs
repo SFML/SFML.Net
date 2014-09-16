@@ -77,7 +77,9 @@ namespace SFML
             {
                 StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
                 StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
-                SetThis(sfShader_createFromStream(vertexAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr));
+                IntPtr vertexPtr = vertexShaderStream == null ? IntPtr.Zero : vertexAdaptor.InputStreamPtr;
+                IntPtr fragmentPtr = fragmentShaderStream == null ? IntPtr.Zero : fragmentAdaptor.InputStreamPtr;
+                SetThis(sfShader_createFromStream(vertexPtr, fragmentPtr));
                 vertexAdaptor.Dispose();
                 fragmentAdaptor.Dispose();
 
