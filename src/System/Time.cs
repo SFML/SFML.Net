@@ -285,6 +285,17 @@ namespace SFML.System
             return FromMicroseconds(left.AsMicroseconds() % right.AsMicroseconds());
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Provide a integer describing the object
+        /// </summary>
+        /// <returns>Integer description of the object</returns>
+        ////////////////////////////////////////////////////////////
+        public override int GetHashCode()
+        {
+            return microseconds.GetHashCode();
+        }
+
         private long microseconds;
 
         #region Imports

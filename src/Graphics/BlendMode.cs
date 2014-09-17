@@ -177,6 +177,22 @@ namespace SFML
                        (AlphaEquation == other.AlphaEquation);
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Provide a integer describing the object
+            /// </summary>
+            /// <returns>Integer description of the object</returns>
+            ////////////////////////////////////////////////////////////
+            public override int GetHashCode()
+            {
+                return ColorSrcFactor.GetHashCode() ^
+                       ColorDstFactor.GetHashCode() ^
+                       ColorEquation.GetHashCode()  ^
+                       AlphaSrcFactor.GetHashCode() ^
+                       AlphaDstFactor.GetHashCode() ^
+                       AlphaEquation.GetHashCode();
+            }
+
             /// <summary>Source blending factor for the color channels</summary>
             public Factor ColorSrcFactor;
 
