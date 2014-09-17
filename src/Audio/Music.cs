@@ -40,7 +40,7 @@ namespace SFML
                 base(IntPtr.Zero)
             {
                 myStream = new StreamAdaptor(stream);
-                SetThis(sfMusic_createFromStream(myStream.InputStreamPtr));
+                CPointer = sfMusic_createFromStream(myStream.InputStreamPtr);
 
                 if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("music");
@@ -59,7 +59,7 @@ namespace SFML
                 GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
                 try 
                 {
-                    SetThis(sfMusic_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                    CPointer = sfMusic_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
                 } 
                 finally 
                 {

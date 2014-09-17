@@ -43,7 +43,7 @@ namespace SFML
                 base(IntPtr.Zero)
             {
                 myStream = new StreamAdaptor(stream);
-                SetThis(sfFont_createFromStream(myStream.InputStreamPtr));
+                CPointer = sfFont_createFromStream(myStream.InputStreamPtr);
 
                 if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("font");
@@ -62,7 +62,7 @@ namespace SFML
                 GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
                 try 
                 {
-                    SetThis(sfFont_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                    CPointer = sfFont_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
                 } 
                 finally 
                 {

@@ -160,7 +160,7 @@ namespace SFML
             {
                 myGetPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
                 myGetPointCallback = new GetPointCallbackType(InternalGetPoint);
-                SetThis(sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero));
+                CPointer = sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero);
             }
 
             ////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ namespace SFML
             {
                 myGetPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
                 myGetPointCallback = new GetPointCallbackType(InternalGetPoint);
-                SetThis(sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero));
+                CPointer = sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero);
 
                 Origin = copy.Origin;
                 Position = copy.Position;

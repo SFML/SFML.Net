@@ -73,7 +73,7 @@ namespace SFML
             {
                 using (StreamAdaptor adaptor = new StreamAdaptor(stream))
                 {
-                    SetThis(sfImage_createFromStream(adaptor.InputStreamPtr));
+                    CPointer = sfImage_createFromStream(adaptor.InputStreamPtr);
                 }
 
                 if (CPointer == IntPtr.Zero)
@@ -93,7 +93,7 @@ namespace SFML
                 GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
                 try 
                 {
-                    SetThis(sfImage_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length)));
+                    CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
                 } 
                 finally 
                 {
@@ -126,7 +126,7 @@ namespace SFML
                 {
                     fixed (Color* PixelsPtr = transposed)
                     {
-                        SetThis(sfImage_createFromPixels(Width, Height, (byte*)PixelsPtr));
+                        CPointer = sfImage_createFromPixels(Width, Height, (byte*)PixelsPtr);
                     }
                 }
 
@@ -150,7 +150,7 @@ namespace SFML
                 {
                     fixed (byte* PixelsPtr = pixels)
                     {
-                        SetThis(sfImage_createFromPixels(width, height, PixelsPtr));
+                        CPointer = sfImage_createFromPixels(width, height, PixelsPtr);
                     }
                 }
 

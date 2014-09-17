@@ -63,7 +63,7 @@ namespace SFML
                 {
                     fixed (byte* titlePtr = titleAsUtf32)
                     {
-                        SetThis(sfRenderWindow_createUnicode(mode, (IntPtr)titlePtr, style, ref settings));
+                        CPointer = sfRenderWindow_createUnicode(mode, (IntPtr)titlePtr, style, ref settings);
                     }
                 }
                 Initialize();
