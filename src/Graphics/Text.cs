@@ -30,14 +30,17 @@ namespace SFML
                 /// <summary>Regular characters, no style</summary>
                 Regular = 0,
 
-                /// <summary> Characters are bold</summary>
+                /// <summary>Bold characters</summary>
                 Bold = 1 << 0,
 
-                /// <summary>Characters are in italic</summary>
+                /// <summary>Italic characters</summary>
                 Italic = 1 << 1,
 
-                /// <summary>Characters are underlined</summary>
-                Underlined = 1 << 2
+                /// <summary>Underlined characters</summary>
+                Underlined = 1 << 2,
+
+                /// <summary>Strike through characters</summary>
+                StrikeThrough = 1 << 3
             }
 
             ////////////////////////////////////////////////////////////
