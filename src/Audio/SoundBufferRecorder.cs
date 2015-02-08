@@ -17,12 +17,17 @@ namespace SFML
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Sound buffer containing the recorded data (invalid until the capture stops)
+            /// Sound buffer containing the captured audio data
+            ///
+            /// The sound buffer is valid only after the capture has ended.
+            /// This function provides a reference to the internal
+            /// sound buffer, but you should make a copy of it if you want
+            /// to make any modifications to it.
             /// </summary>
             ////////////////////////////////////////////////////////////
             public SoundBuffer SoundBuffer
             {
-                get {return mySoundBuffer;}
+                get { return mySoundBuffer; }
             }
 
             ////////////////////////////////////////////////////////////

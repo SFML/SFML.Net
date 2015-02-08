@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
 using SFML.Window;
+using SFML.System;
 
 namespace SFML
 {
@@ -10,16 +11,18 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// SoundBuffer is the low-level class for loading and manipulating
-        /// sound buffers. A sound buffer holds audio data (samples)
-        /// which can then be played by a Sound or saved to a file.
+        /// Storage for audio samples defining a sound
         /// </summary>
         ////////////////////////////////////////////////////////////
         public class SoundBuffer : ObjectBase
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the sound buffer from a file
+            /// Construct a sound buffer from a file
+            /// 
+            /// Here is a complete list of all the supported audio formats:
+            /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+            /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
             /// </summary>
             /// <param name="filename">Path of the sound file to load</param>
             /// <exception cref="LoadingFailedException" />
@@ -33,7 +36,11 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Load the sound buffer from a custom stream
+            /// Construct a sound buffer from a custom stream.
+            ///
+            /// Here is a complete list of all the supported audio formats:
+            /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+            /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
             /// </summary>
             /// <param name="stream">Source stream to read from</param>
             /// <exception cref="LoadingFailedException" />
@@ -52,16 +59,20 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the sound buffer and load it from a file in memory
+            /// Construct a sound buffer from a file in memory.
+            /// 
+            /// Here is a complete list of all the supported audio formats:
+            /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+            /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
             /// </summary>
             /// <param name="bytes">Byte array containing the file contents</param>
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
-            public SoundBuffer(byte[] bytes) : 
+            public SoundBuffer(byte[] bytes) :
                 base(IntPtr.Zero)
             {
                 GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-                try 
+                try
                 {
                     CPointer = sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
                 } 
@@ -75,7 +86,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the sound buffer from an array of samples
+            /// Construct a sound buffer from an array of samples
             /// </summary>
             /// <param name="samples">Array of samples</param>
             /// <param name="channelCount">Channel count</param>
@@ -99,7 +110,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Construct the sound buffer from another sound buffer
+            /// Construct a sound buffer from another sound buffer
             /// </summary>
             /// <param name="copy">Sound buffer to copy</param>
             ////////////////////////////////////////////////////////////
@@ -110,7 +121,11 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Save the sound buffer to an audio file
+            /// Save the sound buffer to an audio file.
+            ///
+            /// Here is a complete list of all the supported audio formats:
+            /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+            /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
             /// </summary>
             /// <param name="filename">Path of the sound file to write</param>
             /// <returns>True if saving has been successful</returns>
@@ -122,12 +137,15 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Samples rate, in samples per second
+            /// Sample rate of the sound buffer.
+            ///
+            /// The sample rate is the number of audio samples played per
+            /// second. The higher, the better the quality.
             /// </summary>
             ////////////////////////////////////////////////////////////
             public uint SampleRate
             {
-                get {return sfSoundBuffer_getSampleRate(CPointer);}
+                get { return sfSoundBuffer_getSampleRate(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -137,22 +155,25 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public uint ChannelCount
             {
-                get {return sfSoundBuffer_getChannelCount(CPointer);}
+                get { return sfSoundBuffer_getChannelCount(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Total duration of the buffer, in milliseconds
+            /// Total duration of the buffer
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public uint Duration
+            public Time Duration
             {
-                get {return sfSoundBuffer_getDuration(CPointer);}
+                get { return sfSoundBuffer_getDuration(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Array of samples contained in the buffer
+            /// Array of audio samples stored in the buffer.
+            ///
+            /// The format of the returned samples is 16 bits signed integer
+            /// (sf::Int16).
             /// </summary>
             ////////////////////////////////////////////////////////////
             public short[] Samples
@@ -225,7 +246,7 @@ namespace SFML
             static extern uint sfSoundBuffer_getChannelCount(IntPtr SoundBuffer);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfSoundBuffer_getDuration(IntPtr SoundBuffer);
+            static extern Time sfSoundBuffer_getDuration(IntPtr SoundBuffer);
             #endregion
         }
     }
