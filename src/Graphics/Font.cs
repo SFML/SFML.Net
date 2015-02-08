@@ -106,7 +106,7 @@ namespace SFML
             /// <param name="characterSize">Character size</param>
             /// <returns>Kerning offset, in pixels</returns>
             ////////////////////////////////////////////////////////////
-            public int GetKerning(uint first, uint second, uint characterSize)
+            public float GetKerning(uint first, uint second, uint characterSize)
             {
                 return sfFont_getKerning(CPointer, first, second, characterSize);
             }
@@ -118,7 +118,7 @@ namespace SFML
             /// <param name="characterSize">Character size</param>
             /// <returns>Line spacing, in pixels</returns>
             ////////////////////////////////////////////////////////////
-            public int GetLineSpacing(uint characterSize)
+            public float GetLineSpacing(uint characterSize)
             {
                 return sfFont_getLineSpacing(CPointer, characterSize);
             }
@@ -207,10 +207,10 @@ namespace SFML
             static extern Glyph sfFont_getGlyph(IntPtr CPointer, uint codePoint, uint characterSize, bool bold);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern int sfFont_getKerning(IntPtr CPointer, uint first, uint second, uint characterSize);
+            static extern float sfFont_getKerning(IntPtr CPointer, uint first, uint second, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern int sfFont_getLineSpacing(IntPtr CPointer, uint characterSize);
+            static extern float sfFont_getLineSpacing(IntPtr CPointer, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_getTexture(IntPtr CPointer, uint characterSize);

@@ -17,7 +17,7 @@ namespace SFML
             public int Advance;
 
             /// <summary>Bounding rectangle of the glyph, in coordinates relative to the baseline</summary>
-            public IntRect Bounds;
+            public FloatRect Bounds;
 
             /// <summary>Texture coordinates of the glyph inside the font's texture</summary>
             public IntRect TextureRect;
