@@ -8,7 +8,7 @@ It is originally written in C++, and this project is its official binding for .N
 Authors
 -------
 
-Laurent Gomila - main developer (laurent.gom@gmail.com)
+Laurent Gomila - main developer (laurent@sfml-dev.org)
 
 Download
 --------
@@ -20,12 +20,20 @@ Learn
 -----
 
 There is no tutorial for SFML.Net, but since it's a binding you can use the C++ resources:
-* The official tutorials (http://www.sfml-dev.org/resources.php#tutorials)
-* The online API documentation (http://www.sfml-dev.org/resources.php#documentation)
+* The official tutorials (http://www.sfml-dev.org/tutorials/)
+* The online API documentation (http://www.sfml-dev.org/documentation/)
 * The community wiki (https://github.com/LaurentGomila/SFML/wiki/)
 * The community forum (http://en.sfml-dev.org/forums/) (or http://fr.sfml-dev.org/forums/ for french people)
 
 Of course, you can also find the SFML.Net API documentation in the SDK.
+
+Dependencies
+--------
+
+To run SFML.NET executables you must have a copy of CSFML. CSFML can be compiled from
+source (https://github.com/LaurentGomila/CSFML/) or downloaded from the offical release
+page (http://www.sfml-dev.org/download/csfml/). Also note that since CSFML depends on
+the main SFML project you also need all SFML runtime dependencies.
 
 Contribute
 ----------
@@ -33,4 +41,4 @@ Contribute
 SFML and SFML.Net are open-source projects, and they need your help to go on growing and improving.
 Don't hesitate to post suggestions or bug reports on the forum (http://en.sfml-dev.org/forums/),
 submit patches by e-mail, or post new bugs/features requests on the task tracker (https://github.com/LaurentGomila/SFML.Net/issues/).
-You can even fork the project on github, maintain your own version and send us pull requests periodically to merge your work.
+You can even fork the project on GitHub, maintain your own version and send us pull requests periodically to merge your work.
