@@ -352,6 +352,28 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Request the current window to be made the active
+            /// foreground window
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public void RequestFocus()
+            {
+                sfWindow_requestFocus(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Check whether the window has the input focus
+            /// </summary>
+            /// <returns>True if the window has focus, false otherwise</returns>
+            ////////////////////////////////////////////////////////////
+            public bool HasFocus()
+            {
+                return sfWindow_hasFocus(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -672,6 +694,12 @@ namespace SFML
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfWindow_getSystemHandle(IntPtr CPointer);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_requestFocus(IntPtr CPointer);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfWindow_hasFocus(IntPtr CPointer);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
