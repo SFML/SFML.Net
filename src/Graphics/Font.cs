@@ -125,6 +125,30 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Get the position of the underline
+            /// </summary>
+            /// <param name="characterSize">Character size</param>
+            /// <returns>Underline position, in pixels</returns>
+            ////////////////////////////////////////////////////////////
+            public float GetUnderlinePosition(uint characterSize)
+            {
+                return sfFont_getUnderlinePosition(CPointer, characterSize);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Get the thickness of the underline
+            /// </summary>
+            /// <param name="characterSize">Character size</param>
+            /// <returns>Underline thickness, in pixels</returns>
+            ////////////////////////////////////////////////////////////
+            public float GetUnderlineThickness(uint characterSize)
+            {
+                return sfFont_getUnderlineThickness(CPointer, characterSize);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Get the texture containing the glyphs of a given size
             /// </summary>
             /// <param name="characterSize">Character size</param>
@@ -211,6 +235,12 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern float sfFont_getLineSpacing(IntPtr CPointer, uint characterSize);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern float sfFont_getUnderlinePosition(IntPtr CPointer, uint characterSize);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern float sfFont_getUnderlineThickness(IntPtr CPointer, uint characterSize);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_getTexture(IntPtr CPointer, uint characterSize);
