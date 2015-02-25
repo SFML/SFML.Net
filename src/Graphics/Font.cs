@@ -202,7 +202,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// FontInfo holds various information about a font
+            /// Info holds various information about a font
             /// </summary>
             ////////////////////////////////////////////////////////////
             public struct Info
