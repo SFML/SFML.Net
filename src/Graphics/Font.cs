@@ -162,6 +162,22 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Get the font information
+            /// </summary>
+            /// <returns>A structure that holds the font information</returns>
+            ////////////////////////////////////////////////////////////
+            public Info GetInfo()
+            {
+                InfoMarshalData data = sfFont_getInfo(CPointer);
+                Info info = new Info();
+
+                info.Family = Marshal.PtrToStringAnsi(data.Family);
+
+                return info;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Provide a string describing the object
             /// </summary>
             /// <returns>String description of the object</returns>
@@ -208,6 +224,29 @@ namespace SFML
             {
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// FontInfo holds various information about a font
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public struct Info
+            {
+                /// <summary>The font family</summary>
+                public string Family;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Internal struct used for marshaling the font info
+            /// struct from unmanaged code.
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            [StructLayout(LayoutKind.Sequential)]
+            internal struct InfoMarshalData
+            {
+                public IntPtr Family;
+            }
+
             private Dictionary<uint, Texture> myTextures = new Dictionary<uint, Texture>();
             private StreamAdaptor myStream = null;
 
@@ -244,6 +283,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfFont_getTexture(IntPtr CPointer, uint characterSize);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern InfoMarshalData sfFont_getInfo(IntPtr CPointer);
             #endregion
         }
     }
