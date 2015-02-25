@@ -135,6 +135,56 @@ namespace SFML
                 sfJoystick_update();
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Get the joystick information
+            /// </summary>
+            /// <param name="joystick">Index of the joystick</param>
+            /// <returns>Structure containing joystick information</returns>
+            ////////////////////////////////////////////////////////////
+            public static Identification GetIdentification(uint joystick)
+            {
+                IdentificationMarshalData identification = sfJoystick_getIdentification(joystick);
+                Identification retidentification = new Identification();
+
+                retidentification.Name      = Marshal.PtrToStringAnsi(identification.Name);
+                retidentification.VendorId  = identification.VendorId;
+                retidentification.ProductId = identification.ProductId;
+
+                return retidentification;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Identification holds a joystick's identification
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public struct Identification
+            {
+                /// <summary>Name of the joystick</summary>
+                public string Name;
+
+                /// <summary>Manufacturer identifier</summary>
+                public uint VendorId;
+
+                /// <summary>Product identifier</summary>
+                public uint ProductId;
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Internal struct used for marshaling the joystick
+            /// identification struct from unmanaged code.
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            [StructLayout(LayoutKind.Sequential)]
+            internal struct IdentificationMarshalData
+            {
+                public IntPtr Name;
+                public uint VendorId;
+                public uint ProductId;
+            }
+
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfJoystick_isConnected(uint joystick);
@@ -153,6 +203,9 @@ namespace SFML
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfJoystick_update();
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern IdentificationMarshalData sfJoystick_getIdentification(uint joystick);
             #endregion
         }
     }
