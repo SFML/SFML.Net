@@ -35,6 +35,9 @@ source (https://github.com/LaurentGomila/CSFML/) or downloaded from the offical 
 page (http://www.sfml-dev.org/download/csfml/). Also note that since CSFML depends on
 the main SFML project you also need all SFML runtime dependencies.
 
+Another dependency is the Tao framework. This is required by the examples to run correctly.
+It is not required unless you plan on running the example programs that are included.
+
 Contribute
 ----------
 
