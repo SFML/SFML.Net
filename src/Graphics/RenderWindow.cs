@@ -624,7 +624,7 @@ namespace SFML
             /// foreground window
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public void RequestFocus()
+            public override void RequestFocus()
             {
                 sfRenderWindow_requestFocus(CPointer);
             }
@@ -635,7 +635,7 @@ namespace SFML
             /// </summary>
             /// <returns>True if the window has focus, false otherwise</returns>
             ////////////////////////////////////////////////////////////
-            public bool HasFocus()
+            public override bool HasFocus()
             {
                 return sfRenderWindow_hasFocus(CPointer);
             }
@@ -682,7 +682,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Internal function to get the mouse position relatively to the window.
+            /// Internal function to get the mouse position relative to the window.
             /// This function is public because it is called by another class,
             /// it is not meant to be called by users.
             /// </summary>
@@ -695,7 +695,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Internal function to set the mouse position relatively to the window.
+            /// Internal function to set the mouse position relative to the window.
             /// This function is public because it is called by another class,
             /// it is not meant to be called by users.
             /// </summary>
