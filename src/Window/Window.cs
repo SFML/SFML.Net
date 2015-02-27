@@ -356,7 +356,7 @@ namespace SFML
             /// foreground window
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public void RequestFocus()
+            public virtual void RequestFocus()
             {
                 sfWindow_requestFocus(CPointer);
             }
@@ -367,7 +367,7 @@ namespace SFML
             /// </summary>
             /// <returns>True if the window has focus, false otherwise</returns>
             ////////////////////////////////////////////////////////////
-            public bool HasFocus()
+            public virtual bool HasFocus()
             {
                 return sfWindow_hasFocus(CPointer);
             }
@@ -425,7 +425,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Internal function to get the mouse position relatively to the window.
+            /// Internal function to get the mouse position relative to the window.
             /// This function is protected because it is called by another class of
             /// another module, it is not meant to be called by users.
             /// </summary>
@@ -438,7 +438,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Internal function to set the mouse position relatively to the window.
+            /// Internal function to set the mouse position relative to the window.
             /// This function is protected because it is called by another class of
             /// another module, it is not meant to be called by users.
             /// </summary>
@@ -447,6 +447,20 @@ namespace SFML
             protected internal virtual void InternalSetMousePosition(Vector2i position)
             {
                 sfMouse_setPosition(position, CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Internal function to get the touch position relative to the window.
+            /// This function is protected because it is called by another class of
+            /// another module, it is not meant to be called by users.
+            /// </summary>
+            /// <param name="Finger">Finger index</param>
+            /// <returns>Relative touch position</returns>
+            ////////////////////////////////////////////////////////////
+            protected internal virtual Vector2i InternalGetTouchPosition(uint Finger)
+            {
+                return sfTouch_getPosition(Finger, CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -559,6 +573,29 @@ namespace SFML
                         if (TextEntered != null)
                             TextEntered(this, new TextEventArgs(e.Text));
                         break;
+
+                    case EventType.TouchBegan :
+                        if (TouchBegan != null)
+                            TouchBegan(this, new TouchEventArgs(e.Touch));
+                        break;
+
+                    case EventType.TouchMoved:
+                        if (TouchMoved != null)
+                            TouchMoved(this, new TouchEventArgs(e.Touch));
+                        break;
+
+                    case EventType.TouchEnded:
+                        if (TouchEnded != null)
+                            TouchEnded(this, new TouchEventArgs(e.Touch));
+                        break;
+
+                    case EventType.SensorChanged:
+                        if (SensorChanged != null)
+                            SensorChanged(this, new SensorEventArgs(e.Sensor));
+                        break;
+
+                    default:
+                        break;
                 }
             }
 
@@ -615,6 +652,18 @@ namespace SFML
 
             /// <summary>Event handler for the JoystickDisconnected event</summary>
             public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected = null;
+
+            /// <summary>Event handler for the TouchBegan event</summary>
+            public event EventHandler<TouchEventArgs> TouchBegan = null;
+
+            /// <summary>Event handler for the TouchMoved event</summary>
+            public event EventHandler<TouchEventArgs> TouchMoved = null;
+
+            /// <summary>Event handler for the TouchEnded event</summary>
+            public event EventHandler<TouchEventArgs> TouchEnded = null;
+
+            /// <summary>Event handler for the SensorChanged event</summary>
+            public event EventHandler<SensorEventArgs> SensorChanged = null;
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -707,6 +756,8 @@ namespace SFML
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
 
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
             #endregion
         }
     }

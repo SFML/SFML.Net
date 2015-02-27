@@ -64,7 +64,19 @@ namespace SFML
             JoystickConnected,
 
             /// <summary>Event triggered when a joystick is disconnected</summary>
-            JoystickDisconnected
+            JoystickDisconnected,
+
+            /// <summary>Event triggered when a touch begins</summary>
+            TouchBegan,
+
+            /// <summary>Event triggered when a touch is moved</summary>
+            TouchMoved,
+
+            /// <summary>Event triggered when a touch is ended</summary>
+            TouchEnded,
+
+            /// <summary>Event triggered when a sensor is changed</summary>
+            SensorChanged
         }
 
         ////////////////////////////////////////////////////////////
@@ -216,6 +228,45 @@ namespace SFML
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Touch event parameters
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        [StructLayout(LayoutKind.Sequential)]
+        public struct TouchEvent
+        {
+            /// <summary>Index of the finger in case of multi-touch events</summary>
+            public uint Finger;
+
+            /// <summary>X position of the touch, relative to the left of the owner window</summary>
+            public int X;
+
+            /// <summary>Y position of the touch, relative to the top of the owner window</summary>
+            public int Y;
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Sensor event parameters
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SensorEvent
+        {
+            /// <summary>Type of the sensor</summary>
+            public Sensor.Type Type;
+
+            /// <summary>Current value of the sensor on X axis</summary>
+            public float X;
+
+            /// <summary>Current value of the sensor on Y axis</summary>
+            public float Y;
+
+            /// <summary>Current value of the sensor on Z axis</summary>
+            public float Z;
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Event defines a system event and its parameters
         /// </summary>
         ////////////////////////////////////////////////////////////
@@ -261,6 +312,14 @@ namespace SFML
             /// <summary>Arguments for joystick connect events (JoystickConnected, JoystickDisconnected)</summary>
             [FieldOffset(4)]
             public JoystickConnectEvent JoystickConnect;
+
+            /// <summary>Arguments for touch events (TouchBegan, TouchMoved, TouchEnded)</summary>
+            [FieldOffset(4)]
+            public TouchEvent Touch;
+
+            /// <summary>Arguments for sensor events (SensorChanged)</summary>
+            [FieldOffset(4)]
+            public SensorEvent Sensor;
         }
     }
 }

@@ -624,7 +624,7 @@ namespace SFML
             /// foreground window
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public void RequestFocus()
+            public override void RequestFocus()
             {
                 sfRenderWindow_requestFocus(CPointer);
             }
@@ -635,7 +635,7 @@ namespace SFML
             /// </summary>
             /// <returns>True if the window has focus, false otherwise</returns>
             ////////////////////////////////////////////////////////////
-            public bool HasFocus()
+            public override bool HasFocus()
             {
                 return sfRenderWindow_hasFocus(CPointer);
             }
@@ -682,7 +682,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Internal function to get the mouse position relatively to the window.
+            /// Internal function to get the mouse position relative to the window.
             /// This function is public because it is called by another class,
             /// it is not meant to be called by users.
             /// </summary>
@@ -695,7 +695,7 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Internal function to set the mouse position relatively to the window.
+            /// Internal function to set the mouse position relative to the window.
             /// This function is public because it is called by another class,
             /// it is not meant to be called by users.
             /// </summary>
@@ -704,6 +704,20 @@ namespace SFML
             protected override void InternalSetMousePosition(Vector2i position)
             {
                 sfMouse_setPositionRenderWindow(position, CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Internal function to get the touch position relative to the window.
+            /// This function is protected because it is called by another class of
+            /// another module, it is not meant to be called by users.
+            /// </summary>
+            /// <param name="Finger">Finger index</param>
+            /// <returns>Relative touch position</returns>
+            ////////////////////////////////////////////////////////////
+            protected override Vector2i InternalGetTouchPosition(uint Finger)
+            {
+                return sfTouch_getPositionRenderWindow(Finger, CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -866,6 +880,8 @@ namespace SFML
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfMouse_setPositionRenderWindow(Vector2i position, IntPtr CPointer);
 
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern Vector2i sfTouch_getPositionRenderWindow(uint Finger, IntPtr RelativeTo);
             #endregion
         }
     }
