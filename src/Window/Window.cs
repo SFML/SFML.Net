@@ -573,6 +573,29 @@ namespace SFML
                         if (TextEntered != null)
                             TextEntered(this, new TextEventArgs(e.Text));
                         break;
+
+                    case EventType.TouchBegan :
+                        if (TouchBegan != null)
+                            TouchBegan(this, new TouchEventArgs(e.Touch));
+                        break;
+
+                    case EventType.TouchMoved:
+                        if (TouchMoved != null)
+                            TouchMoved(this, new TouchEventArgs(e.Touch));
+                        break;
+
+                    case EventType.TouchEnded:
+                        if (TouchEnded != null)
+                            TouchEnded(this, new TouchEventArgs(e.Touch));
+                        break;
+
+                    case EventType.SensorChanged:
+                        if (SensorChanged != null)
+                            SensorChanged(this, new SensorEventArgs(e.Sensor));
+                        break;
+
+                    default:
+                        break;
                 }
             }
 
@@ -629,6 +652,18 @@ namespace SFML
 
             /// <summary>Event handler for the JoystickDisconnected event</summary>
             public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected = null;
+
+            /// <summary>Event handler for the TouchBegan event</summary>
+            public event EventHandler<TouchEventArgs> TouchBegan = null;
+
+            /// <summary>Event handler for the TouchMoved event</summary>
+            public event EventHandler<TouchEventArgs> TouchMoved = null;
+
+            /// <summary>Event handler for the TouchEnded event</summary>
+            public event EventHandler<TouchEventArgs> TouchEnded = null;
+
+            /// <summary>Event handler for the SensorChanged event</summary>
+            public event EventHandler<SensorEventArgs> SensorChanged = null;
 
             #region Imports
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
