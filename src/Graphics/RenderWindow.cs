@@ -708,6 +708,20 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Internal function to get the touch position relative to the window.
+            /// This function is protected because it is called by another class of
+            /// another module, it is not meant to be called by users.
+            /// </summary>
+            /// <param name="Finger">Finger index</param>
+            /// <returns>Relative touch position</returns>
+            ////////////////////////////////////////////////////////////
+            protected override Vector2i InternalGetTouchPosition(uint Finger)
+            {
+                return sfTouch_getPositionRenderWindow(Finger, CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Handle the destruction of the object
             /// </summary>
             /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
@@ -866,6 +880,8 @@ namespace SFML
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfMouse_setPositionRenderWindow(Vector2i position, IntPtr CPointer);
 
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern Vector2i sfTouch_getPositionRenderWindow(uint Finger, IntPtr RelativeTo);
             #endregion
         }
     }
