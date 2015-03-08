@@ -78,7 +78,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is Color) && obj.Equals(this);
+                return (obj is Color) && Equals((Color)obj);
             }
             
             ///////////////////////////////////////////////////////////

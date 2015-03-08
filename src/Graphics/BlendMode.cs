@@ -157,7 +157,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is BlendMode) && obj.Equals(this);
+                return (obj is BlendMode) && Equals((BlendMode)obj);
             }
 
             ///////////////////////////////////////////////////////////
