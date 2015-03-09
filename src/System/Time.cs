@@ -116,7 +116,7 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public override bool Equals(object obj)
         {
-            return (obj is Time) && obj.Equals(this);
+            return (obj is Time) && Equals((Time)obj);
         }
 
         ///////////////////////////////////////////////////////////
