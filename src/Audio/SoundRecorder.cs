@@ -206,7 +206,7 @@ namespace SFML
             {
                 get
                 {
-                    return sfSoundRecorder_getDefaultDevice();
+                    return Marshal.PtrToStringAnsi(sfSoundRecorder_getDefaultDevice());
                 }
             }
 
@@ -301,7 +301,7 @@ namespace SFML
             unsafe static extern IntPtr* sfSoundRecorder_getAvailableDevices(out uint Count);
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern string sfSoundRecorder_getDefaultDevice();
+            static extern IntPtr sfSoundRecorder_getDefaultDevice();
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfSoundRecorder_setDevice(IntPtr SoundRecorder, string Name);
