@@ -1,11 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
-using SFML;
 using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace opengl
 {
@@ -16,17 +16,14 @@ namespace opengl
         /// </summary>
         static void Main()
         {
-            // Request a 32-bits depth buffer when creating the window
+            // Request a 24-bits depth buffer when creating the window
             ContextSettings contextSettings = new ContextSettings();
-            contextSettings.DepthBits = 32;
+            contextSettings.DepthBits = 24;
 
             // Create the main window
             RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML graphics with OpenGL", Styles.Default, contextSettings);
             window.SetVerticalSyncEnabled(true);
 
-            // Make it the active window for OpenGL calls
-            window.SetActive();
-            
             // Initialize OpenTK
             Toolkit.Init();
             GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
@@ -44,6 +41,9 @@ namespace opengl
             text.Position = new Vector2f(250, 450);
             text.Color = new Color(255, 255, 255, 170);
 
+            // Make the window the active target for OpenGL calls
+            window.SetActive();
+
             // Load an OpenGL texture.
             // We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
             // but here we want more control on it (generate mipmaps, ...) so we create a new one
@@ -52,7 +52,7 @@ namespace opengl
             {
                 GL.GenTextures(1, out texture);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
-                Glu.Build2DMipmap(TextureTarget.Texture2D, (int)PixelInternalFormat.Rgba, (int)image.Size.X, (int)image.Size.Y, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int)image.Size.X, (int)image.Size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             }
@@ -74,8 +74,9 @@ namespace opengl
             float ratio = (float)(window.Size.X) / window.Size.Y;
             GL.Frustum(-ratio, ratio, -1, 1, 1, 500);
 
-            // Enable 2D Textures
+            // Bind the texture
             GL.Enable(EnableCap.Texture2D);
+            GL.BindTexture(TextureTarget.Texture2D, texture);
 
             // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
             float[] cube = new float[]
@@ -125,14 +126,14 @@ namespace opengl
             };
 
             // Enable position and texture coordinates vertex components
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.TextureCoordArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.TextureCoordArray);
             GL.VertexPointer(3, VertexPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
             GL.TexCoordPointer(2, TexCoordPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
 
             // Disable normal and color vertex components
-            GL.DisableClientState(EnableCap.NormalArray);
-            GL.DisableClientState(EnableCap.ColorArray);
+            GL.DisableClientState(ArrayCap.NormalArray);
+            GL.DisableClientState(ArrayCap.ColorArray);
 
             Clock clock = new Clock();
 
@@ -143,7 +144,7 @@ namespace opengl
                 window.DispatchEvents();
 
                 // Clear the window
-                window.Clear();
+                GL.Clear(ClearBufferMask.DepthBufferBit);
 
                 // Draw background
                 window.PushGLStates();
@@ -165,11 +166,8 @@ namespace opengl
                 GL.Rotate(clock.ElapsedTime.AsSeconds() * 30, 0.0F, 1.0F, 0.0F);
                 GL.Rotate(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F);
 
-                // Bind the texture
-                GL.BindTexture(TextureTarget.Texture2D, texture);
-
                 // Draw the cube
-                GL.DrawArrays(BeginMode.Triangles, 0, 36);
+                GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, 0, 36);
 
                 // Draw some text on top of our OpenGL object
                 window.PushGLStates();

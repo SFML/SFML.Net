@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
-using SFML;
 using SFML.Window;
 using SFML.System;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace window
 {
@@ -15,9 +15,9 @@ namespace window
         /// </summary>
         static void Main()
         {
-            // Request a 32-bits depth buffer when creating the window
+            // Request a 24-bits depth buffer when creating the window
             ContextSettings contextSettings = new ContextSettings();
-            contextSettings.DepthBits = 32;
+            contextSettings.DepthBits = 24;
 
             // Create the main window
             Window window = new Window(new VideoMode(640, 480), "SFML window with OpenGL", Styles.Default, contextSettings);
@@ -103,14 +103,14 @@ namespace window
             };
 
             // Enable position and color vertex components
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.EnableClientState(EnableCap.ColorArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
             GL.VertexPointer(3, VertexPointerType.Float, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
             GL.ColorPointer(4, ColorPointerType.Float, 7 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
 
             // Disable normal and texture coordinates vertex components
-            GL.DisableClientState(EnableCap.NormalArray);
-            GL.DisableClientState(EnableCap.TextureCoordArray);
+            GL.DisableClientState(ArrayCap.NormalArray);
+            GL.DisableClientState(ArrayCap.TextureCoordArray);
 
             Clock clock = new Clock();
 
@@ -132,7 +132,7 @@ namespace window
                 GL.Rotate(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F);
 
                 // Draw the cube
-                GL.DrawArrays(BeginMode.Triangles, 0, 36);
+                GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, 0, 36);
 
                 // Finally, display the rendered frame on screen
                 window.Display();
