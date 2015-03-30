@@ -45,6 +45,20 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Construct the color from 32-bit unsigned integer
+            /// </summary>
+            /// <param name="color">Number containing the RGBA components (in that order)</param>
+            ////////////////////////////////////////////////////////////
+            public Color(uint color)
+            {
+                R = (byte)((color & 0xff000000) >> 24);
+                G = (byte)((color & 0x00ff0000) >> 16);
+                B = (byte)((color & 0x0000ff00) >> 8);
+                A = (byte)((color & 0x000000ff) >> 0);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the color from another
             /// </summary>
             /// <param name="color">Color to copy</param>
@@ -52,6 +66,17 @@ namespace SFML
             public Color(Color color) :
                 this(color.R, color.G, color.B, color.A)
             {
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Convert a color to a 32-bit unsigned integer
+            /// </summary>
+            /// <returns>Color represented as a 32-bit unsigned integer</returns>
+            ////////////////////////////////////////////////////////////
+            public uint ToInteger()
+            {
+                return (uint)((R << 24) | (G << 16) | (B << 8) | A);
             }
 
             ////////////////////////////////////////////////////////////
