@@ -1,11 +1,11 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
-Imports SFML
 Imports SFML.System
 Imports SFML.Window
 Imports SFML.Graphics
 Imports OpenTK
 Imports OpenTK.Graphics
+Imports OpenTk.Graphics.OpenGL
 
 
 Module OpenGL
@@ -17,21 +17,17 @@ Module OpenGL
     ''' </summary>
     Sub Main()
 
-        ' Request a 32-bits depth bufer when creating the window
+        ' Request a 24-bits depth bufer when creating the window
         Dim contextSettings As New ContextSettings()
-        contextSettings.DepthBits = 32
+        contextSettings.DepthBits = 24
 
         ' Create main window
         window = New RenderWindow(New VideoMode(800, 600), "SFML graphics with OpenGL (Visual Basic)", Styles.Default, contextSettings)
         window.SetVerticalSyncEnabled(True)
 
-        ' Make it the active window for OpenGL calls
-        window.SetActive(True)
-
         ' Initialize OpenTK
         Toolkit.Init()
-        Dim context As GraphicsContext
-        context = New GraphicsContext(New ContextHandle(IntPtr.Zero), Nothing)
+        Dim context As GraphicsContext = New GraphicsContext(New ContextHandle(IntPtr.Zero), Nothing)
 
         ' Create a sprite for the background
         Dim background = New Sprite(New Texture("resources/background.jpg"))
@@ -41,6 +37,9 @@ Module OpenGL
         text.Position = New Vector2f(250, 450)
         text.Color = New Color(255, 255, 255, 170)
 
+        ' Make it the active window for OpenGL calls
+        window.SetActive(True)
+
         ' Load an OpenGL texture
         ' We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
         ' but here we want more control on it (generate mipmaps, ...) so we create a new one
@@ -48,7 +47,7 @@ Module OpenGL
         Using image = New Image("resources/texture.jpg")
             GL.GenTextures(1, texture)
             GL.BindTexture(TextureTarget.Texture2D, texture)
-            Glu.Build2DMipmap(TextureTarget.Texture2D, PixelInternalFormat.Rgba, image.Size.X, image.Size.Y, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels)
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Size.X, image.Size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels)
             GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, TextureMagFilter.Linear)
             GL.TexParameterI(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, TextureMinFilter.Linear)
         End Using
@@ -70,8 +69,9 @@ Module OpenGL
         Dim ratio As Single = window.Size.X / window.Size.Y
         GL.Frustum(-ratio, ratio, -1, 1, 1, 500)
 
-        ' Enable 2D Textures
+        ' Bind the texture
         GL.Enable(EnableCap.Texture2D)
+        GL.BindTexture(TextureTarget.Texture2D, texture)
 
         ' Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
         Dim cube = New Single() _
@@ -120,14 +120,14 @@ Module OpenGL
         }
 
         ' Enable position and texture coordinates vertex components
-        GL.EnableClientState(EnableCap.VertexArray)
-        GL.EnableClientState(EnableCap.TextureCoordArray)
+        GL.EnableClientState(ArrayCap.VertexArray)
+        GL.EnableClientState(ArrayCap.TextureCoordArray)
         GL.VertexPointer(3, VertexPointerType.Float, 5 * 4, Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0))
         GL.TexCoordPointer(2, TexCoordPointerType.Float, 5 * 4, Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3))
 
         ' Disable normal and color vertex components
-        GL.DisableClientState(EnableCap.NormalArray)
-        GL.DisableClientState(EnableCap.ColorArray)
+        GL.DisableClientState(ArrayCap.NormalArray)
+        GL.DisableClientState(ArrayCap.ColorArray)
 
         Dim clock = New Clock()
 
@@ -137,16 +137,13 @@ Module OpenGL
             ' Process events
             window.DispatchEvents()
 
-            ' Clear the window
-            window.Clear()
+            ' Clear the depth buffer
+            GL.Clear(ClearBufferMask.DepthBufferBit)
 
             ' Draw background
             window.PushGLStates()
             window.Draw(background)
             window.PopGLStates()
-
-            ' Clear the depth buffer
-            GL.Clear(ClearBufferMask.DepthBufferBit)
 
             ' We get the position of the mouse cursor, so that we can move the box accordingly
             Dim x = Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F
@@ -160,11 +157,8 @@ Module OpenGL
             GL.Rotate(clock.ElapsedTime.AsSeconds() * 30, 0.0F, 1.0F, 0.0F)
             GL.Rotate(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F)
 
-            ' Bind the texture
-            GL.BindTexture(TextureTarget.Texture2D, texture)
-
             ' Draw the cube
-            GL.DrawArrays(BeginMode.Triangles, 0, 36)
+            GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, 0, 36)
 
             ' Draw some text on top of our OpenGL object
             window.PushGLStates()
