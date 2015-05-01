@@ -51,10 +51,13 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Color(uint color)
             {
-                R = (byte)((color & 0xff000000) >> 24);
-                G = (byte)((color & 0x00ff0000) >> 16);
-                B = (byte)((color & 0x0000ff00) >> 8);
-                A = (byte)((color & 0x000000ff) >> 0);
+                unchecked
+                {
+                    R = (byte)(color >> 24);
+                    G = (byte)(color >> 16);
+                    B = (byte)(color >> 8);
+                    A = (byte)color;
+                }
             }
 
             ////////////////////////////////////////////////////////////
@@ -93,7 +96,7 @@ namespace SFML
                        " B(" + B + ")" +
                        " A(" + A + ")";
             }
-            
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Compare color and object and checks if they are equal
@@ -105,7 +108,7 @@ namespace SFML
             {
                 return (obj is Color) && Equals((Color)obj);
             }
-            
+
             ///////////////////////////////////////////////////////////
             /// <summary>
             /// Compare two colors and checks if they are equal
@@ -120,7 +123,7 @@ namespace SFML
                        (B == other.B) &&
                        (A == other.A);
             }
-            
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Provide a integer describing the object
@@ -129,10 +132,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override int GetHashCode()
             {
-                return (int)(R << 24) |
-                       (int)(G << 16) |
-                       (int)(B << 8)  |
-                       (int)A;
+                return (R << 24) | (G << 16) | (B << 8) | A;
             }
 
             ////////////////////////////////////////////////////////////
@@ -186,7 +186,7 @@ namespace SFML
                                  (byte)Math.Max(left.B - right.B, 0),
                                  (byte)Math.Max(left.A - right.A, 0));
             }
-            
+
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// This operator returns the component-wise multiplication of two colors.
