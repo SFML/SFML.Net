@@ -87,6 +87,21 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Get the underlying OpenGL handle of the shader.
+            /// </summary>
+            /// <remarks>
+            /// You shouldn't need to use this handle, unless you have
+            /// very specific stuff to implement that SFML doesn't support,
+            /// or implement a temporary workaround until a bug is fixed.
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public uint NativeHandle
+            {
+                get { return sfShader_getNativeHandle(CPointer); }
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Load both the vertex and fragment shaders from source codes in memory
             ///
             /// This function can load both the vertex and the fragment
@@ -378,6 +393,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfShader_setCurrentTextureParameter(IntPtr shader, string name);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern uint sfShader_getNativeHandle(IntPtr shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfShader_bind(IntPtr shader);
