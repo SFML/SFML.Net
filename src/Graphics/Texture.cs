@@ -155,6 +155,21 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Get the underlying OpenGL handle of the texture.
+            /// </summary>
+            /// <remarks>
+            /// You shouldn't need to use this handle, unless you have
+            /// very specific stuff to implement that SFML doesn't support,
+            /// or implement a temporary workaround until a bug is fixed.
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public uint NativeHandle
+            {
+                get { return sfTexture_getNativeHandle(CPointer); }
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Copy a texture's pixels to an image
             /// </summary>
             /// <returns>Image containing the texture's pixels</returns>
@@ -424,6 +439,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfTexture_isRepeated(IntPtr texture);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern uint sfTexture_getNativeHandle(IntPtr shader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern FloatRect sfTexture_getTexCoords(IntPtr texture, IntRect rectangle);

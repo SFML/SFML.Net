@@ -15,6 +15,24 @@ namespace SFML
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Enumeration of the context attribute flags
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            [Flags]
+            public enum Attribute
+            {
+                /// <summary>Non-debug, compatibility context (this and the core attribute are mutually exclusive)</summary>
+                Default = 0,
+
+                /// <summary>Core attribute</summary>
+                Core = 1 << 0,
+
+                /// <summary>Debug attribute</summary>
+                Debug = 1 << 2
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Construct the settings from depth / stencil bits
             /// </summary>
             /// <param name="depthBits">Depth buffer bits</param>
@@ -34,7 +52,7 @@ namespace SFML
             /// <param name="antialiasingLevel">Antialiasing level</param>
             ////////////////////////////////////////////////////////////
             public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel) :
-                this(depthBits, stencilBits, antialiasingLevel, 2, 0)
+                this(depthBits, stencilBits, antialiasingLevel, 2, 0, Attribute.Default)
             {
             }
 
@@ -47,14 +65,16 @@ namespace SFML
             /// <param name="antialiasingLevel">Antialiasing level</param>
             /// <param name="majorVersion">Major number of the context version</param>
             /// <param name="minorVersion">Minor number of the context version</param>
+            /// <param name="attributes">Attribute flags of the context</param>
             ////////////////////////////////////////////////////////////
-            public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion, uint minorVersion)
+            public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion, uint minorVersion, Attribute attributes)
             {
                 DepthBits         = depthBits;
                 StencilBits       = stencilBits;
                 AntialiasingLevel = antialiasingLevel;
                 MajorVersion      = majorVersion;
                 MinorVersion      = minorVersion;
+                AttributeFlags    = attributes;
             }
 
             ////////////////////////////////////////////////////////////
@@ -70,7 +90,8 @@ namespace SFML
                        " StencilBits(" + StencilBits + ")" +
                        " AntialiasingLevel(" + AntialiasingLevel + ")" +
                        " MajorVersion(" + MajorVersion + ")" +
-                       " MinorVersion(" + MinorVersion + ")";
+                       " MinorVersion(" + MinorVersion + ")" +
+                       " AttributeFlags" + AttributeFlags + ")";
             }
 
             /// <summary>Depth buffer bits (0 is disabled)</summary>
@@ -87,6 +108,9 @@ namespace SFML
 
             /// <summary>Minor number of the context version</summary>
             public uint MinorVersion;
+
+            /// <summary>The attribute flags to create the context with</summary>
+            public Attribute AttributeFlags;
         }
     }
 }
