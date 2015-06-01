@@ -564,6 +564,11 @@ namespace SFML
                             MouseWheelMoved(this, new MouseWheelEventArgs(e.MouseWheel));
                         break;
 
+                    case EventType.MouseWheelScrolled :
+                        if (MouseWheelScrolled != null)
+                            MouseWheelScrolled(this, new MouseWheelScrollEventArgs(e.MouseWheelScroll));
+                        break;
+
                     case EventType.Resized :
                         if (Resized != null)
                             Resized(this, new SizeEventArgs(e.Size));
@@ -621,7 +626,11 @@ namespace SFML
             public event EventHandler<KeyEventArgs> KeyReleased = null;
 
             /// <summary>Event handler for the MouseWheelMoved event</summary>
+            [Obsolete("MouseWheelMoved is deprecated, please use MouseWheelScrolled instead")]
             public event EventHandler<MouseWheelEventArgs> MouseWheelMoved = null;
+
+            /// <summary>Event handler for the MouseWheelScrolled event</summary>
+            public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled = null;
 
             /// <summary>Event handler for the MouseButtonPressed event</summary>
             public event EventHandler<MouseButtonEventArgs> MouseButtonPressed = null;

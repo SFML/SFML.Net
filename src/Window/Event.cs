@@ -33,8 +33,12 @@ namespace SFML
             /// <summary>Event triggered when a keyboard key is released</summary>
             KeyReleased,
 
-            /// <summary>Event triggered when the mouse wheel is scrolled</summary>
+            /// <summary>Event triggered when the mouse wheel is scrolled (deprecated)</summary>
+            [Obsolete("MouseWheelMoved is deprecated, please use MouseWheelScrolled instead")]
             MouseWheelMoved,
+
+            /// <summary>Event triggered when a mouse wheel is scrolled</summary>
+            MouseWheelScrolled,
 
             /// <summary>Event triggered when a mouse button is pressed</summary>
             MouseButtonPressed,
@@ -150,14 +154,36 @@ namespace SFML
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Mouse wheel event parameters
+        /// Mouse wheel move event parameters
         /// </summary>
         ////////////////////////////////////////////////////////////
         [StructLayout(LayoutKind.Sequential)]
+        [Obsolete("MouseWheelEvent is deprecated, please use MouseWheelScrollEvent instead")]
         public struct MouseWheelEvent
         {
             /// <summary>Scroll amount</summary>
             public int Delta;
+
+            /// <summary>X coordinate of the mouse cursor</summary>
+            public int X;
+
+            /// <summary>Y coordinate of the mouse cursor</summary>
+            public int Y;
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Mouse wheel scroll event parameters
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MouseWheelScrollEvent
+        {
+            /// <summary>Mouse Wheel which triggered the event</summary>
+            public Mouse.Wheel Wheel;
+
+            /// <summary>Scroll amount</summary>
+            public float Delta;
 
             /// <summary>X coordinate of the mouse cursor</summary>
             public int X;
@@ -299,7 +325,12 @@ namespace SFML
 
             /// <summary>Arguments for mouse wheel events (MouseWheelMoved)</summary>
             [FieldOffset(4)]
+            [Obsolete("MouseWheel is deprecated, please use MouseWheelScroll instead")]
             public MouseWheelEvent MouseWheel;
+
+            /// <summary>Arguments for mouse wheel scroll events (MouseWheelScrolled)</summary>
+            [FieldOffset(4)]
+            public MouseWheelScrollEvent MouseWheelScroll;
 
             /// <summary>Arguments for joystick axis events (JoystickMoved)</summary>
             [FieldOffset(4)]

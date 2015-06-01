@@ -42,6 +42,20 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Mouse wheels
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public enum Wheel
+            {
+                /// <summary>The vertical mouse wheel</summary>
+                VerticalWheel,
+
+                /// <summary>The horizontal mouse wheel</summary>
+                HorizontalWheel
+            };
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Check if a mouse button is pressed
             /// </summary>
             /// <param name="button">Button to check</param>
