@@ -150,12 +150,12 @@ namespace SFML
             }
 
             ////////////////////////////////////////////////////////////
-            /// <summmary>
+            /// <summary>
             /// Compute the bounding rectangle of the vertex array.
             ///
             /// This function returns the axis-aligned rectangle that
             /// contains all the vertices of the array.
-            /// </summmary>
+            /// </summary>
             ////////////////////////////////////////////////////////////
             public FloatRect Bounds
             {
@@ -163,9 +163,9 @@ namespace SFML
             }
 
             ////////////////////////////////////////////////////////////
-            /// <summmary>
+            /// <summary>
             /// Draw the vertex array to a render target
-            /// </summmary>
+            /// </summary>
             /// <param name="target">Render target to draw to</param>
             /// <param name="states">Current render states</param>
             ////////////////////////////////////////////////////////////

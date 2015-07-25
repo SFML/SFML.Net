@@ -10,7 +10,7 @@ namespace SFML
         /// Types of primitives that a VertexArray can render.
         ///
         /// Points and lines have no area, therefore their thickness
-        /// will always be 1 pixel, regarldess the current transform
+        /// will always be 1 pixel, regardless the current transform
         /// and view.
         /// </summary>
         ////////////////////////////////////////////////////////////

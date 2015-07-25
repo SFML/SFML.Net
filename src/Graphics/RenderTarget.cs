@@ -60,7 +60,7 @@ namespace SFML
             /// coordinates, using the current view
             ///
             /// This function is an overload of the MapPixelToCoords
-            /// function that implicitely uses the current view.
+            /// function that implicitly uses the current view.
             /// It is equivalent to:
             /// target.MapPixelToCoords(point, target.GetView());
             /// </summary>
@@ -103,7 +103,7 @@ namespace SFML
             /// coordinates, using the current view
             ///
             /// This function is an overload of the mapCoordsToPixel
-            /// function that implicitely uses the current view.
+            /// function that implicitly uses the current view.
             /// It is equivalent to:
             /// target.MapCoordsToPixel(point, target.GetView());
             /// </summary>

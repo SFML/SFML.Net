@@ -129,9 +129,9 @@ namespace SFML
             }
 
             ////////////////////////////////////////////////////////////
-            /// <summmary>
+            /// <summary>
             /// Draw the shape to a render target
-            /// </summmary>
+            /// </summary>
             /// <param name="target">Render target to draw to</param>
             /// <param name="states">Current render states</param>
             ////////////////////////////////////////////////////////////

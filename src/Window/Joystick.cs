@@ -126,7 +126,7 @@ namespace SFML
             /// Update the states of all joysticks
             /// </summary>
             /// This function is used internally by SFML, so you normally
-            /// don't have to call it explicitely. However, you may need to
+            /// don't have to call it explicitly. However, you may need to
             /// call it if you have no window yet (or no window at all):
             /// in this case the joysticks states are not updated automatically.
             ////////////////////////////////////////////////////////////
@@ -145,13 +145,13 @@ namespace SFML
             public static Identification GetIdentification(uint joystick)
             {
                 IdentificationMarshalData identification = sfJoystick_getIdentification(joystick);
-                Identification retidentification = new Identification();
+                Identification retIdentification = new Identification();
 
-                retidentification.Name      = Marshal.PtrToStringAnsi(identification.Name);
-                retidentification.VendorId  = identification.VendorId;
-                retidentification.ProductId = identification.ProductId;
+                retIdentification.Name      = Marshal.PtrToStringAnsi(identification.Name);
+                retIdentification.VendorId  = identification.VendorId;
+                retIdentification.ProductId = identification.ProductId;
 
-                return retidentification;
+                return retIdentification;
             }
 
             ////////////////////////////////////////////////////////////
