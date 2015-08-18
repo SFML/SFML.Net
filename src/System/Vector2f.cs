@@ -1,5 +1,4 @@
-using System;
-using System.Runtime.InteropServices;
+﻿using System;
 
 namespace SFML
 {
@@ -7,12 +6,11 @@ namespace SFML
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Vector2 is an generic utility class for manipulating
-        /// 2-dimensional vectors
+        /// Vector2f is an utility class for manipulating 2 dimensional
+        /// vectors with float components
         /// </summary>
         ////////////////////////////////////////////////////////////
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Vector2<T> : IEquatable<Vector2<T>>
+        public struct Vector2f : IEquatable<Vector2f>
         {
             ////////////////////////////////////////////////////////////
             /// <summary>
@@ -21,7 +19,7 @@ namespace SFML
             /// <param name="x">X coordinate</param>
             /// <param name="y">Y coordinate</param>
             ////////////////////////////////////////////////////////////
-            public Vector2(T x, T y)
+            public Vector2f(float x, float y)
             {
                 X = x;
                 Y = y;
@@ -34,9 +32,9 @@ namespace SFML
             /// <param name="v">Vector to negate</param>
             /// <returns>-v</returns>
             ////////////////////////////////////////////////////////////
-            public static Vector2<T> operator -(Vector2<T> v)
+            public static Vector2f operator -(Vector2f v)
             {
-                return new Vector2<T>(Operator<T>.Negate(v.X), Operator<T>.Negate(v.Y));
+                return new Vector2f(-v.X, -v.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -47,9 +45,9 @@ namespace SFML
             /// <param name="v2">Second vector</param>
             /// <returns>v1 - v2</returns>
             ////////////////////////////////////////////////////////////
-            public static Vector2<T> operator -(Vector2<T> v1, Vector2<T> v2)
+            public static Vector2f operator -(Vector2f v1, Vector2f v2)
             {
-                return new Vector2<T>(Operator<T>.Subtract(v1.X, v2.X), Operator<T>.Subtract(v1.Y, v2.Y));
+                return new Vector2f(v1.X - v2.X, v1.Y - v2.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -60,9 +58,9 @@ namespace SFML
             /// <param name="v2">Second vector</param>
             /// <returns>v1 + v2</returns>
             ////////////////////////////////////////////////////////////
-            public static Vector2<T> operator +(Vector2<T> v1, Vector2<T> v2)
+            public static Vector2f operator +(Vector2f v1, Vector2f v2)
             {
-                return new Vector2<T>(Operator<T>.Add(v1.X, v2.X), Operator<T>.Add(v1.Y, v2.Y));
+                return new Vector2f(v1.X + v2.X, v1.Y + v2.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -73,9 +71,9 @@ namespace SFML
             /// <param name="x">Scalar value</param>
             /// <returns>v * x</returns>
             ////////////////////////////////////////////////////////////
-            public static Vector2<T> operator *(Vector2<T> v, T x)
+            public static Vector2f operator *(Vector2f v, float x)
             {
-                return new Vector2<T>(Operator<T>.Multiply(v.X, x), Operator<T>.Multiply(v.Y, x));
+                return new Vector2f(v.X * x, v.Y * x);
             }
 
             ////////////////////////////////////////////////////////////
@@ -86,9 +84,9 @@ namespace SFML
             /// <param name="v">Vector</param>
             /// <returns>x * v</returns>
             ////////////////////////////////////////////////////////////
-            public static Vector2<T> operator *(T x, Vector2<T> v)
+            public static Vector2f operator *(float x, Vector2f v)
             {
-                return new Vector2<T>(Operator<T>.Multiply(v.X, x), Operator<T>.Multiply(v.Y, x));
+                return new Vector2f(v.X * x, v.Y * x);
             }
 
             ////////////////////////////////////////////////////////////
@@ -99,9 +97,9 @@ namespace SFML
             /// <param name="x">Scalar value</param>
             /// <returns>v / x</returns>
             ////////////////////////////////////////////////////////////
-            public static Vector2<T> operator /(Vector2<T> v, T x)
+            public static Vector2f operator /(Vector2f v, float x)
             {
-                return new Vector2<T>(Operator<T>.Divide(v.X, x), Operator<T>.Divide(v.Y, x));
+                return new Vector2f(v.X / x, v.Y / x);
             }
 
             ////////////////////////////////////////////////////////////
@@ -112,7 +110,7 @@ namespace SFML
             /// <param name="v2">Second vector</param>
             /// <returns>v1 == v2</returns>
             ////////////////////////////////////////////////////////////
-            public static bool operator ==(Vector2<T> v1, Vector2<T> v2)
+            public static bool operator ==(Vector2f v1, Vector2f v2)
             {
                 return v1.Equals(v2);
             }
@@ -125,7 +123,7 @@ namespace SFML
             /// <param name="v2">Second vector</param>
             /// <returns>v1 != v2</returns>
             ////////////////////////////////////////////////////////////
-            public static bool operator !=(Vector2<T> v1, Vector2<T> v2)
+            public static bool operator !=(Vector2f v1, Vector2f v2)
             {
                 return !v1.Equals(v2);
             }
@@ -138,7 +136,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override string ToString()
             {
-                return "[Vector2<" + typeof(T).Name + ">]" +
+                return "[Vector2f]" +
                        " X(" + X + ")" +
                        " Y(" + Y + ")";
             }
@@ -152,7 +150,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public override bool Equals(object obj)
             {
-                return (obj is Vector2<T>) && Equals((Vector2<T>)obj);
+                return (obj is Vector2f) && Equals((Vector2f)obj);
             }
 
             ///////////////////////////////////////////////////////////
@@ -162,10 +160,10 @@ namespace SFML
             /// <param name="other">Vector to check</param>
             /// <returns>Vectors are equal</returns>
             ////////////////////////////////////////////////////////////
-            public bool Equals(Vector2<T> other)
+            public bool Equals(Vector2f other)
             {
-                return (Operator<T>.Equal(X, other.X) &&
-                       Operator<T>.Equal(Y, other.Y));
+                return (X == other.X) &&
+                       (Y == other.Y);
             }
 
             ////////////////////////////////////////////////////////////
@@ -180,11 +178,40 @@ namespace SFML
                        Y.GetHashCode();
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2i(Vector2f v)
+            {
+                return new Vector2i((int)v.X, (int)v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static explicit operator Vector2u(Vector2f v)
+            {
+                return new Vector2u((uint)v.X, (uint)v.Y);
+            }
+
+            public static implicit operator Vector2<float>(Vector2f v)
+            {
+                
+            }
+
             /// <summary>X (horizontal) component of the vector</summary>
-            public T X;
+            public float X;
 
             /// <summary>Y (vertical) component of the vector</summary>
-            public T Y;
+            public float Y;
         }
     }
 }
