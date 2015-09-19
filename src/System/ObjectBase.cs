@@ -46,7 +46,7 @@ namespace SFML
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Explicitely dispose the object
+        /// Explicitly dispose the object
         /// </summary>
         ////////////////////////////////////////////////////////////
         public void Dispose()

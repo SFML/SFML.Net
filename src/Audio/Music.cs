@@ -215,7 +215,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public Vector3f Position
             {
-                get { return sfMusic_getPosition(CPointer); ;}
+                get { return sfMusic_getPosition(CPointer); }
                 set { sfMusic_setPosition(CPointer, value); }
             }
 

@@ -91,7 +91,7 @@ namespace SFML
                        " AntialiasingLevel(" + AntialiasingLevel + ")" +
                        " MajorVersion(" + MajorVersion + ")" +
                        " MinorVersion(" + MinorVersion + ")" +
-                       " AttributeFlags" + AttributeFlags + ")";
+                       " AttributeFlags(" + AttributeFlags + ")";
             }
 
             /// <summary>Depth buffer bits (0 is disabled)</summary>

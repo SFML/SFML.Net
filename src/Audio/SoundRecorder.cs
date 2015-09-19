@@ -115,7 +115,7 @@ namespace SFML
             /// <summary>
             /// Start capturing audio data.
             ///
-            /// This virtual function may be overriden by a derived class
+            /// This virtual function may be overridden by a derived class
             /// if something has to be done every time a new capture
             /// starts. If not, this function can be ignored; the default
             /// implementation does nothing.
@@ -146,7 +146,7 @@ namespace SFML
             /// <summary>
             /// Stop capturing audio data.
             ///
-            /// This virtual function may be overriden by a derived class
+            /// This virtual function may be overridden by a derived class
             /// if something has to be done every time the capture
             /// ends. If not, this function can be ignored; the default
             /// implementation does nothing.

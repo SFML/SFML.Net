@@ -12,12 +12,12 @@ namespace SFML
         public interface Drawable
         {
             ////////////////////////////////////////////////////////////
-            /// <summmary>
+            /// <summary>
             /// Draw the object to a render target
             ///
             /// This is a function that has to be implemented by the
             /// derived class to define how the drawable should be drawn.
-            /// </summmary>
+            /// </summary>
             /// <param name="target">Render target to draw to</param>
             /// <param name="states">Current render states</param>
             ////////////////////////////////////////////////////////////

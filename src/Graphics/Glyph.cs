@@ -13,7 +13,7 @@ namespace SFML
         [StructLayout(LayoutKind.Sequential)]
         public struct Glyph
         {
-            /// <summary>Offset to move horizontically to the next character</summary>
+            /// <summary>Offset to move horizontally to the next character</summary>
             public float Advance;
 
             /// <summary>Bounding rectangle of the glyph, in coordinates relative to the baseline</summary>
