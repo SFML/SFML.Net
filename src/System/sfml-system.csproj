@@ -69,6 +69,9 @@
   <ItemGroup>
     <Compile Include="Clock.cs" />
     <Compile Include="ObjectBase.cs" />
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Vector2.cs" />
