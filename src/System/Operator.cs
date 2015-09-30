@@ -5,7 +5,7 @@ namespace SFML
 {
     namespace System
     {
-        static class Operator<T>
+        internal static class Operator<T>
         {
             public static T Add(T lhs, T rhs)
             {

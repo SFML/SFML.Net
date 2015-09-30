@@ -11,6 +11,7 @@ namespace SFML
         /// vectors with integer components
         /// </summary>
         ////////////////////////////////////////////////////////////
+        [Obsolete("Vector2i is deprecated, please use Vector2<int> instead")]
         [StructLayout(LayoutKind.Sequential)]
         public struct Vector2i : IEquatable<Vector2i>
         {
@@ -199,9 +200,33 @@ namespace SFML
             /// <param name="v">Vector being casted</param>
             /// <returns>Casting result</returns>
             ////////////////////////////////////////////////////////////
-            public static explicit operator Vector2u(Vector2i v)
+            public static explicit operator Vector2<uint>(Vector2i v)
             {
-                return new Vector2u((uint)v.X, (uint)v.Y);
+                return new Vector2<uint>((uint)v.X, (uint)v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Implicit casting to a generic vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static implicit operator Vector2<int>(Vector2i v)
+            {
+                return new Vector2<int>(v.X, v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Implicit casting from a generic vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static implicit operator Vector2i(Vector2<int> v)
+            {
+                return new Vector2i(v.X, v.Y);
             }
 
             /// <summary>X (horizontal) component of the vector</summary>

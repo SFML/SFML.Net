@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace SFML
 {
@@ -10,6 +11,8 @@ namespace SFML
         /// vectors with float components
         /// </summary>
         ////////////////////////////////////////////////////////////
+        [Obsolete("Vector2f is deprecated, please use Vector2<float> instead")]
+        [StructLayout(LayoutKind.Sequential)]
         public struct Vector2f : IEquatable<Vector2f>
         {
             ////////////////////////////////////////////////////////////
@@ -197,14 +200,33 @@ namespace SFML
             /// <param name="v">Vector being casted</param>
             /// <returns>Casting result</returns>
             ////////////////////////////////////////////////////////////
-            public static explicit operator Vector2u(Vector2f v)
+            public static explicit operator Vector2<uint>(Vector2f v)
             {
-                return new Vector2u((uint)v.X, (uint)v.Y);
+                return new Vector2<uint>((uint)v.X, (uint)v.Y);
             }
 
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Implicit casting to a generic vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
             public static implicit operator Vector2<float>(Vector2f v)
             {
-                
+                return new Vector2<float>(v.X, v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Implicit casting from a generic vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static implicit operator Vector2f(Vector2<float> v)
+            {
+                return new Vector2f(v.X, v.Y);
             }
 
             /// <summary>X (horizontal) component of the vector</summary>

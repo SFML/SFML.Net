@@ -165,7 +165,7 @@ namespace SFML
             public bool Equals(Vector2<T> other)
             {
                 return (Operator<T>.Equal(X, other.X) &&
-                       Operator<T>.Equal(Y, other.Y));
+                        Operator<T>.Equal(Y, other.Y));
             }
 
             ////////////////////////////////////////////////////////////
@@ -178,6 +178,18 @@ namespace SFML
             {
                 return X.GetHashCode() ^
                        Y.GetHashCode();
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Explicit casting to another generic vector type
+            /// </summary>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public Vector2<K> Cast<K>()
+            {
+                return new Vector2<K>((K)Convert.ChangeType(X, typeof(K)),
+                                      (K)Convert.ChangeType(Y, typeof(K)));
             }
 
             /// <summary>X (horizontal) component of the vector</summary>

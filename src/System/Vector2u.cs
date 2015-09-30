@@ -11,6 +11,7 @@ namespace SFML
         /// vectors with unsigned integer components
         /// </summary>
         ////////////////////////////////////////////////////////////
+        [Obsolete("Vector2u is deprecated, please use Vector2<uint> instead")]
         [StructLayout(LayoutKind.Sequential)]
         public struct Vector2u : IEquatable<Vector2u>
         {
@@ -190,6 +191,30 @@ namespace SFML
             public static explicit operator Vector2f(Vector2u v)
             {
                 return new Vector2f((float)v.X, (float)v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Implicit casting to a generic vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static implicit operator Vector2<uint>(Vector2u v)
+            {
+                return new Vector2<uint>(v.X, v.Y);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Implicit casting from a generic vector type
+            /// </summary>
+            /// <param name="v">Vector being casted</param>
+            /// <returns>Casting result</returns>
+            ////////////////////////////////////////////////////////////
+            public static implicit operator Vector2u(Vector2<uint> v)
+            {
+                return new Vector2u(v.X, v.Y);
             }
 
             /// <summary>X (horizontal) component of the vector</summary>
