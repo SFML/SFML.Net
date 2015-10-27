@@ -75,11 +75,29 @@ namespace SFML
             public Shader(Stream vertexShaderStream, Stream fragmentShaderStream) :
                 base(IntPtr.Zero)
             {
-                StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
-                StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
-                CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr);
-                vertexAdaptor.Dispose();
-                fragmentAdaptor.Dispose();
+                if ((fragmentShaderStream != null) || (vertexShaderStream != null))
+                {
+                    if (fragmentShaderStream == null)
+                    {
+                        StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
+                        CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, IntPtr.Zero);
+                        vertexAdaptor.Dispose();
+                    }
+                    else if (vertexShaderStream == null)
+                    {
+                        StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
+                        CPointer = sfShader_createFromStream(IntPtr.Zero, fragmentAdaptor.InputStreamPtr);
+                        fragmentAdaptor.Dispose();
+                    }
+                    else
+                    {
+                        StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
+                        StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
+                        CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr);
+                        vertexAdaptor.Dispose();
+                        fragmentAdaptor.Dispose();
+                    }
+                }
 
                 if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("shader");
