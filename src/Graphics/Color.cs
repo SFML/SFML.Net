@@ -196,10 +196,10 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             public static Color operator *(Color left, Color right)
             {
-                return new Color((byte)Math.Min(left.R * right.R, 255),
-                                 (byte)Math.Min(left.G * right.G, 255),
-                                 (byte)Math.Min(left.B * right.B, 255),
-                                 (byte)Math.Min(left.A * right.A, 255));
+                return new Color((byte)((int)left.R * right.R / 255),
+                                 (byte)((int)left.G * right.G / 255),
+                                 (byte)((int)left.B * right.B / 255),
+                                 (byte)((int)left.A * right.A / 255));
             }
 
             /// <summary>Red component of the color</summary>
