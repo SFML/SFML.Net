@@ -35,22 +35,24 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Load the vertex and fragment shaders from files
-            ///
-            /// This function can load both the vertex and the fragment
-            /// shaders, or only one of them: pass NULL if you don't want to load
-            /// either the vertex shader or the fragment shader.
+            /// Load the vertex, geometry and fragment shaders from files
+            /// </summary>
+            /// <remarks>
+            /// This function loads the vertex, geometry and fragment
+            /// shaders. Pass NULL if you don't want to load
+            /// a specific shader.
             /// The sources must be text files containing valid shaders
             /// in GLSL language. GLSL is a C-like language dedicated to
             /// OpenGL shaders; you'll probably need to read a good documentation
             /// for it before writing your own shaders.
-            /// </summary>
+            /// </remarks>
             /// <param name="vertexShaderFilename">Path of the vertex shader file to load, or null to skip this shader</param>
+            /// <param name="geometryShaderFilename">Path of the geometry shader file to load, or null to skip this shader</param>
             /// <param name="fragmentShaderFilename">Path of the fragment shader file to load, or null to skip this shader</param>
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
-            public Shader(string vertexShaderFilename, string fragmentShaderFilename) :
-                base(sfShader_createFromFile(vertexShaderFilename, fragmentShaderFilename))
+            public Shader(string vertexShaderFilename, string geometryShaderFilename, string fragmentShaderFilename) :
+                base(sfShader_createFromFile(vertexShaderFilename, geometryShaderFilename, fragmentShaderFilename))
             {
                 if (CPointer == IntPtr.Zero)
                     throw new LoadingFailedException("shader", vertexShaderFilename + " " + fragmentShaderFilename);
@@ -58,45 +60,33 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Load both the vertex and fragment shaders from custom streams
+            /// Load the vertex, geometry and fragment shaders from custom streams
+            /// </summary>
             ///
-            /// This function can load both the vertex and the fragment
-            /// shaders, or only one of them: pass NULL if you don't want to load
-            /// either the vertex shader or the fragment shader.
+            /// <remarks>
+            /// This function loads the vertex, geometry and fragment
+            /// shaders. Pass NULL if you don't want to load
+            /// a specific shader.
             /// The sources must be valid shaders in GLSL language. GLSL is
             /// a C-like language dedicated to OpenGL shaders; you'll
             /// probably need to read a good documentation for it before
             /// writing your own shaders.
-            /// </summary>
+            /// </remarks>
             /// <param name="vertexShaderStream">Source stream to read the vertex shader from, or null to skip this shader</param>
+            /// <param name="geometryShaderStream">Source stream to read the geometry shader from, or null to skip this shader</param>
             /// <param name="fragmentShaderStream">Source stream to read the fragment shader from, or null to skip this shader</param>
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
-            public Shader(Stream vertexShaderStream, Stream fragmentShaderStream) :
+            public Shader(Stream vertexShaderStream, Stream geometryShaderStream, Stream fragmentShaderStream) :
                 base(IntPtr.Zero)
             {
-                if ((fragmentShaderStream != null) || (vertexShaderStream != null))
+                // using these funky conditional operators because StreamAdaptor doesn't have some method for dealing with
+                // its constructor argument being null
+                using(StreamAdaptor vertexAdaptor   = vertexShaderStream   != null ? new StreamAdaptor(vertexShaderStream)   : null,
+                                    geometryAdaptor = geometryShaderStream != null ? new StreamAdaptor(geometryShaderStream) : null,
+                                    fragmentAdaptor = fragmentShaderStream != null ? new StreamAdaptor(fragmentShaderStream) : null)
                 {
-                    if (fragmentShaderStream == null)
-                    {
-                        StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
-                        CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, IntPtr.Zero);
-                        vertexAdaptor.Dispose();
-                    }
-                    else if (vertexShaderStream == null)
-                    {
-                        StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
-                        CPointer = sfShader_createFromStream(IntPtr.Zero, fragmentAdaptor.InputStreamPtr);
-                        fragmentAdaptor.Dispose();
-                    }
-                    else
-                    {
-                        StreamAdaptor vertexAdaptor = new StreamAdaptor(vertexShaderStream);
-                        StreamAdaptor fragmentAdaptor = new StreamAdaptor(fragmentShaderStream);
-                        CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr);
-                        vertexAdaptor.Dispose();
-                        fragmentAdaptor.Dispose();
-                    }
+                    CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, geometryAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr);
                 }
 
                 if (CPointer == IntPtr.Zero)
@@ -120,24 +110,26 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Load both the vertex and fragment shaders from source codes in memory
-            ///
-            /// This function can load both the vertex and the fragment
-            /// shaders, or only one of them: pass NULL if you don't want to load
-            /// either the vertex shader or the fragment shader.
+            /// Load the vertex, geometry and fragment shaders from source code in memory
+            /// </summary>
+            /// <remarks>
+            /// This function loads the vertex, geometry and fragment
+            /// shaders. Pass NULL if you don't want to load
+            /// a specific shader.
             /// The sources must be valid shaders in GLSL language. GLSL is
             /// a C-like language dedicated to OpenGL shaders; you'll
             /// probably need to read a good documentation for it before
             /// writing your own shaders.
-            /// </summary>
+            /// </remarks>
             /// <param name="vertexShader">String containing the source code of the vertex shader</param>
+            /// <param name="geometryShader">String containing the source code of the geometry shader</param>
             /// <param name="fragmentShader">String containing the source code of the fragment shader</param>
             /// <returns>New shader instance</returns>
             /// <exception cref="LoadingFailedException" />
             ////////////////////////////////////////////////////////////
-            public static Shader FromString(string vertexShader, string fragmentShader)
+            public static Shader FromString(string vertexShader, string geometryShader, string fragmentShader)
             {
-                IntPtr ptr = sfShader_createFromMemory(vertexShader, fragmentShader);
+                IntPtr ptr = sfShader_createFromMemory(vertexShader, geometryShader, fragmentShader);
                 if (ptr == IntPtr.Zero)
                     throw new LoadingFailedException("shader");
 
@@ -321,15 +313,36 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Tell whether or not the system supports shaders.
+            /// </summary>
             ///
+            /// <remarks>
             /// This property should always be checked before using
             /// the shader features. If it returns false, then
             /// any attempt to use Shader will fail.
-            /// </summary>
+            /// </remarks>
             ////////////////////////////////////////////////////////////
             public static bool IsAvailable
             {
                 get {return sfShader_isAvailable();}
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Tell whether or not the system supports geometry shaders.
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// <para>This property should always be checked before using
+            /// the geometry shader features. If it returns false, then
+            /// any attempt to use geometry shader features will fail.</para>
+            /// 
+            /// <para>Note: The first call to this function, whether by your
+            /// code or SFML will result in a context switch.</para>
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public static bool IsGeometryAvailable
+            {
+                get { return sfShader_isGeometryAvailable(); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -377,13 +390,13 @@ namespace SFML
             #region Imports
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfShader_createFromFile(string vertexShaderFilename, string fragmentShaderFilename);
+            static extern IntPtr sfShader_createFromFile(string vertexShaderFilename, string geometryShaderFilename, string fragmentShaderFilename);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfShader_createFromMemory(string vertexShader, string fragmentShader);
+            static extern IntPtr sfShader_createFromMemory(string vertexShader, string geometryShader, string fragmentShader);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfShader_createFromStream(IntPtr vertexShaderStream, IntPtr fragmentShaderStream);
+            static extern IntPtr sfShader_createFromStream(IntPtr vertexShaderStream, IntPtr geometryShaderStream, IntPtr fragmentShaderStream);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfShader_destroy(IntPtr shader);
@@ -420,6 +433,9 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfShader_isAvailable();
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfShader_isGeometryAvailable();
 
             #endregion
         }
