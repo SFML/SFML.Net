@@ -2,7 +2,6 @@ using System;
 using System.Security;
 using System.Runtime.InteropServices;
 using System.Text;
-using SFML.Window;
 using SFML.System;
 
 namespace SFML
@@ -100,21 +99,79 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Global color of the object
+            /// Fill color of the object
             /// </summary>
+            /// 
+            /// <remarks>
+			/// Deprecated. Use <see cref="FillColor"/> instead.
+			/// 
+            /// By default, the text's fill color is opaque white.
+            /// Setting the fill color to a transparent color with an outline
+            /// will cause the outline to be displayed in the fill area of the text.
+            /// </remarks>
             ////////////////////////////////////////////////////////////
+			[Obsolete]
             public Color Color
             {
-                get { return sfText_getColor(CPointer); }
-                set { sfText_setColor(CPointer, value); }
+                get { return sfText_getFillColor(CPointer); }
+                set { sfText_setFillColor(CPointer, value); }
             }
 
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// String which is displayed
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public string DisplayedString
+			////////////////////////////////////////////////////////////
+			/// <summary>
+			/// Fill color of the object
+			/// </summary>
+			/// 
+			/// <remarks>
+			/// By default, the text's fill color is opaque white.
+			/// Setting the fill color to a transparent color with an outline
+			/// will cause the outline to be displayed in the fill area of the text.
+			/// </remarks>
+			////////////////////////////////////////////////////////////
+			public Color FillColor
+			{
+				get { return sfText_getFillColor(CPointer); }
+				set { sfText_setFillColor(CPointer, value); }
+			}
+
+			////////////////////////////////////////////////////////////
+			/// <summary>
+			/// Outline color of the object
+			/// </summary>
+			/// 
+			/// <remarks>
+			/// By default, the text's outline color is opaque black.
+			/// </remarks>
+			////////////////////////////////////////////////////////////
+			public Color OutlineColor
+			{
+				get { return sfText_getOutlineColor(CPointer); }
+				set { sfText_setOutlineColor(CPointer, value); }
+			}
+
+			////////////////////////////////////////////////////////////
+			/// <summary>
+			/// Thickness of the object's outline
+			/// </summary>
+			/// 
+			/// <remarks>
+			/// <para>By default, the outline thickness is 0.</para>
+			/// <para>Be aware that using a negative value for the outline
+			/// thickness will cause distorted rendering.</para>
+			/// </remarks>
+			////////////////////////////////////////////////////////////
+			public float OutlineThickness
+			{
+				get { return sfText_getOutlineThickness(CPointer); }
+				set { sfText_setOutlineThickness(CPointer, value); }
+			}
+
+			////////////////////////////////////////////////////////////
+			/// <summary>
+			/// String which is displayed
+			/// </summary>
+			////////////////////////////////////////////////////////////
+			public string DisplayedString
             {
                 get
                 {
@@ -245,11 +302,13 @@ namespace SFML
             public override string ToString()
             {
                 return "[Text]" +
-                       " Color(" + Color + ")" +
-                       " String(" + DisplayedString + ")" +
+                       " FillColor(" + FillColor + ")" +
+					   " OutlineColor(" + OutlineColor + ")" +
+					   " String(" + DisplayedString + ")" +
                        " Font(" + Font + ")" +
                        " CharacterSize(" + CharacterSize + ")" +
-                       " Style(" + Style + ")";
+					   " OutlineThickness(" + OutlineThickness + ")" +
+					   " Style(" + Style + ")";
             }
 
             ////////////////////////////////////////////////////////////
@@ -298,13 +357,31 @@ namespace SFML
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfText_destroy(IntPtr CPointer);
 
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
             static extern void sfText_setColor(IntPtr CPointer, Color Color);
 
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			static extern void sfText_setFillColor(IntPtr CPointer, Color Color);
+
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			static extern void sfText_setOutlineColor(IntPtr CPointer, Color Color);
+
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			static extern void sfText_setOutlineThickness(IntPtr CPointer, float thickness);
+
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
             static extern Color sfText_getColor(IntPtr CPointer);
 
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			static extern Color sfText_getFillColor(IntPtr CPointer);
+
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			static extern Color sfText_getOutlineColor(IntPtr CPointer);
+
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+			static extern float sfText_getOutlineThickness(IntPtr CPointer);
+
+			[DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
