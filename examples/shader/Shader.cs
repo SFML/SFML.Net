@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using SFML;
 using SFML.Graphics;
-using SFML.Window;
 using SFML.System;
+using SFML.Window;
 
 namespace shader
 {
@@ -68,13 +66,13 @@ namespace shader
             mySprite = new Sprite(myTexture);
 
             // Load the shader
-            myShader = new Shader(null, "resources/pixelate.frag");
-            myShader.SetParameter("texture", Shader.CurrentTexture);
+            myShader = new Shader(null, null, "resources/pixelate.frag");
+            myShader.SetUniform("texture", Shader.CurrentTexture);
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            myShader.SetParameter("pixel_threshold", (x + y) / 30);
+            myShader.SetUniform("pixel_threshold", (x + y) / 30);
         }
 
         protected override void OnDraw(RenderTarget target, RenderStates states)
@@ -119,14 +117,14 @@ namespace shader
             myText.Position = new Vector2f(30, 20);
 
             // Load the shader
-            myShader = new Shader("resources/wave.vert", "resources/blur.frag");
+            myShader = new Shader("resources/wave.vert", null, "resources/blur.frag");
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            myShader.SetParameter("wave_phase", time);
-            myShader.SetParameter("wave_amplitude", x * 40, y * 40);
-            myShader.SetParameter("blur_radius", (x + y) * 0.008F);
+            myShader.SetUniform("wave_phase", time);
+            myShader.SetUniform("wave_amplitude", new Vector2f(x * 40, y * 40));
+            myShader.SetUniform("blur_radius", (x + y) * 0.008F);
         }
 
         protected override void OnDraw(RenderTarget target, RenderStates states)
@@ -160,16 +158,16 @@ namespace shader
             }
 
             // Load the shader
-            myShader = new Shader("resources/storm.vert", "resources/blink.frag");
+            myShader = new Shader("resources/storm.vert", null, "resources/blink.frag");
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
             float radius = 200 + (float)Math.Cos(time) * 150;
-            myShader.SetParameter("storm_position", x * 800, y * 600);
-            myShader.SetParameter("storm_inner_radius", radius / 3);
-            myShader.SetParameter("storm_total_radius", radius);
-            myShader.SetParameter("blink_alpha", 0.5F + (float)Math.Cos(time * 3) * 0.25F);
+            myShader.SetUniform("storm_position", new Vector2f(x * 800, y * 600));
+            myShader.SetUniform("storm_inner_radius", radius / 3);
+            myShader.SetUniform("storm_total_radius", radius);
+            myShader.SetUniform("blink_alpha", 0.5F + (float)Math.Cos(time * 3) * 0.25F);
         }
 
         protected override void OnDraw(RenderTarget target, RenderStates states)
@@ -210,13 +208,13 @@ namespace shader
             }
 
             // Load the shader
-            myShader = new Shader(null, "resources/edge.frag");
-            myShader.SetParameter("texture", Shader.CurrentTexture);
+            myShader = new Shader(null, null, "resources/edge.frag");
+            myShader.SetUniform("texture", Shader.CurrentTexture);
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            myShader.SetParameter("edge_threshold", 1 - (x + y) / 2);
+            myShader.SetUniform("edge_threshold", 1 - (x + y) / 2);
 
             // Update the position of the moving entities
             for (int i = 0; i < myEntities.Length; ++i)

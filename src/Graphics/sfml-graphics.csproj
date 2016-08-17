@@ -76,6 +76,7 @@
     <Compile Include="ConvexShape.cs" />
     <Compile Include="Drawable.cs" />
     <Compile Include="Font.cs" />
+    <Compile Include="Glsl.cs" />
     <Compile Include="Glyph.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="PrimitiveType.cs" />
