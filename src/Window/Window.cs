@@ -246,6 +246,26 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Grab or release the mouse cursor
+            /// </summary>
+            /// <param name="grabbed">True to grab, false to release</param>
+            /// 
+            /// <remarks>
+            /// If set, grabs the mouse cursor inside this window's client
+            /// area so it may no longer be moved outside its bounds.
+            /// Note that grabbing is only active while the window has
+            /// focus and calling this function for fullscreen windows
+            /// won't have any effect (fullscreen windows always grab the
+            /// cursor).
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public virtual void SetMouseCursorGrabbed(bool grabbed)
+            {
+                sfWindow_setMouseCursorGrabbed(CPointer, grabbed);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Enable / disable vertical synchronization
             /// </summary>
             /// <param name="enable">True to enable v-sync, false to deactivate</param>
@@ -731,6 +751,9 @@ namespace SFML
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfWindow_setMouseCursorVisible(IntPtr CPointer, bool Show);
+
+            [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfWindow_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
 
             [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfWindow_setVerticalSyncEnabled(IntPtr CPointer, bool Enable);
