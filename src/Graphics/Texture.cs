@@ -297,6 +297,34 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Enable or disable conversion from sRGB
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// <para>When providing texture data from an image file or memory, it can
+            /// either be stored in a linear color space or an sRGB color space.
+            /// Most digital images account for gamma correction already, so they
+            /// would need to be "uncorrected" back to linear color space before
+            /// being processed by the hardware. The hardware can automatically
+            /// convert it from the sRGB color space to a linear color space when
+            /// it gets sampled. When the rendered image gets output to the final
+            /// framebuffer, it gets converted back to sRGB.</para>
+            ///
+            /// <para>After enabling or disabling sRGB conversion, make sure to reload
+            /// the texture data in order for the setting to take effect.</para>
+            ///
+            /// <para>This option is only useful in conjunction with an sRGB capable
+            /// framebuffer. This can be requested during window creation.</para>
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public bool Srgb
+            {
+                get { return sfTexture_isSrgb(CPointer); }
+                set { sfTexture_setSrgb(CPointer, value); }
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Control the repeat mode
             /// </summary>
             ////////////////////////////////////////////////////////////
@@ -433,6 +461,12 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfTexture_isSmooth(IntPtr texture);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfTexture_setSrgb(IntPtr texture, bool sRgb);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfTexture_isSrgb(IntPtr texture);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfTexture_setRepeated(IntPtr texture, bool repeated);
