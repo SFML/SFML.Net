@@ -1,9 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
 using System.Security;
-using SFML.Window;
 using SFML.System;
 
 namespace SFML
@@ -58,6 +55,22 @@ namespace SFML
             public bool SetActive(bool active)
             {
                 return sfRenderTexture_setActive(CPointer, active);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Enable or disable texture repeating
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// This property is similar to <see cref="Texture.Repeated"/>.
+            /// This parameter is disabled by default.
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public bool Repeated
+            {
+                get { return sfRenderTexture_isRepeated(CPointer); }
+                set { sfRenderTexture_setRepeated(CPointer, value); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -206,6 +219,28 @@ namespace SFML
             public Vector2i MapCoordsToPixel(Vector2f point, View view)
             {
                 return sfRenderTexture_mapCoordsToPixel(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Generate a mipmap using the current texture data
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// This function is similar to <see cref="Texture.GenerateMipmap"/> and operates
+            /// on the texture used as the target for drawing.
+            /// Be aware that any draw operation may modify the base level image data.
+            /// For this reason, calling this function only makes sense after all
+            /// drawing is completed and display has been called. Not calling display
+            /// after subsequent drawing will lead to undefined behavior if a mipmap
+            /// had been previously generated.
+            /// </remarks>
+            /// 
+            /// <returns>True if mipmap generation was successful, false if unsuccessful</returns>
+            ////////////////////////////////////////////////////////////
+            public bool GenerateMipmap()
+            {
+                return sfRenderTexture_generateMipmap(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -507,10 +542,19 @@ namespace SFML
             static extern IntPtr sfRenderTexture_getTexture(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderTexture_setSmooth(IntPtr texture, bool smooth);
+            static extern void sfRenderTexture_setSmooth(IntPtr CPointer, bool smooth);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderTexture_isSmooth(IntPtr texture);
+            static extern bool sfRenderTexture_isSmooth(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderTexture_setRepeated(IntPtr CPointer, bool repeated);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfRenderTexture_isRepeated(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfRenderTexture_generateMipmap(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern void sfRenderTexture_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
