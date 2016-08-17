@@ -73,11 +73,13 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Sample rate of the sound recorder.
-            ///
+            /// </summary>
+            /// 
+            /// <remarks>
             /// The sample rate defines the number of audio samples
             /// captured per second. The higher, the better the quality
             /// (for example, 44100 samples/sec is CD quality).
-            /// </summary>
+            /// </remarks>
             ////////////////////////////////////////////////////////////
             public uint SampleRate
             {
@@ -86,13 +88,32 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Get/Set the channel count of the audio capture device
+            /// </summary>
+            /// 
+            /// <remarks>
+            /// This method allows you to specify the number of channels
+            /// used for recording. Currently only 16-bit mono (1) and
+            /// 16-bit stereo (2) are supported.
+            /// </remarks>
+            ////////////////////////////////////////////////////////////
+            public uint ChannelCount
+            {
+                get { return sfSoundRecorder_getChannelCount(CPointer); }
+                set { sfSoundRecorder_setChannelCount(CPointer, value); }
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Check if the system supports audio capture.
-            ///
+            /// </summary>
+            /// 
+            /// <remarks>
             /// This function should always be called before using
             /// the audio capture features. If it returns false, then
             /// any attempt to use the SoundRecorder or one of its derived
             /// classes will fail.
-            /// </summary>
+            /// </remarks>
             ////////////////////////////////////////////////////////////
             public static bool IsAvailable
             {
@@ -308,6 +329,12 @@ namespace SFML
 
             [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfSoundRecorder_getDevice(IntPtr SoundRecorder);
+
+            [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfSoundRecorder_setChannelCount(IntPtr SoundRecorder, uint channelCount);
+
+            [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern uint sfSoundRecorder_getChannelCount(IntPtr SoundRecorder);
             #endregion
         }
     }
