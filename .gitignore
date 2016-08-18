@@ -2,7 +2,6 @@ obj/
 lib/
 examples/*/*.dll
 examples/*/*.xml
-doc/build/*xml
 *.exe
 *.manifest
 *.pdb
