@@ -289,12 +289,12 @@ namespace shader
             // Create the description text
             description = new Text("Current effect: " + effects[current].Name, font, 20);
             description.Position = new Vector2f(10, 530);
-            description.Color = new Color(80, 80, 80);
+            description.FillColor = new Color(80, 80, 80);
 
             // Create the instructions text
             Text instructions = new Text("Press left and right arrows to change the current shader", font, 20);
             instructions.Position = new Vector2f(280, 555);
-            instructions.Color = new Color(80, 80, 80);
+            instructions.FillColor = new Color(80, 80, 80);
 
             // Start the game loop
             Clock clock = new Clock();
