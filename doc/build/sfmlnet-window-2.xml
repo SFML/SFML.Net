@@ -4,6 +4,38 @@
         <name>sfmlnet-window-2</name>
     </assembly>
     <members>
+        <member name="T:SFML.Window.Context">
+            <summary>
+            This class defines a .NET interface to an SFML OpenGL Context
+            </summary>
+        </member>
+        <member name="M:SFML.Window.Context.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:SFML.Window.Context.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:SFML.Window.Context.SetActive(System.Boolean)">
+            <summary>
+            Activate or deactivate the context
+            </summary>
+            <param name="active">True to activate, false to deactivate</param>
+        </member>
+        <member name="P:SFML.Window.Context.Global">
+            <summary>
+            Global helper context
+            </summary>
+        </member>
+        <member name="M:SFML.Window.Context.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
         <member name="T:SFML.Window.ContextSettings">
             <summary>
             Structure defining the creation settings of OpenGL contexts
@@ -72,6 +104,11 @@
         </member>
         <member name="F:SFML.Window.ContextSettings.AttributeFlags">
             <summary>The attribute flags to create the context with</summary>
+        </member>
+        <member name="T:SFML.Window.CSFML">
+            <summary>
+            Container class for the CSFML Window DLL name
+            </summary>
         </member>
         <member name="T:SFML.Window.EventType">
             <summary>

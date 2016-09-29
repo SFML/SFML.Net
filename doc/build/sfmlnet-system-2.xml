@@ -31,6 +31,11 @@
             </summary>
             <returns>Time elapsed since the clock was started.</returns>
         </member>
+        <member name="T:SFML.System.CSFML">
+            <summary>
+            Container class for the CSFML System DLL name
+            </summary>
+        </member>
         <member name="T:SFML.System.Time">
             <summary>
             This class represents a time value

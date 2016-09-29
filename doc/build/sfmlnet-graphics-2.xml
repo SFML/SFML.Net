@@ -343,38 +343,6 @@
         <member name="F:SFML.Graphics.Color.Transparent">
             <summary>Predefined (black) transparent color</summary>
         </member>
-        <member name="T:SFML.Graphics.Context">
-            <summary>
-            This class defines
-            </summary>
-        </member>
-        <member name="M:SFML.Graphics.Context.#ctor">
-            <summary>
-            Default constructor
-            </summary>
-        </member>
-        <member name="M:SFML.Graphics.Context.Finalize">
-            <summary>
-            Finalizer
-            </summary>
-        </member>
-        <member name="M:SFML.Graphics.Context.SetActive(System.Boolean)">
-            <summary>
-            Activate or deactivate the context
-            </summary>
-            <param name="active">True to activate, false to deactivate</param>
-        </member>
-        <member name="P:SFML.Graphics.Context.Global">
-            <summary>
-            Global helper context
-            </summary>
-        </member>
-        <member name="M:SFML.Graphics.Context.ToString">
-            <summary>
-            Provide a string describing the object
-            </summary>
-            <returns>String description of the object</returns>
-        </member>
         <member name="T:SFML.Graphics.ConvexShape">
             <summary>
             Specialized shape representing a convex polygon
@@ -877,6 +845,11 @@
         </member>
         <member name="F:SFML.Graphics.Glyph.TextureRect">
             <summary>Texture coordinates of the glyph inside the font's texture</summary>
+        </member>
+        <member name="T:SFML.Graphics.CSFML">
+            <summary>
+            Container class for the CSFML Graphics DLL name
+            </summary>
         </member>
         <member name="T:SFML.Graphics.Image">
             <summary>
