@@ -846,11 +846,6 @@
         <member name="F:SFML.Graphics.Glyph.TextureRect">
             <summary>Texture coordinates of the glyph inside the font's texture</summary>
         </member>
-        <member name="T:SFML.Graphics.CSFML">
-            <summary>
-            Container class for the CSFML Graphics DLL name
-            </summary>
-        </member>
         <member name="T:SFML.Graphics.Image">
             <summary>
             Image is the low-level class for loading and
@@ -2612,7 +2607,7 @@
              </remarks>
              
              <param name="name">Name of the texture in the shader</param>
-             <param name="idontneedanamehere"/>
+             <param name="current"/>
         </member>
         <member name="M:SFML.Graphics.Shader.SetUniformArray(System.String,System.Single[])">
             <summary>

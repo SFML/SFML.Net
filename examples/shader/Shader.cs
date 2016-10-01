@@ -15,7 +15,7 @@ namespace shader
 
         public string Name
         {
-            get {return myName;}
+            get { return myName; }
         }
 
         public void Update(float time, float x, float y)
@@ -246,7 +246,7 @@ namespace shader
         Sprite[] myEntities = null;
         private Shader myShader = null;
     }
-    
+
     static class Program
     {
         private static Effect[] effects;
@@ -263,7 +263,7 @@ namespace shader
             window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
-            window.Closed     += new EventHandler(OnClosed);
+            window.Closed += new EventHandler(OnClosed);
             window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
 
             // Load the application font and pass it to the Effect class

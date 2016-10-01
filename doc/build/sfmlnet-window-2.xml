@@ -105,11 +105,6 @@
         <member name="F:SFML.Window.ContextSettings.AttributeFlags">
             <summary>The attribute flags to create the context with</summary>
         </member>
-        <member name="T:SFML.Window.CSFML">
-            <summary>
-            Container class for the CSFML Window DLL name
-            </summary>
-        </member>
         <member name="T:SFML.Window.EventType">
             <summary>
             Enumeration of the different types of events

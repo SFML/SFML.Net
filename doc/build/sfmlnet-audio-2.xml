@@ -4,11 +4,6 @@
         <name>sfmlnet-audio-2</name>
     </assembly>
     <members>
-        <member name="T:SFML.Audio.CSFML">
-            <summary>
-            Container class for the CSFML Audio DLL name
-            </summary>
-        </member>
         <member name="T:SFML.Audio.Listener">
             <summary>
             The audio listener is the point in the scene
