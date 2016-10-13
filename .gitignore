@@ -7,3 +7,4 @@ examples/*/*.xml
 *.pdb
 *.suo
 *.csproj.user
+*.VC.db
