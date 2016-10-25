@@ -15,7 +15,7 @@ namespace shader
 
         public string Name
         {
-            get {return myName;}
+            get { return myName; }
         }
 
         public void Update(float time, float x, float y)
@@ -246,7 +246,7 @@ namespace shader
         Sprite[] myEntities = null;
         private Shader myShader = null;
     }
-    
+
     static class Program
     {
         private static Effect[] effects;
@@ -263,7 +263,7 @@ namespace shader
             window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
-            window.Closed     += new EventHandler(OnClosed);
+            window.Closed += new EventHandler(OnClosed);
             window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
 
             // Load the application font and pass it to the Effect class
@@ -289,12 +289,12 @@ namespace shader
             // Create the description text
             description = new Text("Current effect: " + effects[current].Name, font, 20);
             description.Position = new Vector2f(10, 530);
-            description.Color = new Color(80, 80, 80);
+            description.FillColor = new Color(80, 80, 80);
 
             // Create the instructions text
             Text instructions = new Text("Press left and right arrows to change the current shader", font, 20);
             instructions.Position = new Vector2f(280, 555);
-            instructions.Color = new Color(80, 80, 80);
+            instructions.FillColor = new Color(80, 80, 80);
 
             // Start the game loop
             Clock clock = new Clock();

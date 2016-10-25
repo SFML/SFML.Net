@@ -39,7 +39,7 @@ namespace opengl
             // Create a text to display on top of the OpenGL object
             Text text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
             text.Position = new Vector2f(250, 450);
-            text.Color = new Color(255, 255, 255, 170);
+            text.FillColor = new Color(255, 255, 255, 170);
 
             // Make the window the active target for OpenGL calls
             window.SetActive();

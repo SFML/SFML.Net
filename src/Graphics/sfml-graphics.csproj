@@ -72,7 +72,6 @@
     <Compile Include="BlendMode.cs" />
     <Compile Include="CircleShape.cs" />
     <Compile Include="Color.cs" />
-    <Compile Include="Context.cs" />
     <Compile Include="ConvexShape.cs" />
     <Compile Include="Drawable.cs" />
     <Compile Include="Font.cs" />

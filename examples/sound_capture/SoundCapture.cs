@@ -41,8 +41,8 @@ namespace sound_capture
 
             // Display captured sound informations
             Console.WriteLine("Sound information :");
-            Console.WriteLine(" " + buffer.Duration     + " seconds");
-            Console.WriteLine(" " + buffer.SampleRate   + " samples / seconds");
+            Console.WriteLine(" " + buffer.Duration + " seconds");
+            Console.WriteLine(" " + buffer.SampleRate + " samples / seconds");
             Console.WriteLine(" " + buffer.ChannelCount + " channels");
 
             // Choose what to do with the recorded sound data
