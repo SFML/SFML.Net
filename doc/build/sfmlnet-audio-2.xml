@@ -1,0 +1,884 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>sfmlnet-audio-2</name>
+    </assembly>
+    <members>
+        <member name="T:SFML.Audio.Listener">
+            <summary>
+            The audio listener is the point in the scene
+            from where all the sounds are heard
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Listener.GlobalVolume">
+            <summary>
+            The volume is a number between 0 and 100; it is combined with
+            the individual volume of each sound / music.
+            The default value for the volume is 100 (maximum).
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Listener.Position">
+            <summary>
+            3D position of the listener (default is (0, 0, 0))
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Listener.Direction">
+            <summary>
+            The direction (also called "at vector") is the vector
+            pointing forward from the listener's perspective. Together
+            with the up vector, it defines the 3D orientation of the
+            listener in the scene. The direction vector doesn't
+            have to be normalized.
+            The default listener's direction is (0, 0, -1).
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Listener.UpVector">
+            <summary>
+            The up vector is the vector that points upward from the
+            listener's perspective. Together with the direction, it
+            defines the 3D orientation of the listener in the scene.
+            The up vector doesn't have to be normalized.
+            The default listener's up vector is (0, 1, 0). It is usually
+            not necessary to change it, especially in 2D scenarios.
+            </summary>
+        </member>
+        <member name="T:SFML.Audio.Music">
+            <summary>
+            Streamed music played from an audio file
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.Music.#ctor(System.String)">
+            <summary>
+            Constructs a music from an audio file
+            </summary>
+            <param name="filename">Path of the music file to open</param>
+        </member>
+        <member name="M:SFML.Audio.Music.#ctor(System.IO.Stream)">
+            <summary>
+            Constructs a music from a custom stream
+            </summary>
+            <param name="stream">Source stream to read from</param>
+        </member>
+        <member name="M:SFML.Audio.Music.#ctor(System.Byte[])">
+            <summary>
+            Constructs a music from an audio file in memory
+            </summary>
+            <param name="bytes">Byte array containing the file contents</param>
+            <exception cref="T:SFML.LoadingFailedException" />
+        </member>
+        <member name="M:SFML.Audio.Music.Play">
+             <summary>
+             Start or resume playing the audio stream.
+            
+             This function starts the stream if it was stopped, resumes
+             it if it was paused, and restarts it from beginning if it
+             was it already playing.
+             This function uses its own thread so that it doesn't block
+             the rest of the program while the stream is played.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.Music.Pause">
+             <summary>
+             Pause the audio stream.
+            
+             This function pauses the stream if it was playing,
+             otherwise (stream already paused or stopped) it has no effect.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.Music.Stop">
+             <summary>
+             Stop playing the audio stream.
+            
+             This function stops the stream if it was playing or paused,
+             and does nothing if it was already stopped.
+             It also resets the playing position (unlike Pause()).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.SampleRate">
+             <summary>
+             Sample rate of the music.
+            
+             The sample rate is the number of audio samples played per
+             second. The higher, the better the quality.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.ChannelCount">
+            <summary>
+            Number of channels (1 = mono, 2 = stereo)
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Status">
+            <summary>
+            Current status of the music (see SoundStatus enum)
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Duration">
+            <summary>
+            Total duration of the music
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Loop">
+             <summary>
+             Flag if the music should loop after reaching the end.
+            
+             If set, the music will restart from beginning after
+             reaching the end and so on, until it is stopped or
+             Loop = false is set.
+             The default looping state for music is false.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Pitch">
+            <summary>
+            Pitch of the music.
+            
+            The pitch represents the perceived fundamental frequency
+            of a sound; thus you can make a sound more acute or grave
+            by changing its pitch. A side effect of changing the pitch
+            is to modify the playing speed of the sound as well.
+            The default value for the pitch is 1.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Volume">
+            <summary>
+            Volume of the music.
+            
+            The volume is a value between 0 (mute) and 100 (full volume).
+            The default value for the volume is 100.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Position">
+             <summary>
+             3D position of the music in the audio scene.
+            
+             Only sounds with one channel (mono sounds) can be
+             spatialized.
+             The default position of a sound is (0, 0, 0).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.RelativeToListener">
+             <summary>
+             Make the music's position relative to the listener or absolute.
+            
+             Making a sound relative to the listener will ensure that it will always
+             be played the same way regardless the position of the listener.
+             This can be useful for non-spatialized sounds, sounds that are
+             produced by the listener, or sounds attached to it.
+             The default value is false (position is absolute).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.MinDistance">
+             <summary>
+             Minimum distance of the music.
+            
+             The "minimum distance" of a sound is the maximum
+             distance at which it is heard at its maximum volume. Further
+             than the minimum distance, it will start to fade out according
+             to its attenuation factor. A value of 0 ("inside the head
+             of the listener") is an invalid value and is forbidden.
+             The default value of the minimum distance is 1.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.Attenuation">
+             <summary>
+             Attenuation factor of the music.
+            
+             The attenuation is a multiplicative factor which makes
+             the music more or less loud according to its distance
+             from the listener. An attenuation of 0 will produce a
+             non-attenuated sound, i.e. its volume will always be the same
+             whether it is heard from near or from far. On the other hand,
+             an attenuation value such as 100 will make the sound fade out
+             very quickly as it gets further from the listener.
+             The default value of the attenuation is 1.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Music.PlayingOffset">
+            <summary>
+            Current playing position of the music.
+            
+            The playing position can be changed when the music is
+            either paused or playing.
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.Music.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
+        <member name="M:SFML.Audio.Music.Destroy(System.Boolean)">
+            <summary>
+            Handle the destruction of the object
+            </summary>
+            <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        </member>
+        <member name="T:SFML.Audio.SoundStatus">
+            <summary>
+            Enumeration of all possible sound states
+            </summary>
+        </member>
+        <member name="F:SFML.Audio.SoundStatus.Stopped">
+            <summary>Sound is not playing</summary>
+        </member>
+        <member name="F:SFML.Audio.SoundStatus.Paused">
+            <summary>Sound is paused</summary>
+        </member>
+        <member name="F:SFML.Audio.SoundStatus.Playing">
+            <summary>Sound is playing</summary>
+        </member>
+        <member name="T:SFML.Audio.Sound">
+            <summary>
+            Regular sound that can be played in the audio environment
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.Sound.#ctor">
+            <summary>
+            Default constructor (invalid sound)
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.Sound.#ctor(SFML.Audio.SoundBuffer)">
+            <summary>
+            Construct the sound with a buffer
+            </summary>
+            <param name="buffer">Sound buffer containing the audio data to play with the sound</param>
+        </member>
+        <member name="M:SFML.Audio.Sound.#ctor(SFML.Audio.Sound)">
+            <summary>
+            Construct the sound from another source
+            </summary>
+            <param name="copy">Sound to copy</param>
+        </member>
+        <member name="M:SFML.Audio.Sound.Play">
+             <summary>
+             Start or resume playing the sound.
+            
+             This function starts the stream if it was stopped, resumes
+             it if it was paused, and restarts it from beginning if it
+             was it already playing.
+             This function uses its own thread so that it doesn't block
+             the rest of the program while the sound is played.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.Sound.Pause">
+             <summary>
+             Pause the sound.
+            
+             This function pauses the sound if it was playing,
+             otherwise (sound already paused or stopped) it has no effect.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.Sound.Stop">
+             <summary>
+             Stop playing the sound.
+            
+             This function stops the sound if it was playing or paused,
+             and does nothing if it was already stopped.
+             It also resets the playing position (unlike pause()).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.SoundBuffer">
+            <summary>
+            Buffer containing the sound data to play through the sound.
+            
+            It is important to note that the sound buffer is not copied,
+            thus the SoundBuffer instance must remain alive as long
+            as it is attached to the sound.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.Status">
+            <summary>
+            Current status of the sound (see SoundStatus enum)
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.Loop">
+             <summary>
+             Flag if the sound should loop after reaching the end.
+            
+             If set, the sound will restart from beginning after
+             reaching the end and so on, until it is stopped or
+             Loop = false is set.
+             The default looping state for sounds is false.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.Pitch">
+            <summary>
+            Pitch of the sound.
+            
+            The pitch represents the perceived fundamental frequency
+            of a sound; thus you can make a sound more acute or grave
+            by changing its pitch. A side effect of changing the pitch
+            is to modify the playing speed of the sound as well.
+            The default value for the pitch is 1.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.Volume">
+            <summary>
+            Volume of the sound.
+            
+            The volume is a value between 0 (mute) and 100 (full volume).
+            The default value for the volume is 100.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.PlayingOffset">
+            <summary>
+            Current playing position of the sound.
+            
+            The playing position can be changed when the sound is
+            either paused or playing.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.Position">
+             <summary>
+             3D position of the sound in the audio scene.
+            
+             Only sounds with one channel (mono sounds) can be
+             spatialized.
+             The default position of a sound is (0, 0, 0).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.RelativeToListener">
+             <summary>
+             Make the music's position relative to the listener or absolute.
+            
+             Making a sound relative to the listener will ensure that it will always
+             be played the same way regardless the position of the listener.
+             This can be useful for non-spatialized sounds, sounds that are
+             produced by the listener, or sounds attached to it.
+             The default value is false (position is absolute).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.MinDistance">
+             <summary>
+             Minimum distance of the sound.
+            
+             The "minimum distance" of a sound is the maximum
+             distance at which it is heard at its maximum volume. Further
+             than the minimum distance, it will start to fade out according
+             to its attenuation factor. A value of 0 ("inside the head
+             of the listener") is an invalid value and is forbidden.
+             The default value of the minimum distance is 1.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.Sound.Attenuation">
+             <summary>
+             Attenuation factor of the music.
+            
+             The attenuation is a multiplicative factor which makes
+             the music more or less loud according to its distance
+             from the listener. An attenuation of 0 will produce a
+             non-attenuated sound, i.e. its volume will always be the same
+             whether it is heard from near or from far. On the other hand,
+             an attenuation value such as 100 will make the sound fade out
+             very quickly as it gets further from the listener.
+             The default value of the attenuation is 1.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.Sound.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
+        <member name="M:SFML.Audio.Sound.Destroy(System.Boolean)">
+            <summary>
+            Handle the destruction of the object
+            </summary>
+            <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        </member>
+        <member name="T:SFML.Audio.SoundBuffer">
+            <summary>
+            Storage for audio samples defining a sound
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.#ctor(System.String)">
+            <summary>
+            Construct a sound buffer from a file
+            
+            Here is a complete list of all the supported audio formats:
+            ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+            w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
+            </summary>
+            <param name="filename">Path of the sound file to load</param>
+            <exception cref="T:SFML.LoadingFailedException" />
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.#ctor(System.IO.Stream)">
+             <summary>
+             Construct a sound buffer from a custom stream.
+            
+             Here is a complete list of all the supported audio formats:
+             ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+             w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
+             </summary>
+             <param name="stream">Source stream to read from</param>
+             <exception cref="T:SFML.LoadingFailedException" />
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.#ctor(System.Byte[])">
+            <summary>
+            Construct a sound buffer from a file in memory.
+            
+            Here is a complete list of all the supported audio formats:
+            ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+            w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
+            </summary>
+            <param name="bytes">Byte array containing the file contents</param>
+            <exception cref="T:SFML.LoadingFailedException" />
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.#ctor(System.Int16[],System.UInt32,System.UInt32)">
+            <summary>
+            Construct a sound buffer from an array of samples
+            </summary>
+            <param name="samples">Array of samples</param>
+            <param name="channelCount">Channel count</param>
+            <param name="sampleRate">Sample rate</param>
+            <exception cref="T:SFML.LoadingFailedException" />
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.#ctor(SFML.Audio.SoundBuffer)">
+            <summary>
+            Construct a sound buffer from another sound buffer
+            </summary>
+            <param name="copy">Sound buffer to copy</param>
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.SaveToFile(System.String)">
+             <summary>
+             Save the sound buffer to an audio file.
+            
+             Here is a complete list of all the supported audio formats:
+             ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+             w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
+             </summary>
+             <param name="filename">Path of the sound file to write</param>
+             <returns>True if saving has been successful</returns>
+        </member>
+        <member name="P:SFML.Audio.SoundBuffer.SampleRate">
+             <summary>
+             Sample rate of the sound buffer.
+            
+             The sample rate is the number of audio samples played per
+             second. The higher, the better the quality.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundBuffer.ChannelCount">
+            <summary>
+            Number of channels (1 = mono, 2 = stereo)
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundBuffer.Duration">
+            <summary>
+            Total duration of the buffer
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundBuffer.Samples">
+             <summary>
+             Array of audio samples stored in the buffer.
+            
+             The format of the returned samples is 16 bits signed integer
+             (sf::Int16).
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundBuffer.Destroy(System.Boolean)">
+            <summary>
+            Handle the destruction of the object
+            </summary>
+            <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        </member>
+        <member name="T:SFML.Audio.SoundBufferRecorder">
+            <summary>
+            Specialized SoundRecorder which saves the captured
+            audio data into a sound buffer
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundBufferRecorder.SoundBuffer">
+             <summary>
+             Sound buffer containing the captured audio data
+            
+             The sound buffer is valid only after the capture has ended.
+             This function provides a reference to the internal
+             sound buffer, but you should make a copy of it if you want
+             to make any modifications to it.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundBufferRecorder.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundBufferRecorder.OnStart">
+            <summary>
+            Called when a new capture starts
+            </summary>
+            <returns>False to abort recording audio data, true to continue</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundBufferRecorder.OnProcessSamples(System.Int16[])">
+            <summary>
+            Process a new chunk of recorded samples
+            </summary>
+            <param name="samples">Array of samples to process</param>
+            <returns>False to stop recording audio data, true to continue</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundBufferRecorder.OnStop">
+            <summary>
+            Called when the current capture stops
+            </summary>
+        </member>
+        <member name="T:SFML.Audio.SoundRecorder">
+            <summary>
+            Base class intended for capturing sound data
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.Start">
+            <summary>
+            Start the capture using the default sample rate (44100 Hz).
+            
+            Please note that only one capture can happen at the same time.
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.Start(System.UInt32)">
+             <summary>
+             Start the capture.
+            
+             The sampleRate parameter defines the number of audio samples
+             captured per second. The higher, the better the quality
+             (for example, 44100 samples/sec is CD quality).
+             This function uses its own thread so that it doesn't block
+             the rest of the program while the capture runs.
+             
+             Please note that only one capture can happen at the same time.
+             </summary>
+             <param name="sampleRate"> Sound frequency; the more samples, the higher the quality (44100 by default = CD quality)</param>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.Stop">
+            <summary>
+            Stop the capture
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundRecorder.SampleRate">
+            <summary>
+            Sample rate of the sound recorder.
+            </summary>
+            
+            <remarks>
+            The sample rate defines the number of audio samples
+            captured per second. The higher, the better the quality
+            (for example, 44100 samples/sec is CD quality).
+            </remarks>
+        </member>
+        <member name="P:SFML.Audio.SoundRecorder.ChannelCount">
+            <summary>
+            Get/Set the channel count of the audio capture device
+            </summary>
+            
+            <remarks>
+            This method allows you to specify the number of channels
+            used for recording. Currently only 16-bit mono (1) and
+            16-bit stereo (2) are supported.
+            </remarks>
+        </member>
+        <member name="P:SFML.Audio.SoundRecorder.IsAvailable">
+            <summary>
+            Check if the system supports audio capture.
+            </summary>
+            
+            <remarks>
+            This function should always be called before using
+            the audio capture features. If it returns false, then
+            any attempt to use the SoundRecorder or one of its derived
+            classes will fail.
+            </remarks>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.OnStart">
+             <summary>
+             Start capturing audio data.
+            
+             This virtual function may be overridden by a derived class
+             if something has to be done every time a new capture
+             starts. If not, this function can be ignored; the default
+             implementation does nothing.
+             </summary>
+             <returns>False to abort recording audio data, true to continue</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.OnProcessSamples(System.Int16[])">
+             <summary>
+             Process a new chunk of recorded samples.
+            
+             This virtual function is called every time a new chunk of
+             recorded data is available. The derived class can then do
+             whatever it wants with it (storing it, playing it, sending
+             it over the network, etc.).
+             </summary>
+             <param name="samples">Array of samples to process</param>
+             <returns>False to stop recording audio data, true to continue</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.OnStop">
+             <summary>
+             Stop capturing audio data.
+            
+             This virtual function may be overridden by a derived class
+             if something has to be done every time the capture
+             ends. If not, this function can be ignored; the default
+             implementation does nothing.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.SetProcessingInterval(SFML.System.Time)">
+             <summary>
+             The processing interval controls the period
+             between calls to the onProcessSamples function. You may
+             want to use a small interval if you want to process the
+             recorded data in real time, for example.
+            
+             Note: this is only a hint, the actual period may vary.
+             So don't rely on this parameter to implement precise timing.
+            
+             The default processing interval is 100 ms.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundRecorder.AvailableDevices">
+            <summary>
+            Get the list of the names of all available audio capture devices
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundRecorder.DefaultDevice">
+            <summary>
+            Get the name of the default audio capture device
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.SetDevice(System.String)">
+            <summary>
+            Set the audio capture device
+            </summary>
+            <param name="Name">The name of the audio capture device</param>
+            <returns>True, if it was able to set the requested device</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.GetDevice">
+            <summary>
+            Get the name of the current audio capture device
+            </summary>
+            <returns>The name of the current audio capture device</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.Destroy(System.Boolean)">
+            <summary>
+            Handle the destruction of the object
+            </summary>
+            <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        </member>
+        <member name="M:SFML.Audio.SoundRecorder.ProcessSamples(System.IntPtr,System.UInt32,System.IntPtr)">
+            <summary>
+            Function called directly by the C library ; convert
+            arguments and forward them to the internal virtual function
+            </summary>
+            <param name="samples">Pointer to the array of samples</param>
+            <param name="nbSamples">Number of samples in the array</param>
+            <param name="userData">User data -- unused</param>
+            <returns>False to stop recording audio data, true to continue</returns>
+        </member>
+        <member name="T:SFML.Audio.SoundStream">
+            <summary>
+            Abstract base class for streamed audio sources
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.Play">
+             <summary>
+             Start or resume playing the audio stream.
+            
+             This function starts the stream if it was stopped, resumes
+             it if it was paused, and restarts it from beginning if it
+             was it already playing.
+             This function uses its own thread so that it doesn't block
+             the rest of the program while the stream is played.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.Pause">
+             <summary>
+             Pause the audio stream.
+            
+             This function pauses the stream if it was playing,
+             otherwise (stream already paused or stopped) it has no effect.
+             </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.Stop">
+             <summary>
+             Stop playing the audio stream.
+            
+             This function stops the stream if it was playing or paused,
+             and does nothing if it was already stopped.
+             It also resets the playing position (unlike pause()).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.SampleRate">
+             <summary>
+             Sample rate of the stream
+            
+             The sample rate is the number of audio samples played per
+             second. The higher, the better the quality.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.ChannelCount">
+            <summary>
+            Number of channels (1 = mono, 2 = stereo)
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.Status">
+            <summary>
+            Current status of the sound stream (see SoundStatus enum)
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.Loop">
+             <summary>
+             Flag if the music should loop after reaching the end.
+            
+             If set, the music will restart from beginning after
+             reaching the end and so on, until it is stopped or
+             Loop = false is set.
+             The default looping state for music is false.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.Pitch">
+            <summary>
+            Pitch of the stream.
+            
+            The pitch represents the perceived fundamental frequency
+            of a sound; thus you can make a sound more acute or grave
+            by changing its pitch. A side effect of changing the pitch
+            is to modify the playing speed of the sound as well.
+            The default value for the pitch is 1.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.Volume">
+            <summary>
+            Volume of the stream.
+            
+            The volume is a value between 0 (mute) and 100 (full volume).
+            The default value for the volume is 100.
+            </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.Position">
+             <summary>
+             3D position of the stream in the audio scene.
+            
+             Only sounds with one channel (mono sounds) can be
+             spatialized.
+             The default position of a sound is (0, 0, 0).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.RelativeToListener">
+             <summary>
+             Make the stream's position relative to the listener or absolute.
+            
+             Making a sound relative to the listener will ensure that it will always
+             be played the same way regardless the position of the listener.
+             This can be useful for non-spatialized sounds, sounds that are
+             produced by the listener, or sounds attached to it.
+             The default value is false (position is absolute).
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.MinDistance">
+             <summary>
+             Minimum distance of the music.
+            
+             The "minimum distance" of a sound is the maximum
+             distance at which it is heard at its maximum volume. Further
+             than the minimum distance, it will start to fade out according
+             to its attenuation factor. A value of 0 ("inside the head
+             of the listener") is an invalid value and is forbidden.
+             The default value of the minimum distance is 1.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.Attenuation">
+             <summary>
+             Attenuation factor of the stream.
+            
+             The attenuation is a multiplicative factor which makes
+             the music more or less loud according to its distance
+             from the listener. An attenuation of 0 will produce a
+             non-attenuated sound, i.e. its volume will always be the same
+             whether it is heard from near or from far. On the other hand,
+             an attenuation value such as 100 will make the sound fade out
+             very quickly as it gets further from the listener.
+             The default value of the attenuation is 1.
+             </summary>
+        </member>
+        <member name="P:SFML.Audio.SoundStream.PlayingOffset">
+            <summary>
+            Current playing position of the stream.
+            
+            The playing position can be changed when the music is
+            either paused or playing.
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.ToString">
+            <summary>
+            Provide a string describing the object
+            </summary>
+            <returns>String description of the object</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.Initialize(System.UInt32,System.UInt32)">
+            <summary>
+            Set the audio stream parameters, you must call it before Play()
+            </summary>
+            <param name="channelCount">Number of channels</param>
+            <param name="sampleRate">Sample rate, in samples per second</param>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.OnGetData(System.Int16[]@)">
+            <summary>
+            Virtual function called each time new audio data is needed to feed the stream
+            </summary>
+            <param name="samples">Array of samples to fill for the stream</param>
+            <returns>True to continue playback, false to stop</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.OnSeek(SFML.System.Time)">
+            <summary>
+            Virtual function called to seek into the stream
+            </summary>
+            <param name="timeOffset">New position</param>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.Destroy(System.Boolean)">
+            <summary>
+            Handle the destruction of the object
+            </summary>
+            <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        </member>
+        <member name="T:SFML.Audio.SoundStream.Chunk">
+            <summary>
+            Structure mapping the C library arguments passed to the data callback
+            </summary>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.GetData(SFML.Audio.SoundStream.Chunk@,System.IntPtr)">
+            <summary>
+            Called each time new audio data is needed to feed the stream
+            </summary>
+            <param name="dataChunk">Data chunk to fill with new audio samples</param>
+            <param name="userData">User data -- unused</param>
+            <returns>True to continue playback, false to stop</returns>
+        </member>
+        <member name="M:SFML.Audio.SoundStream.Seek(SFML.System.Time,System.IntPtr)">
+            <summary>
+            Called to seek in the stream
+            </summary>
+            <param name="timeOffset">New position</param>
+            <param name="userData">User data -- unused</param>
+            <returns>If false is returned, the playback is aborted</returns>
+        </member>
+    </members>
+</doc>

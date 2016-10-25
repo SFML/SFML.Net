@@ -1,7 +1,5 @@
-using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using SFML.Window;
 using SFML.System;
 
 namespace SFML
@@ -299,9 +297,9 @@ namespace SFML
                        m20, m21, m22);
             }
 
-            float m00, m01, m02;
-            float m10, m11, m12;
-            float m20, m21, m22;
+            internal float m00, m01, m02;
+            internal float m10, m11, m12;
+            internal float m20, m21, m22;
 
             #region Imports
 

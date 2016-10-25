@@ -90,11 +90,12 @@ namespace SFML
             /// <param name="codePoint">Unicode code point of the character to get</param>
             /// <param name="characterSize">Character size</param>
             /// <param name="bold">Retrieve the bold version or the regular one?</param>
+			/// <param name="outlineThickness">Thickness of outline (when != 0 the glyph will not be filled)</param>
             /// <returns>The glyph corresponding to the character</returns>
             ////////////////////////////////////////////////////////////
-            public Glyph GetGlyph(uint codePoint, uint characterSize, bool bold)
+            public Glyph GetGlyph(uint codePoint, uint characterSize, bool bold, float outlineThickness)
             {
-                return sfFont_getGlyph(CPointer, codePoint, characterSize, bold);
+                return sfFont_getGlyph(CPointer, codePoint, characterSize, bold, outlineThickness);
             }
 
             ////////////////////////////////////////////////////////////
@@ -191,7 +192,7 @@ namespace SFML
             /// <summary>
             /// Handle the destruction of the object
             /// </summary>
-            /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+            /// <param name="disposing">Is the GC disposing the object, or is it an explicit call?</param>
             ////////////////////////////////////////////////////////////
             protected override void Destroy(bool disposing)
             {
@@ -267,7 +268,7 @@ namespace SFML
             static extern void sfFont_destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Glyph sfFont_getGlyph(IntPtr CPointer, uint codePoint, uint characterSize, bool bold);
+            static extern Glyph sfFont_getGlyph(IntPtr CPointer, uint codePoint, uint characterSize, bool bold, float outlineThickness);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern float sfFont_getKerning(IntPtr CPointer, uint first, uint second, uint characterSize);

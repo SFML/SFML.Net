@@ -62,7 +62,10 @@ namespace SFML
                 Add,
 
                 /// <summary>Pixel = Src * SrcFactor - Dst * DstFactor</summary>
-                Subtract
+                Subtract,
+
+                /// <summary>Pixel = Dst * DstFactor - Src * SrcFactor</summary>
+                ReverseSubtract
             }
 
             /// <summary>Blend source and dest according to dest alpha</summary>

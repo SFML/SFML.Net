@@ -1,8 +1,9 @@
 obj/
 lib/
 examples/*/*.dll
-doc/build/*xml
+examples/*/*.xml
 *.exe
 *.manifest
 *.pdb
 *.suo
+*.csproj.user

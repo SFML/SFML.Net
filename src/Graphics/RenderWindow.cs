@@ -1,7 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
 using System.Security;
 using System.Text;
 using SFML.Window;
@@ -95,6 +93,18 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Close (destroy) the window.
+            /// The Window instance remains valid and you can call
+            /// Create to recreate the window
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public override void Close()
+            {
+                sfRenderWindow_close(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Tell whether or not the window is opened (ie. has been created).
             /// Note that a hidden window (Show(false))
             /// will still return true
@@ -108,34 +118,12 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Close (destroy) the window.
-            /// The Window instance remains valid and you can call
-            /// Create to recreate the window
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public override void Close()
-            {
-                sfRenderWindow_close(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Display the window on screen
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public override void Display()
-            {
-                sfRenderWindow_display(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Creation settings of the window
             /// </summary>
             ////////////////////////////////////////////////////////////
             public override ContextSettings Settings
             {
-                get {return sfRenderWindow_getSettings(CPointer);}
+                get { return sfRenderWindow_getSettings(CPointer); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -212,6 +200,17 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Enable / disable vertical synchronization
+            /// </summary>
+            /// <param name="enable">True to enable v-sync, false to deactivate</param>
+            ////////////////////////////////////////////////////////////
+            public override void SetVerticalSyncEnabled(bool enable)
+            {
+                sfRenderWindow_setVerticalSyncEnabled(CPointer, enable);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// Show or hide the mouse cursor
             /// </summary>
             /// <param name="visible">True to show, false to hide</param>
@@ -223,13 +222,22 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Enable / disable vertical synchronization
+            /// Grab or release the mouse cursor
             /// </summary>
-            /// <param name="enable">True to enable v-sync, false to deactivate</param>
+            /// <param name="grabbed">True to grab, false to release</param>
+            /// 
+            /// <remarks>
+            /// If set, grabs the mouse cursor inside this window's client
+            /// area so it may no longer be moved outside its bounds.
+            /// Note that grabbing is only active while the window has
+            /// focus and calling this function for fullscreen windows
+            /// won't have any effect (fullscreen windows always grab the
+            /// cursor).
+            /// </remarks>
             ////////////////////////////////////////////////////////////
-            public override void SetVerticalSyncEnabled(bool enable)
+            public override void SetMouseCursorGrabbed(bool grabbed)
             {
-                sfRenderWindow_setVerticalSyncEnabled(CPointer, enable);
+                sfRenderWindow_setMouseCursorGrabbed(CPointer, grabbed);
             }
 
             ////////////////////////////////////////////////////////////
@@ -242,19 +250,6 @@ namespace SFML
             public override void SetKeyRepeatEnabled(bool enable)
             {
                 sfRenderWindow_setKeyRepeatEnabled(CPointer, enable);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Activate of deactivate the window as the current target
-            /// for rendering
-            /// </summary>
-            /// <param name="active">True to activate, false to deactivate (true by default)</param>
-            /// <returns>True if operation was successful, false otherwise</returns>
-            ////////////////////////////////////////////////////////////
-            public override bool SetActive(bool active)
-            {
-                return sfRenderWindow_setActive(CPointer, active);
             }
 
             ////////////////////////////////////////////////////////////
@@ -282,6 +277,51 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
+            /// Activate of deactivate the window as the current target
+            /// for rendering
+            /// </summary>
+            /// <param name="active">True to activate, false to deactivate (true by default)</param>
+            /// <returns>True if operation was successful, false otherwise</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool SetActive(bool active)
+            {
+                return sfRenderWindow_setActive(CPointer, active);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Request the current window to be made the active
+            /// foreground window
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public override void RequestFocus()
+            {
+                sfRenderWindow_requestFocus(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Check whether the window has the input focus
+            /// </summary>
+            /// <returns>True if the window has focus, false otherwise</returns>
+            ////////////////////////////////////////////////////////////
+            public override bool HasFocus()
+            {
+                return sfRenderWindow_hasFocus(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Display the window on screen
+            /// </summary>
+            ////////////////////////////////////////////////////////////
+            public override void Display()
+            {
+                sfRenderWindow_display(CPointer);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
             /// OS-specific handle of the window
             /// </summary>
             ////////////////////////////////////////////////////////////
@@ -292,12 +332,34 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Default view of the window
+            /// Clear the entire window with black color
             /// </summary>
             ////////////////////////////////////////////////////////////
-            public View DefaultView
+            public void Clear()
             {
-                get { return new View(myDefaultView); }
+                sfRenderWindow_clear(CPointer, Color.Black);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Clear the entire window with a single color
+            /// </summary>
+            /// <param name="color">Color to use to clear the window</param>
+            ////////////////////////////////////////////////////////////
+            public void Clear(Color color)
+            {
+                sfRenderWindow_clear(CPointer, color);
+            }
+
+            ////////////////////////////////////////////////////////////
+            /// <summary>
+            /// Change the current active view
+            /// </summary>
+            /// <param name="view">New view</param>
+            ////////////////////////////////////////////////////////////
+            public void SetView(View view)
+            {
+                sfRenderWindow_setView(CPointer, view.CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -313,13 +375,12 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Change the current active view
+            /// Default view of the window
             /// </summary>
-            /// <param name="view">New view</param>
             ////////////////////////////////////////////////////////////
-            public void SetView(View view)
+            public View DefaultView
             {
-                sfRenderWindow_setView(CPointer, view.CPointer);
+                get { return new View(myDefaultView); }
             }
 
             ////////////////////////////////////////////////////////////
@@ -430,27 +491,6 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Clear the entire window with black color
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public void Clear()
-            {
-                sfRenderWindow_clear(CPointer, Color.Black);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Clear the entire window with a single color
-            /// </summary>
-            /// <param name="color">Color to use to clear the window</param>
-            ////////////////////////////////////////////////////////////
-            public void Clear(Color color)
-            {
-                sfRenderWindow_clear(CPointer, color);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
             /// Draw a drawable object to the render-target, with default render states
             /// </summary>
             /// <param name="drawable">Object to draw</param>
@@ -537,32 +577,36 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Save the current OpenGL render states and matrices.
-            ///
-            /// This function can be used when you mix SFML drawing
-            /// and direct OpenGL rendering. Combined with PopGLStates,
-            /// it ensures that:
-            /// \li SFML's internal states are not messed up by your OpenGL code
-            /// \li your OpenGL states are not modified by a call to a SFML function
-            ///
-            /// More specifically, it must be used around code that
-            /// calls Draw functions. Example:
-            ///
+            /// </summary>
+            /// 
+            /// <example>
             /// // OpenGL code here...
             /// window.PushGLStates();
             /// window.Draw(...);
             /// window.Draw(...);
             /// window.PopGLStates();
             /// // OpenGL code here...
+            /// </example>
             ///
-            /// Note that this function is quite expensive: it saves all the
+            /// <remarks>
+            /// <para>This function can be used when you mix SFML drawing
+            /// and direct OpenGL rendering. Combined with PopGLStates,
+            /// it ensures that:</para>
+            /// <para>SFML's internal states are not messed up by your OpenGL code</para>
+            /// <para>Your OpenGL states are not modified by a call to a SFML function</para>
+            ///
+            /// <para>More specifically, it must be used around code that
+            /// calls Draw functions.</para>
+            ///
+            /// <para>Note that this function is quite expensive: it saves all the
             /// possible OpenGL states and matrices, even the ones you
             /// don't care about. Therefore it should be used wisely.
             /// It is provided for convenience, but the best results will
             /// be achieved if you handle OpenGL states yourself (because
             /// you know which states have really changed, and need to be
-            /// saved and restored). Take a look at the ResetGLStates
-            /// function if you do so.
-            /// </summary>
+            /// saved and restored). Take a look at the <seealso cref="ResetGLStates"/>
+            /// function if you do so.</para>
+            /// </remarks>
             ////////////////////////////////////////////////////////////
             public void PushGLStates()
             {
@@ -573,7 +617,7 @@ namespace SFML
             /// <summary>
             /// Restore the previously saved OpenGL render states and matrices.
             ///
-            /// See the description of PushGLStates to get a detailed
+            /// See the description of <seealso cref="PushGLStates"/> to get a detailed
             /// description of these functions.
             /// </summary>
             ////////////////////////////////////////////////////////////
@@ -585,15 +629,17 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Reset the internal OpenGL states so that the target is ready for drawing.
+            /// </summary>
             ///
+            /// <remarks>
             /// This function can be used when you mix SFML drawing
             /// and direct OpenGL rendering, if you choose not to use
             /// PushGLStates/PopGLStates. It makes sure that all OpenGL
             /// states needed by SFML are set, so that subsequent Draw()
             /// calls will work as expected.
-            ///
-            /// Example:
-            ///
+            /// </remarks>
+            /// 
+            /// <example>
             /// // OpenGL code here...
             /// glPushAttrib(...);
             /// window.ResetGLStates();
@@ -601,7 +647,7 @@ namespace SFML
             /// window.Draw(...);
             /// glPopAttrib(...);
             /// // OpenGL code here...
-            /// </summary>
+            /// </example>
             ////////////////////////////////////////////////////////////
             public void ResetGLStates()
             {
@@ -610,34 +656,23 @@ namespace SFML
 
             ////////////////////////////////////////////////////////////
             /// <summary>
-            /// Capture the current contents of the window into an image
+            /// Capture the current contents of the window into an image.
             /// </summary>
+            /// 
+            /// <remarks>
+            /// Deprecated. Use <see cref="Texture"/> and <see cref="Texture.Update(RenderWindow)"/>
+            /// instead:
+            /// <code>
+            ///	Texture texture = new Texture(window.Size);
+            ///	texture.update(window);
+            ///	Image img = texture.CopyToImage();
+            ///	</code>
+            /// </remarks>
             ////////////////////////////////////////////////////////////
+            [Obsolete("Capture is deprecated, please see remarks for preferred method")]
             public Image Capture()
             {
                 return new Image(sfRenderWindow_capture(CPointer));
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Request the current window to be made the active
-            /// foreground window
-            /// </summary>
-            ////////////////////////////////////////////////////////////
-            public override void RequestFocus()
-            {
-                sfRenderWindow_requestFocus(CPointer);
-            }
-
-            ////////////////////////////////////////////////////////////
-            /// <summary>
-            /// Check whether the window has the input focus
-            /// </summary>
-            /// <returns>True if the window has focus, false otherwise</returns>
-            ////////////////////////////////////////////////////////////
-            public override bool HasFocus()
-            {
-                return sfRenderWindow_hasFocus(CPointer);
             }
 
             ////////////////////////////////////////////////////////////
@@ -683,7 +718,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Internal function to get the mouse position relative to the window.
-            /// This function is public because it is called by another class,
+            /// This function is protected because it is called by another class,
             /// it is not meant to be called by users.
             /// </summary>
             /// <returns>Relative mouse position</returns>
@@ -696,7 +731,7 @@ namespace SFML
             ////////////////////////////////////////////////////////////
             /// <summary>
             /// Internal function to set the mouse position relative to the window.
-            /// This function is public because it is called by another class,
+            /// This function is protected because it is called by another class,
             /// it is not meant to be called by users.
             /// </summary>
             /// <param name="position">Relative mouse position</param>
@@ -761,25 +796,19 @@ namespace SFML
             static extern void sfRenderWindow_destroy(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderWindow_close(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfRenderWindow_isOpen(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_close(IntPtr CPointer);
+            static extern ContextSettings sfRenderWindow_getSettings(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfRenderWindow_pollEvent(IntPtr CPointer, out Event Evt);
             
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern bool sfRenderWindow_waitEvent(IntPtr CPointer, out Event Evt);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_clear(IntPtr CPointer, Color ClearColor);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_display(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern ContextSettings sfRenderWindow_getSettings(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern Vector2i sfRenderWindow_getPosition(IntPtr CPointer);
@@ -806,31 +835,40 @@ namespace SFML
             static extern void sfRenderWindow_setVisible(IntPtr CPointer, bool visible);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderWindow_setVerticalSyncEnabled(IntPtr CPointer, bool Enable);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_setMouseCursorVisible(IntPtr CPointer, bool visible);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_setVerticalSyncEnabled(IntPtr CPointer, bool Enable);
+            static extern void sfRenderWindow_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_setKeyRepeatEnabled(IntPtr CPointer, bool Enable);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderWindow_setActive(IntPtr CPointer, bool Active);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderWindow_saveGLStates(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderWindow_restoreGLStates(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_setFramerateLimit(IntPtr CPointer, uint Limit);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern uint sfRenderWindow_getFrameTime(IntPtr CPointer);
+            static extern void sfRenderWindow_setJoystickThreshold(IntPtr CPointer, float Threshold);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_setJoystickThreshold(IntPtr CPointer, float Threshold);
+            static extern bool sfRenderWindow_setActive(IntPtr CPointer, bool Active);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderWindow_requestFocus(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfRenderWindow_hasFocus(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderWindow_display(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern IntPtr sfRenderWindow_getSystemHandle(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern void sfRenderWindow_clear(IntPtr CPointer, Color ClearColor);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern void sfRenderWindow_setView(IntPtr CPointer, IntPtr View);
@@ -845,10 +883,10 @@ namespace SFML
             static extern IntRect sfRenderWindow_getViewport(IntPtr CPointer, IntPtr TargetView);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2i sfRenderWindow_mapCoordsToPixel(IntPtr CPointer, Vector2f point, IntPtr View);
+            static extern Vector2f sfRenderWindow_mapPixelToCoords(IntPtr CPointer, Vector2i point, IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern Vector2f sfRenderWindow_mapPixelToCoords(IntPtr CPointer, Vector2i point, IntPtr View);
+            static extern Vector2i sfRenderWindow_mapCoordsToPixel(IntPtr CPointer, Vector2f point, IntPtr View);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             unsafe static extern void sfRenderWindow_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
@@ -863,16 +901,7 @@ namespace SFML
             static extern void sfRenderWindow_resetGLStates(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern IntPtr sfRenderWindow_getSystemHandle(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern IntPtr sfRenderWindow_capture(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern void sfRenderWindow_requestFocus(IntPtr CPointer);
-
-            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-            static extern bool sfRenderWindow_hasFocus(IntPtr CPointer);
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern Vector2i sfMouse_getPositionRenderWindow(IntPtr CPointer);
@@ -882,6 +911,15 @@ namespace SFML
 
             [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
             static extern Vector2i sfTouch_getPositionRenderWindow(uint Finger, IntPtr RelativeTo);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfRenderWindow_saveGLStates(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern bool sfRenderWindow_restoreGLStates(IntPtr CPointer);
+
+            [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+            static extern uint sfRenderWindow_getFrameTime(IntPtr CPointer);
             #endregion
         }
     }
