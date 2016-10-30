@@ -24,6 +24,18 @@
             Activate or deactivate the context
             </summary>
             <param name="active">True to activate, false to deactivate</param>
+            <returns>true on success, false on failure</returns>
+        </member>
+        <member name="M:SFML.Window.Context.GetSettings">
+            <summary>
+            Get the settings of the context.
+            </summary>
+            <returns>Structure containing the settings</returns>
+            <remarks>
+            Note that these settings may be different than the ones passed to the
+            constructor; they are indeed adjusted if the original settings are not
+            directly supported by the system.
+            </remarks>
         </member>
         <member name="P:SFML.Window.Context.Global">
             <summary>
