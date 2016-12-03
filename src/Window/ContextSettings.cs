@@ -64,7 +64,7 @@ namespace SFML.Window
         /// <param name="majorVersion">Major number of the context version</param>
         /// <param name="minorVersion">Minor number of the context version</param>
         /// <param name="attributes">Attribute flags of the context</param>
-		/// <param name="sRgbCapable">sRGB capability of the context</param>
+        /// <param name="sRgbCapable">sRGB capability of the context</param>
         ////////////////////////////////////////////////////////////
         public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion, uint minorVersion, Attribute attributes, bool sRgbCapable)
         {
@@ -74,8 +74,8 @@ namespace SFML.Window
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             AttributeFlags = attributes;
-			SRgbCapable = sRgbCapable;
-		}
+            SRgbCapable = sRgbCapable;
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -112,7 +112,7 @@ namespace SFML.Window
         /// <summary>The attribute flags to create the context with</summary>
         public Attribute AttributeFlags;
 
-		/// <summary>Whether the context framebuffer is sRGB capable</summary>
-		public bool SRgbCapable;
+        /// <summary>Whether the context framebuffer is sRGB capable</summary>
+        public bool SRgbCapable;
     }
 }

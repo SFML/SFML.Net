@@ -37,20 +37,22 @@ namespace SFML.Window
         /// Activate or deactivate the context
         /// </summary>
         /// <param name="active">True to activate, false to deactivate</param>
-		/// <returns>true on success, false on failure</returns>
+        /// <returns>true on success, false on failure</returns>
         ////////////////////////////////////////////////////////////
         public bool SetActive(bool active)
         {
             return sfContext_setActive(myThis, active);
         }
 
-		/// <summary>
-		/// Get the settings of the context.
-		/// </summary>
-		public ContextSettings Settings
-		{
-			get { return sfContext_getSettings(myThis); }
-		}
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the settings of the context.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public ContextSettings Settings
+        {
+            get { return sfContext_getSettings(myThis); }
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -93,8 +95,8 @@ namespace SFML.Window
         [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfContext_setActive(IntPtr View, bool Active);
 
-		[DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		static extern ContextSettings sfContext_getSettings(IntPtr View);
-		#endregion
-	}
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern ContextSettings sfContext_getSettings(IntPtr View);
+        #endregion
+    }
 }
