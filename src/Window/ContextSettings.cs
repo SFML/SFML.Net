@@ -50,7 +50,7 @@ namespace SFML.Window
         /// <param name="antialiasingLevel">Antialiasing level</param>
         ////////////////////////////////////////////////////////////
         public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel) :
-            this(depthBits, stencilBits, antialiasingLevel, 2, 0, Attribute.Default)
+            this(depthBits, stencilBits, antialiasingLevel, 2, 0, Attribute.Default, false)
         {
         }
 
@@ -64,8 +64,9 @@ namespace SFML.Window
         /// <param name="majorVersion">Major number of the context version</param>
         /// <param name="minorVersion">Minor number of the context version</param>
         /// <param name="attributes">Attribute flags of the context</param>
+        /// <param name="sRgbCapable">sRGB capability of the context</param>
         ////////////////////////////////////////////////////////////
-        public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion, uint minorVersion, Attribute attributes)
+        public ContextSettings(uint depthBits, uint stencilBits, uint antialiasingLevel, uint majorVersion, uint minorVersion, Attribute attributes, bool sRgbCapable)
         {
             DepthBits = depthBits;
             StencilBits = stencilBits;
@@ -73,6 +74,7 @@ namespace SFML.Window
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             AttributeFlags = attributes;
+            SRgbCapable = sRgbCapable;
         }
 
         ////////////////////////////////////////////////////////////
@@ -109,5 +111,8 @@ namespace SFML.Window
 
         /// <summary>The attribute flags to create the context with</summary>
         public Attribute AttributeFlags;
+
+        /// <summary>Whether the context framebuffer is sRGB capable</summary>
+        public bool SRgbCapable;
     }
 }

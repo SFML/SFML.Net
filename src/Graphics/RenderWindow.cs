@@ -661,10 +661,10 @@ namespace SFML.Graphics
         /// Deprecated. Use <see cref="Texture"/> and <see cref="Texture.Update(RenderWindow)"/>
         /// instead:
         /// <code>
-        ///	Texture texture = new Texture(window.Size);
-        ///	texture.update(window);
-        ///	Image img = texture.CopyToImage();
-        ///	</code>
+        ///    Texture texture = new Texture(window.Size);
+        ///    texture.update(window);
+        ///    Image img = texture.CopyToImage();
+        ///    </code>
         /// </remarks>
         ////////////////////////////////////////////////////////////
         [Obsolete("Capture is deprecated, please see remarks for preferred method")]

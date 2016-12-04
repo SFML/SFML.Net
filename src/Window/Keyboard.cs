@@ -238,9 +238,24 @@ namespace SFML.Window
             return sfKeyboard_isKeyPressed(key);
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Enable/Disable visibility of the virtual keyboard
+        /// </summary>
+        /// <remarks>Applicable only on Android and iOS</remarks>
+        /// <param name="visible">Whether to make the virtual keyboard visible (true) or not (false)</param>
+        ////////////////////////////////////////////////////////////
+        public static void SetVirtualKeyboardVisible(bool visible)
+        {
+            sfKeyboard_setVirtualKeyboardVisible(visible);
+        }
+
         #region Imports
         [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfKeyboard_isKeyPressed(Key Key);
+
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern void sfKeyboard_setVirtualKeyboardVisible(bool visible);
         #endregion
     }
 }
