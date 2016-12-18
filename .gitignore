@@ -1,8 +1,8 @@
 obj/
 lib/
+src/*/bin/
 examples/*/*.dll
 examples/*/*.xml
-*/bin/*
 *.exe
 *.manifest
 *.pdb
