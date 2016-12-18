@@ -329,85 +329,85 @@ namespace SFML.Audio
         private StreamAdaptor myStream = null;
 
         #region Imports
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfMusic_createFromFile(string Filename);
         
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         unsafe static extern IntPtr sfMusic_createFromStream(IntPtr stream);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfMusic_createFromMemory(IntPtr data, ulong size);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_destroy(IntPtr MusicStream);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_play(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_pause(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_stop(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern SoundStatus sfMusic_getStatus(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Time sfMusic_getDuration(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern uint sfMusic_getChannelCount(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern uint sfMusic_getSampleRate(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setPitch(IntPtr Music, float Pitch);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setLoop(IntPtr Music, bool Loop);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setVolume(IntPtr Music, float Volume);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setPosition(IntPtr Music, Vector3f position);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setRelativeToListener(IntPtr Music, bool Relative);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setMinDistance(IntPtr Music, float MinDistance);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setAttenuation(IntPtr Music, float Attenuation);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMusic_setPlayingOffset(IntPtr Music, Time TimeOffset);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfMusic_getLoop(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern float sfMusic_getPitch(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern float sfMusic_getVolume(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector3f sfMusic_getPosition(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfMusic_isRelativeToListener(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern float sfMusic_getMinDistance(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern float sfMusic_getAttenuation(IntPtr Music);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Time sfMusic_getPlayingOffset(IntPtr Music);
         #endregion
     }

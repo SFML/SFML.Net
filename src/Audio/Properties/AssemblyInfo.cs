@@ -1,7 +1,19 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("sfml-audio")]
-[assembly: AssemblyDescription("Audio module of the SFML library")]
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("sfml_audio")]
+[assembly: AssemblyTrademark("")]
 
-[assembly: Guid("f16e1d68-cc36-440d-a157-0304e9084ab1")]
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("8ba3de31-a907-47ac-b1dc-fb26fa2ccccc")]

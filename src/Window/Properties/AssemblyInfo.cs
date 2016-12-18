@@ -1,7 +1,19 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("sfml-window")]
-[assembly: AssemblyDescription("Window module of the SFML library")]
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("sfml_window")]
+[assembly: AssemblyTrademark("")]
 
-[assembly: Guid("c88ebbee-2702-4543-9461-2e92da65156e")]
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("90251b77-c243-40aa-ba08-74a0ebd84e8c")]

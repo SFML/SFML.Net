@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 
 namespace SFML
 {
@@ -8,7 +7,6 @@ namespace SFML
     /// Exception thrown by SFML whenever loading a resource fails
     /// </summary>
     ////////////////////////////////////////////////////////////
-    [Serializable]
     public class LoadingFailedException : Exception
     {
         ////////////////////////////////////////////////////////////
@@ -76,9 +74,9 @@ namespace SFML
         /// <param name="info">Serialized data</param>
         /// <param name="context">Contextual informations</param>
         ////////////////////////////////////////////////////////////
-        public LoadingFailedException(SerializationInfo info, StreamingContext context) :
+        /*public LoadingFailedException(SerializationInfo info, StreamingContext context) :
             base(info, context)
         {
-        }
+        }*/
     }
 }

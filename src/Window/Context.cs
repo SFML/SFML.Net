@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Runtime.ConstrainedExecution;
 
 namespace SFML.Window
 {
@@ -10,7 +9,7 @@ namespace SFML.Window
     /// This class defines a .NET interface to an SFML OpenGL Context
     /// </summary>
     //////////////////////////////////////////////////////////////////
-    public class Context : CriticalFinalizerObject
+    public class Context : IDisposable
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -22,6 +21,13 @@ namespace SFML.Window
             myThis = sfContext_create();
         }
 
+
+        public void Dispose()
+        {
+            sfContext_destroy(myThis);
+
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Finalizer
@@ -29,7 +35,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         ~Context()
         {
-            sfContext_destroy(myThis);
+            Dispose();
         }
 
         ////////////////////////////////////////////////////////////
@@ -86,17 +92,18 @@ namespace SFML.Window
         private IntPtr myThis = IntPtr.Zero;
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfContext_create();
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfContext_destroy(IntPtr View);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfContext_setActive(IntPtr View, bool Active);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern ContextSettings sfContext_getSettings(IntPtr View);
+
         #endregion
     }
 }
