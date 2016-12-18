@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "../../src", "{7F00C5C8-4E3D-4275-9A0D-B122DCDA9145}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "..\..\src", "{7F00C5C8-4E3D-4275-9A0D-B122DCDA9145}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A4C8407-BE85-474E-98CE-06E941F5DC15}"
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-window", "../../src\Window\sfml-window.xproj", "{90251B77-C243-40AA-BA08-74A0EBD84E8C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-window", "..\..\src\sfml-window\sfml-window.xproj", "{90251B77-C243-40AA-BA08-74A0EBD84E8C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-system", "../../src\System\sfml-system.xproj", "{05772E3F-49B2-4AB6-9504-6B6AFC1903CD}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-system", "..\..\src\sfml-system\sfml-system.xproj", "{05772E3F-49B2-4AB6-9504-6B6AFC1903CD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-audio", "../../src\Audio\sfml-audio.xproj", "{8BA3DE31-A907-47AC-B1DC-FB26FA2CCCCC}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-audio", "..\..\src\sfml-audio\sfml-audio.xproj", "{8BA3DE31-A907-47AC-B1DC-FB26FA2CCCCC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-graphics", "../../src\Graphics\sfml-graphics.xproj", "{A8BF040B-FC1E-4380-A17E-230DD0338D07}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "sfml-graphics", "..\..\src\sfml-graphics\sfml-graphics.xproj", "{A8BF040B-FC1E-4380-A17E-230DD0338D07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
