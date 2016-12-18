@@ -1,5 +1,6 @@
 obj/
 lib/
+src/*/bin/
 examples/*/*.dll
 examples/*/*.xml
 *.exe
