@@ -2,8 +2,8 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
-using SFML.Window;
 using SFML.System;
+
 
 namespace SFML.Audio
 {
@@ -210,40 +210,40 @@ namespace SFML.Audio
         }
 
         #region Imports
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfSoundBuffer_createFromFile(string Filename);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         unsafe static extern IntPtr sfSoundBuffer_createFromStream(IntPtr stream);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, ulong size);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, uint SampleCount, uint ChannelsCount, uint SampleRate);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfSoundBuffer_copy(IntPtr SoundBuffer);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfSoundBuffer_destroy(IntPtr SoundBuffer);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfSoundBuffer_saveToFile(IntPtr SoundBuffer, string Filename);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfSoundBuffer_getSamples(IntPtr SoundBuffer);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern uint sfSoundBuffer_getSampleCount(IntPtr SoundBuffer);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern uint sfSoundBuffer_getSampleRate(IntPtr SoundBuffer);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern uint sfSoundBuffer_getChannelCount(IntPtr SoundBuffer);
 
-        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-audio-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Time sfSoundBuffer_getDuration(IntPtr SoundBuffer);
         #endregion
     }

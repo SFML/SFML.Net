@@ -1,14 +1,12 @@
 using System;
-using System.Runtime.Serialization;
 
-namespace SFML
+namespace SFML.System
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
     /// Exception thrown by SFML whenever loading a resource fails
     /// </summary>
     ////////////////////////////////////////////////////////////
-    [Serializable]
     public class LoadingFailedException : Exception
     {
         ////////////////////////////////////////////////////////////
@@ -66,18 +64,6 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(string resourceName, string filename, Exception innerException) :
             base("Failed to load " + resourceName + " from file " + filename, innerException)
-        {
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Initialize an instance of the exception with serialized data
-        /// </summary>
-        /// <param name="info">Serialized data</param>
-        /// <param name="context">Contextual informations</param>
-        ////////////////////////////////////////////////////////////
-        public LoadingFailedException(SerializationInfo info, StreamingContext context) :
-            base(info, context)
         {
         }
     }

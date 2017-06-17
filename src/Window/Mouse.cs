@@ -125,13 +125,13 @@ namespace SFML.Window
         }
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfMouse_isButtonPressed(Button button);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector2i sfMouse_getPosition(IntPtr relativeTo);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMouse_setPosition(Vector2i position, IntPtr relativeTo);
         #endregion
     }
