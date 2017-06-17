@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using System.Threading;
-using SFML;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
 using SFML.Audio;
 
-namespace sound
+namespace shader
 {
     static class Program
     {
@@ -26,16 +28,16 @@ namespace sound
         private static void PlaySound()
         {
             // Load a sound buffer from a wav file
-            SoundBuffer buffer = new SoundBuffer("resources/canary.wav");
+            var buffer = new SoundBuffer("resources/canary.wav");
 
             // Display sound informations
             Console.WriteLine("canary.wav :");
-            Console.WriteLine(" " + buffer.Duration     + " sec");
-            Console.WriteLine(" " + buffer.SampleRate   + " samples / sec");
+            Console.WriteLine(" " + buffer.Duration + " sec");
+            Console.WriteLine(" " + buffer.SampleRate + " samples / sec");
             Console.WriteLine(" " + buffer.ChannelCount + " channels");
 
             // Create a sound instance and play it
-            Sound sound = new Sound(buffer);
+            var sound = new Sound(buffer);
             sound.Play();
 
             // Loop while the sound is playing
@@ -56,12 +58,12 @@ namespace sound
         private static void PlayMusic()
         {
             // Load an ogg music file
-            Music music = new Music("resources/orchestral.ogg");
+            var music = new Music("resources/orchestral.ogg");
 
             // Display music informations
             Console.WriteLine("orchestral.ogg :");
-            Console.WriteLine(" " + music.Duration     + " sec");
-            Console.WriteLine(" " + music.SampleRate   + " samples / sec");
+            Console.WriteLine(" " + music.Duration + " sec");
+            Console.WriteLine(" " + music.SampleRate + " samples / sec");
             Console.WriteLine(" " + music.ChannelCount + " channels");
 
             // Play it
