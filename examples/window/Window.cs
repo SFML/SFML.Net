@@ -5,6 +5,9 @@ using SFML.System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Platform;
+using SFML.Graphics;
+using PrimitiveType = OpenTK.Graphics.OpenGL.PrimitiveType;
 
 namespace window
 {
@@ -16,23 +19,28 @@ namespace window
         static void Main()
         {
             // Request a 24-bits depth buffer when creating the window
-            ContextSettings contextSettings = new ContextSettings();
+            var contextSettings = new ContextSettings();
             contextSettings.DepthBits = 24;
 
             // Create the main window
-            Window window = new Window(new VideoMode(640, 480), "SFML window with OpenGL", Styles.Default, contextSettings);
-
+            var window = new Window(new VideoMode(640, 480), "SFML window with OpenGL", Styles.Default, contextSettings);
+            window.SetFramerateLimit(60);
             // Make it the active window for OpenGL calls
             window.SetActive();
+            window.Display();
 
             // Initialize OpenTK
             Toolkit.Init();
-            GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
-
+            var wi = Utilities.CreateWindowsWindowInfo(window.SystemHandle);
+            var dummy = new GameWindow();
+            var ctx = new GraphicsContext(GraphicsMode.Default, wi);
+            ctx.MakeCurrent(wi);
+            ctx.LoadAll();
+            
             // Setup event handlers
-            window.Closed += new EventHandler(OnClosed);
-            window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
-            window.Resized += new EventHandler<SizeEventArgs>(OnResized);
+            window.Closed += OnClosed;
+            window.KeyPressed += OnKeyPressed;
+            window.Resized += OnResized;
 
             // Set the color and depth clear values
             GL.ClearDepth(1);
@@ -52,11 +60,11 @@ namespace window
             // Setup a perspective projection
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            float ratio = (float)(window.Size.X) / window.Size.Y;
+            var ratio = (float)(window.Size.X) / window.Size.Y;
             GL.Frustum(-ratio, ratio, -1, 1, 1, 500);
 
             // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
-            float[] cube = new float[]
+            var cube = new float[]
             {
                 // positions    // colors (r, g, b, a)
                 -50, -50, -50,  0, 0, 1, 1,
@@ -66,40 +74,40 @@ namespace window
                 -50,  50, -50,  0, 0, 1, 1,
                 -50,  50,  50,  0, 0, 1, 1,
 
-                 50, -50, -50,  0, 1, 0, 1,
-                 50,  50, -50,  0, 1, 0, 1,
-                 50, -50,  50,  0, 1, 0, 1,
-                 50, -50,  50,  0, 1, 0, 1,
-                 50,  50, -50,  0, 1, 0, 1,
-                 50,  50,  50,  0, 1, 0, 1,
+                50, -50, -50,  0, 1, 0, 1,
+                50,  50, -50,  0, 1, 0, 1,
+                50, -50,  50,  0, 1, 0, 1,
+                50, -50,  50,  0, 1, 0, 1,
+                50,  50, -50,  0, 1, 0, 1,
+                50,  50,  50,  0, 1, 0, 1,
 
                 -50, -50, -50,  1, 0, 0, 1,
-                 50, -50, -50,  1, 0, 0, 1,
+                50, -50, -50,  1, 0, 0, 1,
                 -50, -50,  50,  1, 0, 0, 1,
                 -50, -50,  50,  1, 0, 0, 1,
-                 50, -50, -50,  1, 0, 0, 1,
-                 50, -50,  50,  1, 0, 0, 1,
+                50, -50, -50,  1, 0, 0, 1,
+                50, -50,  50,  1, 0, 0, 1,
 
                 -50,  50, -50,  0, 1, 1, 1,
-                 50,  50, -50,  0, 1, 1, 1,
+                50,  50, -50,  0, 1, 1, 1,
                 -50,  50,  50,  0, 1, 1, 1,
                 -50,  50,  50,  0, 1, 1, 1,
-                 50,  50, -50,  0, 1, 1, 1,
-                 50,  50,  50,  0, 1, 1, 1,
+                50,  50, -50,  0, 1, 1, 1,
+                50,  50,  50,  0, 1, 1, 1,
 
                 -50, -50, -50,  1, 0, 1, 1,
-                 50, -50, -50,  1, 0, 1, 1,
+                50, -50, -50,  1, 0, 1, 1,
                 -50,  50, -50,  1, 0, 1, 1,
                 -50,  50, -50,  1, 0, 1, 1,
-                 50, -50, -50,  1, 0, 1, 1,
-                 50,  50, -50,  1, 0, 1, 1,
+                50, -50, -50,  1, 0, 1, 1,
+                50,  50, -50,  1, 0, 1, 1,
 
                 -50, -50,  50,  1, 1, 0, 1,
-                 50, -50,  50,  1, 1, 0, 1,
+                50, -50,  50,  1, 1, 0, 1,
                 -50,  50,  50,  1, 1, 0, 1,
                 -50,  50,  50,  1, 1, 0, 1,
-                 50, -50,  50,  1, 1, 0, 1,
-                 50,  50,  50,  1, 1, 0, 1,
+                50, -50,  50,  1, 1, 0, 1,
+                50,  50,  50,  1, 1, 0, 1,
             };
 
             // Enable position and color vertex components
@@ -112,7 +120,7 @@ namespace window
             GL.DisableClientState(ArrayCap.NormalArray);
             GL.DisableClientState(ArrayCap.TextureCoordArray);
 
-            Clock clock = new Clock();
+            var clock = new Clock();
 
             // Start the game loop
             while (window.IsOpen)
@@ -132,7 +140,7 @@ namespace window
                 GL.Rotate(clock.ElapsedTime.AsSeconds() * 90, 0.0F, 0.0F, 1.0F);
 
                 // Draw the cube
-                GL.DrawArrays(OpenTK.Graphics.OpenGL.PrimitiveType.Triangles, 0, 36);
+                GL.DrawArrays(PrimitiveType.Triangles, 0, 36);
 
                 // Finally, display the rendered frame on screen
                 window.Display();
@@ -144,7 +152,7 @@ namespace window
         /// </summary>
         static void OnClosed(object sender, EventArgs e)
         {
-            Window window = (Window)sender;
+            var window = (Window)sender;
             window.Close();
         }
 
@@ -153,7 +161,7 @@ namespace window
         /// </summary>
         static void OnKeyPressed(object sender, KeyEventArgs e)
         {
-            Window window = (Window)sender;
+            var window = (Window)sender;
             if (e.Code == Keyboard.Key.Escape)
                 window.Close();
         }

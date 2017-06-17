@@ -6,6 +6,7 @@ using SFML.System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Platform;
 
 namespace opengl
 {
@@ -17,27 +18,35 @@ namespace opengl
         static void Main()
         {
             // Request a 24-bits depth buffer when creating the window
-            ContextSettings contextSettings = new ContextSettings();
+            var contextSettings = new ContextSettings();
             contextSettings.DepthBits = 24;
 
             // Create the main window
-            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML graphics with OpenGL", Styles.Default, contextSettings);
-            window.SetVerticalSyncEnabled(true);
+            var window = new RenderWindow(new VideoMode(800, 600), "SFML graphics with OpenGL", Styles.Default,
+                contextSettings);
+            window.SetFramerateLimit(60);
+            // Make it the active window for OpenGL calls
+            window.SetActive();
+            window.Display();
 
             // Initialize OpenTK
             Toolkit.Init();
-            GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
+            var wi = Utilities.CreateWindowsWindowInfo(window.SystemHandle);
+            var dummy = new GameWindow();
+            var ctx = new GraphicsContext(GraphicsMode.Default, wi);
+            ctx.MakeCurrent(wi);
+            ctx.LoadAll();
 
             // Setup event handlers
-            window.Closed     += new EventHandler(OnClosed);
-            window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
-            window.Resized    += new EventHandler<SizeEventArgs>(OnResized);
+            window.Closed += OnClosed;
+            window.KeyPressed += OnKeyPressed;
+            window.Resized += OnResized;
 
             // Create a sprite for the background
-            Sprite background = new Sprite(new Texture("resources/background.jpg"));
+            var background = new Sprite(new Texture("resources/background.jpg"));
 
             // Create a text to display on top of the OpenGL object
-            Text text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
+            var text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
             text.Position = new Vector2f(250, 450);
             text.FillColor = new Color(255, 255, 255, 170);
 
@@ -47,14 +56,17 @@ namespace opengl
             // Load an OpenGL texture.
             // We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
             // but here we want more control on it (generate mipmaps, ...) so we create a new one
-            int texture = 0;
-            using (Image image = new Image("resources/texture.jpg"))
+            var texture = 0;
+            using (var image = new Image("resources/texture.jpg"))
             {
                 GL.GenTextures(1, out texture);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int)image.Size.X, (int)image.Size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int) image.Size.X,
+                    (int) image.Size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter,
+                    (int) TextureMagFilter.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter,
+                    (int) TextureMinFilter.Linear);
             }
 
             // Enable Z-buffer read and write
@@ -66,12 +78,12 @@ namespace opengl
             GL.Disable(EnableCap.Lighting);
 
             // Configure the viewport (the same size as the window)
-            GL.Viewport(0, 0, (int)window.Size.X, (int)window.Size.Y);
+            GL.Viewport(0, 0, (int) window.Size.X, (int) window.Size.Y);
 
             // Setup a perspective projection
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            float ratio = (float)(window.Size.X) / window.Size.Y;
+            var ratio = (float) (window.Size.X) / window.Size.Y;
             GL.Frustum(-ratio, ratio, -1, 1, 1, 500);
 
             // Bind the texture
@@ -79,63 +91,65 @@ namespace opengl
             GL.BindTexture(TextureTarget.Texture2D, texture);
 
             // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
-            float[] cube = new float[]
+            var cube = new float[]
             {
                 // positions    // texture coordinates
-                -20, -20, -20,  0, 0,
-                -20,  20, -20,  1, 0,
-                -20, -20,  20,  0, 1,
-                -20, -20,  20,  0, 1,
-                -20,  20, -20,  1, 0,
-                -20,  20,  20,  1, 1,
+                -20, -20, -20, 0, 0,
+                -20, 20, -20, 1, 0,
+                -20, -20, 20, 0, 1,
+                -20, -20, 20, 0, 1,
+                -20, 20, -20, 1, 0,
+                -20, 20, 20, 1, 1,
 
-                 20, -20, -20,  0, 0,
-                 20,  20, -20,  1, 0,
-                 20, -20,  20,  0, 1,
-                 20, -20,  20,  0, 1,
-                 20,  20, -20,  1, 0,
-                 20,  20,  20,  1, 1,
+                20, -20, -20, 0, 0,
+                20, 20, -20, 1, 0,
+                20, -20, 20, 0, 1,
+                20, -20, 20, 0, 1,
+                20, 20, -20, 1, 0,
+                20, 20, 20, 1, 1,
 
-                -20, -20, -20,  0, 0,
-                 20, -20, -20,  1, 0,
-                -20, -20,  20,  0, 1,
-                -20, -20,  20,  0, 1,
-                 20, -20, -20,  1, 0,
-                 20, -20,  20,  1, 1,
+                -20, -20, -20, 0, 0,
+                20, -20, -20, 1, 0,
+                -20, -20, 20, 0, 1,
+                -20, -20, 20, 0, 1,
+                20, -20, -20, 1, 0,
+                20, -20, 20, 1, 1,
 
-                -20,  20, -20,  0, 0,
-                 20,  20, -20,  1, 0,
-                -20,  20,  20,  0, 1,
-                -20,  20,  20,  0, 1,
-                 20,  20, -20,  1, 0,
-                 20,  20,  20,  1, 1,
+                -20, 20, -20, 0, 0,
+                20, 20, -20, 1, 0,
+                -20, 20, 20, 0, 1,
+                -20, 20, 20, 0, 1,
+                20, 20, -20, 1, 0,
+                20, 20, 20, 1, 1,
 
-                -20, -20, -20,  0, 0,
-                 20, -20, -20,  1, 0,
-                -20,  20, -20,  0, 1,
-                -20,  20, -20,  0, 1,
-                 20, -20, -20,  1, 0,
-                 20,  20, -20,  1, 1,
+                -20, -20, -20, 0, 0,
+                20, -20, -20, 1, 0,
+                -20, 20, -20, 0, 1,
+                -20, 20, -20, 0, 1,
+                20, -20, -20, 1, 0,
+                20, 20, -20, 1, 1,
 
-                -20, -20,  20,  0, 0,
-                 20, -20,  20,  1, 0,
-                -20,  20,  20,  0, 1,
-                -20,  20,  20,  0, 1,
-                 20, -20,  20,  1, 0,
-                 20,  20,  20,  1, 1
+                -20, -20, 20, 0, 0,
+                20, -20, 20, 1, 0,
+                -20, 20, 20, 0, 1,
+                -20, 20, 20, 0, 1,
+                20, -20, 20, 1, 0,
+                20, 20, 20, 1, 1
             };
 
             // Enable position and texture coordinates vertex components
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
-            GL.VertexPointer(3, VertexPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
-            GL.TexCoordPointer(2, TexCoordPointerType.Float, 5 * sizeof(float), Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
+            GL.VertexPointer(3, VertexPointerType.Float, 5 * sizeof(float),
+                Marshal.UnsafeAddrOfPinnedArrayElement(cube, 0));
+            GL.TexCoordPointer(2, TexCoordPointerType.Float, 5 * sizeof(float),
+                Marshal.UnsafeAddrOfPinnedArrayElement(cube, 3));
 
             // Disable normal and color vertex components
             GL.DisableClientState(ArrayCap.NormalArray);
             GL.DisableClientState(ArrayCap.ColorArray);
 
-            Clock clock = new Clock();
+            var clock = new Clock();
 
             // Start game loop
             while (window.IsOpen)
@@ -155,8 +169,8 @@ namespace opengl
                 GL.Clear(ClearBufferMask.DepthBufferBit);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
-                float x =  Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F;
-                float y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F;
+                var x = Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F;
+                var y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F;
 
                 // Apply some transformations
                 GL.MatrixMode(MatrixMode.Modelview);
@@ -187,7 +201,7 @@ namespace opengl
         /// </summary>
         static void OnClosed(object sender, EventArgs e)
         {
-            RenderWindow window = (RenderWindow)sender;
+            var window = (RenderWindow) sender;
             window.Close();
         }
 
@@ -196,7 +210,7 @@ namespace opengl
         /// </summary>
         static void OnKeyPressed(object sender, KeyEventArgs e)
         {
-            RenderWindow window = (RenderWindow)sender;
+            var window = (RenderWindow) sender;
             if (e.Code == Keyboard.Key.Escape)
                 window.Close();
         }
@@ -206,7 +220,7 @@ namespace opengl
         /// </summary>
         static void OnResized(object sender, SizeEventArgs e)
         {
-            GL.Viewport(0, 0, (int)e.Width, (int)e.Height);
+            GL.Viewport(0, 0, (int) e.Width, (int) e.Height);
         }
     }
 }
