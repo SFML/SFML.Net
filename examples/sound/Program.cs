@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Threading;
-using SFML.Graphics;
-using SFML.System;
-using SFML.Window;
 using SFML.Audio;
 
-namespace shader
+namespace sound
 {
     static class Program
     {

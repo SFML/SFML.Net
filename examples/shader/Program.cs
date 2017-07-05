@@ -50,7 +50,7 @@ namespace shader
         }
 
         private string myName;
-        private static Font ourFont;
+        private static Font ourFont = null;
     }
 
     /// <summary>"Pixelate" fragment shader</summary>

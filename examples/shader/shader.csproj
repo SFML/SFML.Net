@@ -3,6 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <OutputPath>..\..\bin\shader\debug\x86\</OutputPath>
@@ -19,6 +20,7 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <OutputPath>..\..\bin\shader\release\x64\</OutputPath>
   </PropertyGroup>
+  
   <ItemGroup>
     <Folder Include="resources" />
   </ItemGroup>
