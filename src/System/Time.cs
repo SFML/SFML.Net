@@ -299,22 +299,22 @@ namespace SFML.System
         private long microseconds;
 
         #region Imports
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Time sfSeconds(float Amount);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Time sfMilliseconds(int Amount);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Time sfMicroseconds(long Amount);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl)]
         static extern float sfTime_asSeconds(Time time);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl)]
         static extern int sfTime_asMilliseconds(Time time);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl)]
         static extern long sfTime_asMicroseconds(Time time);
         #endregion
     }

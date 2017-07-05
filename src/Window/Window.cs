@@ -692,100 +692,100 @@ namespace SFML.Window
         public event EventHandler<SensorEventArgs> SensorChanged = null;
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfWindow_create(VideoMode Mode, string Title, Styles Style, ref ContextSettings Params);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfWindow_createUnicode(VideoMode Mode, IntPtr Title, Styles Style, ref ContextSettings Params);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfWindow_createFromHandle(IntPtr Handle, ref ContextSettings Params);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_destroy(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfWindow_isOpen(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_close(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfWindow_pollEvent(IntPtr CPointer, out Event Evt);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfWindow_waitEvent(IntPtr CPointer, out Event Evt);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_display(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern ContextSettings sfWindow_getSettings(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector2i sfWindow_getPosition(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setPosition(IntPtr CPointer, Vector2i position);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector2u sfWindow_getSize(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setSize(IntPtr CPointer, Vector2u size);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setTitle(IntPtr CPointer, string title);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setUnicodeTitle(IntPtr CPointer, IntPtr title);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         unsafe static extern void sfWindow_setIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setVisible(IntPtr CPointer, bool visible);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setMouseCursorVisible(IntPtr CPointer, bool Show);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setVerticalSyncEnabled(IntPtr CPointer, bool Enable);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setKeyRepeatEnabled(IntPtr CPointer, bool Enable);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfWindow_setActive(IntPtr CPointer, bool Active);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setFramerateLimit(IntPtr CPointer, uint Limit);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern uint sfWindow_getFrameTime(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_setJoystickThreshold(IntPtr CPointer, float Threshold);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern IntPtr sfWindow_getSystemHandle(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfWindow_requestFocus(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern bool sfWindow_hasFocus(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
         #endregion
     }

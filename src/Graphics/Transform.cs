@@ -300,31 +300,31 @@ namespace SFML.Graphics
         internal float m20, m21, m22;
 
         #region Imports
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Transform sfTransform_getInverse(ref Transform transform);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern Vector2f sfTransform_transformPoint(ref Transform transform, Vector2f point);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern FloatRect sfTransform_transformRect(ref Transform transform, FloatRect rectangle);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfTransform_combine(ref Transform transform, ref Transform other);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfTransform_translate(ref Transform transform, float x, float y);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfTransform_rotate(ref Transform transform, float angle);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfTransform_rotateWithCenter(ref Transform transform, float angle, float centerX, float centerY);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfTransform_scale(ref Transform transform, float scaleX, float scaleY);
 
-        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport("csfml-graphics-2", CallingConvention = CallingConvention.Cdecl)]
         static extern void sfTransform_scaleWithCenter(ref Transform transform, float scaleX, float scaleY, float centerX, float centerY);
         #endregion
     }
