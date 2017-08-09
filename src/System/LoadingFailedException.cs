@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace SFML
+namespace SFML.System
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -69,16 +69,16 @@ namespace SFML
         {
         }
 
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Initialize an instance of the exception with serialized data
-        /// </summary>
-        /// <param name="info">Serialized data</param>
-        /// <param name="context">Contextual informations</param>
-        ////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////		
+        /// <summary>		
+        /// Initialize an instance of the exception with serialized data		
+        /// </summary>		
+        /// <param name="info">Serialized data</param>		
+        /// <param name="context">Contextual informations</param>		
+        ////////////////////////////////////////////////////////////		
         public LoadingFailedException(SerializationInfo info, StreamingContext context) :
-            base(info, context)
-        {
+            base(info, context)		
+        {		
         }
     }
 }

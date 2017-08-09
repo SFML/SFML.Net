@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.IO;
+using SFML.System;
 using SFML.Window;
 
 namespace SFML.Graphics

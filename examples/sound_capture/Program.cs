@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Threading;
-using SFML;
 using SFML.Audio;
 
 namespace sound_capture
@@ -21,14 +20,14 @@ namespace sound_capture
 
             // Choose the sample rate
             Console.WriteLine("Please choose the sample rate for sound capture (44100 is CD quality) : ");
-            uint sampleRate = uint.Parse(Console.ReadLine());
+            var sampleRate = uint.Parse(Console.ReadLine());
 
             // Wait for user input...
             Console.WriteLine("Press enter to start recording audio");
             Console.ReadLine();
 
             // Here we'll use an integrated custom recorder, which saves the captured data into a SoundBuffer
-            SoundBufferRecorder recorder = new SoundBufferRecorder();
+            var recorder = new SoundBufferRecorder();
 
             // Audio capture is done in a separate thread, so we can block the main thread while it is capturing
             recorder.Start(sampleRate);
@@ -37,7 +36,7 @@ namespace sound_capture
             recorder.Stop();
 
             // Get the buffer containing the captured data
-            SoundBuffer buffer = recorder.SoundBuffer;
+            var buffer = recorder.SoundBuffer;
 
             // Display captured sound informations
             Console.WriteLine("Sound information :");
@@ -47,13 +46,13 @@ namespace sound_capture
 
             // Choose what to do with the recorded sound data
             Console.WriteLine("What do you want to do with captured sound (p = play, s = save) ? ");
-            char choice = char.Parse(Console.ReadLine());
+            var choice = char.Parse(Console.ReadLine());
 
             if (choice == 's')
             {
                 // Choose the filename
                 Console.WriteLine("Choose the file to create : ");
-                string filename = Console.ReadLine();
+                var filename = Console.ReadLine();
 
                 // Save the buffer
                 buffer.SaveToFile(filename);
@@ -61,7 +60,7 @@ namespace sound_capture
             else
             {
                 // Create a sound instance and play it
-                Sound sound = new Sound(buffer);
+                var sound = new Sound(buffer);
                 sound.Play();
 
                 // Wait until finished
