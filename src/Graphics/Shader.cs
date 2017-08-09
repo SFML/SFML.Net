@@ -81,8 +81,8 @@ namespace SFML.Graphics
             // using these funky conditional operators because StreamAdaptor doesn't have some method for dealing with
             // its constructor argument being null
             using (StreamAdaptor vertexAdaptor = vertexShaderStream != null ? new StreamAdaptor(vertexShaderStream) : null,
-                                geometryAdaptor = geometryShaderStream != null ? new StreamAdaptor(geometryShaderStream) : null,
-                                fragmentAdaptor = fragmentShaderStream != null ? new StreamAdaptor(fragmentShaderStream) : null)
+                geometryAdaptor = geometryShaderStream != null ? new StreamAdaptor(geometryShaderStream) : null,
+                fragmentAdaptor = fragmentShaderStream != null ? new StreamAdaptor(fragmentShaderStream) : null)
             {
                 CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, geometryAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr);
             }
@@ -723,7 +723,7 @@ namespace SFML.Graphics
             base(ptr)
         {
         }
-        
+
         // Keeps references to used Textures for GC prevention during use
         private Dictionary<string, Texture> myTextures = new Dictionary<string, Texture>();
 

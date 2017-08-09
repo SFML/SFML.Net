@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -13,10 +13,7 @@ namespace shader
             myName = name;
         }
 
-        public string Name
-        {
-            get { return myName; }
-        }
+        public string Name => myName;
 
         public void Update(float time, float x, float y)
         {
@@ -32,7 +29,7 @@ namespace shader
             }
             else
             {
-                Text error = new Text("Shader not\nsupported", GetFont());
+                var error = new Text("Shader not\nsupported", GetFont());
                 error.Position = new Vector2f(320, 200);
                 error.CharacterSize = 36;
                 target.Draw(error, states);
@@ -82,9 +79,9 @@ namespace shader
             target.Draw(mySprite, states);
         }
 
-        private Texture myTexture = null;
-        private Sprite mySprite = null;
-        private Shader myShader = null;
+        private Texture myTexture;
+        private Sprite mySprite;
+        private Shader myShader;
     }
 
     /// <summary>"Wave" vertex shader + "blur" fragment shader</summary>
@@ -134,8 +131,8 @@ namespace shader
             target.Draw(myText, states);
         }
 
-        private Text myText = null;
-        private Shader myShader = null;
+        private Text myText;
+        private Shader myShader;
     }
 
     /// <summary>"Storm" vertex shader + "blink" fragment shader</summary>
@@ -143,17 +140,17 @@ namespace shader
     {
         public StormBlink() : base("storm + blink")
         {
-            Random random = new Random();
+            var random = new Random();
 
             // Create the points
             myPoints = new VertexArray(PrimitiveType.Points);
-            for (int i = 0; i < 40000; ++i)
+            for (var i = 0; i < 40000; ++i)
             {
-                float x = (float)random.Next(0, 800);
-                float y = (float)random.Next(0, 600);
-                byte r = (byte)random.Next(0, 255);
-                byte g = (byte)random.Next(0, 255);
-                byte b = (byte)random.Next(0, 255);
+                var x = (float)random.Next(0, 800);
+                var y = (float)random.Next(0, 600);
+                var r = (byte)random.Next(0, 255);
+                var g = (byte)random.Next(0, 255);
+                var b = (byte)random.Next(0, 255);
                 myPoints.Append(new Vertex(new Vector2f(x, y), new Color(r, g, b)));
             }
 
@@ -163,7 +160,7 @@ namespace shader
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            float radius = 200 + (float)Math.Cos(time) * 150;
+            var radius = 200 + (float)Math.Cos(time) * 150;
             myShader.SetUniform("storm_position", new Vector2f(x * 800, y * 600));
             myShader.SetUniform("storm_inner_radius", radius / 3);
             myShader.SetUniform("storm_total_radius", radius);
@@ -177,8 +174,8 @@ namespace shader
             target.Draw(myPoints, states);
         }
 
-        private VertexArray myPoints = null;
-        private Shader myShader = null;
+        private VertexArray myPoints;
+        private Shader myShader;
     }
 
     /// <summary>"Edge" post-effect fragment shader</summary>
@@ -202,7 +199,7 @@ namespace shader
 
             // Load the moving entities
             myEntities = new Sprite[6];
-            for (int i = 0; i < myEntities.Length; ++i)
+            for (var i = 0; i < myEntities.Length; ++i)
             {
                 myEntities[i] = new Sprite(myEntityTexture, new IntRect(96 * i, 0, 96, 96));
             }
@@ -217,17 +214,17 @@ namespace shader
             myShader.SetUniform("edge_threshold", 1 - (x + y) / 2);
 
             // Update the position of the moving entities
-            for (int i = 0; i < myEntities.Length; ++i)
+            for (var i = 0; i < myEntities.Length; ++i)
             {
-                float posX = (float)Math.Cos(0.25F * (time * i + (myEntities.Length - i))) * 300 + 350;
-                float posY = (float)Math.Sin(0.25F * (time * (myEntities.Length - i) + i)) * 200 + 250;
+                var posX = (float)Math.Cos(0.25F * (time * i + (myEntities.Length - i))) * 300 + 350;
+                var posY = (float)Math.Sin(0.25F * (time * (myEntities.Length - i) + i)) * 200 + 250;
                 myEntities[i].Position = new Vector2f(posX, posY);
             }
 
             // Render the updated scene to the off-screen surface
             mySurface.Clear(Color.White);
             mySurface.Draw(myBackgroundSprite);
-            foreach (Sprite entity in myEntities)
+            foreach (var entity in myEntities)
                 mySurface.Draw(entity);
             mySurface.Display();
         }
@@ -239,12 +236,12 @@ namespace shader
             target.Draw(new Sprite(mySurface.Texture), states);
         }
 
-        private RenderTexture mySurface = null;
-        private Texture myBackgroundTexture = null;
-        private Texture myEntityTexture = null;
-        private Sprite myBackgroundSprite = null;
-        Sprite[] myEntities = null;
-        private Shader myShader = null;
+        private RenderTexture mySurface;
+        private Texture myBackgroundTexture;
+        private Texture myEntityTexture;
+        private Sprite myBackgroundSprite;
+        Sprite[] myEntities;
+        private Shader myShader;
     }
 
     static class Program
@@ -259,15 +256,15 @@ namespace shader
         static void Main()
         {
             // Create the main window
-            RenderWindow window = new RenderWindow(new VideoMode(800, 600), "SFML.Net Shader");
+            var window = new RenderWindow(new VideoMode(800, 600), "SFML.Net Shader");
             window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
-            window.Closed += new EventHandler(OnClosed);
-            window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
+            window.Closed += OnClosed;
+            window.KeyPressed += OnKeyPressed;
 
             // Load the application font and pass it to the Effect class
-            Font font = new Font("resources/sansation.ttf");
+            var font = new Font("resources/sansation.ttf");
             Effect.SetFont(font);
 
             // Create the effects
@@ -281,8 +278,8 @@ namespace shader
             current = 0;
 
             // Create the messages background
-            Texture textBackgroundTexture = new Texture("resources/text-background.png");
-            Sprite textBackground = new Sprite(textBackgroundTexture);
+            var textBackgroundTexture = new Texture("resources/text-background.png");
+            var textBackground = new Sprite(textBackgroundTexture);
             textBackground.Position = new Vector2f(0, 520);
             textBackground.Color = new Color(255, 255, 255, 200);
 
@@ -292,20 +289,20 @@ namespace shader
             description.FillColor = new Color(80, 80, 80);
 
             // Create the instructions text
-            Text instructions = new Text("Press left and right arrows to change the current shader", font, 20);
+            var instructions = new Text("Press left and right arrows to change the current shader", font, 20);
             instructions.Position = new Vector2f(280, 555);
             instructions.FillColor = new Color(80, 80, 80);
 
             // Start the game loop
-            Clock clock = new Clock();
+            var clock = new Clock();
             while (window.IsOpen)
             {
                 // Process events
                 window.DispatchEvents();
 
                 // Update the current example
-                float x = (float)Mouse.GetPosition(window).X / window.Size.X;
-                float y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
+                var x = (float)Mouse.GetPosition(window).X / window.Size.X;
+                var y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
                 effects[current].Update(clock.ElapsedTime.AsSeconds(), x, y);
 
                 // Clear the window
@@ -329,7 +326,7 @@ namespace shader
         /// </summary>
         static void OnClosed(object sender, EventArgs e)
         {
-            RenderWindow window = (RenderWindow)sender;
+            var window = (RenderWindow)sender;
             window.Close();
         }
 
@@ -338,7 +335,7 @@ namespace shader
         /// </summary>
         static void OnKeyPressed(object sender, KeyEventArgs e)
         {
-            RenderWindow window = (RenderWindow)sender;
+            var window = (RenderWindow)sender;
 
             // Escape key : exit
             if (e.Code == Keyboard.Key.Escape)
