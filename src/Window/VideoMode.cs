@@ -1,3 +1,4 @@
+using SFML.System;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -107,13 +108,13 @@ namespace SFML.Window
         public uint BitsPerPixel;
         
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern VideoMode sfVideoMode_getDesktopMode();
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out uint Count);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfVideoMode_isValid(VideoMode Mode);
         #endregion
     }

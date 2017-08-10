@@ -24,4 +24,14 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <OutputPath>..\..\lib\release\x64\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
+    <DefineConstants>__WINDOWS__, $(OS)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' == 'Unix' ">
+    <DefineConstants>__LINUX__, $(OS)</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(OS)' == 'OSX' ">
+    <DefineConstants>__OSX__, $(OS)</DefineConstants>
+  </PropertyGroup>
+  
 </Project>
