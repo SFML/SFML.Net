@@ -24,13 +24,13 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <OutputPath>..\..\lib\release\x64\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="($(RuntimeIdentifier.Contains('win')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('Windows_NT')) And $(RuntimeIdentifier.Equals('')) ) ">
+  <PropertyGroup Condition="($(RuntimeIdentifier.StartsWith('win')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('Windows_NT')) And $(RuntimeIdentifier.Equals('')) ) ">
     <DefineConstants>_WINDOWS_, $(RuntimeIdentifier)</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="($(RuntimeIdentifier.Contains('osx')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('OSX')) And $(RuntimeIdentifier.Equals('')) ) ">
+  <PropertyGroup Condition="($(RuntimeIdentifier.StartsWith('osx')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('OSX')) And $(RuntimeIdentifier.Equals('')) ) ">
     <DefineConstants>_OSX_, $(RuntimeIdentifier)</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" !(($(RuntimeIdentifier.Contains('win')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('Windows_NT')) And $(RuntimeIdentifier.Equals('')) )) And !(($(RuntimeIdentifier.Contains('osx')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('OSX')) And $(RuntimeIdentifier.Equals('')) ))">
+  <PropertyGroup Condition=" !(($(RuntimeIdentifier.StartsWith('win')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('Windows_NT')) And $(RuntimeIdentifier.Equals('')) )) And !(($(RuntimeIdentifier.StartsWith('osx')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('OSX')) And $(RuntimeIdentifier.Equals('')) ))">
     <DefineConstants>_LINUX_, $(RuntimeIdentifier)</DefineConstants>
   </PropertyGroup>
  
