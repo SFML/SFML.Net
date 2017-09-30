@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.IO;
 
-namespace SFML.Window
+namespace SFML.System
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
