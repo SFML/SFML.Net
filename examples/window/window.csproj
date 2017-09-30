@@ -24,9 +24,4 @@
     <ProjectReference Include="..\..\src\System\sfml-system.csproj" />
     <ProjectReference Include="..\..\src\Window\sfml-window.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="OpenTK.NETCore">
-      <Version>1.1.2571.6431</Version>
-    </PackageReference>
-  </ItemGroup>
 </Project>
