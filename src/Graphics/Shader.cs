@@ -81,10 +81,12 @@ namespace SFML.Graphics
             // using these funky conditional operators because StreamAdaptor doesn't have some method for dealing with
             // its constructor argument being null
             using (StreamAdaptor vertexAdaptor = vertexShaderStream != null ? new StreamAdaptor(vertexShaderStream) : null,
-                                geometryAdaptor = geometryShaderStream != null ? new StreamAdaptor(geometryShaderStream) : null,
-                                fragmentAdaptor = fragmentShaderStream != null ? new StreamAdaptor(fragmentShaderStream) : null)
+                                 geometryAdaptor = geometryShaderStream != null ? new StreamAdaptor(geometryShaderStream) : null,
+                                 fragmentAdaptor = fragmentShaderStream != null ? new StreamAdaptor(fragmentShaderStream) : null)
             {
-                CPointer = sfShader_createFromStream(vertexAdaptor.InputStreamPtr, geometryAdaptor.InputStreamPtr, fragmentAdaptor.InputStreamPtr);
+                CPointer = sfShader_createFromStream(vertexAdaptor != null ? vertexAdaptor.InputStreamPtr : IntPtr.Zero,
+                                                     geometryAdaptor != null ? geometryAdaptor.InputStreamPtr : IntPtr.Zero,
+	                                                 fragmentAdaptor != null ? fragmentAdaptor.InputStreamPtr : IntPtr.Zero);
             }
 
             if (CPointer == IntPtr.Zero)
