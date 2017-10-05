@@ -86,7 +86,7 @@ namespace SFML.Graphics
             {
                 CPointer = sfShader_createFromStream(vertexAdaptor != null ? vertexAdaptor.InputStreamPtr : IntPtr.Zero,
                                                      geometryAdaptor != null ? geometryAdaptor.InputStreamPtr : IntPtr.Zero,
-	                                                 fragmentAdaptor != null ? fragmentAdaptor.InputStreamPtr : IntPtr.Zero);
+                                                     fragmentAdaptor != null ? fragmentAdaptor.InputStreamPtr : IntPtr.Zero);
             }
 
             if (CPointer == IntPtr.Zero)
