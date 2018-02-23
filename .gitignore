@@ -260,6 +260,8 @@ paket-files/
 __pycache__/
 *.pyc
 
+.vscode/
+/bin
 
 # ignore stuff from SFML.Net
 
