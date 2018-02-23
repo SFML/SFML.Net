@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-graphics_core", "..\..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-audio_core", "..\..\src\Audio\sfml-audio_core.csproj", "{EF63EC62-6649-4660-ABDF-57147AE4E434}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "window_core", "..\..\examples\window\window_core.csproj", "{D865DE9E-113D-441E-8232-0A01E1BC0A87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,18 @@ Global
 		{EF63EC62-6649-4660-ABDF-57147AE4E434}.Release|x64.Build.0 = Release|Any CPU
 		{EF63EC62-6649-4660-ABDF-57147AE4E434}.Release|x86.ActiveCfg = Release|Any CPU
 		{EF63EC62-6649-4660-ABDF-57147AE4E434}.Release|x86.Build.0 = Release|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Debug|x64.Build.0 = Debug|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Debug|x86.Build.0 = Debug|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Release|x64.ActiveCfg = Release|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Release|x64.Build.0 = Release|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Release|x86.ActiveCfg = Release|Any CPU
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +95,7 @@ Global
 		{31A94BF9-8341-4B24-BB40-5F4C3EFF0C1E} = {4E3833B5-0F25-4F77-9447-148272A98933}
 		{65BBF273-96C5-4070-8C52-B8A323D24378} = {4E3833B5-0F25-4F77-9447-148272A98933}
 		{EF63EC62-6649-4660-ABDF-57147AE4E434} = {4E3833B5-0F25-4F77-9447-148272A98933}
+		{D865DE9E-113D-441E-8232-0A01E1BC0A87} = {C854187C-65DA-45CA-B774-64B27F6C9399}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DA97921-3E29-4F21-B56B-6F46339B1877}
