@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
+		<RootNamespace>sound</RootNamespace>
+		<AssemblyName>sound</AssemblyName>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Audio\sfml-audio_core.csproj" />
+	  <ProjectReference Include="..\..\src\Graphics\sfml-graphics_core.csproj" />
+	  <ProjectReference Include="..\..\src\System\sfml-system_core.csproj" />
+	  <ProjectReference Include="..\..\src\Window\sfml-window_core.csproj" />
+	</ItemGroup>
+
+</Project>
