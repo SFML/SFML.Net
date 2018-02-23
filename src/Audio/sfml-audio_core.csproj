@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>sfml-audio</RootNamespace>
+    <AssemblyName>sfml-audio</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Graphics\sfml-graphics_core.csproj" />
+    <ProjectReference Include="..\System\sfml-system_core.csproj" />
+    <ProjectReference Include="..\Window\sfml-window_core.csproj" />
+  </ItemGroup>
+
+</Project>
