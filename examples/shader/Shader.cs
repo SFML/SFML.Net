@@ -32,10 +32,11 @@ namespace shader
             }
             else
             {
-                Text error = new Text("Shader not\nsupported", GetFont());
-                error.Position = new Vector2f(320, 200);
-                error.CharacterSize = 36;
-                target.Draw(error, states);
+				Text error = new Text( "Shader not\nsupported", GetFont() ) {
+					Position = new Vector2f( 320, 200 ),
+					CharacterSize = 36
+				};
+				target.Draw(error, states);
             }
         }
 
@@ -77,14 +78,15 @@ namespace shader
 
         protected override void OnDraw(RenderTarget target, RenderStates states)
         {
-            states = new RenderStates(states);
-            states.Shader = myShader;
-            target.Draw(mySprite, states);
+			states = new RenderStates( states ) {
+				Shader = myShader
+			};
+			target.Draw(mySprite, states);
         }
 
-        private Texture myTexture = null;
-        private Sprite mySprite = null;
-        private Shader myShader = null;
+        private Texture myTexture;
+        private Sprite mySprite;
+        private Shader myShader;
     }
 
     /// <summary>"Wave" vertex shader + "blur" fragment shader</summary>
@@ -92,32 +94,33 @@ namespace shader
     {
         public WaveBlur() : base("wave + blur")
         {
-            // Create the text
-            myText = new Text();
-            myText.DisplayedString = "Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
-                                     "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
-                                     "Praesent cursus ultrices justo, ut feugiat ante vehicula quis.\n" +
-                                     "Donec fringilla scelerisque mauris et viverra.\n" +
-                                     "Maecenas adipiscing ornare scelerisque. Nullam at libero elit.\n" +
-                                     "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
-                                     "Nullam leo urna, tincidunt id semper eget, ultricies sed mi.\n" +
-                                     "Morbi mauris massa, commodo id dignissim vel, lobortis et elit.\n" +
-                                     "Fusce vel libero sed neque scelerisque venenatis.\n" +
-                                     "Integer mattis tincidunt quam vitae iaculis.\n" +
-                                     "Vivamus fringilla sem non velit venenatis fermentum.\n" +
-                                     "Vivamus varius tincidunt nisi id vehicula.\n" +
-                                     "Integer ullamcorper, enim vitae euismod rutrum, massa nisl semper ipsum,\n" +
-                                     "vestibulum sodales sem ante in massa.\n" +
-                                     "Vestibulum in augue non felis convallis viverra.\n" +
-                                     "Mauris ultricies dolor sed massa convallis sed aliquet augue fringilla.\n" +
-                                     "Duis erat eros, porta in accumsan in, blandit quis sem.\n" +
-                                     "In hac habitasse platea dictumst. Etiam fringilla est id odio dapibus sit amet semper dui laoreet.\n";
-            myText.Font = GetFont();
-            myText.CharacterSize = 22;
-            myText.Position = new Vector2f(30, 20);
+			// Create the text
+			myText = new Text {
+				DisplayedString = "Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
+									 "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
+									 "Praesent cursus ultrices justo, ut feugiat ante vehicula quis.\n" +
+									 "Donec fringilla scelerisque mauris et viverra.\n" +
+									 "Maecenas adipiscing ornare scelerisque. Nullam at libero elit.\n" +
+									 "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n" +
+									 "Nullam leo urna, tincidunt id semper eget, ultricies sed mi.\n" +
+									 "Morbi mauris massa, commodo id dignissim vel, lobortis et elit.\n" +
+									 "Fusce vel libero sed neque scelerisque venenatis.\n" +
+									 "Integer mattis tincidunt quam vitae iaculis.\n" +
+									 "Vivamus fringilla sem non velit venenatis fermentum.\n" +
+									 "Vivamus varius tincidunt nisi id vehicula.\n" +
+									 "Integer ullamcorper, enim vitae euismod rutrum, massa nisl semper ipsum,\n" +
+									 "vestibulum sodales sem ante in massa.\n" +
+									 "Vestibulum in augue non felis convallis viverra.\n" +
+									 "Mauris ultricies dolor sed massa convallis sed aliquet augue fringilla.\n" +
+									 "Duis erat eros, porta in accumsan in, blandit quis sem.\n" +
+									 "In hac habitasse platea dictumst. Etiam fringilla est id odio dapibus sit amet semper dui laoreet.\n",
+				Font = GetFont(),
+				CharacterSize = 22,
+				Position = new Vector2f( 30, 20 )
+			};
 
-            // Load the shader
-            myShader = new Shader("resources/wave.vert", null, "resources/blur.frag");
+			// Load the shader
+			myShader = new Shader("resources/wave.vert", null, "resources/blur.frag");
         }
 
         protected override void OnUpdate(float time, float x, float y)
@@ -129,13 +132,14 @@ namespace shader
 
         protected override void OnDraw(RenderTarget target, RenderStates states)
         {
-            states = new RenderStates(states);
-            states.Shader = myShader;
-            target.Draw(myText, states);
+			states = new RenderStates( states ) {
+				Shader = myShader
+			};
+			target.Draw(myText, states);
         }
 
-        private Text myText = null;
-        private Shader myShader = null;
+        private Text myText;
+        private Shader myShader;
     }
 
     /// <summary>"Storm" vertex shader + "blink" fragment shader</summary>
@@ -177,8 +181,8 @@ namespace shader
             target.Draw(myPoints, states);
         }
 
-        private VertexArray myPoints = null;
-        private Shader myShader = null;
+        private VertexArray myPoints;
+        private Shader myShader;
     }
 
     /// <summary>"Edge" post-effect fragment shader</summary>
@@ -186,18 +190,21 @@ namespace shader
     {
         public Edge() : base("edge post-effect")
         {
-            // Create the off-screen surface
-            mySurface = new RenderTexture(800, 600);
-            mySurface.Smooth = true;
+			// Create the off-screen surface
+			mySurface = new RenderTexture( 800, 600 ) {
+				Smooth = true
+			};
 
-            // Load the textures
-            myBackgroundTexture = new Texture("resources/sfml.png");
-            myBackgroundTexture.Smooth = true;
-            myEntityTexture = new Texture("resources/devices.png");
-            myEntityTexture.Smooth = true;
+			// Load the textures
+			myBackgroundTexture = new Texture( "resources/sfml.png" ) {
+				Smooth = true
+			};
+			myEntityTexture = new Texture( "resources/devices.png" ) {
+				Smooth = true
+			};
 
-            // Initialize the background sprite
-            myBackgroundSprite = new Sprite(myBackgroundTexture);
+			// Initialize the background sprite
+			myBackgroundSprite = new Sprite(myBackgroundTexture);
             myBackgroundSprite.Position = new Vector2f(135, 100);
 
             // Load the moving entities
@@ -234,17 +241,18 @@ namespace shader
 
         protected override void OnDraw(RenderTarget target, RenderStates states)
         {
-            states = new RenderStates(states);
-            states.Shader = myShader;
-            target.Draw(new Sprite(mySurface.Texture), states);
+			states = new RenderStates( states ) {
+				Shader = myShader
+			};
+			target.Draw(new Sprite(mySurface.Texture), states);
         }
 
-        private RenderTexture mySurface = null;
-        private Texture myBackgroundTexture = null;
-        private Texture myEntityTexture = null;
-        private Sprite myBackgroundSprite = null;
-        Sprite[] myEntities = null;
-        private Shader myShader = null;
+        private RenderTexture mySurface;
+        private Texture myBackgroundTexture;
+        private Texture myEntityTexture;
+        private Sprite myBackgroundSprite;
+        Sprite[] myEntities;
+        private Shader myShader;
     }
 
     static class Program
@@ -263,11 +271,11 @@ namespace shader
             window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
-            window.Closed += new EventHandler(OnClosed);
-            window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
+            window.Closed += OnClosed;
+            window.KeyPressed += OnKeyPressed;
 
             // Load the application font and pass it to the Effect class
-            Font font = new Font("resources/sansation.ttf");
+            var font = new Font("resources/sansation.ttf");
             Effect.SetFont(font);
 
             // Create the effects
@@ -281,31 +289,34 @@ namespace shader
             current = 0;
 
             // Create the messages background
-            Texture textBackgroundTexture = new Texture("resources/text-background.png");
-            Sprite textBackground = new Sprite(textBackgroundTexture);
-            textBackground.Position = new Vector2f(0, 520);
-            textBackground.Color = new Color(255, 255, 255, 200);
+            var textBackgroundTexture = new Texture("resources/text-background.png");
+			var textBackground = new Sprite( textBackgroundTexture ) {
+				Position = new Vector2f( 0, 520 ),
+				Color = new Color( 255, 255, 255, 200 )
+			};
 
-            // Create the description text
-            description = new Text("Current effect: " + effects[current].Name, font, 20);
-            description.Position = new Vector2f(10, 530);
-            description.FillColor = new Color(80, 80, 80);
+			// Create the description text
+			description = new Text( "Current effect: " + effects[current].Name, font, 20 ) {
+				Position = new Vector2f( 10, 530 ),
+				FillColor = new Color( 80, 80, 80 )
+			};
 
-            // Create the instructions text
-            Text instructions = new Text("Press left and right arrows to change the current shader", font, 20);
-            instructions.Position = new Vector2f(280, 555);
-            instructions.FillColor = new Color(80, 80, 80);
+			// Create the instructions text
+			var instructions = new Text( "Press left and right arrows to change the current shader", font, 20 ) {
+				Position = new Vector2f( 280, 555 ),
+				FillColor = new Color( 80, 80, 80 )
+			};
 
-            // Start the game loop
-            Clock clock = new Clock();
+			// Start the game loop
+			var clock = new Clock();
             while (window.IsOpen)
             {
                 // Process events
                 window.DispatchEvents();
 
                 // Update the current example
-                float x = (float)Mouse.GetPosition(window).X / window.Size.X;
-                float y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
+                var x = (float)Mouse.GetPosition(window).X / window.Size.X;
+                var y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
                 effects[current].Update(clock.ElapsedTime.AsSeconds(), x, y);
 
                 // Clear the window
@@ -338,7 +349,7 @@ namespace shader
         /// </summary>
         static void OnKeyPressed(object sender, KeyEventArgs e)
         {
-            RenderWindow window = (RenderWindow)sender;
+            var window = (RenderWindow)sender;
 
             // Escape key : exit
             if (e.Code == Keyboard.Key.Escape)
@@ -353,7 +364,7 @@ namespace shader
                     current = effects.Length - 1;
                 else
                     current--;
-                description.DisplayedString = "Current effect: " + effects[current].Name;
+                description.DisplayedString = $"Current effect: {effects[current].Name}";
             }
 
             // Right arrow key: next shader
@@ -363,7 +374,7 @@ namespace shader
                     current = 0;
                 else
                     current++;
-                description.DisplayedString = "Current effect: " + effects[current].Name;
+                description.DisplayedString = $"Current effect: {effects[current].Name}";
             }
         }
     }

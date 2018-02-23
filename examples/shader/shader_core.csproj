@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
+		<RootNamespace>shader</RootNamespace>
+		<AssemblyName>shader</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Graphics\sfml-graphics_core.csproj" />
+	  <ProjectReference Include="..\..\src\System\sfml-system_core.csproj" />
+	  <ProjectReference Include="..\..\src\Window\sfml-window_core.csproj" />
+	</ItemGroup>
+
+</Project>

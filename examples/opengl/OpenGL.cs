@@ -17,7 +17,7 @@ namespace opengl
         static void Main()
         {
             // Request a 24-bits depth buffer when creating the window
-            ContextSettings contextSettings = new ContextSettings();
+            var contextSettings = new ContextSettings();
             contextSettings.DepthBits = 24;
 
             // Create the main window
@@ -34,12 +34,12 @@ namespace opengl
             window.Resized    += new EventHandler<SizeEventArgs>(OnResized);
 
             // Create a sprite for the background
-            Sprite background = new Sprite(new Texture("resources/background.jpg"));
+            var background = new Sprite(new Texture("resources/background.jpg"));
 
             // Create a text to display on top of the OpenGL object
-            Text text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
+            var text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
             text.Position = new Vector2f(250, 450);
-            text.FillColor = new Color(255, 255, 255, 170);
+            text.FillColor = new SFML.Graphics.Color( 255, 255, 255, 170);
 
             // Make the window the active target for OpenGL calls
             window.SetActive();
@@ -48,7 +48,7 @@ namespace opengl
             // We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
             // but here we want more control on it (generate mipmaps, ...) so we create a new one
             int texture = 0;
-            using (Image image = new Image("resources/texture.jpg"))
+            using (var image = new SFML.Graphics.Image( "resources/texture.jpg"))
             {
                 GL.GenTextures(1, out texture);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
@@ -135,7 +135,7 @@ namespace opengl
             GL.DisableClientState(ArrayCap.NormalArray);
             GL.DisableClientState(ArrayCap.ColorArray);
 
-            Clock clock = new Clock();
+            var clock = new Clock();
 
             // Start game loop
             while (window.IsOpen)
