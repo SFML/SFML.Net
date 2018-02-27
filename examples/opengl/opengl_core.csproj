@@ -5,6 +5,7 @@
 		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<RootNamespace>opengl</RootNamespace>
 		<AssemblyName>opengl</AssemblyName>
+		<Configurations>Debug;Release;_WINDOWS_;_LINUX_;_OSX_</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>

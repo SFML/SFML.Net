@@ -1,3 +1,4 @@
+using SFML.System;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -251,10 +252,10 @@ namespace SFML.Window
         }
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfKeyboard_isKeyPressed(Key Key);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfKeyboard_setVirtualKeyboardVisible(bool visible);
         #endregion
     }

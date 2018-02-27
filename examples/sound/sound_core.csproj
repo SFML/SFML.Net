@@ -5,14 +5,14 @@
 		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<RootNamespace>sound</RootNamespace>
 		<AssemblyName>sound</AssemblyName>
-
+		<Configurations>Debug;Release;_WINDOWS_;_LINUX_;_OSX_</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Audio\sfml-audio_core.csproj" />
-	  <ProjectReference Include="..\..\src\Graphics\sfml-graphics_core.csproj" />
-	  <ProjectReference Include="..\..\src\System\sfml-system_core.csproj" />
-	  <ProjectReference Include="..\..\src\Window\sfml-window_core.csproj" />
+		<ProjectReference Include="..\..\src\Audio\sfml-audio_core.csproj" />
+		<ProjectReference Include="..\..\src\Graphics\sfml-graphics_core.csproj" />
+		<ProjectReference Include="..\..\src\System\sfml-system_core.csproj" />
+		<ProjectReference Include="..\..\src\Window\sfml-window_core.csproj" />
 	</ItemGroup>
 
 </Project>

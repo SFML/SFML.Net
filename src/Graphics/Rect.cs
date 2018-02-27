@@ -122,41 +122,31 @@ namespace SFML.Graphics
             }
         }
 
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Provide a string describing the object
-        /// </summary>
-        /// <returns>String description of the object</returns>
-        ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[IntRect]" +
-                   " Left(" + Left + ")" +
-                   " Top(" + Top + ")" +
-                   " Width(" + Width + ")" +
-                   " Height(" + Height + ")";
-        }
+		////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Provide a string describing the object
+		/// </summary>
+		/// <returns>String description of the object</returns>
+		////////////////////////////////////////////////////////////
+		public override string ToString() => $"[IntRect] Left({Left}) Top({Top}) Width({Width}) Height({Height})";
 
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Compare rectangle and object and checks if they are equal
-        /// </summary>
-        /// <param name="obj">Object to check</param>
-        /// <returns>Object and rectangle are equal</returns>
-        ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj)
-        {
-            return (obj is IntRect) && Equals((IntRect)obj);
-        }
+		////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Compare rectangle and object and checks if they are equal
+		/// </summary>
+		/// <param name="obj">Object to check</param>
+		/// <returns>Object and rectangle are equal</returns>
+		////////////////////////////////////////////////////////////
+		public override bool Equals( object obj ) => ( obj is IntRect ) && Equals( (IntRect) obj );
 
-        ///////////////////////////////////////////////////////////
-        /// <summary>
-        /// Compare two rectangles and checks if they are equal
-        /// </summary>
-        /// <param name="other">Rectangle to check</param>
-        /// <returns>Rectangles are equal</returns>
-        ////////////////////////////////////////////////////////////
-        public bool Equals(IntRect other)
+		///////////////////////////////////////////////////////////
+		/// <summary>
+		/// Compare two rectangles and checks if they are equal
+		/// </summary>
+		/// <param name="other">Rectangle to check</param>
+		/// <returns>Rectangles are equal</returns>
+		////////////////////////////////////////////////////////////
+		public bool Equals(IntRect other)
         {
             return (Left == other.Left) &&
                    (Top == other.Top) &&
@@ -191,27 +181,24 @@ namespace SFML.Graphics
             return r1.Equals(r2);
         }
 
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Operator != overload ; check rect inequality
-        /// </summary>
-        /// <param name="r1">First rect</param>
-        /// <param name="r2">Second rect</param>
-        /// <returns>r1 != r2</returns>
-        ////////////////////////////////////////////////////////////
-        public static bool operator !=(IntRect r1, IntRect r2)
-        {
-            return !r1.Equals(r2);
-        }
+		////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Operator != overload ; check rect inequality
+		/// </summary>
+		/// <param name="r1">First rect</param>
+		/// <param name="r2">Second rect</param>
+		/// <returns>r1 != r2</returns>
+		////////////////////////////////////////////////////////////
+		public static bool operator !=( IntRect r1, IntRect r2 ) => !r1.Equals( r2 );
 
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Explicit casting to another rectangle type
-        /// </summary>
-        /// <param name="r">Rectangle being casted</param>
-        /// <returns>Casting result</returns>
-        ////////////////////////////////////////////////////////////
-        public static explicit operator FloatRect(IntRect r)
+		////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Explicit casting to another rectangle type
+		/// </summary>
+		/// <param name="r">Rectangle being casted</param>
+		/// <returns>Casting result</returns>
+		////////////////////////////////////////////////////////////
+		public static explicit operator FloatRect(IntRect r)
         {
             return new FloatRect((float)r.Left,
                                  (float)r.Top,
