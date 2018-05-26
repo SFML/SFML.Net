@@ -18,4 +18,16 @@
 		<ProjectReference Include="..\..\src\Window\sfml-window_core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="resources\background.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="resources\sansation.ttf">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="resources\texture.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
