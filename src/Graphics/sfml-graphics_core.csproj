@@ -26,6 +26,7 @@
 		<IsOSX>False</IsOSX>
 		<IsAndroid>False</IsAndroid>
 		<IsLinux>False</IsLinux>
+		<Version>2.4.2</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_OSX_|AnyCPU'">
