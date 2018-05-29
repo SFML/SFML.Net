@@ -16,8 +16,10 @@ namespace opengl
         /// </summary>
         static void Main()
         {
-            // Request a 24-bits depth buffer when creating the window
-            var contextSettings = new ContextSettings();
+			var gameWindow = new OpenTK.GameWindow();
+
+			// Request a 24-bits depth buffer when creating the window
+			var contextSettings = new ContextSettings();
             contextSettings.DepthBits = 24;
 
             // Create the main window
@@ -25,8 +27,8 @@ namespace opengl
             window.SetVerticalSyncEnabled(true);
 
             // Initialize OpenTK
-            Toolkit.Init();
-            GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
+            //Toolkit.Init();
+            //GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
 
             // Setup event handlers
             window.Closed     += new EventHandler(OnClosed);
