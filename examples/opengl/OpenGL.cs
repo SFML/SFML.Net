@@ -16,6 +16,7 @@ namespace opengl
         /// </summary>
         static void Main()
         {
+			// NOTE : This is workaround to create a functioning opengl context for OpenTK (for current OpenTK version)
 			var gameWindow = new OpenTK.GameWindow();
 
 			// Request a 24-bits depth buffer when creating the window
@@ -27,7 +28,8 @@ namespace opengl
             window.SetVerticalSyncEnabled(true);
 
             // Initialize OpenTK
-            //Toolkit.Init();
+			// NOTE : next 2 lines are kept from old examples until we resolve proper OpenTK versioning
+			//Toolkit.Init();
             //GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
 
             // Setup event handlers
