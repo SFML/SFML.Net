@@ -6,23 +6,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4E3833B5-0F2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{C854187C-65DA-45CA-B774-64B27F6C9399}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-system_core", "..\..\src\System\sfml-system_core.csproj", "{EBC0625C-5C66-473E-BD50-18FC3C8CCBF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-system", "..\..\src\System\sfml-system.csproj", "{EBC0625C-5C66-473E-BD50-18FC3C8CCBF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-window_core", "..\..\src\Window\sfml-window_core.csproj", "{31A94BF9-8341-4B24-BB40-5F4C3EFF0C1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-window", "..\..\src\Window\sfml-window.csproj", "{31A94BF9-8341-4B24-BB40-5F4C3EFF0C1E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-graphics_core", "..\..\src\Graphics\sfml-graphics_core.csproj", "{65BBF273-96C5-4070-8C52-B8A323D24378}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-graphics", "..\..\src\Graphics\sfml-graphics.csproj", "{65BBF273-96C5-4070-8C52-B8A323D24378}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-audio_core", "..\..\src\Audio\sfml-audio_core.csproj", "{EF63EC62-6649-4660-ABDF-57147AE4E434}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sfml-audio", "..\..\src\Audio\sfml-audio.csproj", "{EF63EC62-6649-4660-ABDF-57147AE4E434}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "window_core", "..\..\examples\window\window_core.csproj", "{D865DE9E-113D-441E-8232-0A01E1BC0A87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "window", "..\..\examples\window\window.csproj", "{D865DE9E-113D-441E-8232-0A01E1BC0A87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sound_core", "..\..\examples\sound\sound_core.csproj", "{6A2C6BBF-2217-484C-A7B8-8784558F468E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sound", "..\..\examples\sound\sound.csproj", "{6A2C6BBF-2217-484C-A7B8-8784558F468E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sound_capture_core", "..\..\examples\sound_capture\sound_capture_core.csproj", "{90CF10DF-76F9-46BC-B5BE-CC52736EA264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sound_capture", "..\..\examples\sound_capture\sound_capture.csproj", "{90CF10DF-76F9-46BC-B5BE-CC52736EA264}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "opengl_core", "..\..\examples\opengl\opengl_core.csproj", "{212CDB58-CB8A-4413-8D16-2E53828C4E53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "opengl", "..\..\examples\opengl\opengl.csproj", "{212CDB58-CB8A-4413-8D16-2E53828C4E53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shader_core", "..\..\examples\shader\shader_core.csproj", "{8E406F9F-D6AE-40FB-9209-A5DE992AD340}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shader", "..\..\examples\shader\shader.csproj", "{8E406F9F-D6AE-40FB-9209-A5DE992AD340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
