@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using SFML;
 using SFML.Audio;
 
 namespace sound
@@ -30,8 +29,8 @@ namespace sound
 
             // Display sound informations
             Console.WriteLine("canary.wav :");
-            Console.WriteLine(" " + buffer.Duration     + " sec");
-            Console.WriteLine(" " + buffer.SampleRate   + " samples / sec");
+            Console.WriteLine(" " + buffer.Duration + " sec");
+            Console.WriteLine(" " + buffer.SampleRate + " samples / sec");
             Console.WriteLine(" " + buffer.ChannelCount + " channels");
 
             // Create a sound instance and play it
@@ -60,8 +59,8 @@ namespace sound
 
             // Display music informations
             Console.WriteLine("orchestral.ogg :");
-            Console.WriteLine(" " + music.Duration     + " sec");
-            Console.WriteLine(" " + music.SampleRate   + " samples / sec");
+            Console.WriteLine(" " + music.Duration + " sec");
+            Console.WriteLine(" " + music.SampleRate + " samples / sec");
             Console.WriteLine(" " + music.ChannelCount + " channels");
 
             // Play it

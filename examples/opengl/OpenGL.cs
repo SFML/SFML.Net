@@ -1,11 +1,9 @@
 using System;
 using System.Runtime.InteropServices;
-using SFML.Graphics;
-using SFML.Window;
-using SFML.System;
-using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
 
 namespace opengl
 {
@@ -16,11 +14,11 @@ namespace opengl
         /// </summary>
         static void Main()
         {
-			// NOTE : This is workaround to create a functioning opengl context for OpenTK (for current OpenTK version)
-			var gameWindow = new OpenTK.GameWindow();
+            // NOTE : This is workaround to create a functioning opengl context for OpenTK (for current OpenTK version)
+            var gameWindow = new OpenTK.GameWindow();
 
-			// Request a 24-bits depth buffer when creating the window
-			var contextSettings = new ContextSettings();
+            // Request a 24-bits depth buffer when creating the window
+            var contextSettings = new ContextSettings();
             contextSettings.DepthBits = 24;
 
             // Create the main window
@@ -28,14 +26,14 @@ namespace opengl
             window.SetVerticalSyncEnabled(true);
 
             // Initialize OpenTK
-			// NOTE : next 2 lines are kept from old examples until we resolve proper OpenTK versioning
-			//Toolkit.Init();
+            // NOTE : next 2 lines are kept from old examples until we resolve proper OpenTK versioning
+            //Toolkit.Init();
             //GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
 
             // Setup event handlers
-            window.Closed     += new EventHandler(OnClosed);
+            window.Closed += new EventHandler(OnClosed);
             window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
-            window.Resized    += new EventHandler<SizeEventArgs>(OnResized);
+            window.Resized += new EventHandler<SizeEventArgs>(OnResized);
 
             // Create a sprite for the background
             var background = new Sprite(new Texture("resources/background.jpg"));
@@ -43,7 +41,7 @@ namespace opengl
             // Create a text to display on top of the OpenGL object
             var text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"));
             text.Position = new Vector2f(250, 450);
-            text.FillColor = new SFML.Graphics.Color( 255, 255, 255, 170);
+            text.FillColor = new SFML.Graphics.Color(255, 255, 255, 170);
 
             // Make the window the active target for OpenGL calls
             window.SetActive();
@@ -52,7 +50,7 @@ namespace opengl
             // We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
             // but here we want more control on it (generate mipmaps, ...) so we create a new one
             int texture = 0;
-            using (var image = new SFML.Graphics.Image( "resources/texture.jpg"))
+            using (var image = new SFML.Graphics.Image("resources/texture.jpg"))
             {
                 GL.GenTextures(1, out texture);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
@@ -75,7 +73,7 @@ namespace opengl
             // Setup a perspective projection
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            float ratio = (float)(window.Size.X) / window.Size.Y;
+            float ratio = (float)( window.Size.X ) / window.Size.Y;
             GL.Frustum(-ratio, ratio, -1, 1, 1, 500);
 
             // Bind the texture
@@ -159,7 +157,7 @@ namespace opengl
                 GL.Clear(ClearBufferMask.DepthBufferBit);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
-                float x =  Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F;
+                float x = Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F;
                 float y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F;
 
                 // Apply some transformations
@@ -202,7 +200,9 @@ namespace opengl
         {
             RenderWindow window = (RenderWindow)sender;
             if (e.Code == Keyboard.Key.Escape)
+            {
                 window.Close();
+            }
         }
 
         /// <summary>
