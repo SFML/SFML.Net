@@ -208,7 +208,9 @@ namespace SFML.Audio
                     IntPtr* DevicesPtr = sfSoundRecorder_getAvailableDevices(out Count);
                     string[] Devices = new string[Count];
                     for (uint i = 0; i < Count; ++i)
+                    {
                         Devices[i] = Marshal.PtrToStringAnsi(DevicesPtr[i]);
+                    }
 
                     return Devices;
                 }
@@ -286,10 +288,10 @@ namespace SFML.Audio
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void StopCallback();
 
-        private StartCallback myStartCallback;
-        private ProcessCallback myProcessCallback;
-        private StopCallback myStopCallback;
-        
+        private readonly StartCallback myStartCallback;
+        private readonly ProcessCallback myProcessCallback;
+        private readonly StopCallback myStopCallback;
+
         #region Imports
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfSoundRecorder_create(StartCallback OnStart, ProcessCallback OnProcess, StopCallback OnStop, IntPtr UserData);

@@ -27,6 +27,7 @@
 		<IsAndroid>False</IsAndroid>
 		<IsLinux>False</IsLinux>
 		<Version>2.4.2</Version>
+		<Description>Audio module of the SFML library</Description>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_OSX_|AnyCPU'">

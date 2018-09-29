@@ -24,7 +24,7 @@ namespace SFML.System
         /// </summary>
         /// <param name="resourceName">Name of the resource</param>
         ////////////////////////////////////////////////////////////
-        public LoadingFailedException(string resourceName) : base( $"Failed to load {resourceName} from memory" )
+        public LoadingFailedException(string resourceName) : base($"Failed to load {resourceName} from memory")
         {
         }
 
@@ -36,7 +36,7 @@ namespace SFML.System
         /// <param name="innerException">Exception which is the cause ofthe current exception</param>
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(string resourceName, Exception innerException) :
-            base( $"Failed to load {resourceName} from memory", innerException)
+            base($"Failed to load {resourceName} from memory", innerException)
         {
         }
 
@@ -48,7 +48,7 @@ namespace SFML.System
         /// <param name="filename">Path of the file</param>
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(string resourceName, string filename) :
-            base( $"Failed to load {resourceName} from file {filename}" )
+            base($"Failed to load {resourceName} from file {filename}")
         {
         }
 
@@ -61,7 +61,7 @@ namespace SFML.System
         /// <param name="innerException">Exception which is the cause ofthe current exception</param>
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(string resourceName, string filename, Exception innerException) :
-            base( $"Failed to load {resourceName} from file {filename}", innerException)
+            base($"Failed to load {resourceName} from file {filename}", innerException)
         {
         }
 

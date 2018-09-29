@@ -1,6 +1,6 @@
-using SFML.System;
 using System.Runtime.InteropServices;
 using System.Security;
+using SFML.System;
 
 namespace SFML.Window
 {
@@ -67,7 +67,9 @@ namespace SFML.Window
                     VideoMode* ModesPtr = sfVideoMode_getFullscreenModes(out Count);
                     VideoMode[] Modes = new VideoMode[Count];
                     for (uint i = 0; i < Count; ++i)
+                    {
                         Modes[i] = ModesPtr[i];
+                    }
 
                     return Modes;
                 }
@@ -106,7 +108,7 @@ namespace SFML.Window
 
         /// <summary>Video mode depth, in bits per pixel</summary>
         public uint BitsPerPixel;
-        
+
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern VideoMode sfVideoMode_getDesktopMode();

@@ -1,8 +1,7 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.IO;
-using SFML.Window;
 using SFML.System;
 
 namespace SFML.Audio
@@ -24,7 +23,9 @@ namespace SFML.Audio
             base(sfMusic_createFromFile(filename))
         {
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("music", filename);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -40,7 +41,9 @@ namespace SFML.Audio
             CPointer = sfMusic_createFromStream(myStream.InputStreamPtr);
 
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("music");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -63,7 +66,9 @@ namespace SFML.Audio
                 pin.Free();
             }
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("music");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -320,7 +325,9 @@ namespace SFML.Audio
             if (disposing)
             {
                 if (myStream != null)
+                {
                     myStream.Dispose();
+                }
             }
 
             sfMusic_destroy(CPointer);
@@ -331,7 +338,7 @@ namespace SFML.Audio
         #region Imports
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfMusic_createFromFile(string Filename);
-        
+
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         unsafe static extern IntPtr sfMusic_createFromStream(IntPtr stream);
 

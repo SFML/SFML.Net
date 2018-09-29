@@ -356,7 +356,7 @@ namespace SFML.Audio
         private GetDataCallbackType myGetDataCallback;
         private SeekCallbackType mySeekCallback;
         private short[] myTempBuffer;
-        
+
         #region Imports
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfSoundStream_create(GetDataCallbackType OnGetData, SeekCallbackType OnSeek, uint ChannelCount, uint SampleRate, IntPtr UserData);

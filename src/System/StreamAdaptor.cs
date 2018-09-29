@@ -1,6 +1,6 @@
 using System;
-using System.Runtime.InteropServices;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace SFML.System
 {
@@ -91,14 +91,15 @@ namespace SFML.System
         {
             myStream = stream;
 
-			myInputStream = new InputStream {
-				Read = new InputStream.ReadCallbackType( Read ),
-				Seek = new InputStream.SeekCallbackType( Seek ),
-				Tell = new InputStream.TellCallbackType( Tell ),
-				GetSize = new InputStream.GetSizeCallbackType( GetSize )
-			};
+            myInputStream = new InputStream
+            {
+                Read = new InputStream.ReadCallbackType(Read),
+                Seek = new InputStream.SeekCallbackType(Seek),
+                Tell = new InputStream.TellCallbackType(Tell),
+                GetSize = new InputStream.GetSizeCallbackType(GetSize)
+            };
 
-			myInputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(myInputStream));
+            myInputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(myInputStream));
             Marshal.StructureToPtr(myInputStream, myInputStreamPtr, false);
         }
 
@@ -112,19 +113,19 @@ namespace SFML.System
             Dispose(false);
         }
 
-		////////////////////////////////////////////////////////////
-		/// <summary>
-		/// The pointer to the CSFML InputStream structure
-		/// </summary>
-		////////////////////////////////////////////////////////////
-		public IntPtr InputStreamPtr => myInputStreamPtr;
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// The pointer to the CSFML InputStream structure
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public IntPtr InputStreamPtr => myInputStreamPtr;
 
-		////////////////////////////////////////////////////////////
-		/// <summary>
-		/// Explicitly dispose the object
-		/// </summary>
-		////////////////////////////////////////////////////////////
-		public void Dispose()
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Explicitly dispose the object
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -183,17 +184,17 @@ namespace SFML.System
             return myStream.Position;
         }
 
-		////////////////////////////////////////////////////////////
-		/// <summary>
-		/// Called to get the total size of the stream
-		/// </summary>
-		/// <param name="userData">User data -- unused</param>
-		/// <returns>Number of bytes in the stream</returns>
-		////////////////////////////////////////////////////////////
-		private long GetSize( IntPtr userData ) => myStream.Length;
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Called to get the total size of the stream
+        /// </summary>
+        /// <param name="userData">User data -- unused</param>
+        /// <returns>Number of bytes in the stream</returns>
+        ////////////////////////////////////////////////////////////
+        private long GetSize(IntPtr userData) => myStream.Length;
 
-		private Stream myStream;
+        private Stream myStream;
         private InputStream myInputStream;
-        private IntPtr myInputStreamPtr;
+        private readonly IntPtr myInputStreamPtr;
     }
 }

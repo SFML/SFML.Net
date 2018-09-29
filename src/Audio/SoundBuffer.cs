@@ -1,8 +1,7 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.IO;
-using SFML.Window;
 using SFML.System;
 
 namespace SFML.Audio
@@ -29,7 +28,9 @@ namespace SFML.Audio
             base(sfSoundBuffer_createFromFile(filename))
         {
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("sound buffer", filename);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -52,7 +53,9 @@ namespace SFML.Audio
             }
 
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("sound buffer");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -79,7 +82,9 @@ namespace SFML.Audio
                 pin.Free();
             }
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("sound buffer");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -103,7 +108,9 @@ namespace SFML.Audio
             }
 
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("sound buffer");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -197,7 +204,7 @@ namespace SFML.Audio
                    " ChannelCount(" + ChannelCount + ")" +
                    " Duration(" + Duration + ")";
         }
-        
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Handle the destruction of the object

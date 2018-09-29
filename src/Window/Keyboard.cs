@@ -1,6 +1,6 @@
-using SFML.System;
 using System.Runtime.InteropServices;
 using System.Security;
+using SFML.System;
 
 namespace SFML.Window
 {
@@ -226,7 +226,7 @@ namespace SFML.Window
             /// <summary>The total number of keyboard keys</summary>
             KeyCount // Keep last
         };
-        
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Check if a key is pressed

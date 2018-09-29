@@ -75,7 +75,7 @@ namespace SFML.Window
         {
             return sfSensor_getValue(Sensor);
         }
-        
+
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfSensor_isAvailable(Type Sensor);

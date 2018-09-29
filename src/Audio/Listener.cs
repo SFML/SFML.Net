@@ -67,9 +67,9 @@ namespace SFML.Audio
             get { return sfListener_getUpVector(); }
             set { sfListener_setUpVector(value); }
         }
-        
+
         #region Imports
-        [DllImport( CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfListener_setGlobalVolume(float Volume);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

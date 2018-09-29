@@ -48,11 +48,15 @@ namespace SFML.Window
         public static Vector2i GetPosition(uint Finger, Window RelativeTo)
         {
             if (RelativeTo != null)
+            {
                 return RelativeTo.InternalGetTouchPosition(Finger);
+            }
             else
+            {
                 return sfTouch_getPosition(Finger, IntPtr.Zero);
+            }
         }
-        
+
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfTouch_isDown(uint Finger);

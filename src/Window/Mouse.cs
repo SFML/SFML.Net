@@ -89,9 +89,13 @@ namespace SFML.Window
         public static Vector2i GetPosition(Window relativeTo)
         {
             if (relativeTo != null)
+            {
                 return relativeTo.InternalGetMousePosition();
+            }
             else
+            {
                 return sfMouse_getPosition(IntPtr.Zero);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -119,9 +123,13 @@ namespace SFML.Window
         public static void SetPosition(Vector2i position, Window relativeTo)
         {
             if (relativeTo != null)
+            {
                 relativeTo.InternalSetMousePosition(position);
+            }
             else
+            {
                 sfMouse_setPosition(position, IntPtr.Zero);
+            }
         }
 
         #region Imports
