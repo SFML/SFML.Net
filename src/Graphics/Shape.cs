@@ -139,11 +139,11 @@ namespace SFML.Graphics
 
             if (target is RenderWindow)
             {
-                sfRenderWindow_drawShape(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderWindow_drawShape(( (RenderWindow)target ).CPointer, CPointer, ref marshaledStates);
             }
             else if (target is RenderTexture)
             {
-                sfRenderTexture_drawShape(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderTexture_drawShape(( (RenderTexture)target ).CPointer, CPointer, ref marshaledStates);
             }
         }
 
@@ -235,9 +235,9 @@ namespace SFML.Graphics
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate Vector2f GetPointCallbackType(uint index, IntPtr UserData);
-        
-        private GetPointCountCallbackType myGetPointCountCallback;
-        private GetPointCallbackType myGetPointCallback;
+
+        private readonly GetPointCountCallbackType myGetPointCountCallback;
+        private readonly GetPointCallbackType myGetPointCallback;
 
         private Texture myTexture = null;
 

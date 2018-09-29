@@ -1,6 +1,6 @@
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
+using System.Security;
 using SFML.System;
 
 namespace SFML.Graphics
@@ -137,33 +137,33 @@ namespace SFML.Graphics
             return Transform.TransformRect(GetLocalBounds());
         }
 
-		////////////////////////////////////////////////////////////
-		/// <summary>
-		/// Provide a string describing the object
-		/// </summary>
-		/// <returns>String description of the object</returns>
-		////////////////////////////////////////////////////////////
-		public override string ToString() => $"[Sprite] Color({Color}) Texture({Texture}) TextureRect({TextureRect})";
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Provide a string describing the object
+        /// </summary>
+        /// <returns>String description of the object</returns>
+        ////////////////////////////////////////////////////////////
+        public override string ToString() => $"[Sprite] Color({Color}) Texture({Texture}) TextureRect({TextureRect})";
 
-		////////////////////////////////////////////////////////////
-		/// <summary>
-		/// Draw the sprite to a render target
-		/// </summary>
-		/// <param name="target">Render target to draw to</param>
-		/// <param name="states">Current render states</param>
-		////////////////////////////////////////////////////////////
-		public void Draw(RenderTarget target, RenderStates states)
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Draw the sprite to a render target
+        /// </summary>
+        /// <param name="target">Render target to draw to</param>
+        /// <param name="states">Current render states</param>
+        ////////////////////////////////////////////////////////////
+        public void Draw(RenderTarget target, RenderStates states)
         {
             states.Transform *= Transform;
             RenderStates.MarshalData marshaledStates = states.Marshal();
 
             if (target is RenderWindow)
             {
-                sfRenderWindow_drawSprite(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderWindow_drawSprite(( (RenderWindow)target ).CPointer, CPointer, ref marshaledStates);
             }
             else if (target is RenderTexture)
             {
-                sfRenderTexture_drawSprite(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderTexture_drawSprite(( (RenderTexture)target ).CPointer, CPointer, ref marshaledStates);
             }
         }
 

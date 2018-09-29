@@ -1,7 +1,7 @@
-using SFML.System;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using SFML.System;
 
 namespace SFML.Graphics
 {
@@ -173,11 +173,11 @@ namespace SFML.Graphics
 
             if (target is RenderWindow)
             {
-                sfRenderWindow_drawVertexArray(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderWindow_drawVertexArray(( (RenderWindow)target ).CPointer, CPointer, ref marshaledStates);
             }
             else if (target is RenderTexture)
             {
-                sfRenderTexture_drawVertexArray(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderTexture_drawVertexArray(( (RenderTexture)target ).CPointer, CPointer, ref marshaledStates);
             }
         }
 
@@ -191,7 +191,7 @@ namespace SFML.Graphics
         {
             sfVertexArray_destroy(CPointer);
         }
-        
+
         #region Imports
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfVertexArray_create();

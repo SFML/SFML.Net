@@ -477,7 +477,9 @@ namespace SFML.Graphics
         protected override void Destroy(bool disposing)
         {
             if (!disposing)
+            {
                 Context.Global.SetActive(true);
+            }
 
             sfRenderTexture_destroy(CPointer);
 
@@ -488,7 +490,9 @@ namespace SFML.Graphics
             }
 
             if (!disposing)
+            {
                 Context.Global.SetActive(false);
+            }
         }
 
         private View myDefaultView = null;

@@ -187,10 +187,12 @@ namespace SFML.Graphics
         protected override void Destroy(bool disposing)
         {
             if (!myExternal)
+            {
                 sfView_destroy(CPointer);
+            }
         }
 
-        private bool myExternal = false;
+        private readonly bool myExternal = false;
 
         #region Imports
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

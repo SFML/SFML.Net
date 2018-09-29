@@ -24,6 +24,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "opengl", "..\..\examples\op
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "shader", "..\..\examples\shader\shader.csproj", "{8E406F9F-D6AE-40FB-9209-A5DE992AD340}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E32E8DE9-A1CB-4F4E-B563-CA5C50DD5485}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.editorconfig = ..\..\.editorconfig
+		..\..\code_style.md = ..\..\code_style.md
+		..\..\license.txt = ..\..\license.txt
+		..\..\omnisharp.json = ..\..\omnisharp.json
+		..\..\readme.txt = ..\..\readme.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		_LINUX_|Any CPU = _LINUX_|Any CPU

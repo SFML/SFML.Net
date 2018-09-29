@@ -764,7 +764,9 @@ namespace SFML.Graphics
             sfRenderWindow_destroy(CPointer);
 
             if (disposing)
+            {
                 myDefaultView.Dispose();
+            }
         }
 
         ////////////////////////////////////////////////////////////

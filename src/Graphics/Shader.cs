@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Collections.Generic;
-using SFML.Window;
 using SFML.System;
+using SFML.Window;
 
 namespace SFML.Graphics
 {
@@ -53,7 +53,9 @@ namespace SFML.Graphics
             base(sfShader_createFromFile(vertexShaderFilename, geometryShaderFilename, fragmentShaderFilename))
         {
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("shader", vertexShaderFilename + " " + fragmentShaderFilename);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -90,7 +92,9 @@ namespace SFML.Graphics
             }
 
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("shader");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -131,7 +135,9 @@ namespace SFML.Graphics
         {
             IntPtr ptr = sfShader_createFromMemory(vertexShader, geometryShader, fragmentShader);
             if (ptr == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("shader");
+            }
 
             return new Shader(ptr);
         }
@@ -706,13 +712,17 @@ namespace SFML.Graphics
         protected override void Destroy(bool disposing)
         {
             if (!disposing)
+            {
                 Context.Global.SetActive(true);
+            }
 
             myTextures.Clear();
             sfShader_destroy(CPointer);
 
             if (!disposing)
+            {
                 Context.Global.SetActive(false);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -725,7 +735,7 @@ namespace SFML.Graphics
             base(ptr)
         {
         }
-        
+
         // Keeps references to used Textures for GC prevention during use
         private Dictionary<string, Texture> myTextures = new Dictionary<string, Texture>();
 

@@ -1,6 +1,6 @@
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using SFML.System;
 
@@ -181,7 +181,9 @@ namespace SFML.Graphics
                 unsafe
                 {
                     for (uint* ptr = (uint*)source.ToPointer(); *ptr != 0; ++ptr)
+                    {
                         length++;
+                    }
                 }
 
                 // Copy it to a byte array
@@ -323,11 +325,11 @@ namespace SFML.Graphics
 
             if (target is RenderWindow)
             {
-                sfRenderWindow_drawText(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderWindow_drawText(( (RenderWindow)target ).CPointer, CPointer, ref marshaledStates);
             }
             else if (target is RenderTexture)
             {
-                sfRenderTexture_drawText(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderTexture_drawText(( (RenderTexture)target ).CPointer, CPointer, ref marshaledStates);
             }
         }
 

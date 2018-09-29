@@ -200,13 +200,13 @@ namespace SFML.Graphics
             // or not the final object (if used as a base for a drawable class)
         }
 
-        private Vector2f  myOrigin              = new Vector2f(0, 0);
-        private Vector2f  myPosition            = new Vector2f(0, 0);
-        private float     myRotation            = 0;
-        private Vector2f  myScale               = new Vector2f(1, 1);
+        private Vector2f myOrigin = new Vector2f(0, 0);
+        private Vector2f myPosition = new Vector2f(0, 0);
+        private float myRotation = 0;
+        private Vector2f myScale = new Vector2f(1, 1);
         private Transform myTransform;
         private Transform myInverseTransform;
-        private bool      myTransformNeedUpdate = true;
-        private bool      myInverseNeedUpdate   = true;
+        private bool myTransformNeedUpdate = true;
+        private bool myInverseNeedUpdate = true;
     }
 }

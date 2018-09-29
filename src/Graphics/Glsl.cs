@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using SFML.System;
 
 namespace SFML.Graphics.Glsl

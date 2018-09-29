@@ -1,9 +1,9 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.IO;
-using SFML.Window;
 using SFML.System;
+using SFML.Window;
 
 namespace SFML.Graphics
 {
@@ -26,7 +26,9 @@ namespace SFML.Graphics
             base(sfTexture_create(width, height))
         {
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("texture");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -53,7 +55,9 @@ namespace SFML.Graphics
             base(sfTexture_createFromFile(filename, ref area))
         {
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("texture", filename);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -85,7 +89,9 @@ namespace SFML.Graphics
             }
 
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("texture");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -112,7 +118,9 @@ namespace SFML.Graphics
             base(sfTexture_createFromImage(image.CPointer, ref area))
         {
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("texture");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -136,7 +144,9 @@ namespace SFML.Graphics
                 pin.Free();
             }
             if (CPointer == IntPtr.Zero)
+            {
                 throw new LoadingFailedException("texture");
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -430,17 +440,21 @@ namespace SFML.Graphics
             if (!myExternal)
             {
                 if (!disposing)
+                {
                     Context.Global.SetActive(true);
+                }
 
                 sfTexture_destroy(CPointer);
 
                 if (!disposing)
+                {
                     Context.Global.SetActive(false);
+                }
             }
         }
 
-        private bool myExternal = false;
-        
+        private readonly bool myExternal = false;
+
         #region Imports
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfTexture_create(uint width, uint height);
