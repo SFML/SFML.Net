@@ -1,7 +1,8 @@
 using System;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Runtime.ConstrainedExecution;
+using SFML.System;
 
 namespace SFML.Window
 {
@@ -64,7 +65,9 @@ namespace SFML.Window
             get
             {
                 if (ourGlobalContext == null)
+                {
                     ourGlobalContext = new Context();
+                }
 
                 return ourGlobalContext;
             }
@@ -83,19 +86,19 @@ namespace SFML.Window
 
         private static Context ourGlobalContext = null;
 
-        private IntPtr myThis = IntPtr.Zero;
+        private readonly IntPtr myThis = IntPtr.Zero;
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfContext_create();
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfContext_destroy(IntPtr View);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfContext_setActive(IntPtr View, bool Active);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern ContextSettings sfContext_getSettings(IntPtr View);
         #endregion
     }

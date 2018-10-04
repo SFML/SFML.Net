@@ -1,7 +1,7 @@
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Text;
 using SFML.System;
 
 namespace SFML.Window
@@ -352,7 +352,9 @@ namespace SFML.Window
         {
             Event e;
             if (WaitEvent(out e))
+            {
                 CallEventHandler(e);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -364,7 +366,9 @@ namespace SFML.Window
         {
             Event e;
             while (PollEvent(out e))
+            {
                 CallEventHandler(e);
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -503,117 +507,186 @@ namespace SFML.Window
             {
                 case EventType.Closed:
                     if (Closed != null)
+                    {
                         Closed(this, EventArgs.Empty);
+                    }
+
                     break;
 
                 case EventType.GainedFocus:
                     if (GainedFocus != null)
+                    {
                         GainedFocus(this, EventArgs.Empty);
+                    }
+
                     break;
 
                 case EventType.JoystickButtonPressed:
                     if (JoystickButtonPressed != null)
+                    {
                         JoystickButtonPressed(this, new JoystickButtonEventArgs(e.JoystickButton));
+                    }
+
                     break;
 
                 case EventType.JoystickButtonReleased:
                     if (JoystickButtonReleased != null)
+                    {
                         JoystickButtonReleased(this, new JoystickButtonEventArgs(e.JoystickButton));
+                    }
+
                     break;
 
                 case EventType.JoystickMoved:
                     if (JoystickMoved != null)
+                    {
                         JoystickMoved(this, new JoystickMoveEventArgs(e.JoystickMove));
+                    }
+
                     break;
 
                 case EventType.JoystickConnected:
                     if (JoystickConnected != null)
+                    {
                         JoystickConnected(this, new JoystickConnectEventArgs(e.JoystickConnect));
+                    }
+
                     break;
 
                 case EventType.JoystickDisconnected:
                     if (JoystickDisconnected != null)
+                    {
                         JoystickDisconnected(this, new JoystickConnectEventArgs(e.JoystickConnect));
+                    }
+
                     break;
 
                 case EventType.KeyPressed:
                     if (KeyPressed != null)
+                    {
                         KeyPressed(this, new KeyEventArgs(e.Key));
+                    }
+
                     break;
 
                 case EventType.KeyReleased:
                     if (KeyReleased != null)
+                    {
                         KeyReleased(this, new KeyEventArgs(e.Key));
+                    }
+
                     break;
 
                 case EventType.LostFocus:
                     if (LostFocus != null)
+                    {
                         LostFocus(this, EventArgs.Empty);
+                    }
+
                     break;
 
                 case EventType.MouseButtonPressed:
                     if (MouseButtonPressed != null)
+                    {
                         MouseButtonPressed(this, new MouseButtonEventArgs(e.MouseButton));
+                    }
+
                     break;
 
                 case EventType.MouseButtonReleased:
                     if (MouseButtonReleased != null)
+                    {
                         MouseButtonReleased(this, new MouseButtonEventArgs(e.MouseButton));
+                    }
+
                     break;
 
                 case EventType.MouseEntered:
                     if (MouseEntered != null)
+                    {
                         MouseEntered(this, EventArgs.Empty);
+                    }
+
                     break;
 
                 case EventType.MouseLeft:
                     if (MouseLeft != null)
+                    {
                         MouseLeft(this, EventArgs.Empty);
+                    }
+
                     break;
 
                 case EventType.MouseMoved:
                     if (MouseMoved != null)
+                    {
                         MouseMoved(this, new MouseMoveEventArgs(e.MouseMove));
+                    }
+
                     break;
 
                 case EventType.MouseWheelMoved:
                     if (MouseWheelMoved != null)
+                    {
                         MouseWheelMoved(this, new MouseWheelEventArgs(e.MouseWheel));
+                    }
+
                     break;
 
                 case EventType.MouseWheelScrolled:
                     if (MouseWheelScrolled != null)
+                    {
                         MouseWheelScrolled(this, new MouseWheelScrollEventArgs(e.MouseWheelScroll));
+                    }
+
                     break;
 
                 case EventType.Resized:
                     if (Resized != null)
+                    {
                         Resized(this, new SizeEventArgs(e.Size));
+                    }
+
                     break;
 
                 case EventType.TextEntered:
                     if (TextEntered != null)
+                    {
                         TextEntered(this, new TextEventArgs(e.Text));
+                    }
+
                     break;
 
                 case EventType.TouchBegan:
                     if (TouchBegan != null)
+                    {
                         TouchBegan(this, new TouchEventArgs(e.Touch));
+                    }
+
                     break;
 
                 case EventType.TouchMoved:
                     if (TouchMoved != null)
+                    {
                         TouchMoved(this, new TouchEventArgs(e.Touch));
+                    }
+
                     break;
 
                 case EventType.TouchEnded:
                     if (TouchEnded != null)
+                    {
                         TouchEnded(this, new TouchEventArgs(e.Touch));
+                    }
+
                     break;
 
                 case EventType.SensorChanged:
                     if (SensorChanged != null)
+                    {
                         SensorChanged(this, new SensorEventArgs(e.Sensor));
+                    }
+
                     break;
 
                 default:
@@ -692,100 +765,100 @@ namespace SFML.Window
         public event EventHandler<SensorEventArgs> SensorChanged = null;
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfWindow_create(VideoMode Mode, string Title, Styles Style, ref ContextSettings Params);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfWindow_createUnicode(VideoMode Mode, IntPtr Title, Styles Style, ref ContextSettings Params);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfWindow_createFromHandle(IntPtr Handle, ref ContextSettings Params);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_destroy(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfWindow_isOpen(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_close(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfWindow_pollEvent(IntPtr CPointer, out Event Evt);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfWindow_waitEvent(IntPtr CPointer, out Event Evt);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_display(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern ContextSettings sfWindow_getSettings(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Vector2i sfWindow_getPosition(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setPosition(IntPtr CPointer, Vector2i position);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Vector2u sfWindow_getSize(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setSize(IntPtr CPointer, Vector2u size);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setTitle(IntPtr CPointer, string title);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setUnicodeTitle(IntPtr CPointer, IntPtr title);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         unsafe static extern void sfWindow_setIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setVisible(IntPtr CPointer, bool visible);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setMouseCursorVisible(IntPtr CPointer, bool Show);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setVerticalSyncEnabled(IntPtr CPointer, bool Enable);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setKeyRepeatEnabled(IntPtr CPointer, bool Enable);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfWindow_setActive(IntPtr CPointer, bool Active);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setFramerateLimit(IntPtr CPointer, uint Limit);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern uint sfWindow_getFrameTime(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_setJoystickThreshold(IntPtr CPointer, float Threshold);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfWindow_getSystemHandle(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfWindow_requestFocus(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfWindow_hasFocus(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
         #endregion
     }

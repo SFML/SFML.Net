@@ -57,13 +57,10 @@ namespace SFML.Graphics
         /// <summary>
         /// Get the total number of points of the rectangle.
         /// </summary>
-        /// <returns>The total point count. For rectangle shapes, 
+        /// <returns>The total point count. For rectangle shapes,
         /// this number is always 4.</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount()
-        {
-            return 4;
-        }
+        public override uint GetPointCount() => 4;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -82,10 +79,14 @@ namespace SFML.Graphics
             switch (index)
             {
                 default:
-                case 0: return new Vector2f(0, 0);
-                case 1: return new Vector2f(mySize.X, 0);
-                case 2: return new Vector2f(mySize.X, mySize.Y);
-                case 3: return new Vector2f(0, mySize.Y);
+                case 0:
+                    return new Vector2f(0, 0);
+                case 1:
+                    return new Vector2f(mySize.X, 0);
+                case 2:
+                    return new Vector2f(mySize.X, mySize.Y);
+                case 3:
+                    return new Vector2f(0, mySize.Y);
             }
         }
 

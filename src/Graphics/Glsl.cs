@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using SFML.System;
 
 namespace SFML.Graphics.Glsl
@@ -16,10 +16,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>
         /// Implicit cast from <see cref="Vector2f"/> to <see cref="Vec2"/>
         /// </summary>
-        public static implicit operator Vec2(Vector2f vec)
-        {
-            return new Vec2(vec);
-        }
+        public static implicit operator Vec2(Vector2f vec) => new Vec2(vec);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -65,10 +62,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>
         /// Implicit cast from <see cref="Vector2i"/> to <see cref="Ivec2"/>
         /// </summary>
-        public static implicit operator Ivec2(Vector2i vec)
-        {
-            return new Ivec2(vec);
-        }
+        public static implicit operator Ivec2(Vector2i vec) => new Ivec2(vec);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -144,10 +138,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>
         /// Implicit cast from <see cref="Vector3f"/> to <see cref="Vec3"/>
         /// </summary>
-        public static implicit operator Vec3(Vector3f vec)
-        {
-            return new Vec3(vec);
-        }
+        public static implicit operator Vec3(Vector3f vec) => new Vec3(vec);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -410,7 +401,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>
         /// Construct the <see cref="Mat3"/> from its components
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Arguments are in row-major order
         /// </remarks>
@@ -421,9 +412,15 @@ namespace SFML.Graphics.Glsl
         {
             fixed (float* m = array)
             {
-                m[0] = a00; m[3] = a01; m[6] = a02;
-                m[1] = a10; m[4] = a11; m[7] = a12;
-                m[2] = a20; m[5] = a21; m[8] = a22;
+                m[0] = a00;
+                m[3] = a01;
+                m[6] = a02;
+                m[1] = a10;
+                m[4] = a11;
+                m[7] = a12;
+                m[2] = a20;
+                m[5] = a21;
+                m[8] = a22;
             }
         }
 
@@ -437,9 +434,15 @@ namespace SFML.Graphics.Glsl
         {
             fixed (float* m = array)
             {
-                m[0] = transform.m00; m[3] = transform.m01; m[6] = transform.m02;
-                m[1] = transform.m10; m[4] = transform.m11; m[7] = transform.m12;
-                m[2] = transform.m20; m[5] = transform.m21; m[8] = transform.m22;
+                m[0] = transform.m00;
+                m[3] = transform.m01;
+                m[6] = transform.m02;
+                m[1] = transform.m10;
+                m[4] = transform.m11;
+                m[7] = transform.m12;
+                m[2] = transform.m20;
+                m[5] = transform.m21;
+                m[8] = transform.m22;
             }
         }
 
@@ -459,7 +462,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>
         /// Provides easy-access to an identity matrix
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Keep in mind that a Mat4 cannot be modified after construction
         /// </remarks>
@@ -479,7 +482,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>
         /// Construct the <see cref="Mat4"/> from its components
         /// </summary>
-        /// 
+        ///
         /// <remarks>
         /// Arguments are in row-major order
         /// </remarks>
@@ -492,10 +495,22 @@ namespace SFML.Graphics.Glsl
             fixed (float* m = array)
             {
                 // transpose to column major
-                m[0] = a00; m[4] = a01; m[8]  = a02; m[12] = a03;
-                m[1] = a10; m[5] = a11; m[9]  = a12; m[13] = a13;
-                m[2] = a20; m[6] = a21; m[10] = a22; m[14] = a23;
-                m[3] = a30; m[7] = a31; m[11] = a32; m[15] = a33;
+                m[0] = a00;
+                m[4] = a01;
+                m[8] = a02;
+                m[12] = a03;
+                m[1] = a10;
+                m[5] = a11;
+                m[9] = a12;
+                m[13] = a13;
+                m[2] = a20;
+                m[6] = a21;
+                m[10] = a22;
+                m[14] = a23;
+                m[3] = a30;
+                m[7] = a31;
+                m[11] = a32;
+                m[15] = a33;
             }
         }
 
@@ -512,10 +527,22 @@ namespace SFML.Graphics.Glsl
                 // swapping to column-major (OpenGL) from row-major (SFML) order
                 // in addition, filling in the blanks (from expanding to a mat4) with values from
                 // an identity matrix
-                m[0] = transform.m00; m[4] = transform.m01; m[8]  = 0; m[12] = transform.m02;
-                m[1] = transform.m10; m[5] = transform.m11; m[9]  = 0; m[13] = transform.m12;
-                m[2] = 0;             m[6] = 0;             m[10] = 1; m[14] = 0;
-                m[3] = transform.m20; m[7] = transform.m21; m[11] = 0; m[15] = transform.m22;
+                m[0] = transform.m00;
+                m[4] = transform.m01;
+                m[8] = 0;
+                m[12] = transform.m02;
+                m[1] = transform.m10;
+                m[5] = transform.m11;
+                m[9] = 0;
+                m[13] = transform.m12;
+                m[2] = 0;
+                m[6] = 0;
+                m[10] = 1;
+                m[14] = 0;
+                m[3] = transform.m20;
+                m[7] = transform.m21;
+                m[11] = 0;
+                m[15] = transform.m22;
             }
         }
 

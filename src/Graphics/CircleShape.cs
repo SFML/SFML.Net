@@ -15,10 +15,7 @@ namespace SFML.Graphics
         /// Default constructor
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public CircleShape() :
-            this(0)
-        {
-        }
+        public CircleShape() : this(0) { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -26,10 +23,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="radius">Radius of the shape</param>
         ////////////////////////////////////////////////////////////
-        public CircleShape(float radius) :
-            this(radius, 30)
-        {
-        }
+        public CircleShape(float radius) : this(radius, 30) { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -50,8 +44,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="copy">Shape to copy</param>
         ////////////////////////////////////////////////////////////
-        public CircleShape(CircleShape copy) :
-            base(copy)
+        public CircleShape(CircleShape copy) : base(copy)
         {
             Radius = copy.Radius;
             SetPointCount(copy.GetPointCount());
@@ -74,10 +67,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The total point count</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount()
-        {
-            return myPointCount;
-        }
+        public override uint GetPointCount() => myPointCount;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -106,7 +96,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override Vector2f GetPoint(uint index)
         {
-            float angle = (float)(index * 2 * Math.PI / myPointCount - Math.PI / 2);
+            float angle = (float)( index * 2 * Math.PI / myPointCount - Math.PI / 2 );
             float x = (float)Math.Cos(angle) * myRadius;
             float y = (float)Math.Sin(angle) * myRadius;
 

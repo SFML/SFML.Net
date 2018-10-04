@@ -19,10 +19,7 @@ namespace SFML.Graphics
         /// <param name="green">Green component</param>
         /// <param name="blue">Blue component</param>
         ////////////////////////////////////////////////////////////
-        public Color(byte red, byte green, byte blue) :
-            this(red, green, blue, 255)
-        {
-        }
+        public Color(byte red, byte green, byte blue) : this(red, green, blue, 255) { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -51,9 +48,9 @@ namespace SFML.Graphics
         {
             unchecked
             {
-                R = (byte)(color >> 24);
-                G = (byte)(color >> 16);
-                B = (byte)(color >> 8);
+                R = (byte)( color >> 24 );
+                G = (byte)( color >> 16 );
+                B = (byte)( color >> 8 );
                 A = (byte)color;
             }
         }
@@ -64,10 +61,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="color">Color to copy</param>
         ////////////////////////////////////////////////////////////
-        public Color(Color color) :
-            this(color.R, color.G, color.B, color.A)
-        {
-        }
+        public Color(Color color) : this(color.R, color.G, color.B, color.A) { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -75,10 +69,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Color represented as a 32-bit unsigned integer</returns>
         ////////////////////////////////////////////////////////////
-        public uint ToInteger()
-        {
-            return (uint)((R << 24) | (G << 16) | (B << 8) | A);
-        }
+        public uint ToInteger() => (uint)( ( R << 24 ) | ( G << 16 ) | ( B << 8 ) | A );
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -86,14 +77,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[Color]" +
-                   " R(" + R + ")" +
-                   " G(" + G + ")" +
-                   " B(" + B + ")" +
-                   " A(" + A + ")";
-        }
+        public override string ToString() => $"[Color] R({R}) G({G}) B({B}) A({A})";
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -102,10 +86,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and color are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj)
-        {
-            return (obj is Color) && Equals((Color)obj);
-        }
+        public override bool Equals(object obj) => ( obj is Color ) && Equals((Color)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -114,13 +95,7 @@ namespace SFML.Graphics
         /// <param name="other">Color to check</param>
         /// <returns>Colors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Color other)
-        {
-            return (R == other.R) &&
-                   (G == other.G) &&
-                   (B == other.B) &&
-                   (A == other.A);
-        }
+        public bool Equals(Color other) => ( R == other.R ) && ( G == other.G ) && ( B == other.B ) && ( A == other.A );
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -128,10 +103,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode()
-        {
-            return (R << 24) | (G << 16) | (B << 8) | A;
-        }
+        public override int GetHashCode() => ( R << 24 ) | ( G << 16 ) | ( B << 8 ) | A;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -139,10 +111,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Colors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator ==(Color left, Color right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(Color left, Color right) => left.Equals(right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -150,10 +119,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Colors are not equal</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator !=(Color left, Color right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(Color left, Color right) => !left.Equals(right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -194,10 +160,10 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public static Color operator *(Color left, Color right)
         {
-            return new Color((byte)((int)left.R * right.R / 255),
-                             (byte)((int)left.G * right.G / 255),
-                             (byte)((int)left.B * right.B / 255),
-                             (byte)((int)left.A * right.A / 255));
+            return new Color((byte)( left.R * right.R / 255 ),
+                             (byte)( left.G * right.G / 255 ),
+                             (byte)( left.B * right.B / 255 ),
+                             (byte)( left.A * right.A / 255 ));
         }
 
         /// <summary>Red component of the color</summary>
@@ -211,7 +177,7 @@ namespace SFML.Graphics
 
         /// <summary>Alpha (transparent) component of the color</summary>
         public byte A;
-        
+
         /// <summary>Predefined black color</summary>
         public static readonly Color Black = new Color(0, 0, 0);
 

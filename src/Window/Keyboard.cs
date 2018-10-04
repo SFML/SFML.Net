@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
+using SFML.System;
 
 namespace SFML.Window
 {
@@ -225,7 +226,7 @@ namespace SFML.Window
             /// <summary>The total number of keyboard keys</summary>
             KeyCount // Keep last
         };
-        
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Check if a key is pressed
@@ -251,10 +252,10 @@ namespace SFML.Window
         }
 
         #region Imports
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfKeyboard_isKeyPressed(Key Key);
 
-        [DllImport("csfml-window-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfKeyboard_setVirtualKeyboardVisible(bool visible);
         #endregion
     }

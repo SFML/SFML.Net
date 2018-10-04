@@ -1,85 +1,75 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{31D24303-F6A9-4D53-BB03-A73EDCB3186D}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFML.System</RootNamespace>
-    <AssemblyName>sfmlnet-system-2</AssemblyName>
-    <StartupObject>
-    </StartupObject>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\lib\x86\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\..\doc\build\sfmlnet-system-2.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>..\..\lib\x86\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\..\doc\build\sfmlnet-system-2.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\lib\x64\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\..\doc\build\sfmlnet-system-2.xml</DocumentationFile>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>..\..\lib\x64\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\..\doc\build\sfmlnet-system-2.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <ItemGroup>
-    <Compile Include="Clock.cs" />
-    <Compile Include="ObjectBase.cs" />
-    <Compile Include="..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Time.cs" />
-    <Compile Include="Vector2.cs" />
-    <Compile Include="Vector3.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>sfml-system</AssemblyName>
+		<RootNamespace>sfml-system</RootNamespace>
+		<Configurations>Debug;Release;_WINDOWS_;_LINUX_;_OSX_</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<IsWindows>False</IsWindows>
+		<IsOSX>False</IsOSX>
+		<IsAndroid>False</IsAndroid>
+		<IsLinux>False</IsLinux>
+		<Version>2.4.2</Version>
+		<Description>Core module of the SFML library</Description>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_OSX_|AnyCPU'">
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DefineConstants>_OSX_;NETSTANDARD2_0</DefineConstants>
+		<IsOSX>True</IsOSX>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_LINUX_|AnyCPU'">
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DefineConstants>_LINUX_;NETSTANDARD2_0</DefineConstants>
+		<IsLinux>True</IsLinux>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='_WINDOWS_|AnyCPU'">
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DefineConstants>_WINDOWS_;NETSTANDARD2_0</DefineConstants>
+		<IsWindows>True</IsWindows>
+	</PropertyGroup>
+
+	<!-- Check if we target Windows -->
+	<PropertyGroup Condition="($(RuntimeIdentifier.StartsWith('win')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $(OS.Equals('Windows_NT')) And $(RuntimeIdentifier.Equals('')) ) ">
+		<!--Replacing '-' and '.' by '_' in Constants because we cannot use those characters in the source files -->
+		<DefineConstants>_WINDOWS_;NETSTANDARD2_0</DefineConstants>
+		<IsWindows>True</IsWindows>
+				<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<!-- Check if we target OSX -->
+	<PropertyGroup Condition="($(RuntimeIdentifier.StartsWith('osx')) And !$(RuntimeIdentifier.Equals('')) ) Or ( $([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX))) And $(RuntimeIdentifier.Equals('')) ) ">
+		<!--Replacing '-' and '.' by '_' in Constants because we cannot use those characters in the source files -->
+		<DefineConstants>_OSX_, $(RuntimeIdentifier.Replace("-","_").Replace(".","_"))</DefineConstants>
+		<IsOSX>True</IsOSX>
+	</PropertyGroup>
+
+	<!-- Check if we target Android (Doesn't Detect properly for now but is Official: https://docs.microsoft.com/en-us/dotnet/core/rid-catalog) -->
+	<!-- (Less check to do because we consider we cannot Dev on Android and anyway there<s no way to detect an Android Platform other then the RID) -->
+	<PropertyGroup Condition="$(RuntimeIdentifier.StartsWith('android')) ">
+		<!--Replacing '-' and '.' by '_' in Constants because we cannot use those characters in the source files -->
+		<DefineConstants>_ANDROID_, $(RuntimeIdentifier.Replace("-","_").Replace(".","_"))</DefineConstants>
+		<IsAndroid>True</IsAndroid>
+	</PropertyGroup>
+
+	<!-- Check if we target Linux (To many name to check, instead we check if not one of the other OS) -->
+	<PropertyGroup Condition=" !$(IsWindows) And !$(IsOSX) And !$(IsAndroid)">
+		<!--Replacing '-' and '.' by '_' in Constants because we cannot use those characters in the source files -->
+		<DefineConstants>_LINUX_, $(RuntimeIdentifier.Replace("-","_").Replace(".","_"))</DefineConstants>
+		<IsLinux>True</IsLinux>
+	</PropertyGroup>
+
 </Project>

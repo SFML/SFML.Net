@@ -133,10 +133,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Blend Modes are equal</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator ==(BlendMode left, BlendMode right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(BlendMode left, BlendMode right) => left.Equals(right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -144,10 +141,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Blend Modes are not equal</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator !=(BlendMode left, BlendMode right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(BlendMode left, BlendMode right) => !left.Equals(right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -156,10 +150,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and blend mode are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj)
-        {
-            return (obj is BlendMode) && Equals((BlendMode)obj);
-        }
+        public override bool Equals(object obj) => ( obj is BlendMode ) && Equals((BlendMode)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -170,12 +161,12 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public bool Equals(BlendMode other)
         {
-            return (ColorSrcFactor == other.ColorSrcFactor) &&
-                   (ColorDstFactor == other.ColorDstFactor) &&
-                   (ColorEquation == other.ColorEquation) &&
-                   (AlphaSrcFactor == other.AlphaSrcFactor) &&
-                   (AlphaDstFactor == other.AlphaDstFactor) &&
-                   (AlphaEquation == other.AlphaEquation);
+            return ( ColorSrcFactor == other.ColorSrcFactor ) &&
+                   ( ColorDstFactor == other.ColorDstFactor ) &&
+                   ( ColorEquation == other.ColorEquation ) &&
+                   ( AlphaSrcFactor == other.AlphaSrcFactor ) &&
+                   ( AlphaDstFactor == other.AlphaDstFactor ) &&
+                   ( AlphaEquation == other.AlphaEquation );
         }
 
         ////////////////////////////////////////////////////////////

@@ -15,10 +15,7 @@ namespace SFML.Graphics
         /// Default constructor
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public ConvexShape() :
-            this(0)
-        {
-        }
+        public ConvexShape() : this(0) { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -37,12 +34,13 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="copy">Shape to copy</param>
         ////////////////////////////////////////////////////////////
-        public ConvexShape(ConvexShape copy) :
-            base(copy)
+        public ConvexShape(ConvexShape copy) : base(copy)
         {
             SetPointCount(copy.GetPointCount());
             for (uint i = 0; i < copy.GetPointCount(); ++i)
+            {
                 SetPoint(i, copy.GetPoint(i));
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -51,10 +49,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The total point count</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount()
-        {
-            return (uint)myPoints.Length;
-        }
+        public override uint GetPointCount() => (uint)myPoints.Length;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -81,10 +76,7 @@ namespace SFML.Graphics
         /// <param name="index">Index of the point to get, in range [0 .. PointCount - 1]</param>
         /// <returns>index-th point of the shape</returns>
         ////////////////////////////////////////////////////////////
-        public override Vector2f GetPoint(uint index)
-        {
-            return myPoints[index];
-        }
+        public override Vector2f GetPoint(uint index) => myPoints[index];
 
         ////////////////////////////////////////////////////////////
         /// <summary>

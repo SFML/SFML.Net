@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using SFML;
 using SFML.Audio;
 
 namespace sound_capture

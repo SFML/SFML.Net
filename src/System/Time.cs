@@ -1,6 +1,6 @@
-﻿using System;
-using System.Security;
+using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace SFML.System
 {
@@ -26,10 +26,7 @@ namespace SFML.System
         /// <param name="seconds">Number of seconds</param>
         /// <returns>Time value constructed from the amount of seconds</returns>
         ////////////////////////////////////////////////////////////
-        public static Time FromSeconds(float seconds)
-        {
-            return sfSeconds(seconds);
-        }
+        public static Time FromSeconds(float seconds) => sfSeconds(seconds);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -38,10 +35,7 @@ namespace SFML.System
         /// <param name="milliseconds">Number of milliseconds</param>
         /// <returns>Time value constructed from the amount of milliseconds</returns>
         ////////////////////////////////////////////////////////////
-        public static Time FromMilliseconds(int milliseconds)
-        {
-            return sfMilliseconds(milliseconds);
-        }
+        public static Time FromMilliseconds(int milliseconds) => sfMilliseconds(milliseconds);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -50,40 +44,28 @@ namespace SFML.System
         /// <param name="microseconds">Number of microseconds</param>
         /// <returns>Time value constructed from the amount of microseconds</returns>
         ////////////////////////////////////////////////////////////
-        public static Time FromMicroseconds(long microseconds)
-        {
-            return sfMicroseconds(microseconds);
-        }
+        public static Time FromMicroseconds(long microseconds) => sfMicroseconds(microseconds);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the time value as a number of seconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public float AsSeconds()
-        {
-            return sfTime_asSeconds(this);
-        }
+        public float AsSeconds() => sfTime_asSeconds(this);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the time value as a number of milliseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public int AsMilliseconds()
-        {
-            return sfTime_asMilliseconds(this);
-        }
+        public int AsMilliseconds() => sfTime_asMilliseconds(this);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the time value as a number of microseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public long AsMicroseconds()
-        {
-            return sfTime_asMicroseconds(this);
-        }
+        public long AsMicroseconds() => sfTime_asMicroseconds(this);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -91,10 +73,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>Times are equal</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator ==(Time left, Time right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(Time left, Time right) => left.Equals(right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -102,10 +81,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>Times are not equal</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator !=(Time left, Time right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(Time left, Time right) => !left.Equals(right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -114,10 +90,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and time are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj)
-        {
-            return (obj is Time) && Equals((Time)obj);
-        }
+        public override bool Equals(object obj) => ( obj is Time ) && Equals((Time)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -126,10 +99,7 @@ namespace SFML.System
         /// <param name="other">Time to check</param>
         /// <returns>times are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Time other)
-        {
-            return microseconds == other.microseconds;
-        }
+        public bool Equals(Time other) => microseconds == other.microseconds;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -137,10 +107,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>True if left is lesser than right</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator <(Time left, Time right)
-        {
-            return left.AsMicroseconds() < right.AsMicroseconds();
-        }
+        public static bool operator <(Time left, Time right) => left.AsMicroseconds() < right.AsMicroseconds();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -148,10 +115,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>True if left is lesser or equal than right</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator <=(Time left, Time right)
-        {
-            return left.AsMicroseconds() <= right.AsMicroseconds();
-        }
+        public static bool operator <=(Time left, Time right) => left.AsMicroseconds() <= right.AsMicroseconds();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -159,10 +123,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>True if left is greater than right</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator >(Time left, Time right)
-        {
-            return left.AsMicroseconds() > right.AsMicroseconds();
-        }
+        public static bool operator >(Time left, Time right) => left.AsMicroseconds() > right.AsMicroseconds();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -170,10 +131,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>True if left is greater or equal than right</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator >=(Time left, Time right)
-        {
-            return left.AsMicroseconds() >= right.AsMicroseconds();
-        }
+        public static bool operator >=(Time left, Time right) => left.AsMicroseconds() >= right.AsMicroseconds();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -181,10 +139,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>Difference of the two times values</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator -(Time left, Time right)
-        {
-            return FromMicroseconds(left.AsMicroseconds() - right.AsMicroseconds());
-        }
+        public static Time operator -(Time left, Time right) => FromMicroseconds(left.AsMicroseconds() - right.AsMicroseconds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -192,10 +147,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>Sum of the two times values</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator +(Time left, Time right)
-        {
-            return FromMicroseconds(left.AsMicroseconds() + right.AsMicroseconds());
-        }
+        public static Time operator +(Time left, Time right) => FromMicroseconds(left.AsMicroseconds() + right.AsMicroseconds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -203,10 +155,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left multiplied by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator *(Time left, float right)
-        {
-            return FromSeconds(left.AsSeconds() * right);
-        }
+        public static Time operator *(Time left, float right) => FromSeconds(left.AsSeconds() * right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -214,10 +163,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left multiplied by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator *(Time left, long right)
-        {
-            return FromMicroseconds(left.AsMicroseconds() * right);
-        }
+        public static Time operator *(Time left, long right) => FromMicroseconds(left.AsMicroseconds() * right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -225,10 +171,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left multiplied by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator *(float left, Time right)
-        {
-            return FromSeconds(left * right.AsSeconds());
-        }
+        public static Time operator *(float left, Time right) => FromSeconds(left * right.AsSeconds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -236,10 +179,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left multiplied by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator *(long left, Time right)
-        {
-            return FromMicroseconds(left * right.AsMicroseconds());
-        }
+        public static Time operator *(long left, Time right) => FromMicroseconds(left * right.AsMicroseconds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -247,10 +187,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left divided by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator /(Time left, Time right)
-        {
-            return FromMicroseconds(left.AsMicroseconds() / right.AsMicroseconds());
-        }
+        public static Time operator /(Time left, Time right) => FromMicroseconds(left.AsMicroseconds() / right.AsMicroseconds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -258,10 +195,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left divided by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator /(Time left, float right)
-        {
-            return FromSeconds(left.AsSeconds() / right);
-        }
+        public static Time operator /(Time left, float right) => FromSeconds(left.AsSeconds() / right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -269,10 +203,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left divided by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator /(Time left, long right)
-        {
-            return FromMicroseconds(left.AsMicroseconds() / right);
-        }
+        public static Time operator /(Time left, long right) => FromMicroseconds(left.AsMicroseconds() / right);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -280,10 +211,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left modulo of right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator %(Time left, Time right)
-        {
-            return FromMicroseconds(left.AsMicroseconds() % right.AsMicroseconds());
-        }
+        public static Time operator %(Time left, Time right) => FromMicroseconds(left.AsMicroseconds() % right.AsMicroseconds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -291,30 +219,27 @@ namespace SFML.System
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode()
-        {
-            return microseconds.GetHashCode();
-        }
+        public override int GetHashCode() => microseconds.GetHashCode();
 
         private long microseconds;
 
         #region Imports
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Time sfSeconds(float Amount);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Time sfMilliseconds(int Amount);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern Time sfMicroseconds(long Amount);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern float sfTime_asSeconds(Time time);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern int sfTime_asMilliseconds(Time time);
 
-        [DllImport("csfml-system-2", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern long sfTime_asMicroseconds(Time time);
         #endregion
     }

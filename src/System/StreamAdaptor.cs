@@ -1,8 +1,8 @@
 using System;
-using System.Runtime.InteropServices;
 using System.IO;
+using System.Runtime.InteropServices;
 
-namespace SFML.Window
+namespace SFML.System
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -91,11 +91,13 @@ namespace SFML.Window
         {
             myStream = stream;
 
-            myInputStream = new InputStream();
-            myInputStream.Read = new InputStream.ReadCallbackType(Read);
-            myInputStream.Seek = new InputStream.SeekCallbackType(Seek);
-            myInputStream.Tell = new InputStream.TellCallbackType(Tell);
-            myInputStream.GetSize = new InputStream.GetSizeCallbackType(GetSize);
+            myInputStream = new InputStream
+            {
+                Read = new InputStream.ReadCallbackType(Read),
+                Seek = new InputStream.SeekCallbackType(Seek),
+                Tell = new InputStream.TellCallbackType(Tell),
+                GetSize = new InputStream.GetSizeCallbackType(GetSize)
+            };
 
             myInputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(myInputStream));
             Marshal.StructureToPtr(myInputStream, myInputStreamPtr, false);
@@ -116,10 +118,7 @@ namespace SFML.Window
         /// The pointer to the CSFML InputStream structure
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public IntPtr InputStreamPtr
-        {
-            get { return myInputStreamPtr; }
-        }
+        public IntPtr InputStreamPtr => myInputStreamPtr;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -192,13 +191,10 @@ namespace SFML.Window
         /// <param name="userData">User data -- unused</param>
         /// <returns>Number of bytes in the stream</returns>
         ////////////////////////////////////////////////////////////
-        private long GetSize(IntPtr userData)
-        {
-            return myStream.Length;
-        }
+        private long GetSize(IntPtr userData) => myStream.Length;
 
         private Stream myStream;
         private InputStream myInputStream;
-        private IntPtr myInputStreamPtr;
+        private readonly IntPtr myInputStreamPtr;
     }
 }

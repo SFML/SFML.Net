@@ -34,10 +34,7 @@ namespace SFML.System
         /// <param name="v">Vector to negate</param>
         /// <returns>-v</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector3f operator -(Vector3f v)
-        {
-            return new Vector3f(-v.X, -v.Y, -v.Z);
-        }
+        public static Vector3f operator -(Vector3f v) => new Vector3f(-v.X, -v.Y, -v.Z);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -47,10 +44,7 @@ namespace SFML.System
         /// <param name="v2">Second vector</param>
         /// <returns>v1 - v2</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector3f operator -(Vector3f v1, Vector3f v2)
-        {
-            return new Vector3f(v1.X - v2.X, v1.Y - v2.X, v1.Z - v2.Z);
-        }
+        public static Vector3f operator -(Vector3f v1, Vector3f v2) => new Vector3f(v1.X - v2.X, v1.Y - v2.X, v1.Z - v2.Z);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -60,10 +54,7 @@ namespace SFML.System
         /// <param name="v2">Second vector</param>
         /// <returns>v1 + v2</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector3f operator +(Vector3f v1, Vector3f v2)
-        {
-            return new Vector3f(v1.X + v2.X, v1.Y + v2.X, v1.Z + v2.Z);
-        }
+        public static Vector3f operator +(Vector3f v1, Vector3f v2) => new Vector3f(v1.X + v2.X, v1.Y + v2.X, v1.Z + v2.Z);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -73,10 +64,7 @@ namespace SFML.System
         /// <param name="x">Scalar value</param>
         /// <returns>v * x</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector3f operator *(Vector3f v, float x)
-        {
-            return new Vector3f(v.X * x, v.Y * x, v.Z * x);
-        }
+        public static Vector3f operator *(Vector3f v, float x) => new Vector3f(v.X * x, v.Y * x, v.Z * x);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -86,10 +74,7 @@ namespace SFML.System
         /// <param name="v">Vector</param>
         /// <returns>x * v</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector3f operator *(float x, Vector3f v)
-        {
-            return new Vector3f(v.X * x, v.Y * x, v.Z * x);
-        }
+        public static Vector3f operator *(float x, Vector3f v) => new Vector3f(v.X * x, v.Y * x, v.Z * x);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -99,10 +84,7 @@ namespace SFML.System
         /// <param name="x">Scalar value</param>
         /// <returns>v / x</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector3f operator /(Vector3f v, float x)
-        {
-            return new Vector3f(v.X / x, v.Y / x, v.Z / x);
-        }
+        public static Vector3f operator /(Vector3f v, float x) => new Vector3f(v.X / x, v.Y / x, v.Z / x);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -112,10 +94,7 @@ namespace SFML.System
         /// <param name="v2">Second vector</param>
         /// <returns>v1 == v2</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator ==(Vector3f v1, Vector3f v2)
-        {
-            return v1.Equals(v2);
-        }
+        public static bool operator ==(Vector3f v1, Vector3f v2) => v1.Equals(v2);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -125,10 +104,7 @@ namespace SFML.System
         /// <param name="v2">Second vector</param>
         /// <returns>v1 != v2</returns>
         ////////////////////////////////////////////////////////////
-        public static bool operator !=(Vector3f v1, Vector3f v2)
-        {
-            return !v1.Equals(v2);
-        }
+        public static bool operator !=(Vector3f v1, Vector3f v2) => !v1.Equals(v2);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -136,13 +112,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[Vector3f]" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")" +
-                   " Z(" + Z + ")";
-        }
+        public override string ToString() => $"[Vector3f] X({X}) Y({Y}) Z({Z})";
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -151,10 +121,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and vector are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj)
-        {
-            return (obj is Vector3f) && Equals((Vector3f)obj);
-        }
+        public override bool Equals(object obj) => ( obj is Vector3f ) && Equals((Vector3f)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -163,12 +130,7 @@ namespace SFML.System
         /// <param name="other">Vector to check</param>
         /// <returns>Vectors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Vector3f other)
-        {
-            return (X == other.X) &&
-                   (Y == other.Y) &&
-                   (Z == other.Z);
-        }
+        public bool Equals(Vector3f other) => ( X == other.X ) && ( Y == other.Y ) && ( Z == other.Z );
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -176,12 +138,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode()
-        {
-            return X.GetHashCode() ^
-                   Y.GetHashCode() ^
-                   Z.GetHashCode();
-        }
+        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
         /// <summary>X (horizontal) component of the vector</summary>
         public float X;
