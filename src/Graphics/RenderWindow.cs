@@ -240,6 +240,17 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Set the displayed cursor to a native system cursor
+        /// </summary>
+        /// <param name="cursor">Native system cursor type to display</param>
+        ////////////////////////////////////////////////////////////
+        public override void SetMouseCursor(Cursor cursor)
+        {
+            sfRenderWindow_setMouseCursor(CPointer, cursor.CPointer);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Enable or disable automatic key-repeat.
         /// Automatic key-repeat is enabled by default
         /// </summary>
@@ -721,7 +732,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Relative mouse position</returns>
         ////////////////////////////////////////////////////////////
-        protected override Vector2i InternalGetMousePosition()
+        protected internal override Vector2i InternalGetMousePosition()
         {
             return sfMouse_getPositionRenderWindow(CPointer);
         }
@@ -734,7 +745,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="position">Relative mouse position</param>
         ////////////////////////////////////////////////////////////
-        protected override void InternalSetMousePosition(Vector2i position)
+        protected internal override void InternalSetMousePosition(Vector2i position)
         {
             sfMouse_setPositionRenderWindow(position, CPointer);
         }
@@ -748,7 +759,7 @@ namespace SFML.Graphics
         /// <param name="Finger">Finger index</param>
         /// <returns>Relative touch position</returns>
         ////////////////////////////////////////////////////////////
-        protected override Vector2i InternalGetTouchPosition(uint Finger)
+        protected internal override Vector2i InternalGetTouchPosition(uint Finger)
         {
             return sfTouch_getPositionRenderWindow(Finger, CPointer);
         }
@@ -842,6 +853,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfRenderWindow_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern void sfRenderWindow_setMouseCursor(IntPtr window, IntPtr cursor);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfRenderWindow_setKeyRepeatEnabled(IntPtr CPointer, bool Enable);

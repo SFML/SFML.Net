@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
@@ -117,7 +118,7 @@ namespace SFML.Window
             /// <summary>The ] key</summary>
             RBracket,
             /// <summary>The ; key</summary>
-            SemiColon,
+            Semicolon,
             /// <summary>The , key</summary>
             Comma,
             /// <summary>The . key</summary>
@@ -127,19 +128,19 @@ namespace SFML.Window
             /// <summary>The / key</summary>
             Slash,
             /// <summary>The \ key</summary>
-            BackSlash,
+            Backslash,
             /// <summary>The ~ key</summary>
             Tilde,
             /// <summary>The = key</summary>
             Equal,
             /// <summary>The - key</summary>
-            Dash,
+            Hyphen,
             /// <summary>The Space key</summary>
             Space,
             /// <summary>The Return key</summary>
-            Return,
+            Enter,
             /// <summary>The Backspace key</summary>
-            BackSpace,
+            Backspace,
             /// <summary>The Tabulation key</summary>
             Tab,
             /// <summary>The Page up key</summary>
@@ -224,7 +225,19 @@ namespace SFML.Window
             Pause,
 
             /// <summary>The total number of keyboard keys</summary>
-            KeyCount // Keep last
+            KeyCount, // Keep last
+
+            // Deprecated backwards compatible stuff
+            [Obsolete("Deprecated: Use Hyphen instead.")]
+            Dash = Hyphen,
+            [Obsolete("Deprecated: Use Backspace instead.")]
+            BackSpace = Backspace,
+            [Obsolete("Deprecated: Use Enter instead.")]
+            Return = Enter,
+            [Obsolete("Deprecated: Use Backslash instead.")]
+            BackSlash = Backslash,
+            [Obsolete("Deprecated: Use Semicolon instead.")]
+            SemiColon = Semicolon
         };
 
         ////////////////////////////////////////////////////////////
