@@ -11,7 +11,7 @@ namespace SFML.Graphics
     /// </summary>
     ////////////////////////////////////////////////////////////
     [StructLayout(LayoutKind.Sequential)]
-    public struct Transform : IEquatable<Transform>
+    public struct Transform
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
