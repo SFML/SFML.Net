@@ -34,8 +34,27 @@ namespace SFML.Graphics
         /// <param name="height">Height of the render-texture</param>
         /// <param name="depthBuffer">Do you want a depth-buffer attached?</param>
         ////////////////////////////////////////////////////////////
+        [Obsolete("Creating a RenderTexture with depthBuffer is deprecated. Use RenderTexture(width, height, contextSettings) instead.")]
         public RenderTexture(uint width, uint height, bool depthBuffer) :
             base(sfRenderTexture_create(width, height, depthBuffer))
+        {
+            myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
+            myTexture = new Texture(sfRenderTexture_getTexture(CPointer));
+            GC.SuppressFinalize(myDefaultView);
+            GC.SuppressFinalize(myTexture);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Create the render-texture with the given dimensions and
+        /// a ContextSettings.
+        /// </summary>
+        /// <param name="width">Width of the render-texture</param>
+        /// <param name="height">Height of the render-texture</param>
+        /// <param name="settings">A ContextSettings struct representing settings for the RenderTexture</param>
+        ////////////////////////////////////////////////////////////
+        public RenderTexture(uint width, uint height, ContextSettings contextSettings) :
+            base(sfRenderTexture_createWithSettings(width, height, contextSettings))
         {
             myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
             myTexture = new Texture(sfRenderTexture_getTexture(CPointer));
@@ -285,6 +304,13 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// The maximum anti-aliasing level supported by the system
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        static public uint MaximumAntialiasingLevel => sfRenderTexture_getMaximumAntialiasingLevel();
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Control the smooth filter
         /// </summary>
         ////////////////////////////////////////////////////////////
@@ -499,8 +525,12 @@ namespace SFML.Graphics
         private Texture myTexture = null;
 
         #region Imports
+        [Obsolete("sfRenderTexture_create is obselete. Use sfRenderTexture_createWithSettings instead.")]
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfRenderTexture_create(uint Width, uint Height, bool DepthBuffer);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern IntPtr sfRenderTexture_createWithSettings(uint Width, uint Height, ContextSettings Settings);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfRenderTexture_destroy(IntPtr CPointer);
@@ -543,6 +573,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfRenderTexture_getTexture(IntPtr CPointer);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern uint sfRenderTexture_getMaximumAntialiasingLevel();
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfRenderTexture_setSmooth(IntPtr CPointer, bool smooth);

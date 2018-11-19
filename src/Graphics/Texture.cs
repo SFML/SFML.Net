@@ -221,6 +221,19 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Update a part of this texture from another texture
+        /// </summary>
+        /// <param name="texture">Source texture to copy to destination texture</param>
+        /// <param name="x">X offset in this texture where to copy the source texture</param>
+        /// <param name="y">Y offset in this texture where to copy the source texture</param>
+        ////////////////////////////////////////////////////////////
+        public void Update(Texture texture, uint x, uint y)
+        {
+            sfTexture_updateFromTexture(CPointer, texture.CPointer, x, y);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Update a texture from an image
         /// </summary>
         /// <param name="image">Image to copy to the texture</param>
@@ -320,6 +333,17 @@ namespace SFML.Graphics
         public bool GenerateMipmap()
         {
             return sfTexture_generateMipmap(CPointer);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Swap the contents of this texture with those of another
+        /// </summary>
+        /// <param name="right">Instance to swap with</param>
+        ////////////////////////////////////////////////////////////
+        public void Swap(Texture right)
+        {
+            sfTexture_swap(CPointer, right.CPointer);
         }
 
         ////////////////////////////////////////////////////////////
@@ -487,6 +511,9 @@ namespace SFML.Graphics
         unsafe static extern void sfTexture_updateFromPixels(IntPtr texture, byte* pixels, uint width, uint height, uint x, uint y);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern void sfTexture_updateFromTexture(IntPtr CPointer, IntPtr texture, uint x, uint y);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfTexture_updateFromImage(IntPtr texture, IntPtr image, uint x, uint y);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -518,6 +545,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern bool sfTexture_generateMipmap(IntPtr texture);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern void sfTexture_swap(IntPtr CPointer, IntPtr right);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern uint sfTexture_getNativeHandle(IntPtr shader);

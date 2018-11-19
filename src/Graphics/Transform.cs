@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
@@ -243,6 +244,30 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Compare Transform and object and checks if they are equal
+        /// </summary>
+        /// <param name="obj">Object to check</param>
+        /// <returns>Object and transform are equal</returns>
+        ////////////////////////////////////////////////////////////
+        public override bool Equals(object obj) => (obj is Transform) && Equals((Transform)obj);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Compare two transforms for equality
+        ///
+        /// Performs an element-wise comparison of the elements of this
+        /// transform with the elements of the right transform.
+        /// </summary>
+        /// <param name="transform">Transform to check</param>
+        /// <returns>Transforms are equal</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Equals(Transform transform)
+        {
+            return sfTransform_equal(ref this, ref transform);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Overload of binary operator * to combine two transforms.
         /// This call is equivalent to calling new Transform(left).Combine(right).
         /// </summary>
@@ -332,6 +357,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfTransform_scaleWithCenter(ref Transform transform, float scaleX, float scaleY, float centerX, float centerY);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        static extern bool sfTransform_equal(ref Transform left, ref Transform right);
         #endregion
     }
 }
