@@ -14,7 +14,8 @@ Zachariah Brown - active maintainer (contact@zbrown.net)
 Download
 --------
 
-You can get the latest official release on SFML website (http://www.sfml-dev.org/download/sfml.net).
+You can get the latest official release on NuGet (https://www.nuget.org/packages/SFML.Net/) or on the
+SFML website (http://www.sfml-dev.org/download/sfml.net).
 You can also get the current development version from the git repository (https://github.com/SFML/SFML.Net).
 
 Learn
@@ -31,8 +32,11 @@ Of course, you can also find the SFML.Net API documentation in the SDK.
 Dependencies
 --------
 
-To run SFML.NET executables you must have a copy of CSFML. CSFML can be compiled from
-source (https://github.com/SFML/CSFML/) or downloaded from the offical release
+The NuGet package of SFML.Net comes with all dependencies, including native CSFML
+and SFML libraries for most platforms.
+
+For unsupported platforms or non-NuGet sources, you must have a copy of CSFML. CSFML can be compiled from
+source (https://github.com/SFML/CSFML/) or downloaded from the official release
 page (http://www.sfml-dev.org/download/csfml/). Also note that since CSFML depends on
 the main SFML project you also need all SFML runtime dependencies.
 

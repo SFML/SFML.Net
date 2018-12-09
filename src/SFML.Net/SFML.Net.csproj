@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+  <Import Project="..\..\SFML.NuGet.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>SFML.Net</PackageId>
+    <Description>
+      A simple, fast, cross-platform and object-oriented multimedia API. It provides access to windowing, graphics, audio and network.
+
+      This is a meta-package that includes all SFML modules.
+    </Description>
+    <Title>SFML.Net</Title>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SFML.Audio\SFML.Audio.csproj"  />
+    <ProjectReference Include="..\SFML.Graphics\SFML.Graphics.csproj" />
+    <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
+    <ProjectReference Include="..\SFML.Window\SFML.Window.csproj" />
+  </ItemGroup>
+
+</Project>

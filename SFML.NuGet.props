@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- This file contains the data shared by all projects that generate a NuGet package. -->
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <Version>2.5.0</Version>
+    <Authors>Laurent Gomila</Authors>
+    <PackageTags>sfml sfml.net</PackageTags>
+    <Copyright>Copyright © Laurent Gomila</Copyright>
+
+    <PackageLicenseExpression>Zlib</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.sfml-dev.org/</PackageProjectUrl>
+    <PackageIconUrl>https://www.sfml-dev.org/images/sfml-icon.png</PackageIconUrl>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

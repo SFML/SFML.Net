@@ -1,0 +1,23 @@
+<Project>
+
+  <!-- This file contains the data shared by all SFML Modules. -->
+
+  <Import Project="SFML.NuGet.props" />
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <Description>$(SFMLModule) module of the SFML.Net library</Description>
+    <Title>SFML.Net $(SFMLModule)</Title>
+
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSFML" Version="$(Version)" />
+  </ItemGroup>
+
+</Project>

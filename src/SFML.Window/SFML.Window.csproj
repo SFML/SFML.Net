@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <SFMLModule>Window</SFMLModule>
+  </PropertyGroup>
+
+  <Import Project="..\..\SFML.Module.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
+  </ItemGroup>
+
+</Project>

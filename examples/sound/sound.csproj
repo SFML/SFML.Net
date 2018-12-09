@@ -10,10 +10,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Audio\sfml-audio.csproj" />
-		<ProjectReference Include="..\..\src\Graphics\sfml-graphics.csproj" />
-		<ProjectReference Include="..\..\src\System\sfml-system.csproj" />
-		<ProjectReference Include="..\..\src\Window\sfml-window.csproj" />
+		<ProjectReference Include="..\..\src\SFML.Audio\SFML.Audio.csproj" />
+		<ProjectReference Include="..\..\src\SFML.Graphics\SFML.Graphics.csproj" />
+		<ProjectReference Include="..\..\src\SFML.System\SFML.System.csproj" />
+		<ProjectReference Include="..\..\src\SFML.Window\SFML.Window.csproj" />
 	</ItemGroup>
 
 </Project>
