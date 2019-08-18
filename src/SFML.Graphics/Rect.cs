@@ -221,7 +221,7 @@ namespace SFML.Graphics
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// IntRect is an utility class for manipulating 2D rectangles
+    /// FloatRect is an utility class for manipulating 2D rectangles
     /// with float coordinates
     /// </summary>
     ////////////////////////////////////////////////////////////
