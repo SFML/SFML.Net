@@ -228,14 +228,19 @@ namespace SFML.Window
             KeyCount, // Keep last
 
             // Deprecated backwards compatible stuff
+            /// <summary>DEPRECATED: Use Hyphen</summary>
             [Obsolete("Deprecated: Use Hyphen instead.")]
             Dash = Hyphen,
+            /// <summary>DEPRECATED: Use Backspace</summary>
             [Obsolete("Deprecated: Use Backspace instead.")]
             BackSpace = Backspace,
+            /// <summary>DEPRECATED: Use Enter</summary>
             [Obsolete("Deprecated: Use Enter instead.")]
             Return = Enter,
+            /// <summary>DEPRECATED: Use Backslash</summary>
             [Obsolete("Deprecated: Use Backslash instead.")]
             BackSlash = Backslash,
+            /// <summary>DEPRECATED: Use Semicolon</summary>
             [Obsolete("Deprecated: Use Semicolon instead.")]
             SemiColon = Semicolon
         };
