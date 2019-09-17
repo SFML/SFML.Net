@@ -1,10 +1,19 @@
-﻿using SFML.System;
+using SFML.System;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
 namespace SFML.Graphics
 {
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Vertex buffer storage for one or more 2D primitives.
+    ///
+    /// VertexBuffer is a simple wrapper around a dynamic buffer of vertices and a primitives type.
+    ///
+    /// Unlike SFML.VertexArray, the vertex data is stored in graphics memory.
+    /// </summary>
+    ////////////////////////////////////////////////////////////
     public class VertexBuffer : ObjectBase, Drawable
     {
         ////////////////////////////////////////////////////////////
@@ -21,8 +30,11 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public enum UsageSpecifier
         {
+            /// <summary>Constantly changing data.</summary>
             Stream,
+            /// <summary>Occasionally changing data.</summary>
             Dynamic,
+            /// <summary>Rarely changing data.</summary>
             Static
         }
 
