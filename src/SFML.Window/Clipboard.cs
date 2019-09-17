@@ -1,4 +1,4 @@
-﻿using SFML.System;
+using SFML.System;
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -6,6 +6,9 @@ using System.Text;
 
 namespace SFML.Window
 {
+    /// <summary>
+    /// Clipboard provides an interface for getting and setting the contents of the system clipboard.
+    /// </summary>
     public class Clipboard
     {
         /// <summary>

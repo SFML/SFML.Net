@@ -265,7 +265,7 @@ namespace SFML.Window
         /// <summary>
         /// Set the displayed cursor to a native system cursor
         /// </summary>
-        /// <param name="enable">True to enable v-sync, false to deactivate</param>
+        /// <param name="cursor">Native system cursor type to display</param>
         ////////////////////////////////////////////////////////////
         public virtual void SetMouseCursor(Cursor cursor)
         {

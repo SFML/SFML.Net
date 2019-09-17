@@ -21,7 +21,7 @@ namespace SFML.Graphics
         /// <param name="height">Height of the render-texture</param>
         ////////////////////////////////////////////////////////////
         public RenderTexture(uint width, uint height) :
-            this(width, height, false)
+            this(width, height, default(ContextSettings))
         {
         }
 
@@ -51,10 +51,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="width">Width of the render-texture</param>
         /// <param name="height">Height of the render-texture</param>
-        /// <param name="settings">A ContextSettings struct representing settings for the RenderTexture</param>
+        /// <param name="contextSettings">A ContextSettings struct representing settings for the RenderTexture</param>
         ////////////////////////////////////////////////////////////
         public RenderTexture(uint width, uint height, ContextSettings contextSettings) :
-            base(sfRenderTexture_createWithSettings(width, height, contextSettings))
+            base(sfRenderTexture_createWithSettings(width, height, ref contextSettings))
         {
             myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
             myTexture = new Texture(sfRenderTexture_getTexture(CPointer));
@@ -530,7 +530,7 @@ namespace SFML.Graphics
         static extern IntPtr sfRenderTexture_create(uint Width, uint Height, bool DepthBuffer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfRenderTexture_createWithSettings(uint Width, uint Height, ContextSettings Settings);
+        static extern IntPtr sfRenderTexture_createWithSettings(uint Width, uint Height, ref ContextSettings Settings);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern void sfRenderTexture_destroy(IntPtr CPointer);
