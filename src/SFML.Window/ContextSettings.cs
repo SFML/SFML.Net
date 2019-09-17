@@ -92,7 +92,7 @@ namespace SFML.Window
                    " MajorVersion(" + MajorVersion + ")" +
                    " MinorVersion(" + MinorVersion + ")" +
                    " AttributeFlags(" + AttributeFlags + ")" +
-                   " sRGBCapable(" + sRGBCapable + ")";
+                   " sRGBCapable(" + SRgbCapable + ")";
         }
 
         /// <summary>Depth buffer bits (0 is disabled)</summary>
