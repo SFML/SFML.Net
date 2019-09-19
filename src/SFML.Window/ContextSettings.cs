@@ -117,6 +117,10 @@ namespace SFML.Window
         private int _SRgbCapable;
 
         /// <summary>Whether the context framebuffer is sRGB capable</summary>
-        public bool SRgbCapable { get => _SRgbCapable == 1; }
+        public bool SRgbCapable
+        {
+            get => _SRgbCapable == 1;
+            set { _SRgbCapable = value ? 1 : 0; }
+        }
     }
 }
