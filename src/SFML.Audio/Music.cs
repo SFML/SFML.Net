@@ -354,6 +354,9 @@ namespace SFML.Audio
 
         private StreamAdaptor myStream = null;
 
+        /// <summary>
+        /// Structure defining a Time range. 
+        /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct TimeSpan
         {

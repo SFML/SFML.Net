@@ -74,7 +74,7 @@ namespace SFML.Window
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             AttributeFlags = attributes;
-            SRgbCapable = sRgbCapable;
+            _SRgbCapable = sRgbCapable ? 1 : 0;
         }
 
         ////////////////////////////////////////////////////////////
@@ -91,7 +91,8 @@ namespace SFML.Window
                    " AntialiasingLevel(" + AntialiasingLevel + ")" +
                    " MajorVersion(" + MajorVersion + ")" +
                    " MinorVersion(" + MinorVersion + ")" +
-                   " AttributeFlags(" + AttributeFlags + ")";
+                   " AttributeFlags(" + AttributeFlags + ")" +
+                   " SRgbCapable(" + SRgbCapable + ")";
         }
 
         /// <summary>Depth buffer bits (0 is disabled)</summary>
@@ -112,7 +113,14 @@ namespace SFML.Window
         /// <summary>The attribute flags to create the context with</summary>
         public Attribute AttributeFlags;
 
+        /// <summary>Internal Representation</summary>
+        private int _SRgbCapable;
+
         /// <summary>Whether the context framebuffer is sRGB capable</summary>
-        public bool SRgbCapable;
+        public bool SRgbCapable
+        {
+            get => _SRgbCapable == 1;
+            set { _SRgbCapable = value ? 1 : 0; }
+        }
     }
 }

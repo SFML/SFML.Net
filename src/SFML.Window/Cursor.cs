@@ -1,4 +1,4 @@
-﻿using SFML;
+using SFML;
 using SFML.System;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SFML.Window
 {
+    /// <summary>
+    /// Cursor defines the appearance of a system cursor. 
+    /// </summary>
     public class Cursor : ObjectBase
     {
         /// <summary>
@@ -161,6 +164,12 @@ namespace SFML.Window
             }
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Handle the destruction of the object
+        /// </summary>
+        /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+        ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing)
         {
             sfCursor_destroy(CPointer);
