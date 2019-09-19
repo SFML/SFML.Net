@@ -9,7 +9,7 @@ namespace SFML.Graphics
     /// </summary>
     ////////////////////////////////////////////////////////////
     [StructLayout(LayoutKind.Sequential)]
-    public struct BlendMode : IEquatable<BlendMode>
+    public struct BlendModes : IEquatable<BlendMode>
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
