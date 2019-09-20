@@ -1,0 +1,13 @@
+language: csharp
+mono: none
+dist: xenial
+dotnet: 2.2.104
+script:
+ - dotnet restore
+ - dotnet build
+
+deploy:
+  provider: script
+  script: bash pushnuget.sh $NUGET_API_KEY
+  on:
+    tags: true

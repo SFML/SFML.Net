@@ -268,6 +268,20 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Generates a hash code by XORing together the internal 3x3 matrix.
+        /// </summary>
+        /// <returns>XOR'd Hash of floats contained.</returns>
+        ////////////////////////////////////////////////////////////
+        public override int GetHashCode()
+        {
+            var hash0 = m00.GetHashCode() ^ m01.GetHashCode() ^ m02.GetHashCode();
+            var hash1 = m10.GetHashCode() ^ m11.GetHashCode() ^ m12.GetHashCode();
+            var hash2 = m20.GetHashCode() ^ m21.GetHashCode() ^ m22.GetHashCode();
+            return (hash0 ^ hash1 ^ hash2);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Overload of binary operator * to combine two transforms.
         /// This call is equivalent to calling new Transform(left).Combine(right).
         /// </summary>
