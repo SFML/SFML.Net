@@ -12,10 +12,11 @@
     </Description>
     <Title>SFML.Net</Title>
     <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SFML.Audio\SFML.Audio.csproj"  />
+    <ProjectReference Include="..\SFML.Audio\SFML.Audio.csproj" />
     <ProjectReference Include="..\SFML.Graphics\SFML.Graphics.csproj" />
     <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
     <ProjectReference Include="..\SFML.Window\SFML.Window.csproj" />
