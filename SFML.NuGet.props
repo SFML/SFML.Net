@@ -12,13 +12,16 @@
 
     <PackageLicenseExpression>Zlib</PackageLicenseExpression>
     <PackageProjectUrl>https://www.sfml-dev.org/</PackageProjectUrl>
-    <PackageIconUrl>https://www.sfml-dev.org/images/sfml-icon.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/SFML/SFML.Net</RepositoryUrl>
+    <PackageIcon>sfml-icon.png</PackageIcon>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="all" />
+	
+    <None Include="..\..\sfml-icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
