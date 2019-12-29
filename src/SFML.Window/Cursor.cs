@@ -61,7 +61,7 @@ namespace SFML.Window
             /// Mac OS:  Yes
             /// Linux:   Yes
             /// </summary>
-            SizeHorinzontal,
+            SizeHorizontal,
             /// <summary>
             /// Vertical double arrow cursor
             /// Windows: Yes

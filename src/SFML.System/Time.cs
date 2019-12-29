@@ -187,7 +187,7 @@ namespace SFML.System
         /// </summary>
         /// <returns>left divided by the right</returns>
         ////////////////////////////////////////////////////////////
-        public static Time operator /(Time left, Time right) => FromMicroseconds(left.AsMicroseconds() / right.AsMicroseconds());
+        public static float operator /(Time left, Time right) => left.AsSeconds() / right.AsSeconds();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
