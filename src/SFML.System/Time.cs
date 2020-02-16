@@ -48,24 +48,47 @@ namespace SFML.System
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Construct a Time value from a TimeSpan
+        /// </summary>
+        /// <param name="timeSpan">A TimeSpan representing the amount of time to represent</param>
+        /// <returns>Time value constructed from an existing TimeSpan</returns>
+        ////////////////////////////////////////////////////////////
+        public static Time FromTimeSpan(TimeSpan timeSpan) => sfMicroseconds(timeSpan.Ticks * 1000 / TimeSpan.TicksPerMillisecond);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Returns the time value as a number of seconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public float AsSeconds() => sfTime_asSeconds(this);
+        public float AsSeconds() => microseconds / 1000000f;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the time value as a number of milliseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public int AsMilliseconds() => sfTime_asMilliseconds(this);
+        public int AsMilliseconds() => (int)(microseconds / 1000);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the time value as a number of microseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public long AsMicroseconds() => sfTime_asMicroseconds(this);
+        public long AsMicroseconds() => microseconds;
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Returns the time value as a TimeSpan
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * (TimeSpan.TicksPerMillisecond / 1000));
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Implicit conversion from TimeSpan to SFML.System.Time, allowing intuitive use
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static implicit operator Time(TimeSpan timeSpan) => FromTimeSpan(timeSpan);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
