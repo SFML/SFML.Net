@@ -227,7 +227,7 @@ namespace SFML.Audio
         unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, ulong size);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, uint SampleCount, uint ChannelsCount, uint SampleRate);
+        unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, ulong SampleCount, uint ChannelsCount, uint SampleRate);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern IntPtr sfSoundBuffer_copy(IntPtr SoundBuffer);
@@ -242,7 +242,7 @@ namespace SFML.Audio
         static extern IntPtr sfSoundBuffer_getSamples(IntPtr SoundBuffer);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern uint sfSoundBuffer_getSampleCount(IntPtr SoundBuffer);
+        static extern ulong sfSoundBuffer_getSampleCount(IntPtr SoundBuffer);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern uint sfSoundBuffer_getSampleRate(IntPtr SoundBuffer);
