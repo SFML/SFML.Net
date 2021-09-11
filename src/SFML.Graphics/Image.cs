@@ -299,6 +299,24 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Copy the array of pixels (RGBA 8 bits integers
+        /// components) to the provided buffer.
+        /// Buffer size must be at least Width x Height x 4
+        /// </summary>
+        /// <param name="buffer">Buffer to copy to</param>
+        ////////////////////////////////////////////////////////////
+        public void CopyPixels(byte[] buffer)
+        {
+            Vector2u size = Size;
+            if (buffer.Length < size.X * size.Y * 4)
+            {
+                throw new ArgumentException("Buffer must have a size of at least Width * Height * 4 bytes", nameof(buffer));
+            }
+            Marshal.Copy(sfImage_getPixelsPtr(CPointer), buffer, 0, (int)(size.X * size.Y * 4));
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Size of the image, in pixels
         /// </summary>
         ////////////////////////////////////////////////////////////
