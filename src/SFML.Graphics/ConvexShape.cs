@@ -49,7 +49,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The total point count</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount() => (uint)myPoints.Length;
+        public override uint GetPointCount() => (uint)(myPoints?.Length ?? 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
