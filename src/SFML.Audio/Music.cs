@@ -360,8 +360,26 @@ namespace SFML.Audio
         [StructLayout(LayoutKind.Sequential)]
         public struct TimeSpan
         {
-            Time offset;
-            Time length;
+            /// <summary>
+            /// Constructs TimeSpan from offset and a length
+            /// </summary>
+            /// <param name="offset">beginning offset of the time range</param>
+            /// <param name="length">length of the time range</param>
+            public TimeSpan(Time offset, Time length)
+            {
+                Offset = offset;
+                Length = length;
+            }
+
+            /// <summary>
+            /// The beginning of the time range
+            /// </summary>
+            public Time Offset;
+
+            /// <summary>
+            /// The length of the time range
+            /// </summary>
+            public Time Length;
         }
 
         #region Imports
