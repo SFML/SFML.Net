@@ -414,7 +414,7 @@ namespace SFML.Audio
         static extern TimeSpan sfMusic_getLoopPoints(IntPtr Music);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern TimeSpan sfMusic_setLoopPoints(IntPtr Music, TimeSpan timePoints);
+        static extern void sfMusic_setLoopPoints(IntPtr Music, TimeSpan timePoints);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         static extern uint sfMusic_getChannelCount(IntPtr Music);
