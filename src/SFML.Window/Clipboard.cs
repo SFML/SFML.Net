@@ -49,9 +49,9 @@ namespace SFML.Window
         }
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfClipboard_getUnicodeString();
+        private static extern IntPtr sfClipboard_getUnicodeString();
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfClipboard_setUnicodeString(IntPtr ptr);
+        private static extern void sfClipboard_setUnicodeString(IntPtr ptr);
     }
 }

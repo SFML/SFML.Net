@@ -176,12 +176,12 @@ namespace SFML.Window
         }
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfCursor_createFromSystem(CursorType type);
+        private static extern IntPtr sfCursor_createFromSystem(CursorType type);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfCursor_createFromPixels(IntPtr pixels, Vector2u size, Vector2u hotspot);
+        private static extern IntPtr sfCursor_createFromPixels(IntPtr pixels, Vector2u size, Vector2u hotspot);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfCursor_destroy(IntPtr CPointer);
+        private static extern void sfCursor_destroy(IntPtr CPointer);
     }
 }

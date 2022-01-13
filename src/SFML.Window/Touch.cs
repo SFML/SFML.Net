@@ -59,10 +59,10 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfTouch_isDown(uint Finger);
+        private static extern bool sfTouch_isDown(uint Finger);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
+        private static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
         #endregion
     }
 }
