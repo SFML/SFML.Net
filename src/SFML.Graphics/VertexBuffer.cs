@@ -277,49 +277,49 @@ namespace SFML.Graphics
 
         #region Imports
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfVertexBuffer_create(uint vertexCount, PrimitiveType type, UsageSpecifier usage);
+        private static extern IntPtr sfVertexBuffer_create(uint vertexCount, PrimitiveType type, UsageSpecifier usage);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfVertexBuffer_copy(IntPtr copy);
+        private static extern IntPtr sfVertexBuffer_copy(IntPtr copy);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfVertexBuffer_destroy(IntPtr CPointer);
+        private static extern void sfVertexBuffer_destroy(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern uint sfVertexBuffer_getVertexCount(IntPtr CPointer);
+        private static extern uint sfVertexBuffer_getVertexCount(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern unsafe bool sfVertexBuffer_update(IntPtr CPointer, Vertex* vertices, uint vertexCount, uint offset);
+        private static extern unsafe bool sfVertexBuffer_update(IntPtr CPointer, Vertex* vertices, uint vertexCount, uint offset);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfVertexBuffer_updateFromVertexBuffer(IntPtr CPointer, IntPtr other);
+        private static extern bool sfVertexBuffer_updateFromVertexBuffer(IntPtr CPointer, IntPtr other);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfVertexBuffer_swap(IntPtr CPointer, IntPtr other);
+        private static extern void sfVertexBuffer_swap(IntPtr CPointer, IntPtr other);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern uint sfVertexBuffer_getNativeHandle(IntPtr CPointer);
+        private static extern uint sfVertexBuffer_getNativeHandle(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfVertexBuffer_setPrimitiveType(IntPtr CPointer, PrimitiveType primitiveType);
+        private static extern void sfVertexBuffer_setPrimitiveType(IntPtr CPointer, PrimitiveType primitiveType);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern PrimitiveType sfVertexBuffer_getPrimitiveType(IntPtr CPointer);
+        private static extern PrimitiveType sfVertexBuffer_getPrimitiveType(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfVertexBuffer_setUsage(IntPtr CPointer, UsageSpecifier usageType);
+        private static extern void sfVertexBuffer_setUsage(IntPtr CPointer, UsageSpecifier usageType);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern UsageSpecifier sfVertexBuffer_getUsage(IntPtr CPointer);
+        private static extern UsageSpecifier sfVertexBuffer_getUsage(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfVertexBuffer_isAvailable();
+        private static extern bool sfVertexBuffer_isAvailable();
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfRenderWindow_drawVertexBuffer(IntPtr CPointer, IntPtr VertexArray, ref RenderStates.MarshalData states);
+        private static extern void sfRenderWindow_drawVertexBuffer(IntPtr CPointer, IntPtr VertexArray, ref RenderStates.MarshalData states);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfRenderTexture_drawVertexBuffer(IntPtr CPointer, IntPtr VertexBuffer, ref RenderStates.MarshalData states);
+        private static extern void sfRenderTexture_drawVertexBuffer(IntPtr CPointer, IntPtr VertexBuffer, ref RenderStates.MarshalData states);
         #endregion
     }
 }
