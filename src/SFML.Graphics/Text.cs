@@ -370,88 +370,88 @@ namespace SFML.Graphics
 
         #region Imports
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfText_create();
+        private static extern IntPtr sfText_create();
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfText_copy(IntPtr Text);
+        private static extern IntPtr sfText_copy(IntPtr Text);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_destroy(IntPtr CPointer);
+        private static extern void sfText_destroy(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        static extern void sfText_setColor(IntPtr CPointer, Color Color);
+        private static extern void sfText_setColor(IntPtr CPointer, Color Color);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setFillColor(IntPtr CPointer, Color Color);
+        private static extern void sfText_setFillColor(IntPtr CPointer, Color Color);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setOutlineColor(IntPtr CPointer, Color Color);
+        private static extern void sfText_setOutlineColor(IntPtr CPointer, Color Color);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setOutlineThickness(IntPtr CPointer, float thickness);
+        private static extern void sfText_setOutlineThickness(IntPtr CPointer, float thickness);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        static extern Color sfText_getColor(IntPtr CPointer);
+        private static extern Color sfText_getColor(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Color sfText_getFillColor(IntPtr CPointer);
+        private static extern Color sfText_getFillColor(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Color sfText_getOutlineColor(IntPtr CPointer);
+        private static extern Color sfText_getOutlineColor(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern float sfText_getOutlineThickness(IntPtr CPointer);
+        private static extern float sfText_getOutlineThickness(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfRenderWindow_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+        private static extern void sfRenderWindow_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfRenderTexture_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
+        private static extern void sfRenderTexture_drawText(IntPtr CPointer, IntPtr Text, ref RenderStates.MarshalData states);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setUnicodeString(IntPtr CPointer, IntPtr Text);
+        private static extern void sfText_setUnicodeString(IntPtr CPointer, IntPtr Text);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setFont(IntPtr CPointer, IntPtr Font);
+        private static extern void sfText_setFont(IntPtr CPointer, IntPtr Font);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setCharacterSize(IntPtr CPointer, uint Size);
+        private static extern void sfText_setCharacterSize(IntPtr CPointer, uint Size);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setLineSpacing(IntPtr CPointer, float spacingFactor);
+        private static extern void sfText_setLineSpacing(IntPtr CPointer, float spacingFactor);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setLetterSpacing(IntPtr CPointer, float spacingFactor);
+        private static extern void sfText_setLetterSpacing(IntPtr CPointer, float spacingFactor);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfText_setStyle(IntPtr CPointer, Styles Style);
+        private static extern void sfText_setStyle(IntPtr CPointer, Styles Style);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfText_getString(IntPtr CPointer);
+        private static extern IntPtr sfText_getString(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfText_getUnicodeString(IntPtr CPointer);
+        private static extern IntPtr sfText_getUnicodeString(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern uint sfText_getCharacterSize(IntPtr CPointer);
+        private static extern uint sfText_getCharacterSize(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern float sfText_getLetterSpacing(IntPtr CPointer);
+        private static extern float sfText_getLetterSpacing(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern float sfText_getLineSpacing(IntPtr CPointer);
+        private static extern float sfText_getLineSpacing(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Styles sfText_getStyle(IntPtr CPointer);
+        private static extern Styles sfText_getStyle(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern FloatRect sfText_getRect(IntPtr CPointer);
+        private static extern FloatRect sfText_getRect(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, uint Index);
+        private static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, uint Index);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern FloatRect sfText_getLocalBounds(IntPtr CPointer);
+        private static extern FloatRect sfText_getLocalBounds(IntPtr CPointer);
         #endregion
     }
 }

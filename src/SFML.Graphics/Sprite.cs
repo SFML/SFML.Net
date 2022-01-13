@@ -183,37 +183,37 @@ namespace SFML.Graphics
         #region Imports
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfSprite_create();
+        private static extern IntPtr sfSprite_create();
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfSprite_copy(IntPtr Sprite);
+        private static extern IntPtr sfSprite_copy(IntPtr Sprite);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSprite_destroy(IntPtr CPointer);
+        private static extern void sfSprite_destroy(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSprite_setColor(IntPtr CPointer, Color Color);
+        private static extern void sfSprite_setColor(IntPtr CPointer, Color Color);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Color sfSprite_getColor(IntPtr CPointer);
+        private static extern Color sfSprite_getColor(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfRenderWindow_drawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
+        private static extern void sfRenderWindow_drawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfRenderTexture_drawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
+        private static extern void sfRenderTexture_drawSprite(IntPtr CPointer, IntPtr Sprite, ref RenderStates.MarshalData states);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSprite_setTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
+        private static extern void sfSprite_setTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSprite_setTextureRect(IntPtr CPointer, IntRect Rect);
+        private static extern void sfSprite_setTextureRect(IntPtr CPointer, IntRect Rect);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntRect sfSprite_getTextureRect(IntPtr CPointer);
+        private static extern IntRect sfSprite_getTextureRect(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern FloatRect sfSprite_getLocalBounds(IntPtr CPointer);
+        private static extern FloatRect sfSprite_getLocalBounds(IntPtr CPointer);
         #endregion
     }
 }
