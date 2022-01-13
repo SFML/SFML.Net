@@ -70,28 +70,28 @@ namespace SFML.Audio
 
         #region Imports
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfListener_setGlobalVolume(float Volume);
+        private static extern void sfListener_setGlobalVolume(float Volume);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern float sfListener_getGlobalVolume();
+        private static extern float sfListener_getGlobalVolume();
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfListener_setPosition(Vector3f position);
+        private static extern void sfListener_setPosition(Vector3f position);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Vector3f sfListener_getPosition();
+        private static extern Vector3f sfListener_getPosition();
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfListener_setDirection(Vector3f direction);
+        private static extern void sfListener_setDirection(Vector3f direction);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Vector3f sfListener_getDirection();
+        private static extern Vector3f sfListener_getDirection();
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfListener_setUpVector(Vector3f upVector);
+        private static extern void sfListener_setUpVector(Vector3f upVector);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Vector3f sfListener_getUpVector();
+        private static extern Vector3f sfListener_getUpVector();
         #endregion
     }
 }

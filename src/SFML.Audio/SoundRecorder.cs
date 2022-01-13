@@ -294,43 +294,43 @@ namespace SFML.Audio
 
         #region Imports
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfSoundRecorder_create(StartCallback OnStart, ProcessCallback OnProcess, StopCallback OnStop, IntPtr UserData);
+        private static extern IntPtr sfSoundRecorder_create(StartCallback OnStart, ProcessCallback OnProcess, StopCallback OnStop, IntPtr UserData);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSoundRecorder_destroy(IntPtr SoundRecorder);
+        private static extern void sfSoundRecorder_destroy(IntPtr SoundRecorder);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfSoundRecorder_start(IntPtr SoundRecorder, uint SampleRate);
+        private static extern bool sfSoundRecorder_start(IntPtr SoundRecorder, uint SampleRate);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSoundRecorder_stop(IntPtr SoundRecorder);
+        private static extern void sfSoundRecorder_stop(IntPtr SoundRecorder);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern uint sfSoundRecorder_getSampleRate(IntPtr SoundRecorder);
+        private static extern uint sfSoundRecorder_getSampleRate(IntPtr SoundRecorder);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfSoundRecorder_isAvailable();
+        private static extern bool sfSoundRecorder_isAvailable();
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSoundRecorder_setProcessingInterval(IntPtr SoundRecorder, Time Interval);
+        private static extern void sfSoundRecorder_setProcessingInterval(IntPtr SoundRecorder, Time Interval);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        unsafe static extern IntPtr* sfSoundRecorder_getAvailableDevices(out uint Count);
+        private unsafe static extern IntPtr* sfSoundRecorder_getAvailableDevices(out uint Count);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfSoundRecorder_getDefaultDevice();
+        private static extern IntPtr sfSoundRecorder_getDefaultDevice();
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfSoundRecorder_setDevice(IntPtr SoundRecorder, string Name);
+        private static extern bool sfSoundRecorder_setDevice(IntPtr SoundRecorder, string Name);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfSoundRecorder_getDevice(IntPtr SoundRecorder);
+        private static extern IntPtr sfSoundRecorder_getDevice(IntPtr SoundRecorder);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSoundRecorder_setChannelCount(IntPtr SoundRecorder, uint channelCount);
+        private static extern void sfSoundRecorder_setChannelCount(IntPtr SoundRecorder, uint channelCount);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern uint sfSoundRecorder_getChannelCount(IntPtr SoundRecorder);
+        private static extern uint sfSoundRecorder_getChannelCount(IntPtr SoundRecorder);
         #endregion
     }
 }
