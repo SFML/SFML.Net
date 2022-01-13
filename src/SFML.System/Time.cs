@@ -248,22 +248,22 @@ namespace SFML.System
 
         #region Imports
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Time sfSeconds(float Amount);
+        private static extern Time sfSeconds(float Amount);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Time sfMilliseconds(int Amount);
+        private static extern Time sfMilliseconds(int Amount);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Time sfMicroseconds(long Amount);
+        private static extern Time sfMicroseconds(long Amount);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern float sfTime_asSeconds(Time time);
+        private static extern float sfTime_asSeconds(Time time);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern int sfTime_asMilliseconds(Time time);
+        private static extern int sfTime_asMilliseconds(Time time);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern long sfTime_asMicroseconds(Time time);
+        private static extern long sfTime_asMicroseconds(Time time);
         #endregion
     }
 }

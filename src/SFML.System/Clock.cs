@@ -46,16 +46,16 @@ namespace SFML.System
 
         #region Imports
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfClock_create();
+        private static extern IntPtr sfClock_create();
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfClock_destroy(IntPtr CPointer);
+        private static extern void sfClock_destroy(IntPtr CPointer);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Time sfClock_getElapsedTime(IntPtr Clock);
+        private static extern Time sfClock_getElapsedTime(IntPtr Clock);
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Time sfClock_restart(IntPtr Clock);
+        private static extern Time sfClock_restart(IntPtr Clock);
         #endregion
     }
 }
