@@ -111,13 +111,13 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern VideoMode sfVideoMode_getDesktopMode();
+        private static extern VideoMode sfVideoMode_getDesktopMode();
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out uint Count);
+        private unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out uint Count);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfVideoMode_isValid(VideoMode Mode);
+        private static extern bool sfVideoMode_isValid(VideoMode Mode);
         #endregion
     }
 }

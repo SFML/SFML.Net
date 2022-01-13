@@ -78,13 +78,13 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfSensor_isAvailable(Type Sensor);
+        private static extern bool sfSensor_isAvailable(Type Sensor);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfSensor_setEnabled(Type Sensor, bool Enabled);
+        private static extern void sfSensor_setEnabled(Type Sensor, bool Enabled);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern Vector3f sfSensor_getValue(Type Sensor);
+        private static extern Vector3f sfSensor_getValue(Type Sensor);
         #endregion
     }
 }

@@ -90,16 +90,16 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr sfContext_create();
+        private static extern IntPtr sfContext_create();
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern void sfContext_destroy(IntPtr View);
+        private static extern void sfContext_destroy(IntPtr View);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern bool sfContext_setActive(IntPtr View, bool Active);
+        private static extern bool sfContext_setActive(IntPtr View, bool Active);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        static extern ContextSettings sfContext_getSettings(IntPtr View);
+        private static extern ContextSettings sfContext_getSettings(IntPtr View);
         #endregion
     }
 }
