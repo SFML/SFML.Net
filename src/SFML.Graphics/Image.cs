@@ -395,10 +395,10 @@ namespace SFML.Graphics
         private static extern Vector2u sfImage_getSize(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfImage_flipHorizontally(IntPtr CPointer);
+        private static extern void sfImage_flipHorizontally(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfImage_flipVertically(IntPtr CPointer);
+        private static extern void sfImage_flipVertically(IntPtr CPointer);
         #endregion
     }
 }

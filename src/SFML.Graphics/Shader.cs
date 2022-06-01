@@ -201,7 +201,17 @@ namespace SFML.Graphics
         {
             sfShader_setIntUniform(CPointer, name, x);
         }
-
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Specify value for <c>color</c> uniform
+        /// </summary>
+        /// <param name="name">Name of the uniform variable in GLSL</param>
+        /// <param name="color">Value of the vec4 vector</param>
+        ////////////////////////////////////////////////////////////
+        public void SetUniform(string name, Color color)
+        {
+            sfShader_setColorUniform(CPointer, name, color);
+        }
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Specify value for <c>ivec2</c> uniform
@@ -766,6 +776,8 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfShader_setIntUniform(IntPtr shader, string name, int x);
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShader_setColorUniform(IntPtr shader, string name, Color color);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfShader_setIvec2Uniform(IntPtr shader, string name, Glsl.Ivec2 vector);
