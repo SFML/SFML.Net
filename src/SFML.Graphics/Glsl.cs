@@ -118,9 +118,11 @@ namespace SFML.Graphics.Glsl
         }
 
         /// <summary>Horizontal component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool X;
 
         /// <summary>Vertical component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool Y;
     }
     #endregion
@@ -235,12 +237,15 @@ namespace SFML.Graphics.Glsl
         }
 
         /// <summary>Horizontal component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool X;
 
         /// <summary>Vertical component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool Y;
 
         /// <summary>Depth component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool Z;
     }
     #endregion
@@ -375,15 +380,19 @@ namespace SFML.Graphics.Glsl
         }
 
         /// <summary>Horizontal component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool X;
 
         /// <summary>Vertical component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool Y;
 
         /// <summary>Depth component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool Z;
 
         /// <summary>Projective/Homogenous component of the vector</summary>
+        [MarshalAs(UnmanagedType.Bool)]
         public bool W;
     }
     #endregion
