@@ -123,6 +123,21 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Bind a vertex buffer for rendering.
+        /// 
+        /// This function is not part of the graphics API, it mustn't
+        /// be used when drawing SFML entities. It must be used only if
+        /// you mix VertexBuffer with OpenGL code.
+        /// </summary>
+        /// <param name="vertexBuffer">The vertex buffer to bind, can be null to use no vertex buffer</param>
+        ////////////////////////////////////////////////////////////
+        public static void Bind(VertexBuffer vertexBuffer)
+        {
+            sfVertexBuffer_bind(vertexBuffer?.CPointer ?? IntPtr.Zero);
+        }
+		
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Update a part of the buffer from an array of vertices
         /// offset is specified as the number of vertices to skip
         /// from the beginning of the buffer.
@@ -311,7 +326,10 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern UsageSpecifier sfVertexBuffer_getUsage(IntPtr CPointer);
-
+		
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfVertexBuffer_bind(IntPtr CPointer);
+		
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfVertexBuffer_isAvailable();
 
