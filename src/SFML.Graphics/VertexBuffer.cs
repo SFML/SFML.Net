@@ -135,6 +135,7 @@ namespace SFML.Graphics
         {
             sfVertexBuffer_bind(vertexBuffer?.CPointer ?? IntPtr.Zero);
         }
+		
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Update a part of the buffer from an array of vertices
@@ -325,8 +326,10 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern UsageSpecifier sfVertexBuffer_getUsage(IntPtr CPointer);
+		
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfVertexBuffer_bind(IntPtr CPointer);
+		
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfVertexBuffer_isAvailable();
 

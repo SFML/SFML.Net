@@ -201,6 +201,7 @@ namespace SFML.Graphics
         {
             sfShader_setIntUniform(CPointer, name, x);
         }
+		
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Specify value for <c>color</c> uniform
@@ -212,6 +213,7 @@ namespace SFML.Graphics
         {
             sfShader_setColorUniform(CPointer, name, color);
         }
+		
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Specify value for <c>ivec2</c> uniform
@@ -776,6 +778,7 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfShader_setIntUniform(IntPtr shader, string name, int x);
+		
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfShader_setColorUniform(IntPtr shader, string name, Color color);
 
