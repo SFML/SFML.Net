@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <Import Project="..\..\SFML.NuGet.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <PackageId>SFML.Net</PackageId>
     <Description>
       A simple, fast, cross-platform and object-oriented multimedia API. It provides access to windowing, graphics, audio and network.
@@ -20,6 +20,10 @@
     <ProjectReference Include="..\SFML.Graphics\SFML.Graphics.csproj" />
     <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
     <ProjectReference Include="..\SFML.Window\SFML.Window.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

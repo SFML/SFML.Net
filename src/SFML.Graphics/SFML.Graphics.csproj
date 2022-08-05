@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <SFMLModule>Graphics</SFMLModule>
   </PropertyGroup>
 
@@ -10,6 +10,11 @@
   <ItemGroup>
     <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
     <ProjectReference Include="..\SFML.Window\SFML.Window.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="CSFML" Version="2.5.0" />
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.1.1" />
   </ItemGroup>
 
 </Project>
