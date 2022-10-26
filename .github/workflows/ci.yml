@@ -1,0 +1,38 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+jobs:
+  build:
+    name: ${{ matrix.platform.name }} ${{ matrix.dotnet.name }}
+    runs-on: ${{ matrix.platform.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+        - { name: Linux, os: ubuntu-latest }
+        - { name: Windows VS2022, os: windows-2022 }
+        dotnet:
+        - { name: .NET Core 3.1, version: '3.1' }
+        - { name: .NET 5, version: '5.0.x' }
+        - { name: .NET 6, version: '6.0.x' }
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET ${{ matrix.dotnet.version }} SDK
+        id: setup-dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet.version }}
+      - name: Enforce SDK Version
+        run: dotnet new globaljson --sdk-version ${{ steps.setup-dotnet.outputs.dotnet-version }} --force
+      - name: Verify SDK Installation
+        run: dotnet --info
+      - name: Install Dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
