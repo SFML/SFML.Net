@@ -12,4 +12,8 @@
     <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="CSFML" Version="2.5.2" />
+  </ItemGroup>
+
 </Project>

@@ -8,4 +8,8 @@
 
   <Import Project="..\..\SFML.Module.props" />
 
+  <ItemGroup>
+    <PackageReference Update="CSFML" Version="2.5.2" />
+  </ItemGroup>
+
 </Project>

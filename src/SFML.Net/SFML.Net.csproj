@@ -16,6 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CSFML" Version="2.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SFML.Audio\SFML.Audio.csproj" />
     <ProjectReference Include="..\SFML.Graphics\SFML.Graphics.csproj" />
     <ProjectReference Include="..\SFML.System\SFML.System.csproj" />
