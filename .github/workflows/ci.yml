@@ -9,17 +9,19 @@ jobs:
   build:
     name: ${{ matrix.platform.name }} ${{ matrix.dotnet.name }}
     runs-on: ${{ matrix.platform.os }}
-    
+
     strategy:
       fail-fast: false
       matrix:
         platform:
-        - { name: Linux, os: ubuntu-latest }
-        - { name: Windows VS2022, os: windows-2022 }
+          - { name: Linux, os: ubuntu-latest }
+          - { name: Windows VS2022, os: windows-2022 }
+          - { name: MacOS, os: macos-12 }
         dotnet:
-        - { name: .NET Core 3.1, version: '3.1' }
-        - { name: .NET 5, version: '5.0.x' }
-        - { name: .NET 6, version: '6.0.x' }
+          - { name: .NET Core 3.1, version: "3.1" }
+          - { name: .NET 5, version: "5.0.x" }
+          - { name: .NET 6, version: "6.0.x" }
+          - { name: .NET 7, version: "7.0.x" }
 
     steps:
       - uses: actions/checkout@v3
