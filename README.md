@@ -1,7 +1,5 @@
 # SFML.Net - Simple and Fast Multimedia Library for .Net
 
-[![Build Status](https://travis-ci.org/SFML/SFML.Net.svg?branch=master)](https://travis-ci.org/SFML/SFML.Net)
-
 [SFML](https://www.sfml-dev.org) is a simple, fast, cross-platform and object-oriented multimedia API. It provides access to windowing,
 graphics, audio and network.
 It is originally written in C++, and this project is its official binding for .Net languages (C#, VB, ...).
