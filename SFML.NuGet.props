@@ -14,6 +14,7 @@
     <PackageProjectUrl>https://www.sfml-dev.org/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SFML/SFML.Net</RepositoryUrl>
     <PackageIcon>sfml-icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
@@ -21,7 +22,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
 
-    <None Include="..\..\sfml-icon.png" Pack="true" PackagePath=""/>
+    <None Include="../../sfml-icon.png" Pack="true" PackagePath=""/>
+    <None Include="README.md" Pack="true" PackagePath="."/>
   </ItemGroup>
 
 </Project>
