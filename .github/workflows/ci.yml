@@ -15,7 +15,7 @@ jobs:
       matrix:
         platform:
           - { name: Linux, os: ubuntu-latest }
-          - { name: Windows VS2022, os: windows-2022 }
+          - { name: Windows, os: windows-2022 }
           - { name: MacOS, os: macos-12 }
         dotnet:
           - { name: .NET Core 3.1, version: "3.1" }
@@ -37,3 +37,10 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - name: Pack
+        run: dotnet pack --configuration Release -o Publish
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SFML.Net (${{ matrix.platform.name }} ${{ matrix.dotnet.name }})
+          path: Publish/SFML.*.*.nupkg
