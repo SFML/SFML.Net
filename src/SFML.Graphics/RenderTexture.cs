@@ -551,7 +551,7 @@ namespace SFML.Graphics
         private static extern bool sfRenderTexture_restoreGLStates(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderTexture_display(IntPtr CPointer);
+        private static extern void sfRenderTexture_display(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderTexture_setView(IntPtr CPointer, IntPtr View);
