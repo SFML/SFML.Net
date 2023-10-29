@@ -122,9 +122,14 @@ namespace SFML.Window
         /// the operating system.
         /// </summary>
         /// <param name="type">System cursor type</param>
+        /// <exception cref="LoadingFailedException" />
         public Cursor(CursorType type)
             : base(sfCursor_createFromSystem(type))
         {
+            if (CPointer == IntPtr.Zero)
+            {
+                throw new LoadingFailedException("cursor");
+            }
         }
 
         /// <summary>
@@ -152,6 +157,7 @@ namespace SFML.Window
         /// <param name="pixels">Array of pixels of the image</param>
         /// <param name="size">Width and height of the image</param>
         /// <param name="hotspot">(x,y) location of the hotspot</param>
+        /// <exception cref="LoadingFailedException" />
         public Cursor(byte[] pixels, SFML.System.Vector2u size, SFML.System.Vector2u hotspot)
             : base((IntPtr)0)
         {
@@ -161,6 +167,11 @@ namespace SFML.Window
                 {
                     CPointer = sfCursor_createFromPixels((IntPtr)ptr, size, hotspot);
                 }
+            }
+
+            if (CPointer == IntPtr.Zero)
+            {
+                throw new LoadingFailedException("cursor");
             }
         }
 
