@@ -390,7 +390,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public IEnumerable<Event> EnumerateEvents(bool dispatchEvent=true)
         {
-            while (PollEvent(out var e))
+            while (PollEvent(out Event e))
             {
                 if(dispatchEvent)
                 {
