@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -375,10 +376,27 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public void DispatchEvents()
         {
-            Event e;
-            while (PollEvent(out e))
+            while (PollEvent(out Event e))
             {
                 CallEventHandler(e);
+            }
+        }
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Enumerates over each pending event
+        /// </summary>
+        /// <param name="dispatchEvent">if true, calls the event handler for the event as well</param>
+        /// <returns>The enumeration of events</returns>
+        ////////////////////////////////////////////////////////////
+        public IEnumerable<Event> EnumerateEvents(bool dispatchEvent=true)
+        {
+            while (PollEvent(out var e))
+            {
+                if(dispatchEvent)
+                {
+                    CallEventHandler(e);
+                }
+                yield return e;
             }
         }
 
@@ -636,7 +654,7 @@ namespace SFML.Window
 
                     break;
 
-// Disable CS0618 (Obselete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
+                // Disable CS0618 (Obselete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
 #pragma warning disable CS0618
                 case EventType.MouseWheelMoved:
                     if (MouseWheelMoved != null)
@@ -645,7 +663,7 @@ namespace SFML.Window
                     }
 
                     break;
-// restore CS0618
+                // restore CS0618
 #pragma warning restore CS0618
 
                 case EventType.MouseWheelScrolled:
