@@ -4,46 +4,48 @@ namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Types of primitives that a VertexArray can render.
+    /// Types of primitives that a <see cref="VertexArray"/> or <see cref="VertexBuffer"/> can render.
+    /// </summary>
     ///
+    /// <remarks>
     /// Points and lines have no area, therefore their thickness
     /// will always be 1 pixel, regardless the current transform
     /// and view.
-    /// </summary>
+    /// </remarks>
     ////////////////////////////////////////////////////////////
     public enum PrimitiveType
     {
-        /// List of individual points
+        /// <summary>Individual Points</summary>
         Points,
 
-        /// List of individual lines
+        /// <summary>Individual, Disconnected Lines; each pair of points forms a line</summary>
         Lines,
 
-        /// List of connected lines, a point uses the previous point to form a line
+        /// <summary>Connected Lines; each point starts at the previous point to form a line</summary>
         LineStrip,
 
-        /// List of individual triangles
+        /// <summary>Individual, Disconnected Triangles</summary>
         Triangles,
 
-        /// List of connected triangles, a point uses the two previous points to form a triangle
+        /// <summary>Connected Triangles; each point uses the two previous points to form a triangle</summary>
         TriangleStrip,
 
-        /// List of connected triangles, a point uses the common center and the previous point to form a triangle
+        /// <summary>Connected Triangles; each point uses the first point and the previous point to form a triangle</summary>
         TriangleFan,
 
-        /// List of individual quads
+        /// <summary>Quadrilaterals; each set of four points forms a 4-sided shape</summary>
         Quads,
 
-        /// List of connected lines, a point uses the previous point to form a line
-        [Obsolete("LinesStrip is deprecated, please use LineStrip")]
+        /// <summary><c>DEPRECATED:</c> Use <see cref="LineStrip">LineStrip</see></summary>
+        [Obsolete("LineStrip")]
         LinesStrip = LineStrip,
 
-        /// List of connected triangles, a point uses the two previous points to form a triangle
-        [Obsolete("TrianglesStrip is deprecated, please use TriangleStrip")]
+        /// <summary><c>DEPRECATED:</c> Use <see cref="TriangleStrip">TriangleStrip</see></summary>
+        [Obsolete("Use TriangleStrip")]
         TrianglesStrip = TriangleStrip,
 
-        /// List of connected triangles, a point uses the common center and the previous point to form a triangle
-        [Obsolete("TrianglesFan is deprecated, please use TriangleFan")]
+        /// <summary><c>DEPRECATED:</c> Use <see cref="TriangleFan">TriangleFan</see></summary>
+        [Obsolete("Use TriangleFan")]
         TrianglesFan = TriangleFan,
     }
 }

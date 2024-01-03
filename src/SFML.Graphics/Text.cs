@@ -18,25 +18,25 @@ namespace SFML.Graphics
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Enumerate the string drawing styles
+        /// Flags for styles that can be applied to the <see cref="Text"/>
         /// </summary>
         ////////////////////////////////////////////////////////////
         [Flags]
         public enum Styles
         {
-            /// <summary>Regular characters, no style</summary>
+            /// <summary>No Style</summary>
             Regular = 0,
 
-            /// <summary>Bold characters</summary>
+            /// <summary>Bold</summary>
             Bold = 1 << 0,
 
-            /// <summary>Italic characters</summary>
+            /// <summary>Italic</summary>
             Italic = 1 << 1,
 
-            /// <summary>Underlined characters</summary>
+            /// <summary>Underlined</summary>
             Underlined = 1 << 2,
 
-            /// <summary>Strike through characters</summary>
+            /// <summary>Strikethrough</summary>
             StrikeThrough = 1 << 3
         }
 
@@ -52,7 +52,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the text from a string and a font
+        /// Construct the text from a string and a <see cref="SFML.Graphics.Font"/>
         /// </summary>
         /// <param name="str">String to display</param>
         /// <param name="font">Font to use</param>
@@ -64,11 +64,11 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the text from a string, font and size
+        /// Construct the text from a string, <see cref="SFML.Graphics.Font"/> and size
         /// </summary>
         /// <param name="str">String to display</param>
         /// <param name="font">Font to use</param>
-        /// <param name="characterSize">Base characters size</param>
+        /// <param name="characterSize">Font size</param>
         ////////////////////////////////////////////////////////////
         public Text(string str, Font font, uint characterSize) :
             base(sfText_create())
@@ -80,7 +80,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the text from another text
+        /// Construct the text from another <see cref="SFML.Graphics.Text"/>
         /// </summary>
         /// <param name="copy">Text to copy</param>
         ////////////////////////////////////////////////////////////
@@ -97,18 +97,20 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Fill color of the object
+        /// DEPRECATED Fill <see cref="SFML.Graphics.Color"/> of the <see cref="Text"/>
         /// </summary>
         /// 
         /// <remarks>
-        /// Deprecated. Use <see cref="FillColor"/> instead.
+        /// Use <see cref="FillColor"/> instead.
         /// 
-        /// By default, the text's fill color is opaque white.
-        /// Setting the fill color to a transparent color with an outline
+        /// By default, the text's fill <see cref="SFML.Graphics.Color"/> is <see cref="SFML.Graphics.Color.White">opaque White</see>.
+        /// <para>
+        /// Setting the fill color to a transparent <see cref="SFML.Graphics.Color"/> with an outline
         /// will cause the outline to be displayed in the fill area of the text.
+        /// </para>
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        [Obsolete]
+        [Obsolete("Use FillColor and OutlineColor")]
         public Color Color
         {
             get { return sfText_getFillColor(CPointer); }
@@ -117,13 +119,15 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Fill color of the object
+        /// Fill <see cref="SFML.Graphics.Color"/> of the <see cref="Text"/>
         /// </summary>
         /// 
         /// <remarks>
-        /// By default, the text's fill color is opaque white.
-        /// Setting the fill color to a transparent color with an outline
+        /// By default, the text's fill <see cref="SFML.Graphics.Color"/> is <see cref="SFML.Graphics.Color.White">opaque White</see>.
+        /// <para>
+        /// Setting the fill color to a transparent <see cref="SFML.Graphics.Color"/> with an outline
         /// will cause the outline to be displayed in the fill area of the text.
+        /// </para>
         /// </remarks>
         ////////////////////////////////////////////////////////////
         public Color FillColor
@@ -134,11 +138,11 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Outline color of the object
+        /// Outline <see cref="SFML.Graphics.Color"/> of the <see cref="Text"/>
         /// </summary>
         /// 
         /// <remarks>
-        /// By default, the text's outline color is opaque black.
+        /// By default, the text's outline <see cref="SFML.Graphics.Color"/> is <see cref="SFML.Graphics.Color.Black">opaque Black</see>.
         /// </remarks>
         ////////////////////////////////////////////////////////////
         public Color OutlineColor
@@ -212,7 +216,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Font used to display the text
+        /// <see cref="SFML.Graphics.Font"/> used to display the text
         /// </summary>
         ////////////////////////////////////////////////////////////
         public Font Font
@@ -256,7 +260,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Style of the text (see Styles enum)
+        /// <see cref="Styles">Style</see> of the text
         /// </summary>
         ////////////////////////////////////////////////////////////
         public Styles Style
@@ -269,8 +273,10 @@ namespace SFML.Graphics
         /// <summary>
         /// Return the visual position of the Index-th character of the text,
         /// in coordinates relative to the text
-        /// (note : translation, origin, rotation and scale are not applied)
         /// </summary>
+        /// <remarks>
+        /// Translation, origin, rotation and scale are not applied.
+        /// </remarks>
         /// <param name="index">Index of the character</param>
         /// <returns>Position of the Index-th character (end of text if Index is out of range)</returns>
         ////////////////////////////////////////////////////////////
@@ -281,14 +287,14 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Get the local bounding rectangle of the entity.
-        ///
-        /// The returned rectangle is in local coordinates, which means
-        /// that it ignores the transformations (translation, rotation,
-        /// scale, ...) that are applied to the entity.
-        /// In other words, this function returns the bounds of the
-        /// entity in the entity's coordinate system.
+        /// Get the local bounding <see cref="FloatRect"/> of the text.
         /// </summary>
+        /// <remarks>
+        /// The returned <see cref="FloatRect"/> is in local coordinates.
+        /// <para>Transformations (Translation, Rotation, Scale) are not applied to the entity.</para>
+        /// <para>In other words, this function returns the bounds of the
+        /// entity in the entity's coordinate system.</para>
+        /// </remarks>
         /// <returns>Local bounding rectangle of the entity</returns>
         ////////////////////////////////////////////////////////////
         public FloatRect GetLocalBounds()
@@ -298,14 +304,14 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Get the global bounding rectangle of the entity.
-        ///
-        /// The returned rectangle is in global coordinates, which means
-        /// that it takes in account the transformations (translation,
-        /// rotation, scale, ...) that are applied to the entity.
-        /// In other words, this function returns the bounds of the
-        /// sprite in the global 2D world's coordinate system.
+        /// Get the global bounding rectangle of the text.
         /// </summary>
+        /// <remarks>
+        /// The returned <see cref="FloatRect"/> is in global coordinates.
+        /// <para>Transformations (Translation, Rotation, Scale) are applied to the entity.</para>
+        /// <para>In other words, this function returns the bounds of the
+        /// sprite in the global 2D world's coordinate system.</para>
+        /// </remarks>
         /// <returns>Global bounding rectangle of the entity</returns>
         ////////////////////////////////////////////////////////////
         public FloatRect GetGlobalBounds()
@@ -335,7 +341,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Draw the text to a render target
+        /// Draw the text to a <see cref="RenderTarget"/>
         /// </summary>
         /// <param name="target">Render target to draw to</param>
         /// <param name="states">Current render states</param>

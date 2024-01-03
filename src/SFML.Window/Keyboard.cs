@@ -229,19 +229,19 @@ namespace SFML.Window
 
             // Deprecated backwards compatible stuff
             /// <summary>DEPRECATED: Use Hyphen</summary>
-            [Obsolete("Deprecated: Use Hyphen instead.")]
+            [Obsolete("Replace with Hyphen")]
             Dash = Hyphen,
             /// <summary>DEPRECATED: Use Backspace</summary>
-            [Obsolete("Deprecated: Use Backspace instead.")]
+            [Obsolete("Replace with Backspace")]
             BackSpace = Backspace,
             /// <summary>DEPRECATED: Use Enter</summary>
-            [Obsolete("Deprecated: Use Enter instead.")]
+            [Obsolete("Replace with Enter")]
             Return = Enter,
             /// <summary>DEPRECATED: Use Backslash</summary>
-            [Obsolete("Deprecated: Use Backslash instead.")]
+            [Obsolete("Replace with Backslash")]
             BackSlash = Backslash,
             /// <summary>DEPRECATED: Use Semicolon</summary>
-            [Obsolete("Deprecated: Use Semicolon instead.")]
+            [Obsolete("Replace with Semicolon")]
             SemiColon = Semicolon
         };
 

@@ -31,8 +31,8 @@ namespace SFML.Window
         /// <summary>Event triggered when a keyboard key is released</summary>
         KeyReleased,
 
-        /// <summary>Event triggered when the mouse wheel is scrolled (deprecated)</summary>
-        [Obsolete("MouseWheelMoved is deprecated, please use MouseWheelScrolled instead")]
+        /// <summary>Event triggered when the mouse wheel is scrolled</summary>
+        [Obsolete("Use MouseWheelScrolled")]
         MouseWheelMoved,
 
         /// <summary>Event triggered when a mouse wheel is scrolled</summary>
@@ -89,7 +89,7 @@ namespace SFML.Window
     [StructLayout(LayoutKind.Sequential)]
     public struct KeyEvent
     {
-        /// <summary>Code of the key (see KeyCode enum)</summary>
+        /// <summary>Code of the key. See <see cref="Keyboard.Key"/></summary>
         public Keyboard.Key Code;
 
         /// <summary>Is the Alt modifier pressed?</summary>
@@ -156,7 +156,7 @@ namespace SFML.Window
     /// </summary>
     ////////////////////////////////////////////////////////////
     [StructLayout(LayoutKind.Sequential)]
-    [Obsolete("MouseWheelEvent is deprecated, please use MouseWheelScrollEvent instead")]
+    [Obsolete("Use MouseWheelScrollEvent")]
     public struct MouseWheelEvent
     {
         /// <summary>Scroll amount</summary>
@@ -323,7 +323,7 @@ namespace SFML.Window
 
         /// <summary>Arguments for mouse wheel events (MouseWheelMoved)</summary>
         [FieldOffset(4)]
-        [Obsolete("MouseWheel is deprecated, please use MouseWheelScroll instead")]
+        [Obsolete("Use MouseWheelScroll")]
         public MouseWheelEvent MouseWheel;
 
         /// <summary>Arguments for mouse wheel scroll events (MouseWheelScrolled)</summary>
