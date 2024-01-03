@@ -493,7 +493,7 @@ namespace SFML.Graphics
         private static extern IntPtr sfTexture_createFromImage(IntPtr image, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfTexture_createFromMemory(IntPtr data, ulong size, ref IntRect area);
+        private static extern IntPtr sfTexture_createFromMemory(IntPtr data, uint size, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_copy(IntPtr texture);

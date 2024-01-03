@@ -390,7 +390,7 @@ namespace SFML.Audio
         private unsafe static extern IntPtr sfMusic_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfMusic_createFromMemory(IntPtr data, ulong size);
+        private static extern IntPtr sfMusic_createFromMemory(IntPtr data, uint size);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfMusic_destroy(IntPtr MusicStream);

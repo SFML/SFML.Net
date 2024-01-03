@@ -230,7 +230,7 @@ namespace SFML.Graphics
         private static extern IntPtr sfFont_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfFont_createFromMemory(IntPtr data, ulong size);
+        private static extern IntPtr sfFont_createFromMemory(IntPtr data, uint size);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfFont_copy(IntPtr Font);

@@ -224,7 +224,7 @@ namespace SFML.Audio
         private unsafe static extern IntPtr sfSoundBuffer_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, ulong size);
+        private unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, uint size);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, ulong SampleCount, uint ChannelsCount, uint SampleRate);

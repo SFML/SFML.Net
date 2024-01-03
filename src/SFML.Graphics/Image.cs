@@ -365,7 +365,7 @@ namespace SFML.Graphics
         private unsafe static extern IntPtr sfImage_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, ulong size);
+        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, uint size);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfImage_copy(IntPtr Image);
