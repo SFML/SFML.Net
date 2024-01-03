@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Audio
 {
     ////////////////////////////////////////////////////////////
@@ -271,9 +273,9 @@ namespace SFML.Audio
         /// <param name="userData">User data -- unused</param>
         /// <returns>False to stop recording audio data, true to continue</returns>
         ////////////////////////////////////////////////////////////
-        private bool ProcessSamples(IntPtr samples, uint nbSamples, IntPtr userData)
+        private bool ProcessSamples(IntPtr samples, SIZE_T nbSamples, IntPtr userData)
         {
-            short[] samplesArray = new short[nbSamples];
+            short[] samplesArray = new short[(int)nbSamples];
             Marshal.Copy(samples, samplesArray, 0, samplesArray.Length);
 
             return OnProcessSamples(samplesArray);
@@ -283,7 +285,7 @@ namespace SFML.Audio
         private delegate bool StartCallback();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate bool ProcessCallback(IntPtr samples, uint nbSamples, IntPtr userData);
+        private delegate bool ProcessCallback(IntPtr samples, SIZE_T nbSamples, IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void StopCallback();

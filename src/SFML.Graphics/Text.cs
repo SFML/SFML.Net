@@ -4,6 +4,8 @@ using System.Security;
 using System.Text;
 using SFML.System;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -276,7 +278,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f FindCharacterPos(uint index)
         {
-            return sfText_findCharacterPos(CPointer, index);
+            return sfText_findCharacterPos(CPointer, (SIZE_T)index);
         }
 
         ////////////////////////////////////////////////////////////
@@ -448,7 +450,7 @@ namespace SFML.Graphics
         private static extern FloatRect sfText_getRect(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, uint Index);
+        private static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, SIZE_T Index);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern FloatRect sfText_getLocalBounds(IntPtr CPointer);

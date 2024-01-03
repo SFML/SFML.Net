@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -66,7 +68,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public uint VertexCount
         {
-            get { return sfVertexArray_getVertexCount(CPointer); }
+            get { return (uint)sfVertexArray_getVertexCount(CPointer); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -203,7 +205,7 @@ namespace SFML.Graphics
         private static extern void sfVertexArray_destroy(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfVertexArray_getVertexCount(IntPtr CPointer);
+        private static extern SIZE_T sfVertexArray_getVertexCount(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern unsafe Vertex* sfVertexArray_getVertex(IntPtr CPointer, uint index);

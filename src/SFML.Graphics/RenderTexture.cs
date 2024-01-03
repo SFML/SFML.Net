@@ -4,6 +4,8 @@ using System.Security;
 using SFML.System;
 using SFML.Window;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -400,7 +402,7 @@ namespace SFML.Graphics
             {
                 fixed (Vertex* vertexPtr = vertices)
                 {
-                    sfRenderTexture_drawPrimitives(CPointer, vertexPtr + start, count, type, ref marshaledStates);
+                    sfRenderTexture_drawPrimitives(CPointer, vertexPtr + start, (SIZE_T)count, type, ref marshaledStates);
                 }
             }
         }
@@ -593,7 +595,7 @@ namespace SFML.Graphics
         private static extern bool sfRenderTexture_generateMipmap(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern void sfRenderTexture_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
+        private unsafe static extern void sfRenderTexture_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, SIZE_T vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderTexture_pushGLStates(IntPtr CPointer);

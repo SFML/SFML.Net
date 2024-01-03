@@ -5,6 +5,8 @@ using System.Security;
 using SFML.System;
 using SFML.Window;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -137,7 +139,7 @@ namespace SFML.Graphics
             try
             {
                 IntRect rect = new IntRect(0, 0, 0, 0);
-                CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref rect);
+                CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), (SIZE_T)bytes.Length, ref rect);
             }
             finally
             {
@@ -493,7 +495,7 @@ namespace SFML.Graphics
         private static extern IntPtr sfTexture_createFromImage(IntPtr image, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfTexture_createFromMemory(IntPtr data, ulong size, ref IntRect area);
+        private static extern IntPtr sfTexture_createFromMemory(IntPtr data, SIZE_T size, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_copy(IntPtr texture);
