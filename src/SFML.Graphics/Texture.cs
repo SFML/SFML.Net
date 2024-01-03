@@ -36,10 +36,11 @@ namespace SFML.Graphics
         /// Construct the texture from a file
         /// </summary>
         /// <param name="filename">Path of the image file to load</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(string filename) :
-            this(filename, new IntRect(0, 0, 0, 0))
+        public Texture(string filename, bool sRGB = false) :
+            this(filename, new IntRect(0, 0, 0, 0), sRGB)
         {
         }
 
@@ -49,11 +50,21 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="filename">Path of the image file to load</param>
         /// <param name="area">Area of the image to load</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(string filename, IntRect area) :
-            base(sfTexture_createFromFile(filename, ref area))
+        public Texture(string filename, IntRect area, bool sRGB = false) :
+            base(IntPtr.Zero)
         {
+            if (sRGB)
+            {
+                CPointer = sfTexture_createSrgbFromFile(filename, ref area);
+            }
+            else
+            {
+                CPointer = sfTexture_createFromFile(filename, ref area);
+            }
+
             if (CPointer == IntPtr.Zero)
             {
                 throw new LoadingFailedException("texture", filename);
@@ -65,10 +76,11 @@ namespace SFML.Graphics
         /// Construct the texture from a file in a stream
         /// </summary>
         /// <param name="stream">Stream containing the file contents</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(Stream stream) :
-            this(stream, new IntRect(0, 0, 0, 0))
+        public Texture(Stream stream, bool sRGB = false) :
+            this(stream, new IntRect(0, 0, 0, 0), sRGB)
         {
         }
 
@@ -78,14 +90,22 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="stream">Stream containing the file contents</param>
         /// <param name="area">Area of the image to load</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(Stream stream, IntRect area) :
+        public Texture(Stream stream, IntRect area, bool sRGB = false) :
             base(IntPtr.Zero)
         {
             using (StreamAdaptor adaptor = new StreamAdaptor(stream))
             {
-                CPointer = sfTexture_createFromStream(adaptor.InputStreamPtr, ref area);
+                if(sRGB)
+                {
+                    CPointer = sfTexture_createSrgbFromStream(adaptor.InputStreamPtr, ref area);
+                }
+                else
+                {
+                    CPointer = sfTexture_createFromStream(adaptor.InputStreamPtr, ref area);
+                }
             }
 
             if (CPointer == IntPtr.Zero)
@@ -99,10 +119,11 @@ namespace SFML.Graphics
         /// Construct the texture from an image
         /// </summary>
         /// <param name="image">Image to load to the texture</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(Image image) :
-            this(image, new IntRect(0, 0, 0, 0))
+        public Texture(Image image, bool sRGB = false) :
+            this(image, new IntRect(0, 0, 0, 0), sRGB)
         {
         }
 
@@ -112,11 +133,21 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="image">Image to load to the texture</param>
         /// <param name="area">Area of the image to load</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(Image image, IntRect area) :
-            base(sfTexture_createFromImage(image.CPointer, ref area))
+        public Texture(Image image, IntRect area, bool sRGB = false) :
+            base(IntPtr.Zero)
         {
+            if(sRGB)
+            {
+                CPointer = sfTexture_createFromImage(image.CPointer, ref area);
+            }
+            else
+            {
+                CPointer = sfTexture_createSrgbFromImage(image.CPointer, ref area);
+            }
+
             if (CPointer == IntPtr.Zero)
             {
                 throw new LoadingFailedException("texture");
@@ -128,16 +159,37 @@ namespace SFML.Graphics
         /// Construct the texture from a file in memory
         /// </summary>
         /// <param name="bytes">Byte array containing the file contents</param>
+        /// <param name="sRGB">Enable sRGB</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(byte[] bytes) :
+        public Texture(byte[] bytes, bool sRGB = false) :
+            this(bytes, new IntRect(0, 0, 0, 0), sRGB)
+        {
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Construct the texture from a file in memory
+        /// </summary>
+        /// <param name="bytes">Byte array containing the file contents</param>
+        /// <param name="area">Area of the image to load</param>
+        /// <param name="sRGB">Enable sRGB</param>
+        /// <exception cref="LoadingFailedException" />
+        ////////////////////////////////////////////////////////////
+        public Texture(byte[] bytes, IntRect area, bool sRGB = false) :
             base(IntPtr.Zero)
         {
             GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
-                IntRect rect = new IntRect(0, 0, 0, 0);
-                CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref rect);
+                if(sRGB)
+                {
+                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref area);
+                }
+                else
+                {
+                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref area);
+                }
             }
             finally
             {
@@ -359,7 +411,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Enable or disable conversion from sRGB
+        /// Whether or not sRGB is enabled for the Texture
         /// </summary>
         /// 
         /// <remarks>
@@ -382,7 +434,6 @@ namespace SFML.Graphics
         public bool Srgb
         {
             get { return sfTexture_isSrgb(CPointer); }
-            set { sfTexture_setSrgb(CPointer, value); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -487,13 +538,25 @@ namespace SFML.Graphics
         private static extern IntPtr sfTexture_createFromFile(string filename, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfTexture_createSrgbFromFile(string filename, ref IntRect area);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromStream(IntPtr stream, ref IntRect area);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfTexture_createSrgbFromStream(IntPtr stream, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromImage(IntPtr image, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfTexture_createSrgbFromImage(IntPtr image, ref IntRect area);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromMemory(IntPtr data, ulong size, ref IntRect area);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfTexture_createSrgbFromMemory(IntPtr data, ulong size, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_copy(IntPtr texture);
@@ -530,9 +593,6 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfTexture_isSmooth(IntPtr texture);
-
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTexture_setSrgb(IntPtr texture, bool sRgb);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfTexture_isSrgb(IntPtr texture);
