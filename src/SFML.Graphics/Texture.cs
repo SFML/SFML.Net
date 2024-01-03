@@ -18,6 +18,9 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the texture
         /// </summary>
+        /// <remarks>
+        /// Textures created this way are uninitialized and have indeterminate contents.
+        /// </remarks>
         /// <param name="width">Texture width</param>
         /// <param name="height">Texture height</param>
         /// <exception cref="LoadingFailedException" />

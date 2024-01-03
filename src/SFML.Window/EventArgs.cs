@@ -178,7 +178,7 @@ namespace SFML.Window
     /// Mouse wheel event parameters
     /// </summary>
     ////////////////////////////////////////////////////////////
-    [Obsolete("MouseWheelEventArgs is deprecated, please use MouseWheelScrollEventArgs instead")]
+    [Obsolete("Use MouseWheelScrollEventArgs")]
     public class MouseWheelEventArgs : EventArgs
     {
         ////////////////////////////////////////////////////////////

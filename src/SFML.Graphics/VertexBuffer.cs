@@ -18,46 +18,49 @@ namespace SFML.Graphics
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Usage specifiers
-        ///
-        /// If data is going to be updated once or more every frame,
-        /// set the usage to Stream. If data is going
-        /// to be set once and used for a long time without being
-        /// modified, set the usage to Static.
-        /// For everything else Dynamic should
-        /// be a good compromise.
+        /// <see cref="VertexBuffer"/> Usage Specifiers
         /// </summary>
+        /// <remarks>
+        /// <para>If data is going to be updated once or more every frame, use <see cref="Stream"/>.</para>
+        /// <para>If data is going to be set once and used for a long time without being modified, use <see cref="Static"/>.</para>
+        /// <para>For everything else, <see cref="Dynamic"/> should be a good compromise.</para>
+        /// </remarks>
         ////////////////////////////////////////////////////////////
         public enum UsageSpecifier
         {
             /// <summary>Constantly changing data.</summary>
+            /// <remarks>Use when the <see cref="VertexBuffer"/> will be updated once or more every frame.</remarks>
             Stream,
             /// <summary>Occasionally changing data.</summary>
+            /// <remarks>Use when the <see cref="VertexBuffer"/> will change infrequently.</remarks>
             Dynamic,
             /// <summary>Rarely changing data.</summary>
+            /// <remarks>Use when the <see cref="VertexBuffer"/> will rarely of never be changed.</remarks>
             Static
         }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Whether or not the system supports vertex buffers
-        ///
+        /// Whether or not the system supports <see cref="VertexBuffer"/>s
+        /// </summary>
+        /// <remarks>
         /// This function should always be called before using
         /// the vertex buffer features. If it returns false, then
-        /// any attempt to use sf::VertexBuffer will fail.
-        /// </summary>
+        /// any attempt to use <see cref="VertexBuffer"/> will fail.
+        /// </remarks>
         ///////////////////////////////////////////////////////////
         public static bool Available { get { return sfVertexBuffer_isAvailable(); } }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Create a new vertex buffer with a specific
-        /// PrimitiveType and usage specifier.
-        ///
-        /// Creates the vertex buffer, allocating enough graphcis
-        /// memory to hold \p vertexCount vertices, and sets its
-        /// primitive type to \p type and usage to \p usage.
+        /// Create a new <see cref="VertexBuffer"/> with a specific
+        /// <see cref="SFML.Graphics.PrimitiveType"/> and <see cref="UsageSpecifier"/>
         /// </summary>
+        /// <remarks>
+        /// Creates the vertex buffer, allocating enough graphics
+        /// memory to hold <paramref name="vertexCount"/> vertices, and sets its
+        /// <see cref="SFML.Graphics.PrimitiveType"/> to primitiveType and <see cref="UsageSpecifier"/> to usageType.
+        /// </remarks>
         /// <param name="vertexCount">Amount of vertices</param>
         /// <param name="primitiveType">Type of primitives</param>
         /// <param name="usageType">Usage specifier</param>
@@ -69,7 +72,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the vertex buffer from another vertex array
+        /// Construct the vertex buffer from another <see cref="VertexBuffer"/>
         /// </summary>
         /// <param name="copy">VertexBuffer to copy</param>
         ////////////////////////////////////////////////////////////
@@ -88,11 +91,12 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// OpenGL handle of the vertex buffer or 0 if not yet created
-        /// 
+        /// </summary>
+        /// <remarks>
         /// You shouldn't need to use this property, unless you have
         /// very specific stuff to implement that SFML doesn't support,
         /// or implement a temporary workaround until a bug is fixed.
-        /// </summary>
+        /// </remarks>
         ////////////////////////////////////////////////////////////
         public uint NativeHandle
         {
@@ -101,7 +105,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// The type of primitives drawn by the vertex buffer
+        /// The <see cref="SFML.Graphics.PrimitiveType"/> drawn by the <see cref="VertexBuffer"/>
         /// </summary>
         ////////////////////////////////////////////////////////////
         public PrimitiveType PrimitiveType
@@ -112,7 +116,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// The usage specifier for the vertex buffer
+        /// The <see cref="UsageSpecifier"/> for the <see cref="VertexBuffer"/>
         /// </summary>
         ////////////////////////////////////////////////////////////
         public UsageSpecifier Usage
@@ -123,44 +127,54 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Bind a vertex buffer for rendering.
-        /// 
-        /// This function is not part of the graphics API, it mustn't
-        /// be used when drawing SFML entities. It must be used only if
-        /// you mix VertexBuffer with OpenGL code.
+        /// Bind a <see cref="VertexBuffer"/> for rendering.
         /// </summary>
-        /// <param name="vertexBuffer">The vertex buffer to bind, can be null to use no vertex buffer</param>
+        /// <remarks>
+        /// <para>This function is not part of the graphics API.</para>
+        /// <para>It must not be used when drawing SFML entities.</para>
+        /// <para>It must be used only if you mix VertexBuffer with OpenGL code.</para>
+        /// </remarks>
+        /// <param name="vertexBuffer">The vertex buffer to bind; can be null to use no vertex buffer</param>
         ////////////////////////////////////////////////////////////
         public static void Bind(VertexBuffer vertexBuffer)
         {
             sfVertexBuffer_bind(vertexBuffer?.CPointer ?? IntPtr.Zero);
         }
-		
+
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Update a part of the buffer from an array of vertices
-        /// offset is specified as the number of vertices to skip
+        /// Update the <see cref="VertexBuffer"/> from a <see cref="Vertex"/>[]
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// <pararef name="offset" /> is specified as the number of vertices to skip
         /// from the beginning of the buffer.
-        ///
-        /// If offset is 0 and vertexCount is equal to the size of
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is 0 and <paramref name="vertexCount" /> is equal to the size of
         /// the currently created buffer, its whole contents are replaced.
-        ///
-        /// If offset is 0 and vertexCount is greater than the
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is 0 and <paramref name="vertexCount" /> is greater than the
         /// size of the currently created buffer, a new buffer is created
-        /// containing the vertex data.
-        ///
-        /// If offset is 0 and vertexCount is less than the size of
+        /// containing the <see cref="Vertex"/> data.
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is 0 and <paramref name="vertexCount" /> is less than the size of
         /// the currently created buffer, only the corresponding region
         /// is updated.
-        ///
-        /// If offset is not 0 and offset + vertexCount is greater
-        /// than the size of the currently created buffer, the update fails.
-        ///
-        /// No additional check is performed on the size of the vertex
-        /// array, passing invalid arguments will lead to undefined
-        /// behavior.
-        /// </summary>
-        /// <param name="vertices">Array of vertices to copy to the buffer</param>
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is NOT 0 and <pararef name="offset" /> +
+        /// <paramref name="vertexCount" /> is greater than the size of the currently
+        /// created buffer, the update fails.
+        /// </para>
+        /// <para>
+        /// No additional checks are performed on the size of the <see cref="VertexBuffer"/>.
+        /// Passing invalid arguments will lead to undefined behavior.
+        /// </para>
+        /// </remarks>
+        /// <param name="vertices">Array of vertices to copy from</param>
         /// <param name="vertexCount">Number of vertices to copy</param>
         /// <param name="offset">Offset in the buffer to copy to</param>
         ////////////////////////////////////////////////////////////
@@ -177,27 +191,28 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Update a part of the buffer from an array of vertices
-        /// assuming an offset of 0 and a vertex count the length of the passed array.
-        ///
-        /// If offset is 0 and vertexCount is equal to the size of
-        /// the currently created buffer, its whole contents are replaced.
-        ///
-        /// If offset is 0 and vertexCount is greater than the
-        /// size of the currently created buffer, a new buffer is created
-        /// containing the vertex data.
-        ///
-        /// If offset is 0 and vertexCount is less than the size of
-        /// the currently created buffer, only the corresponding region
-        /// is updated.
-        ///
-        /// If offset is not 0 and offset + vertexCount is greater
-        /// than the size of the currently created buffer, the update fails.
-        ///
-        /// No additional check is performed on the size of the vertex
-        /// array, passing invalid arguments will lead to undefined
-        /// behavior.
+        /// Update a part of the buffer from a <see cref="Vertex"/>[]
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// If the length of <paramref name="vertices" /> is equal
+        /// to the current size of the buffer, the entire buffer is replaced.
+        /// </para>
+        /// <para>
+        /// If the length of <paramref name="vertices" /> is greater than the
+        /// current size of the buffer, a new buffer is created containing
+        /// the <see cref="Vertex"/> data.
+        /// </para>
+        /// <para>
+        /// If the length of <paramref name="vertices" /> is less than the
+        /// current size of the buffer, only the first <paramref name="vertices" />.Length
+        /// vertices are replaced.
+        /// </para>
+        /// <para>
+        /// No additional checks are performed on <paramref name="vertices" />.Length.
+        /// Passing invalid arguments will lead to undefined behavior.
+        /// </para>
+        /// </remarks>
         /// <param name="vertices">Array of vertices to copy to the buffer</param>
         ////////////////////////////////////////////////////////////
         public bool Update(Vertex[] vertices)
@@ -207,27 +222,37 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Update a part of the buffer from an array of vertices
-        /// assuming a vertex count the length of the passed array.
-        ///
-        /// If offset is 0 and vertexCount is equal to the size of
-        /// the currently created buffer, its whole contents are replaced.
-        ///
-        /// If offset is 0 and vertexCount is greater than the
-        /// size of the currently created buffer, a new buffer is created
-        /// containing the vertex data.
-        ///
-        /// If offset is 0 and vertexCount is less than the size of
-        /// the currently created buffer, only the corresponding region
-        /// is updated.
-        ///
-        /// If offset is not 0 and offset + vertexCount is greater
-        /// than the size of the currently created buffer, the update fails.
-        ///
-        /// No additional check is performed on the size of the vertex
-        /// array, passing invalid arguments will lead to undefined
-        /// behavior.
+        /// Update a part of the buffer from a <see cref="Vertex"/>[]
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// <pararef name="offset" /> is specified as the number of vertices to skip
+        /// from the beginning of the buffer.
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is 0 and <paramref name="vertices" />.Length
+        /// is equal to the size of the currently created buffer, its whole contents are replaced.
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is 0 and <paramref name="vertices" />.Length
+        /// is greater than the size of the currently created buffer, a new buffer is created
+        /// containing the <see cref="Vertex"/> data.
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is 0 and <paramref name="vertices" />.Length
+        /// is less than the size of the currently created buffer, only the first
+        /// <paramref name="vertices" />.Length vertices are replaced.
+        /// </para>
+        /// <para>
+        /// If <pararef name="offset" /> is NOT 0 and <pararef name="offset" /> +
+        /// <paramref name="vertices" />.Length is greater than the size of the currently
+        /// created buffer, the update fails.
+        /// </para>
+        /// <para>
+        /// No additional checks are performed on the size of the <see cref="VertexBuffer"/>.
+        /// Passing invalid arguments will lead to undefined behavior.
+        /// </para>
+        /// </remarks>
         /// <param name="vertices">Array of vertices to copy to the buffer</param>
         /// <param name="offset">Offset in the buffer to copy to</param>
         ////////////////////////////////////////////////////////////
@@ -238,9 +263,9 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Copy the contents of another buffer into this buffer
+        /// Copy the contents of another <see cref="VertexBuffer"/> into this buffer
         /// </summary>
-        /// <param name="other">Vertex buffer whose contents to copy into first vertex buffer</param>
+        /// <param name="other">VertexBuffer whose contents to copy from</param>
         ////////////////////////////////////////////////////////////
         public bool Update(VertexBuffer other)
         {
@@ -249,9 +274,9 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Swap the contents of another buffer into this buffer
+        /// Swap the contents of another <see cref="VertexBuffer"/> into this buffer
         /// </summary>
-        /// <param name="other">Vertex buffer whose contents to swap with</param>
+        /// <param name="other">VertexBuffer whose contents to swap with</param>
         ////////////////////////////////////////////////////////////
         public void Swap(VertexBuffer other)
         {
@@ -271,7 +296,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Draw the vertex buffer to a render target
+        /// Draw the <see cref="VertexBuffer"/> to a <see cref="RenderTarget"/>
         /// </summary>
         /// <param name="target">Render target to draw to</param>
         /// <param name="states">Current render states</param>

@@ -34,7 +34,7 @@ namespace SFML.Graphics
         /// <param name="height">Height of the render-texture</param>
         /// <param name="depthBuffer">Do you want a depth-buffer attached?</param>
         ////////////////////////////////////////////////////////////
-        [Obsolete("Creating a RenderTexture with depthBuffer is deprecated. Use RenderTexture(width, height, contextSettings) instead.")]
+        [Obsolete("Use RenderTexture(width, height, contextSettings)")]
         public RenderTexture(uint width, uint height, bool depthBuffer) :
             base(sfRenderTexture_create(width, height, depthBuffer))
         {
@@ -525,8 +525,7 @@ namespace SFML.Graphics
         private Texture myTexture = null;
 
         #region Imports
-        [Obsolete("sfRenderTexture_create is obselete. Use sfRenderTexture_createWithSettings instead.")]
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
         private static extern IntPtr sfRenderTexture_create(uint Width, uint Height, bool DepthBuffer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

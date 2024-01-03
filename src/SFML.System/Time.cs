@@ -6,8 +6,14 @@ namespace SFML.System
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// This class represents a time value
+    /// A Time value for interfacing with SFML
     /// </summary>
+    /// <remarks>
+    /// <para>Using <see cref="TimeSpan"/> while working within managed code is best.</para>
+    /// <para>In most cases, <see cref="Time"/> is only needed when calling into unmanaged code.</para>
+    /// <para>Implicit casts from <see cref="TimeSpan"/> to <see cref="Time"/>
+    /// allow <see cref="TimeSpan"/>s to be used for most SFML methods.</para>
+    /// </remarks>
     ////////////////////////////////////////////////////////////
     [StructLayout(LayoutKind.Sequential)]
     public struct Time : IEquatable<Time>
@@ -21,71 +27,71 @@ namespace SFML.System
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct a time value from a number of seconds
+        /// Construct a <see cref="Time"/> from a number of seconds
         /// </summary>
         /// <param name="seconds">Number of seconds</param>
-        /// <returns>Time value constructed from the amount of seconds</returns>
+        /// <returns>Time constructed from the amount of seconds</returns>
         ////////////////////////////////////////////////////////////
         public static Time FromSeconds(float seconds) => sfSeconds(seconds);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct a time value from a number of milliseconds
+        /// Construct a <see cref="Time"/> from a number of milliseconds
         /// </summary>
         /// <param name="milliseconds">Number of milliseconds</param>
-        /// <returns>Time value constructed from the amount of milliseconds</returns>
+        /// <returns>Time constructed from the amount of milliseconds</returns>
         ////////////////////////////////////////////////////////////
         public static Time FromMilliseconds(int milliseconds) => sfMilliseconds(milliseconds);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct a time value from a number of microseconds
+        /// Construct a <see cref="Time"/> from a number of microseconds
         /// </summary>
         /// <param name="microseconds">Number of microseconds</param>
-        /// <returns>Time value constructed from the amount of microseconds</returns>
+        /// <returns>Time constructed from the amount of microseconds</returns>
         ////////////////////////////////////////////////////////////
         public static Time FromMicroseconds(long microseconds) => sfMicroseconds(microseconds);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct a Time value from a TimeSpan
+        /// Construct a <see cref="Time"/> from a <see cref="TimeSpan"/>
         /// </summary>
         /// <param name="timeSpan">A TimeSpan representing the amount of time to represent</param>
-        /// <returns>Time value constructed from an existing TimeSpan</returns>
+        /// <returns>Time constructed from an existing TimeSpan</returns>
         ////////////////////////////////////////////////////////////
         public static Time FromTimeSpan(TimeSpan timeSpan) => sfMicroseconds(timeSpan.Ticks * 1000 / TimeSpan.TicksPerMillisecond);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Returns the time value as a number of seconds
+        /// Returns the <see cref="Time"/> as a number of seconds
         /// </summary>
         ////////////////////////////////////////////////////////////
         public float AsSeconds() => microseconds / 1000000f;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Returns the time value as a number of milliseconds
+        /// Returns the <see cref="Time"/> as a number of milliseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
         public int AsMilliseconds() => (int)(microseconds / 1000);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Returns the time value as a number of microseconds
+        /// Returns the <see cref="Time"/> as a number of microseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
         public long AsMicroseconds() => microseconds;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Returns the time value as a TimeSpan
+        /// Returns the <see cref="Time"/> as a TimeSpan
         /// </summary>
         ////////////////////////////////////////////////////////////
         public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * (TimeSpan.TicksPerMillisecond / 1000));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Implicit conversion from TimeSpan to SFML.System.Time, allowing intuitive use
+        /// Implicit conversion from <see cref="TimeSpan"/> to <see cref="Time"/>, allowing intuitive use
         /// </summary>
         ////////////////////////////////////////////////////////////
         public static implicit operator Time(TimeSpan timeSpan) => FromTimeSpan(timeSpan);

@@ -24,7 +24,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the vertex array with a type
+        /// Construct the vertex array with a <see cref="SFML.Graphics.PrimitiveType"/>
         /// </summary>
         /// <param name="type">Type of primitives</param>
         ////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the vertex array with a type and an initial number of vertices
+        /// Construct the vertex array with a <see cref="SFML.Graphics.PrimitiveType"/> and an initial number of vertices
         /// </summary>
         /// <param name="type">Type of primitives</param>
         /// <param name="vertexCount">Initial number of vertices in the array</param>
@@ -50,7 +50,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Construct the vertex array from another vertex array
+        /// Construct the vertex array from another <see cref="VertexArray"/>
         /// </summary>
         /// <param name="copy">Transformable to copy</param>
         ////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Total vertex count
+        /// Total <see cref="Vertex"/> count
         /// </summary>
         ////////////////////////////////////////////////////////////
         public uint VertexCount
@@ -71,14 +71,15 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Read-write access to vertices by their index.
-        ///
+        /// Read-Write access to vertices by their index.
+        /// </summary>
+        /// <remarks>
         /// This function doesn't check index, it must be in range
         /// [0, VertexCount - 1]. The behaviour is undefined
-        /// otherwise.
-        /// </summary>
+        /// otherwise. See <see cref="VertexCount"/>.
+        /// </remarks>
         /// <param name="index">Index of the vertex to get</param>
-        /// <returns>Reference to the index-th vertex</returns>
+        /// <returns>Copy of the index-th vertex.</returns>
         ////////////////////////////////////////////////////////////
         public Vertex this[uint index]
         {
@@ -111,13 +112,14 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Resize the vertex array
-        /// 
-        /// If \a vertexCount is greater than the current size, the previous
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="vertexCount"/> is greater than the current size, the previous
         /// vertices are kept and new (default-constructed) vertices are
         /// added.
-        /// If \a vertexCount is less than the current size, existing vertices
+        /// If <paramref name="vertexCount"/> is less than the current size, existing vertices
         /// are removed from the array.
-        /// </summary>
+        /// </remarks>
         /// <param name="vertexCount">New size of the array (number of vertices)</param>
         ////////////////////////////////////////////////////////////
         public void Resize(uint vertexCount)
@@ -127,7 +129,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Add a vertex to the array
+        /// Add a <see cref="Vertex" /> to the array
         /// </summary>
         /// <param name="vertex">Vertex to add</param>
         ////////////////////////////////////////////////////////////
@@ -140,6 +142,9 @@ namespace SFML.Graphics
         /// <summary>
         /// Type of primitives to draw
         /// </summary>
+        /// <remarks>
+        /// See <see cref="SFML.Graphics.PrimitiveType" />
+        /// </remarks>
         ////////////////////////////////////////////////////////////
         public PrimitiveType PrimitiveType
         {
@@ -150,10 +155,10 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Compute the bounding rectangle of the vertex array.
-        ///
-        /// This function returns the axis-aligned rectangle that
-        /// contains all the vertices of the array.
         /// </summary>
+        /// <remarks>
+        /// Contains the axis-aligned <see cref="FloatRect"/> that contains all the vertices of the array.
+        /// </remarks>
         ////////////////////////////////////////////////////////////
         public FloatRect Bounds
         {
@@ -162,7 +167,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Draw the vertex array to a render target
+        /// Draw the vertex array to a <see cref="RenderTarget" />
         /// </summary>
         /// <param name="target">Render target to draw to</param>
         /// <param name="states">Current render states</param>

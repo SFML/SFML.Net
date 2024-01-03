@@ -678,7 +678,7 @@ namespace SFML.Graphics
         ///    </code>
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        [Obsolete("Capture is deprecated, please see remarks for preferred method")]
+        [Obsolete("Use Texture and Texture.Update(RenderWindow)")]
         public Image Capture()
         {
             return new Image(sfRenderWindow_capture(CPointer));
