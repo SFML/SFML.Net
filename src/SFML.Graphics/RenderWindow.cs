@@ -50,7 +50,7 @@ namespace SFML.Graphics
         /// <param name="settings">Creation parameters</param>
         ////////////////////////////////////////////////////////////
         public RenderWindow(VideoMode mode, string title, Styles style, ContextSettings settings) :
-            base(IntPtr.Zero, 0)
+            base(IntPtr.Zero)
         {
             // Copy the string to a null-terminated UTF-32 byte array
             byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
@@ -84,7 +84,7 @@ namespace SFML.Graphics
         /// <param name="settings">Creation parameters</param>
         ////////////////////////////////////////////////////////////
         public RenderWindow(IntPtr handle, ContextSettings settings) :
-            base(sfRenderWindow_createFromHandle(handle, ref settings), 0)
+            base(sfRenderWindow_createFromHandle(handle, ref settings))
         {
             Initialize();
         }
