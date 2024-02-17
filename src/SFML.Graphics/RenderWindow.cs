@@ -5,6 +5,8 @@ using System.Text;
 using SFML.System;
 using SFML.Window;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -578,7 +580,7 @@ namespace SFML.Graphics
             {
                 fixed (Vertex* vertexPtr = vertices)
                 {
-                    sfRenderWindow_drawPrimitives(CPointer, vertexPtr + start, count, type, ref marshaledStates);
+                    sfRenderWindow_drawPrimitives(CPointer, vertexPtr + start, (SIZE_T)count, type, ref marshaledStates);
                 }
             }
         }
@@ -903,7 +905,7 @@ namespace SFML.Graphics
         private static extern Vector2i sfRenderWindow_mapCoordsToPixel(IntPtr CPointer, Vector2f point, IntPtr View);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern void sfRenderWindow_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, uint vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
+        private unsafe static extern void sfRenderWindow_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, SIZE_T vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_pushGLStates(IntPtr CPointer);

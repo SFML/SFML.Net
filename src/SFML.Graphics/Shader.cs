@@ -6,6 +6,8 @@ using System.Security;
 using SFML.System;
 using SFML.Window;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -406,7 +408,7 @@ namespace SFML.Graphics
         {
             fixed (float* data = array)
             {
-                sfShader_setFloatUniformArray(CPointer, name, data, (uint)array.Length);
+                sfShader_setFloatUniformArray(CPointer, name, data, (SIZE_T)array.Length);
             }
         }
 
@@ -421,7 +423,7 @@ namespace SFML.Graphics
         {
             fixed (Glsl.Vec2* data = array)
             {
-                sfShader_setVec2UniformArray(CPointer, name, data, (uint)array.Length);
+                sfShader_setVec2UniformArray(CPointer, name, data, (SIZE_T)array.Length);
             }
         }
 
@@ -436,7 +438,7 @@ namespace SFML.Graphics
         {
             fixed (Glsl.Vec3* data = array)
             {
-                sfShader_setVec3UniformArray(CPointer, name, data, (uint)array.Length);
+                sfShader_setVec3UniformArray(CPointer, name, data, (SIZE_T)array.Length);
             }
         }
 
@@ -451,7 +453,7 @@ namespace SFML.Graphics
         {
             fixed (Glsl.Vec4* data = array)
             {
-                sfShader_setVec4UniformArray(CPointer, name, data, (uint)array.Length);
+                sfShader_setVec4UniformArray(CPointer, name, data, (SIZE_T)array.Length);
             }
         }
 
@@ -466,7 +468,7 @@ namespace SFML.Graphics
         {
             fixed (Glsl.Mat3* data = array)
             {
-                sfShader_setMat3UniformArray(CPointer, name, data, (uint)array.Length);
+                sfShader_setMat3UniformArray(CPointer, name, data, (SIZE_T)array.Length);
             }
         }
 
@@ -481,7 +483,7 @@ namespace SFML.Graphics
         {
             fixed (Glsl.Mat4* data = array)
             {
-                sfShader_setMat4UniformArray(CPointer, name, data, (uint)array.Length);
+                sfShader_setMat4UniformArray(CPointer, name, data, (SIZE_T)array.Length);
             }
         }
 
@@ -816,22 +818,22 @@ namespace SFML.Graphics
         private static extern void sfShader_setCurrentTextureUniform(IntPtr shader, string name);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfShader_setFloatUniformArray(IntPtr shader, string name, float* data, uint length);
+        private static extern unsafe void sfShader_setFloatUniformArray(IntPtr shader, string name, float* data, SIZE_T length);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfShader_setVec2UniformArray(IntPtr shader, string name, Glsl.Vec2* data, uint length);
+        private static extern unsafe void sfShader_setVec2UniformArray(IntPtr shader, string name, Glsl.Vec2* data, SIZE_T length);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfShader_setVec3UniformArray(IntPtr shader, string name, Glsl.Vec3* data, uint length);
+        private static extern unsafe void sfShader_setVec3UniformArray(IntPtr shader, string name, Glsl.Vec3* data, SIZE_T length);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfShader_setVec4UniformArray(IntPtr shader, string name, Glsl.Vec4* data, uint length);
+        private static extern unsafe void sfShader_setVec4UniformArray(IntPtr shader, string name, Glsl.Vec4* data, SIZE_T length);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfShader_setMat3UniformArray(IntPtr shader, string name, Glsl.Mat3* data, uint length);
+        private static extern unsafe void sfShader_setMat3UniformArray(IntPtr shader, string name, Glsl.Mat3* data, SIZE_T length);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfShader_setMat4UniformArray(IntPtr shader, string name, Glsl.Mat4* data, uint length);
+        private static extern unsafe void sfShader_setMat4UniformArray(IntPtr shader, string name, Glsl.Mat4* data, SIZE_T length);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
         private static extern void sfShader_setFloatParameter(IntPtr shader, string name, float x);

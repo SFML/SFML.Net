@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Audio
 {
     ////////////////////////////////////////////////////////////
@@ -75,7 +77,7 @@ namespace SFML.Audio
             GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
-                CPointer = sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
+                CPointer = sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), (SIZE_T)bytes.Length);
             }
             finally
             {
@@ -224,7 +226,7 @@ namespace SFML.Audio
         private unsafe static extern IntPtr sfSoundBuffer_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, ulong size);
+        private unsafe static extern IntPtr sfSoundBuffer_createFromMemory(IntPtr data, SIZE_T size);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private unsafe static extern IntPtr sfSoundBuffer_createFromSamples(short* Samples, ulong SampleCount, uint ChannelsCount, uint SampleRate);

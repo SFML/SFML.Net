@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+using SIZE_T = System.UIntPtr;
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -90,7 +92,7 @@ namespace SFML.Graphics
             GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
-                CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
+                CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), (SIZE_T)bytes.Length);
             }
             finally
             {
@@ -365,7 +367,7 @@ namespace SFML.Graphics
         private unsafe static extern IntPtr sfImage_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, ulong size);
+        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, SIZE_T size);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfImage_copy(IntPtr Image);
