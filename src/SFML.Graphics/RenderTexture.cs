@@ -103,6 +103,16 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Tell if the render texture will use sRGB encoding when drawing on it
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public bool IsSrgb
+        {
+            get { return sfRenderTexture_isSrgb(CPointer); }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Default view of the render texture
         /// </summary>
         ////////////////////////////////////////////////////////////
@@ -539,6 +549,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2u sfRenderTexture_getSize(IntPtr CPointer);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderTexture_isSrgb(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfRenderTexture_setActive(IntPtr CPointer, bool Active);
