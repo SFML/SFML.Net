@@ -81,14 +81,27 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Get the kerning offset between two glyphs
+        /// Get the kerning value corresponding to a given pair of
+        /// characters in a font
         /// </summary>
         /// <param name="first">Unicode code point of the first character</param>
         /// <param name="second">Unicode code point of the second character</param>
-        /// <param name="characterSize">Character size</param>
+        /// <param name="characterSize">Character size, in pixels</param>
         /// <returns>Kerning offset, in pixels</returns>
         ////////////////////////////////////////////////////////////
         public float GetKerning(uint first, uint second, uint characterSize) => sfFont_getKerning(CPointer, first, second, characterSize);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the bold kerning value corresponding to a given pair
+        /// of characters in a font
+        /// </summary>
+        /// <param name="first">Unicode code point of the first character</param>
+        /// <param name="second">Unicode code point of the second character</param>
+        /// <param name="characterSize">Character size, in pixels</param>
+        /// <returns>Kerning offset, in pixels</returns>
+        ////////////////////////////////////////////////////////////
+        public float GetBoldKerning(uint first, uint second, uint characterSize) => sfFont_getBoldKerning(CPointer, first, second, characterSize);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -129,6 +142,28 @@ namespace SFML.Graphics
             myTextures[characterSize] = new Texture(sfFont_getTexture(CPointer, characterSize));
             return myTextures[characterSize];
         }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Enable or disable the smooth filter
+        ///
+        /// When the filter is activated, the font appears smoother
+        /// so that pixels are less noticeable. However if you want
+        /// the font to look exactly the same as its source file,
+        /// you should disable it.
+        /// The smooth filter is enabled by default.
+        /// </summary>
+        /// <param name="smooth">True to enable smoothing, false to disable it</param>
+        ////////////////////////////////////////////////////////////
+        public void SetSmooth(bool smooth) => sfFont_setSmooth(CPointer, smooth);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Tell whether the smooth filter is enabled or disabled
+        /// </summary>
+        /// <returns>True if smoothing is enabled, false if it is disabled</returns>
+        ////////////////////////////////////////////////////////////
+        public bool IsSmooth() => sfFont_isSmooth(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -245,6 +280,9 @@ namespace SFML.Graphics
         private static extern float sfFont_getKerning(IntPtr CPointer, uint first, uint second, uint characterSize);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfFont_getBoldKerning(IntPtr CPointer, uint first, uint second, uint characterSize);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfFont_getLineSpacing(IntPtr CPointer, uint characterSize);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -255,6 +293,12 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfFont_getTexture(IntPtr CPointer, uint characterSize);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfFont_setSmooth(IntPtr CPointer, bool smooth);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfFont_isSmooth(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern InfoMarshalData sfFont_getInfo(IntPtr CPointer);
