@@ -15,6 +15,10 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Key codes
+        /// 
+        /// The enumerators refer to the "localized" key; i.e. depending
+        /// on the layout set by the operating system, a key can be mapped
+        /// to `Y` or `Z`.
         /// </summary>
         ////////////////////////////////////////////////////////////
         public enum Key
@@ -101,7 +105,7 @@ namespace SFML.Window
             LShift,
             /// <summary>The left Alt key</summary>
             LAlt,
-            /// <summary>The left OS specific key: window (Windows and Linux), apple (MacOS X), ...</summary>
+            /// <summary>The left OS specific key: window (Windows and Linux), apple (macOS), ...</summary>
             LSystem,
             /// <summary>The right Control key</summary>
             RControl,
@@ -109,7 +113,7 @@ namespace SFML.Window
             RShift,
             /// <summary>The right Alt key</summary>
             RAlt,
-            /// <summary>The right OS specific key: window (Windows and Linux), apple (MacOS X), ...</summary>
+            /// <summary>The right OS specific key: window (Windows and Linux), apple (macOS), ...</summary>
             RSystem,
             /// <summary>The Menu key</summary>
             Menu,
@@ -124,13 +128,13 @@ namespace SFML.Window
             /// <summary>The . key</summary>
             Period,
             /// <summary>The ' key</summary>
-            Quote,
+            Apostrophe,
             /// <summary>The / key</summary>
             Slash,
             /// <summary>The \ key</summary>
             Backslash,
             /// <summary>The ~ key</summary>
-            Tilde,
+            Grave,
             /// <summary>The = key</summary>
             Equal,
             /// <summary>The - key</summary>
@@ -228,6 +232,9 @@ namespace SFML.Window
             KeyCount, // Keep last
 
             // Deprecated backwards compatible stuff
+            /// <summary>DEPRECATED: Use Grave</summary>
+            [Obsolete("Replace with Grave")]
+            Tilde = Grave,
             /// <summary>DEPRECATED: Use Hyphen</summary>
             [Obsolete("Replace with Hyphen")]
             Dash = Hyphen,
@@ -242,8 +249,327 @@ namespace SFML.Window
             BackSlash = Backslash,
             /// <summary>DEPRECATED: Use Semicolon</summary>
             [Obsolete("Replace with Semicolon")]
-            SemiColon = Semicolon
+            SemiColon = Semicolon,
+            /// <summary>DEPRECATED: Use Apostrophe</summary>
+            [Obsolete("Replace with Apostrophe")]
+            Quote = Apostrophe
         };
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Scancodes
+        /// 
+        /// The enumerators are bound to a physical key and do not depend on
+        /// the keyboard layout used by the operating system. Usually, the AT-101
+        /// keyboard can be used as reference for the physical position of the keys.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public enum Scancode
+        {
+            /// <summary>Represents any scancode not present in this enum</summary>
+            Unknown = -1,
+            /// <summary>Keyboard a and A key</summary>
+            A = 0,
+            /// <summary>Keyboard b and B key</summary>
+            B,
+            /// <summary>Keyboard c and C key</summary>
+            C,
+            /// <summary>Keyboard d and D key</summary>
+            D,
+            /// <summary>Keyboard e and E key</summary>
+            E,
+            /// <summary>Keyboard f and F key</summary>
+            F,
+            /// <summary>Keyboard g and G key</summary>
+            G,
+            /// <summary>Keyboard h and H key</summary>
+            H,
+            /// <summary>Keyboard i and I key</summary>
+            I,
+            /// <summary>Keyboard j and J key</summary>
+            J,
+            /// <summary>Keyboard k and K key</summary>
+            K,
+            /// <summary>Keyboard l and L key</summary>
+            L,
+            /// <summary>Keyboard m and M key</summary>
+            M,
+            /// <summary>Keyboard n and N key</summary>
+            N,
+            /// <summary>Keyboard o and O key</summary>
+            O,
+            /// <summary>Keyboard p and P key</summary>
+            P,
+            /// <summary>Keyboard q and Q key</summary>
+            Q,
+            /// <summary>Keyboard r and R key</summary>
+            R,
+            /// <summary>Keyboard s and S key</summary>
+            S,
+            /// <summary>Keyboard t and T key</summary>
+            T,
+            /// <summary>Keyboard u and U key</summary>
+            U,
+            /// <summary>Keyboard v and V key</summary>
+            V,
+            /// <summary>Keyboard w and W key</summary>
+            W,
+            /// <summary>Keyboard x and X key</summary>
+            X,
+            /// <summary>Keyboard y and Y key</summary>
+            Y,
+            /// <summary>Keyboard z and Z key</summary>
+            Z,
+            /// <summary>Keyboard 1 and ! key</summary>
+            Num1,
+            /// <summary>Keyboard 2 and @ key</summary>
+            Num2,
+            /// <summary>Keyboard 3 and # key</summary>
+            Num3,
+            /// <summary>Keyboard 4 and $ key</summary>
+            Num4,
+            /// <summary>Keyboard 5 and % key</summary>
+            Num5,
+            /// <summary>Keyboard 6 and ^ key</summary>
+            Num6,
+            /// <summary>Keyboard 7 and &amp; key</summary>
+            Num7,
+            /// <summary>Keyboard 8 and * key</summary>
+            Num8,
+            /// <summary>Keyboard 9 and ) key</summary>
+            Num9,
+            /// <summary>Keyboard 0 and ) key</summary>
+            Num0,
+            /// <summary>Keyboard Enter/Return key</summary>
+            Enter,
+            /// <summary>Keyboard Escape key</summary>
+            Escape,
+            /// <summary>Keyboard Backspace key</summary>
+            Backspace,
+            /// <summary>Keyboard Tab key</summary>
+            Tab,
+            /// <summary>Keyboard Space key</summary>
+            Space,
+            /// <summary>Keyboard - and _ key</summary>
+            Hyphen,
+            /// <summary>Keyboard = and +</summary>
+            Equal,
+            /// <summary>Keyboard [ and { key</summary>
+            LBracket,
+            /// <summary>Keyboard ] and } key</summary>
+            RBracket,
+            // For US keyboards mapped to key 29 (Microsoft Keyboard Scan Code Specification)
+            // For Non-US keyboards mapped to key 42 (Microsoft Keyboard Scan Code Specification)
+            // Typical language mappings: Belg:£µ` FrCa:<>} Dan:*' Dutch:`´ Fren:µ* Ger:'# Ital:§ù LatAm:[}` Nor:*@ Span:ç} Swed:*' Swiss:$£} UK:~# Brazil:}]
+            /// <summary>Keyboard \ and | key OR various keys for Non-US keyboards</summary>
+            Backslash,
+            /// <summary>Keyboard ; and : key</summary>
+            Semicolon,
+            /// <summary>Keyboard ' and " key</summary>
+            Apostrophe,
+            /// <summary>Keyboard ` and ~ key</summary>
+            Grave,
+            /// <summary>Keyboard , and &lt; key</summary>
+            Comma,
+            /// <summary>Keyboard . and > key</summary>
+            Period,
+            /// <summary>Keyboard / and ? key</summary>
+            Slash,
+            /// <summary>Keyboard F1 key</summary>
+            F1,
+            /// <summary>Keyboard F2 key</summary>
+            F2,
+            /// <summary>Keyboard F3 key</summary>
+            F3,
+            /// <summary>Keyboard F5 key</summary>
+            F4,
+            /// <summary>Keyboard F4 key</summary>
+            F5,
+            /// <summary>Keyboard F6 key</summary>
+            F6,
+            /// <summary>Keyboard F7 key</summary>
+            F7,
+            /// <summary>Keyboard F8 key</summary>
+            F8,
+            /// <summary>Keyboard F9 key</summary>
+            F9,
+            /// <summary>Keyboard F10 key</summary>
+            F10,
+            /// <summary>Keyboard F11 key</summary>
+            F11,
+            /// <summary>Keyboard F12 key</summary>
+            F12,
+            /// <summary>Keyboard F13 key</summary>
+            F13,
+            /// <summary>Keyboard F14 key</summary>
+            F14,
+            /// <summary>Keyboard F15 key</summary>
+            F15,
+            /// <summary>Keyboard F16 key</summary>
+            F16,
+            /// <summary>Keyboard F17 key</summary>
+            F17,
+            /// <summary>Keyboard F18 key</summary>
+            F18,
+            /// <summary>Keyboard F19 key</summary>
+            F19,
+            /// <summary>Keyboard F20 key</summary>
+            F20,
+            /// <summary>Keyboard F21 key</summary>
+            F21,
+            /// <summary>Keyboard F22 key</summary>
+            F22,
+            /// <summary>Keyboard F23 key</summary>
+            F23,
+            /// <summary>Keyboard F24 key</summary>
+            F24,
+            /// <summary>Keyboard Caps %Lock key</summary>
+            CapsLock,
+            /// <summary>Keyboard Print Screen key</summary>
+            PrintScreen,
+            /// <summary>Keyboard Scroll %Lock key</summary>
+            ScrollLock,
+            /// <summary>Keyboard Pause key</summary>
+            Pause,
+            /// <summary>Keyboard Insert key</summary>
+            Insert,
+            /// <summary>Keyboard Home key</summary>
+            Home,
+            /// <summary>Keyboard Page Up key</summary>
+            PageUp,
+            /// <summary>Keyboard Delete Forward key</summary>
+            Delete,
+            /// <summary>Keyboard End key</summary>
+            End,
+            /// <summary>Keyboard Page Down key</summary>
+            PageDown,
+            /// <summary>Keyboard Right Arrow key</summary>
+            Right,
+            /// <summary>Keyboard Left Arrow key</summary>
+            Left,
+            /// <summary>Keyboard Down Arrow key</summary>
+            Down,
+            /// <summary>Keyboard Up Arrow key</summary>
+            Up,
+            /// <summary>Keypad Num %Lock and Clear key</summary>
+            NumLock,
+            /// <summary>Keypad / key</summary>
+            NumpadDivide,
+            /// <summary>Keypad * key</summary>
+            NumpadMultiply,
+            /// <summary>Keypad - key</summary>
+            NumpadMinus,
+            /// <summary>Keypad + key</summary>
+            NumpadPlus,
+            /// <summary>keypad = key</summary>
+            NumpadEqual,
+            /// <summary>Keypad Enter/Return key</summary>
+            NumpadEnter,
+            /// <summary>Keypad . and Delete key</summary>
+            NumpadDecimal,
+            /// <summary>Keypad 1 and End key</summary>
+            Numpad1,
+            /// <summary>Keypad 2 and Down Arrow key</summary>
+            Numpad2,
+            /// <summary>Keypad 3 and Page Down key</summary>
+            Numpad3,
+            /// <summary>Keypad 4 and Left Arrow key</summary>
+            Numpad4,
+            /// <summary>Keypad 5 key</summary>
+            Numpad5,
+            /// <summary>Keypad 6 and Right Arrow key</summary>
+            Numpad6,
+            /// <summary>Keypad 7 and Home key</summary>
+            Numpad7,
+            /// <summary>Keypad 8 and Up Arrow key</summary>
+            Numpad8,
+            /// <summary>Keypad 9 and Page Up key</summary>
+            Numpad9,
+            /// <summary>Keypad 0 and Insert key</summary>
+            Numpad0,
+            // For US keyboards doesn't exist
+            // For Non-US keyboards mapped to key 45 (Microsoft Keyboard Scan Code Specification)
+            // Typical language mappings: Belg:<\> FrCa:«°» Dan:<\> Dutch:]|[ Fren:<> Ger:<|> Ital:<> LatAm:<> Nor:<> Span:<> Swed:<|> Swiss:<\> UK:\| Brazil: \|.
+            /// <summary>Keyboard Non-US \ and | key</summary>
+            NonUsBackslash,
+            /// <summary>Keyboard Application key</summary>
+            Application,
+            /// <summary>Keyboard Execute key</summary>
+            Execute,
+            /// <summary>Keyboard Mode Change key</summary>
+            ModeChange,
+            /// <summary>Keyboard Help key</summary>
+            Help,
+            /// <summary>Keyboard Menu key</summary>
+            Menu,
+            /// <summary>Keyboard Select key</summary>
+            Select,
+            /// <summary>Keyboard Redo key</summary>
+            Redo,
+            /// <summary>Keyboard Undo key</summary>
+            Undo,
+            /// <summary>Keyboard Cut key</summary>
+            Cut,
+            /// <summary>Keyboard Copy key</summary>
+            Copy,
+            /// <summary>Keyboard Paste key</summary>
+            Paste,
+            /// <summary>Keyboard Volume Mute key</summary>
+            VolumeMute,
+            /// <summary>Keyboard Volume Up key</summary>
+            VolumeUp,
+            /// <summary>Keyboard Volume Down key</summary>
+            VolumeDown,
+            /// <summary>Keyboard Media Play Pause key</summary>
+            MediaPlayPause,
+            /// <summary>Keyboard Media Stop key</summary>
+            MediaStop,
+            /// <summary>Keyboard Media Next Track key</summary>
+            MediaNextTrack,
+            /// <summary>Keyboard Media Previous Track key</summary>
+            MediaPreviousTrack,
+            /// <summary>Keyboard Left Control key</summary>
+            LControl,
+            /// <summary>Keyboard Left Shift key</summary>
+            LShift,
+            /// <summary>Keyboard Left Alt key</summary>
+            LAlt,
+            /// <summary>Keyboard Left System key</summary>
+            LSystem,
+            /// <summary>Keyboard Right Control key</summary>
+            RControl,
+            /// <summary>Keyboard Right Shift key</summary>
+            RShift,
+            /// <summary>Keyboard Right Alt key</summary>
+            RAlt,
+            /// <summary>Keyboard Right System key</summary>
+            RSystem,
+            /// <summary>Keyboard Back key</summary>
+            Back,
+            /// <summary>Keyboard Forward key</summary>
+            Forward,
+            /// <summary>Keyboard Refresh key</summary>
+            Refresh,
+            /// <summary>Keyboard Stop key</summary>
+            Stop,
+            /// <summary>Keyboard Search key</summary>
+            Search,
+            /// <summary>Keyboard Favorites key</summary>
+            Favorites,
+            /// <summary>Keyboard Home Page key</summary>
+            HomePage,
+            /// <summary>Keyboard Launch Application 1 key</summary>
+            LaunchApplication1,
+            /// <summary>Keyboard Launch Application 2 key</summary>
+            LaunchApplication2,
+            /// <summary>Keyboard Launch Mail key</summary>
+            LaunchMail,
+            /// <summary>Keyboard Launch Media Select key</summary>
+            LaunchMediaSelect,
+
+            /// <summary>Keep last -- the total number of scancodes</summary>
+            ScancodeCount
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -259,7 +585,55 @@ namespace SFML.Window
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Enable/Disable visibility of the virtual keyboard
+        /// Check if a key is pressed
+        /// </summary>
+        /// <param name="code">Scancode to check</param>
+        /// <returns>True if the physical key is pressed, false otherwise</returns>
+        ////////////////////////////////////////////////////////////
+        public static bool IsScancodePressed(Scancode code)
+        {
+            return sfKeyboard_isScancodePressed(code);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Localize a physical key to a logical one
+        /// </summary>
+        /// <param name="code">Scancode to localize</param>
+        /// <returns>
+        /// The key corresponding to the scancode under the current
+        /// keyboard layout used by the operating system, or
+        /// <see cref="Key.Unknown"/> when the scancode cannot be mapped
+        /// to a <see cref="Key"/>.
+        /// </returns>
+        ////////////////////////////////////////////////////////////
+        public static Key Localize(Scancode code)
+        {
+            return sfKeyboard_localize(code);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Identify the physical key corresponding to a logical one
+        /// </summary>
+        /// <param name="key">Key to "delocalize"</param>
+        /// <returns>
+        /// The scancode corresponding to the key under the current
+        /// keyboard layout used by the operating system, or
+        /// <see cref="Scancode.Unknown"/> when the key cannot be mapped
+        /// to a <see cref="Scancode"/>.
+        /// </returns>
+        ////////////////////////////////////////////////////////////
+        public static Scancode Delocalize(Key key)
+        {
+            return sfKeyboard_delocalize(key);
+        }
+
+        // TODO Implement GetDescription
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Show or hide the virtual keyboard.
         /// </summary>
         /// <remarks>Applicable only on Android and iOS</remarks>
         /// <param name="visible">Whether to make the virtual keyboard visible (true) or not (false)</param>
@@ -272,6 +646,17 @@ namespace SFML.Window
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfKeyboard_isKeyPressed(Key Key);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfKeyboard_isScancodePressed(Scancode code);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Key sfKeyboard_localize(Scancode code);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Scancode sfKeyboard_delocalize(Key key);
+
+        // TODO Import sfKeyboard_getDescription
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfKeyboard_setVirtualKeyboardVisible(bool visible);
