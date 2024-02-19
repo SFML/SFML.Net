@@ -315,6 +315,29 @@ namespace SFML.Graphics
             }
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Draw the vertex buffer to a render target
+        /// </summary>
+        /// <param name="target">Render target to draw to</param>
+        /// <param name="firstVertex">Index of the first vertex to render</param>
+        /// <param name="vertexCount">Number of vertices to render</param>
+        /// <param name="states">Current render states</param>
+        ////////////////////////////////////////////////////////////
+        public void Draw(RenderTarget target, uint firstVertex, uint vertexCount, RenderStates states)
+        {
+            RenderStates.MarshalData marshaledStates = states.Marshal();
+
+            if (target is RenderWindow)
+            {
+                sfRenderWindow_drawVertexBufferRange(( (RenderWindow)target ).CPointer, CPointer, firstVertex, vertexCount, ref marshaledStates);
+            }
+            else if (target is RenderTexture)
+            {
+                sfRenderTexture_drawVertexBufferRange(( (RenderTexture)target ).CPointer, CPointer, firstVertex, vertexCount, ref marshaledStates);
+            }
+        }
+
         #region Imports
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfVertexBuffer_create(uint vertexCount, PrimitiveType type, UsageSpecifier usage);
@@ -362,7 +385,13 @@ namespace SFML.Graphics
         private static extern void sfRenderWindow_drawVertexBuffer(IntPtr CPointer, IntPtr VertexArray, ref RenderStates.MarshalData states);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderWindow_drawVertexBufferRange(IntPtr CPointer, IntPtr VertexBuffer, uint firstVertex, uint vertexCount, ref RenderStates.MarshalData states);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderTexture_drawVertexBuffer(IntPtr CPointer, IntPtr VertexBuffer, ref RenderStates.MarshalData states);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_drawVertexBufferRange(IntPtr CPointer, IntPtr VertexBuffer, uint firstVertex, uint vertexCount, ref RenderStates.MarshalData states);
         #endregion
     }
 }
