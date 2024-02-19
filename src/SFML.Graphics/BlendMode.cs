@@ -63,7 +63,13 @@ namespace SFML.Graphics
             Subtract,
 
             /// <summary>Pixel = Dst * DstFactor - Src * SrcFactor</summary>
-            ReverseSubtract
+            ReverseSubtract,
+
+            /// <summary>Pixel = min(Dst, Src)</summary>
+            Min,
+
+            /// <summary>Pixel = max(Dst, Src)</summary>
+            Max
         }
 
         /// <summary>Blend source and dest according to dest alpha</summary>
@@ -77,9 +83,14 @@ namespace SFML.Graphics
         /// <summary>Multiply source and dest</summary>
         public static readonly BlendMode Multiply = new BlendMode(Factor.DstColor, Factor.Zero);
 
+        /// <summary>Take minimum between source and dest</summary>
+        public static readonly BlendMode Min = new BlendMode(Factor.One, Factor.One, Equation.Min);
+
+        /// <summary>Take maximum between source and dest</summary>
+        public static readonly BlendMode Max = new BlendMode(Factor.One, Factor.One, Equation.Max);
+
         /// <summary>Overwrite dest with source</summary>
         public static readonly BlendMode None = new BlendMode(Factor.One, Factor.Zero);
-
 
         ////////////////////////////////////////////////////////////
         /// <summary>
