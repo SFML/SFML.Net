@@ -18,7 +18,7 @@ namespace SFML.Audio
         /// Construct a sound buffer from a file
         /// 
         /// Here is a complete list of all the supported audio formats:
-        /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
         /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="filename">Path of the sound file to load</param>
@@ -38,7 +38,7 @@ namespace SFML.Audio
         /// Construct a sound buffer from a custom stream.
         ///
         /// Here is a complete list of all the supported audio formats:
-        /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
         /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="stream">Source stream to read from</param>
@@ -63,7 +63,7 @@ namespace SFML.Audio
         /// Construct a sound buffer from a file in memory.
         /// 
         /// Here is a complete list of all the supported audio formats:
-        /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
         /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="bytes">Byte array containing the file contents</param>
@@ -129,7 +129,7 @@ namespace SFML.Audio
         /// Save the sound buffer to an audio file.
         ///
         /// Here is a complete list of all the supported audio formats:
-        /// ogg, wav, flac, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
         /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="filename">Path of the sound file to write</param>

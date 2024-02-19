@@ -15,7 +15,13 @@ namespace SFML.Audio
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Constructs a music from an audio file
+        /// Constructs a music from a file
+        ///
+        /// This constructor doesn't start playing the music (call
+        /// <see cref="Play"/> to do so).
+        /// Here is a complete list of all the supported audio formats:
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="filename">Path of the music file to open</param>
         ////////////////////////////////////////////////////////////
@@ -31,6 +37,12 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Constructs a music from a custom stream
+        ///
+        /// This constructor doesn't start playing the music (call
+        /// <see cref="Play"/> to do so).
+        /// Here is a complete list of all the supported audio formats:
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="stream">Source stream to read from</param>
         ////////////////////////////////////////////////////////////
@@ -49,6 +61,12 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Constructs a music from an audio file in memory
+        ///
+        /// This constructor doesn't start playing the music (call
+        /// <see cref="Play"/> to do so).
+        /// Here is a complete list of all the supported audio formats:
+        /// ogg, wav, flac, mp3, aiff, au, raw, paf, svx, nist, voc, ircam,
+        /// w64, mat4, mat5 pvf, htk, sds, avr, sd2, caf, wve, mpc2k, rf64.
         /// </summary>
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
