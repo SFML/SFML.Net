@@ -148,6 +148,16 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Tell if the render window will use sRGB encoding when drawing on it
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public bool IsSrgb
+        {
+            get { return sfRenderWindow_isSrgb(CPointer); }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Change the title of the window
         /// </summary>
         /// <param name="title">New title</param>
@@ -829,6 +839,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2u sfRenderWindow_getSize(IntPtr CPointer);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderWindow_isSrgb(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_setSize(IntPtr CPointer, Vector2u size);
