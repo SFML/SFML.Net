@@ -187,6 +187,30 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Save the image to a buffer in memory
+        /// 
+        /// The format of the image must be specified.
+        /// The supported image formats are bmp, png, tga and jpg.
+        /// This function fails if the image is empty, or if
+        /// the format was invalid.
+        /// </summary>
+        /// <param name="output">Byte array filled with encoded data</param>
+        /// <param name="format">Encoding format to use</param>
+        /// <returns>True if saving was successful</returns>
+        ////////////////////////////////////////////////////////////
+        public bool SaveToMemory(out byte[] output, string format)
+        {
+            using (SFML.System.Buffer buffer = new SFML.System.Buffer())
+            {
+                bool success = sfImage_saveToMemory(CPointer, buffer.CPointer, format);
+
+                output = success ? buffer.GetData() : Array.Empty<byte>();
+                return success;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Create a transparency mask from a specified colorkey
         /// </summary>
         /// <param name="color">Color to become transparent</param>
@@ -375,6 +399,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfImage_saveToFile(IntPtr CPointer, string Filename);
+
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfImage_saveToMemory(IntPtr CPointer, IntPtr bufferOutput, string format);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfImage_createMaskFromColor(IntPtr CPointer, Color Col, byte Alpha);
