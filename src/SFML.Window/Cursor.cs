@@ -84,6 +84,62 @@ namespace SFML.Window
             /// </summary>
             SizeBottomLeftTopRight,
             /// <summary>
+            /// Left arrow cursor on Linux, same as SizeHorizontal on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeLeft,
+            /// <summary>
+            /// Right arrow cursor on Linux, same as SizeHorizontal on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeRight,
+            /// <summary>
+            /// Up arrow cursor on Linux, same as SizeVertical on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeTop,
+            /// <summary>
+            /// Down arrow cursor on Linux, same as SizeVertical on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeBottom,
+            /// <summary>
+            /// Top-left arrow cursor on Linux, same as SizeTopLeftBottomRight on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeTopLeft,
+            /// <summary>
+            /// Bottom-right arrow cursor on Linux, same as SizeTopLeftBottomRight on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeBottomRight,
+            /// <summary>
+            /// Bottom-left arrow cursor on Linux, same as SizeBottomLeftTopRight on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeBottomLeft,
+            /// <summary>
+            /// Top-right arrow cursor on Linux, same as SizeBottomLeftTopRight on other platforms
+            /// Windows: Yes
+            /// Mac OS:  Yes
+            /// Linux:   Yes
+            /// </summary>
+            SizeTopRight,
+            /// <summary>
             /// Combination of SizeHorizontal and SizeVertical
             /// Windows: Yes
             /// Mac OS:  No
