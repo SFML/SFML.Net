@@ -124,6 +124,22 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Get the position of the rectangle's top-left corner
+        /// </summary>
+        /// <returns>Position of rectangle</returns>
+        ////////////////////////////////////////////////////////////
+        public Vector2i Position => new Vector2i(Left, Top);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the size of the rectangle
+        /// </summary>
+        /// <returns>Size of rectangle</returns>
+        ////////////////////////////////////////////////////////////
+        public Vector2i Size => new Vector2i(Width, Height);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Provide a string describing the object
         /// </summary>
         /// <returns>String description of the object</returns>
@@ -336,6 +352,22 @@ namespace SFML.Graphics
                 return false;
             }
         }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the position of the rectangle's top-left corner
+        /// </summary>
+        /// <returns>Position of rectangle</returns>
+        ////////////////////////////////////////////////////////////
+        public Vector2f Position => new Vector2f(Left, Top);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the size of the rectangle
+        /// </summary>
+        /// <returns>Size of rectangle</returns>
+        ////////////////////////////////////////////////////////////
+        public Vector2f Size => new Vector2f(Width, Height);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
