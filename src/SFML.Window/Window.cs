@@ -92,23 +92,12 @@ namespace SFML.Window
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Create the window from an existing control with default creation settings
-        /// </summary>
-        /// <param name="handle">Platform-specific handle of the control</param>
-        ////////////////////////////////////////////////////////////
-        public Window(IntPtr handle) :
-            this(handle, new ContextSettings(0, 0))
-        {
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
         /// Create the window from an existing control
         /// </summary>
         /// <param name="Handle">Platform-specific handle of the control</param>
         /// <param name="settings">Creation parameters</param>
         ////////////////////////////////////////////////////////////
-        public Window(IntPtr Handle, ContextSettings settings) :
+        public Window(IntPtr Handle, ContextSettings settings=default) :
             base(sfWindow_createFromHandle(Handle, ref settings))
         {
         }
@@ -423,12 +412,10 @@ namespace SFML.Window
         /// Constructor for derived classes
         /// </summary>
         /// <param name="cPointer">Pointer to the internal object in the C API</param>
-        /// <param name="dummy">Internal hack :)</param>
         ////////////////////////////////////////////////////////////
-        protected Window(IntPtr cPointer, int dummy) :
+        protected Window(IntPtr cPointer) :
             base(cPointer)
         {
-            // TODO : find a cleaner way of separating this constructor from Window(IntPtr handle)
         }
 
         ////////////////////////////////////////////////////////////
