@@ -34,15 +34,15 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public byte[] GetData()
         {
-            uint size = sfBuffer_getSize(CPointer);
-            IntPtr ptr = sfBuffer_getData(CPointer);
+            var size = sfBuffer_getSize(CPointer);
+            var ptr = sfBuffer_getData(CPointer);
 
             if (ptr == IntPtr.Zero)
             {
                 return Array.Empty<byte>();
             }
 
-            byte[] data = new byte[size];
+            var data = new byte[size];
             Marshal.Copy(ptr, data, 0, (int)size);
 
             return data;
