@@ -202,7 +202,7 @@ namespace SFML.Graphics
         {
             using (SFML.System.Buffer buffer = new SFML.System.Buffer())
             {
-                bool success = sfImage_saveToMemory(CPointer, buffer.CPointer, format);
+                var success = sfImage_saveToMemory(CPointer, buffer.CPointer, format);
 
                 output = success ? buffer.GetData() : Array.Empty<byte>();
                 return success;

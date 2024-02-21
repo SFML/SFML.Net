@@ -67,7 +67,7 @@ namespace SFML.Window
             base(IntPtr.Zero)
         {
             // Copy the title to a null-terminated UTF-32 byte array
-            byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
+            var titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
             unsafe
             {
@@ -145,7 +145,7 @@ namespace SFML.Window
         public virtual void SetTitle(string title)
         {
             // Copy the title to a null-terminated UTF-32 byte array
-            byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
+            var titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
             unsafe
             {
