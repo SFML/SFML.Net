@@ -451,9 +451,6 @@ namespace SFML.Graphics
         private static extern Styles sfText_getStyle(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern FloatRect sfText_getRect(IntPtr CPointer);
-
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, uint Index);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

@@ -49,7 +49,7 @@ namespace SFML.Window
             /// <summary>The X axis of the point-of-view hat</summary>
             PovX,
 
-            /// <summary>TheY axis of the point-of-view hat</summary>
+            /// <summary>The Y axis of the point-of-view hat</summary>
             PovY
         };
 

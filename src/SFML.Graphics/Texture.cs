@@ -629,9 +629,6 @@ namespace SFML.Graphics
         private static extern uint sfTexture_getNativeHandle(IntPtr shader);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern FloatRect sfTexture_getTexCoords(IntPtr texture, IntRect rectangle);
-
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfTexture_getMaximumSize();
         #endregion
     }
