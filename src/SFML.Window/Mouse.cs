@@ -86,7 +86,7 @@ namespace SFML.Window
         /// <param name="relativeTo">Reference window</param>
         /// <returns>Current position of the mouse</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector2i GetPosition(Window relativeTo)
+        public static Vector2i GetPosition(WindowBase relativeTo)
         {
             if (relativeTo != null)
             {
@@ -120,7 +120,7 @@ namespace SFML.Window
         /// <param name="position">New position of the mouse</param>
         /// <param name="relativeTo">Reference window</param>
         ////////////////////////////////////////////////////////////
-        public static void SetPosition(Vector2i position, Window relativeTo)
+        public static void SetPosition(Vector2i position, WindowBase relativeTo)
         {
             if (relativeTo != null)
             {

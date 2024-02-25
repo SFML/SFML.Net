@@ -394,7 +394,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         protected internal virtual Vector2i InternalGetMousePosition()
         {
-            return sfMouse_getPosition(CPointer);
+            throw new NotImplementedException("Currently not available");
         }
 
         ////////////////////////////////////////////////////////////
@@ -407,7 +407,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         protected internal virtual void InternalSetMousePosition(Vector2i position)
         {
-            sfMouse_setPosition(position, CPointer);
+            throw new NotImplementedException("Currently not available");
         }
 
         ////////////////////////////////////////////////////////////
@@ -421,7 +421,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         protected internal virtual Vector2i InternalGetTouchPosition(uint Finger)
         {
-            return sfTouch_getPosition(Finger, CPointer);
+            throw new NotImplementedException("Currently not available");
         }
 
         ////////////////////////////////////////////////////////////
@@ -783,15 +783,6 @@ namespace SFML.Window
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfWindowBase_createVulkanSurface(IntPtr CPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
-
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
-
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
-
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
         #endregion
     }
 }

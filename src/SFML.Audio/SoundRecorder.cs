@@ -20,9 +20,9 @@ namespace SFML.Audio
         public SoundRecorder() :
             base(IntPtr.Zero)
         {
-            myStartCallback = new StartCallback(OnStart);
+            myStartCallback = new StartCallback(StartRecording);
             myProcessCallback = new ProcessCallback(ProcessSamples);
-            myStopCallback = new StopCallback(OnStop);
+            myStopCallback = new StopCallback(StopRecording);
 
             CPointer = sfSoundRecorder_create(myStartCallback, myProcessCallback, myStopCallback, IntPtr.Zero);
         }
@@ -266,6 +266,19 @@ namespace SFML.Audio
         /// Function called directly by the C library ; convert
         /// arguments and forward them to the internal virtual function
         /// </summary>
+        /// <param name="userData">User data -- unused</param>
+        /// <returns>False to stop recording audio data, true to continue</returns>
+        ////////////////////////////////////////////////////////////
+        private bool StartRecording(IntPtr userData)
+        {
+            return OnStart();
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Function called directly by the C library ; convert
+        /// arguments and forward them to the internal virtual function
+        /// </summary>
         /// <param name="samples">Pointer to the array of samples</param>
         /// <param name="nbSamples">Number of samples in the array</param>
         /// <param name="userData">User data -- unused</param>
@@ -279,14 +292,26 @@ namespace SFML.Audio
             return OnProcessSamples(samplesArray);
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Function called directly by the C library ; convert
+        /// arguments and forward them to the internal virtual function
+        /// </summary>
+        /// <param name="userData">User data -- unused</param>
+        ////////////////////////////////////////////////////////////
+        private void StopRecording(IntPtr userData)
+        {
+            OnStop();
+        }
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate bool StartCallback();
+        private delegate bool StartCallback(IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate bool ProcessCallback(IntPtr samples, uint nbSamples, IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void StopCallback();
+        private delegate void StopCallback(IntPtr userData);
 
         private readonly StartCallback myStartCallback;
         private readonly ProcessCallback myProcessCallback;
