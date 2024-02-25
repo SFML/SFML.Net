@@ -376,6 +376,46 @@ namespace SFML.Window
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Internal function to get the mouse position relative to the window.
+        /// This function is protected because it is called by another class of
+        /// another module, it is not meant to be called by users.
+        /// </summary>
+        /// <returns>Relative mouse position</returns>
+        ////////////////////////////////////////////////////////////
+        protected internal override Vector2i InternalGetMousePosition()
+        {
+            return sfMouse_getPosition(CPointer);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Internal function to set the mouse position relative to the window.
+        /// This function is protected because it is called by another class of
+        /// another module, it is not meant to be called by users.
+        /// </summary>
+        /// <param name="position">Relative mouse position</param>
+        ////////////////////////////////////////////////////////////
+        protected internal override void InternalSetMousePosition(Vector2i position)
+        {
+            sfMouse_setPosition(position, CPointer);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Internal function to get the touch position relative to the window.
+        /// This function is protected because it is called by another class of
+        /// another module, it is not meant to be called by users.
+        /// </summary>
+        /// <param name="Finger">Finger index</param>
+        /// <returns>Relative touch position</returns>
+        ////////////////////////////////////////////////////////////
+        protected internal override Vector2i InternalGetTouchPosition(uint Finger)
+        {
+            return sfTouch_getPosition(Finger, CPointer);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Internal function to get the next event (non-blocking)
         /// </summary>
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
@@ -486,9 +526,6 @@ namespace SFML.Window
         private static extern void sfWindow_setFramerateLimit(IntPtr CPointer, uint Limit);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfWindow_getFrameTime(IntPtr CPointer);
-
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindow_setJoystickThreshold(IntPtr CPointer, float Threshold);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -499,6 +536,15 @@ namespace SFML.Window
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfWindow_hasFocus(IntPtr CPointer);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
         #endregion
     }
 }

@@ -45,7 +45,7 @@ namespace SFML.Window
         /// <param name="RelativeTo">Reference window</param>
         /// <returns>Current position of the finger</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector2i GetPosition(uint Finger, Window RelativeTo)
+        public static Vector2i GetPosition(uint Finger, WindowBase RelativeTo)
         {
             if (RelativeTo != null)
             {

@@ -938,15 +938,6 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfTouch_getPositionRenderWindow(uint Finger, IntPtr RelativeTo);
-
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderWindow_saveGLStates(IntPtr CPointer);
-
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderWindow_restoreGLStates(IntPtr CPointer);
-
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfRenderWindow_getFrameTime(IntPtr CPointer);
         #endregion
     }
 }

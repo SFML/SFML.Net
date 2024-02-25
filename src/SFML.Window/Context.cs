@@ -40,9 +40,9 @@ namespace SFML.Window
         /// <param name="name">Name of the extension to check for</param>
         /// <returns>True if available, false if unavailable</returns>
         ////////////////////////////////////////////////////////////
-        public bool IsExtensionAvailable(string name)
+        public static bool IsExtensionAvailable(string name)
         {
-            return sfContext_isExtensionAvailable(myThis, name);
+            return sfContext_isExtensionAvailable(name);
         }
 
         ////////////////////////////////////////////////////////////
@@ -64,9 +64,9 @@ namespace SFML.Window
         /// <param name="name">Name of the function to get the address of</param>
         /// <returns>Address of the OpenGL function, <see cref="IntPtr.Zero"/> on failure</returns>
         ////////////////////////////////////////////////////////////
-        public IntPtr GetFunction(string name)
+        public static IntPtr GetFunction(string name)
         {
-            return sfContext_getFunction(myThis, name);
+            return sfContext_getFunction(name);
         }
 
         ////////////////////////////////////////////////////////////
@@ -120,13 +120,13 @@ namespace SFML.Window
         private static extern void sfContext_destroy(IntPtr View);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfContext_isExtensionAvailable(IntPtr View, string name);
+        private static extern bool sfContext_isExtensionAvailable(string name);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfContext_setActive(IntPtr View, bool Active);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfContext_getFunction(IntPtr View, string name);
+        private static extern IntPtr sfContext_getFunction(string name);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern ContextSettings sfContext_getSettings(IntPtr View);
