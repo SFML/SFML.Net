@@ -60,6 +60,45 @@ namespace SFML.Graphics
             return ( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY );
         }
 
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Check if a point is inside the rectangle's area
+        /// </summary>
+        /// <param name="point">Vector2 position of the point to test</param>
+        /// <returns>True if the point is inside</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Contains(Vector2i point)
+        {
+            return Contains(point.X, point.Y);
+        }
+
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Check if a point is inside the rectangle's area
+        /// </summary>
+        /// <param name="point">Vector2 position of the point to test</param>
+        /// <returns>True if the point is inside</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Contains(Vector2u point)
+        {
+            return Contains((Vector2i)point);
+        }
+
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Check if a point is inside the rectangle's area
+        /// </summary>
+        /// <param name="point">Vector2 position of the point to test</param>
+        /// <returns>True if the point is inside</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Contains(Vector2f point)
+        {
+            return Contains((Vector2i)point);
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Check intersection between two rectangles
@@ -289,6 +328,43 @@ namespace SFML.Graphics
             float maxY = Math.Max(Top, Top + Height);
 
             return ( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY );
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Check if a point is inside the rectangle's area
+        /// </summary>
+        /// <param name="point">Vector2 position of the point to test</param>
+        /// <returns>True if the point is inside</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Contains(Vector2f point)
+        {
+            return Contains(point.X, point.Y);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Check if a point is inside the rectangle's area
+        /// </summary>
+        /// <param name="point">Vector2 position of the point to test</param>
+        /// <returns>True if the point is inside</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Contains(Vector2i point)
+        {
+            return Contains((Vector2f)point);
+        }
+
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Check if a point is inside the rectangle's area
+        /// </summary>
+        /// <param name="point">Vector2 position of the point to test</param>
+        /// <returns>True if the point is inside</returns>
+        ////////////////////////////////////////////////////////////
+        public bool Contains(Vector2u point)
+        {
+            return Contains((Vector2f)point);
         }
 
         ////////////////////////////////////////////////////////////
