@@ -37,10 +37,10 @@ namespace SFML.Window
         // TODO: Implement GetGraphicsRequiredInstanceExtensions
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfVulkan_isAvailable(bool requireGraphics);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfVulkan_getFunction(string name);
 
         // TODO: Import sfVulkan_getGraphicsRequiredInstanceExtensions
