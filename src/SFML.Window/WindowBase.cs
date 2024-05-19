@@ -202,7 +202,7 @@ namespace SFML.Window
         /// Grab or release the mouse cursor
         /// </summary>
         /// <param name="grabbed">True to grab, false to release</param>
-        /// 
+        ///
         /// <remarks>
         /// If set, grabs the mouse cursor inside this window's client
         /// area so it may no longer be moved outside its bounds.
@@ -220,7 +220,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Set the displayed cursor to a native system cursor
-        /// 
+        ///
         /// Upon window creation, the arrow cursor is used by default.
         /// </summary>
         /// <param name="cursor">Native system cursor type to display</param>
@@ -233,11 +233,11 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Enable or disable automatic key-repeat.
-        /// 
+        ///
         /// If key repeat is enabled, you will receive repeated
         /// <see cref="KeyPressed"/> events while keeping a key pressed. If it is
         /// disabled, you will only get a single event when the key is pressed.
-        /// 
+        ///
         /// Automatic key-repeat is enabled by default
         /// </summary>
         /// <param name="enable">True to enable, false to disable</param>
@@ -394,7 +394,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         protected internal virtual Vector2i InternalGetMousePosition()
         {
-            throw new NotImplementedException("Currently not available");
+            return sfMouse_getPositionWindowBase(CPointer);
         }
 
         ////////////////////////////////////////////////////////////
@@ -407,7 +407,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         protected internal virtual void InternalSetMousePosition(Vector2i position)
         {
-            throw new NotImplementedException("Currently not available");
+            sfMouse_setPositionWindowBase(position, CPointer);
         }
 
         ////////////////////////////////////////////////////////////
@@ -421,7 +421,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         protected internal virtual Vector2i InternalGetTouchPosition(uint Finger)
         {
-            throw new NotImplementedException("Currently not available");
+            return sfTouch_getPositionWindowBase(Finger, CPointer);
         }
 
         ////////////////////////////////////////////////////////////
@@ -783,6 +783,15 @@ namespace SFML.Window
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfWindowBase_createVulkanSurface(IntPtr CPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfMouse_getPositionWindowBase(IntPtr CPointer);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfMouse_setPositionWindowBase(Vector2i position, IntPtr CPointer);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfTouch_getPositionWindowBase(uint Finger, IntPtr RelativeTo);
         #endregion
     }
 }
