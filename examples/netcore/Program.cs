@@ -4,13 +4,10 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
-
 namespace netcore
 {
     class Program
     {
-
-
         static void Main(string[] args)
         {
             var shape = new RectangleShape(new Vector2f(100, 100))
