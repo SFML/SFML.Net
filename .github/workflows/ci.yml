@@ -20,39 +20,42 @@ jobs:
         platform:
           - { name: Linux, os: ubuntu-22.04 }
           - { name: Windows, os: windows-2022 }
-          - { name: MacOS Intel, os: macos-13 }
+          - { name: macOS x64, os: macos-13 }
+          - { name: macOS ARM64, os: macos-14 }
         dotnet:
-          - { name: .NET Core 3.1, version: "3.1" }
           - { name: .NET 6, version: "6.0.x" }
           - { name: .NET 7, version: "7.0.x" }
           - { name: .NET 8, version: "8.0.x" }
-        include:
-          - platform: { name: MacOS M1, os: macos-14 }
-            dotnet: { name: .NET 6, version: "6.0.x" }
-          - platform: { name: MacOS M1, os: macos-14 }
-            dotnet: { name: .NET 7, version: "7.0.x" }
-          - platform: { name: MacOS M1, os: macos-14 }
-            dotnet: { name: .NET 8, version: "8.0.x" }
+          - { name: .NET 9, version: "9.0.x" }
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out SFML.Net
+        uses: actions/checkout@v4
+
       - name: Setup .NET ${{ matrix.dotnet.version }} SDK
         id: setup-dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet.version }}
       - name: Enforce SDK Version
         run: dotnet new globaljson --sdk-version ${{ steps.setup-dotnet.outputs.dotnet-version }} --force
       - name: Verify SDK Installation
         run: dotnet --info
-      - name: Install Dependencies
+
+      - name: Install SFML.Net Dependencies
         run: dotnet restore
-      - name: Build
+      - name: Build SFML.Net
         run: dotnet build --configuration Release --no-restore
-      - name: Pack
+      - name: Pack SFML.Net
         run: dotnet pack --configuration Release -o Publish
+
+      - name: Install SFML.Net Examples Dependencies
+        run: dotnet restore examples/Examples.sln
+      - name: Build SFML.Net Examples
+        run: dotnet build --configuration Release --no-restore examples/Examples.sln 
+
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: SFML.Net (${{ matrix.platform.name }} ${{ matrix.dotnet.name }})
           path: Publish/SFML.*.*.nupkg
