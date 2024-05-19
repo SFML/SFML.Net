@@ -1,4 +1,4 @@
-﻿Imports System
+Imports System
 Imports System.Runtime.InteropServices
 Imports SFML.System
 Imports SFML.Window
@@ -6,7 +6,6 @@ Imports SFML.Graphics
 Imports OpenTK
 Imports OpenTK.Graphics
 Imports OpenTk.Graphics.OpenGL
-
 
 Module OpenGL
 
@@ -35,7 +34,7 @@ Module OpenGL
         ' Create a text to display on top of the OpenGL object
         Dim text = New Text("SFML / OpenGL demo", New Font("resources/sansation.ttf"))
         text.Position = New Vector2f(250, 450)
-        text.Color = New Color(255, 255, 255, 170)
+        text.FillColor = New SFML.Graphics.Color(255, 255, 255, 170)
 
         ' Make it the active window for OpenGL calls
         window.SetActive(True)
@@ -44,7 +43,7 @@ Module OpenGL
         ' We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
         ' but here we want more control on it (generate mipmaps, ...) so we create a new one
         Dim texture = 0
-        Using image = New Image("resources/texture.jpg")
+        Using image = New SFML.Graphics.Image("resources/texture.jpg")
             GL.GenTextures(1, texture)
             GL.BindTexture(TextureTarget.Texture2D, texture)
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, image.Size.X, image.Size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, image.Pixels)
@@ -75,48 +74,48 @@ Module OpenGL
 
         ' Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
         Dim cube = New Single() _
-        { _
-            -20, -20, -20, 0, 0, _
-            -20, 20, -20, 1, 0, _
-            -20, -20, 20, 0, 1, _
-            -20, -20, 20, 0, 1, _
-            -20, 20, -20, 1, 0, _
+        {
+            -20, -20, -20, 0, 0,
+            -20, 20, -20, 1, 0,
+            -20, -20, 20, 0, 1,
+            -20, -20, 20, 0, 1,
+            -20, 20, -20, 1, 0,
             -20, 20, 20, 1, 1, _
- _
-             20, -20, -20, 0, 0, _
-             20, 20, -20, 1, 0, _
-             20, -20, 20, 0, 1, _
-             20, -20, 20, 0, 1, _
-             20, 20, -20, 1, 0, _
+                               _
+             20, -20, -20, 0, 0,
+             20, 20, -20, 1, 0,
+             20, -20, 20, 0, 1,
+             20, -20, 20, 0, 1,
+             20, 20, -20, 1, 0,
              20, 20, 20, 1, 1, _
- _
-            -20, -20, -20, 0, 0, _
-             20, -20, -20, 1, 0, _
-            -20, -20, 20, 0, 1, _
-            -20, -20, 20, 0, 1, _
-             20, -20, -20, 1, 0, _
+                               _
+            -20, -20, -20, 0, 0,
+             20, -20, -20, 1, 0,
+            -20, -20, 20, 0, 1,
+            -20, -20, 20, 0, 1,
+             20, -20, -20, 1, 0,
              20, -20, 20, 1, 1, _
- _
-            -20, 20, -20, 0, 0, _
-             20, 20, -20, 1, 0, _
-            -20, 20, 20, 0, 1, _
-            -20, 20, 20, 0, 1, _
-             20, 20, -20, 1, 0, _
+                                _
+            -20, 20, -20, 0, 0,
+             20, 20, -20, 1, 0,
+            -20, 20, 20, 0, 1,
+            -20, 20, 20, 0, 1,
+             20, 20, -20, 1, 0,
              20, 20, 20, 1, 1, _
- _
-            -20, -20, -20, 0, 0, _
-             20, -20, -20, 1, 0, _
-            -20, 20, -20, 0, 1, _
-            -20, 20, -20, 0, 1, _
-             20, -20, -20, 1, 0, _
+                               _
+            -20, -20, -20, 0, 0,
+             20, -20, -20, 1, 0,
+            -20, 20, -20, 0, 1,
+            -20, 20, -20, 0, 1,
+             20, -20, -20, 1, 0,
              20, 20, -20, 1, 1, _
- _
-            -20, -20, 20, 0, 0, _
-             20, -20, 20, 1, 0, _
-            -20, 20, 20, 0, 1, _
-            -20, 20, 20, 0, 1, _
-             20, -20, 20, 1, 0, _
-             20, 20, 20, 1, 1 _
+                                _
+            -20, -20, 20, 0, 0,
+             20, -20, 20, 1, 0,
+            -20, 20, 20, 0, 1,
+            -20, 20, 20, 0, 1,
+             20, -20, 20, 1, 0,
+             20, 20, 20, 1, 1
         }
 
         ' Enable position and texture coordinates vertex components
