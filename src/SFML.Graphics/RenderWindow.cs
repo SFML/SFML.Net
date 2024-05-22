@@ -331,6 +331,20 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Create a Vulkan rendering surface
+        /// </summary>
+        /// <param name="vkInstance">Vulkan instance</param>
+        /// <param name="vkSurface">Created surface</param>
+        /// <param name="vkAllocator">Allocator to use</param>
+        /// <returns>True if surface creation was successful, false otherwise</returns>
+        ////////////////////////////////////////////////////////////
+        public override bool CreateVulkanSurface(IntPtr vkInstance, out IntPtr vkSurface, IntPtr vkAllocator)
+        {
+            return sfRenderWindow_createVulkanSurface(CPointer, vkInstance, out vkSurface, vkAllocator);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Display the window on screen
         /// </summary>
         ////////////////////////////////////////////////////////////
@@ -938,6 +952,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfTouch_getPositionRenderWindow(uint Finger, IntPtr RelativeTo);
+
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderWindow_createVulkanSurface(IntPtr CPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
         #endregion
     }
 }

@@ -629,7 +629,36 @@ namespace SFML.Window
             return sfKeyboard_delocalize(key);
         }
 
-        // TODO Implement GetDescription
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Provide a string representation for a given scancode
+        /// <para/>
+        /// The returned string is a short, non-technical description of
+        /// the key represented with the given scancode. Most effectively
+        /// used in user interfaces, as the description for the key takes
+        /// the users keyboard layout into consideration.
+        /// <para/>
+        /// The current keyboard layout set by the operating system is used to
+        /// interpret the scancode: for example, <see cref="Scancode.Semicolon"/> is
+        /// mapped to ";" for layout and to "é" for others.
+        /// </summary>
+        /// <remarks>
+        /// The result is OS-dependent: for example,  <see cref="Scancode.LSystem"/>
+        /// is "Left Meta" on Linux, "Left Windows" on Windows and
+        /// "Left Command" on macOS.
+        /// </remarks>
+        /// <param name="code">Scancode to describe</param>
+        /// <returns>The localized description of the code</returns>
+        ////////////////////////////////////////////////////////////
+        public static string GetDescription(Scancode code)
+        {
+            // this returns an owning C pointer
+            var ptr = sfKeyboard_getDescription(code);
+            var description = Marshal.PtrToStringAnsi(ptr);
+            Allocation.Free(ptr);
+
+            return description;
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -656,7 +685,8 @@ namespace SFML.Window
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Scancode sfKeyboard_delocalize(Key key);
 
-        // TODO Import sfKeyboard_getDescription
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfKeyboard_getDescription(Scancode code);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfKeyboard_setVirtualKeyboardVisible(bool visible);
