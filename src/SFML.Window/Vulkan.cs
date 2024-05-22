@@ -34,7 +34,27 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public static IntPtr GetFunction(string name) => sfVulkan_getFunction(name);
 
-        // TODO: Implement GetGraphicsRequiredInstanceExtensions
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get Vulkan instance extensions required for graphics
+        /// </summary>
+        /// <returns>Vulkan instance extensions required for graphics</returns>
+        ////////////////////////////////////////////////////////////
+        public static string[] GetGraphicsRequiredInstanceExtensions()
+        {
+            unsafe
+            {
+                var extensionsPtr = sfVulkan_getGraphicsRequiredInstanceExtensions(out var count);
+                var extensions = new string[count];
+
+                for (uint i = 0; i < count; ++i)
+                {
+                    extensions[i] = Marshal.PtrToStringAnsi(extensionsPtr[i]);
+                }
+
+                return extensions;
+            }
+        }
 
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -43,7 +63,8 @@ namespace SFML.Window
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfVulkan_getFunction(string name);
 
-        // TODO: Import sfVulkan_getGraphicsRequiredInstanceExtensions
+        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private unsafe static extern IntPtr* sfVulkan_getGraphicsRequiredInstanceExtensions(out uint count);
         #endregion
     }
 }
