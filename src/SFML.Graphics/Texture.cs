@@ -190,26 +190,39 @@ namespace SFML.Graphics
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
         public Texture(byte[] bytes, bool srgb = false) :
+            this(bytes, new IntRect(0, 0, 0, 0), srgb)
+        {
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Construct the texture from a file in memory
+        /// </summary>
+        /// <param name="bytes">Byte array containing the file contents</param>
+        /// <param name="area">Area of the image to load</param>
+        /// <param name="srgb">True to convert the texture source from sRGB, false otherwise</param>
+        /// <exception cref="LoadingFailedException" />
+        ////////////////////////////////////////////////////////////
+        public Texture(byte[] bytes, IntRect area, bool srgb = false) :
             base(IntPtr.Zero)
         {
             GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
-                IntRect rect = new IntRect(0, 0, 0, 0);
-
                 if (srgb)
                 {
-                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref rect);
+                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref area);
                 }
                 else
                 {
-                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref rect);
-                } 
+                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref area);
+                }
             }
             finally
             {
                 pin.Free();
             }
+
             if (CPointer == IntPtr.Zero)
             {
                 throw new LoadingFailedException("texture");
