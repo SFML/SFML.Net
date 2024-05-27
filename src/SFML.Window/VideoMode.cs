@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
@@ -63,10 +64,10 @@ namespace SFML.Window
             {
                 unsafe
                 {
-                    uint Count;
+                    UIntPtr Count;
                     VideoMode* ModesPtr = sfVideoMode_getFullscreenModes(out Count);
-                    VideoMode[] Modes = new VideoMode[Count];
-                    for (uint i = 0; i < Count; ++i)
+                    VideoMode[] Modes = new VideoMode[(int)Count];
+                    for (int i = 0; i < (int)Count; ++i)
                     {
                         Modes[i] = ModesPtr[i];
                     }
@@ -114,7 +115,7 @@ namespace SFML.Window
         private static extern VideoMode sfVideoMode_getDesktopMode();
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out uint Count);
+        private unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out UIntPtr Count);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfVideoMode_isValid(VideoMode Mode);

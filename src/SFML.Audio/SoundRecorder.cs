@@ -204,10 +204,10 @@ namespace SFML.Audio
             {
                 unsafe
                 {
-                    uint Count;
+                    UIntPtr Count;
                     IntPtr* DevicesPtr = sfSoundRecorder_getAvailableDevices(out Count);
-                    string[] Devices = new string[Count];
-                    for (uint i = 0; i < Count; ++i)
+                    string[] Devices = new string[(int)Count];
+                    for (int i = 0; i < (int)Count; ++i)
                     {
                         Devices[i] = Marshal.PtrToStringAnsi(DevicesPtr[i]);
                     }
@@ -284,9 +284,9 @@ namespace SFML.Audio
         /// <param name="userData">User data -- unused</param>
         /// <returns>False to stop recording audio data, true to continue</returns>
         ////////////////////////////////////////////////////////////
-        private bool ProcessSamples(IntPtr samples, uint nbSamples, IntPtr userData)
+        private bool ProcessSamples(IntPtr samples, UIntPtr nbSamples, IntPtr userData)
         {
-            short[] samplesArray = new short[nbSamples];
+            short[] samplesArray = new short[(int)nbSamples];
             Marshal.Copy(samples, samplesArray, 0, samplesArray.Length);
 
             return OnProcessSamples(samplesArray);
@@ -308,7 +308,7 @@ namespace SFML.Audio
         private delegate bool StartCallback(IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate bool ProcessCallback(IntPtr samples, uint nbSamples, IntPtr userData);
+        private delegate bool ProcessCallback(IntPtr samples, UIntPtr nbSamples, IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void StopCallback(IntPtr userData);
@@ -340,7 +340,7 @@ namespace SFML.Audio
         private static extern void sfSoundRecorder_setProcessingInterval(IntPtr SoundRecorder, Time Interval);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr* sfSoundRecorder_getAvailableDevices(out uint Count);
+        private unsafe static extern IntPtr* sfSoundRecorder_getAvailableDevices(out UIntPtr Count);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfSoundRecorder_getDefaultDevice();

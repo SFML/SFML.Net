@@ -66,7 +66,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public uint VertexCount
         {
-            get { return sfVertexArray_getVertexCount(CPointer); }
+            get { return (uint)sfVertexArray_getVertexCount(CPointer); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -87,14 +87,14 @@ namespace SFML.Graphics
             {
                 unsafe
                 {
-                    return *sfVertexArray_getVertex(CPointer, index);
+                    return *sfVertexArray_getVertex(CPointer, (UIntPtr)index);
                 }
             }
             set
             {
                 unsafe
                 {
-                    *sfVertexArray_getVertex(CPointer, index) = value;
+                    *sfVertexArray_getVertex(CPointer, (UIntPtr)index) = value;
                 }
             }
         }
@@ -124,7 +124,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public void Resize(uint vertexCount)
         {
-            sfVertexArray_resize(CPointer, vertexCount);
+            sfVertexArray_resize(CPointer, (UIntPtr)vertexCount);
         }
 
         ////////////////////////////////////////////////////////////
@@ -208,16 +208,16 @@ namespace SFML.Graphics
         private static extern void sfVertexArray_destroy(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfVertexArray_getVertexCount(IntPtr CPointer);
+        private static extern UIntPtr sfVertexArray_getVertexCount(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe Vertex* sfVertexArray_getVertex(IntPtr CPointer, uint index);
+        private static extern unsafe Vertex* sfVertexArray_getVertex(IntPtr CPointer, UIntPtr index);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfVertexArray_clear(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfVertexArray_resize(IntPtr CPointer, uint vertexCount);
+        private static extern void sfVertexArray_resize(IntPtr CPointer, UIntPtr vertexCount);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfVertexArray_append(IntPtr CPointer, Vertex vertex);

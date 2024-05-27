@@ -90,7 +90,7 @@ namespace SFML.Graphics
             GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
-                CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
+                CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
             }
             finally
             {
@@ -389,7 +389,7 @@ namespace SFML.Graphics
         private unsafe static extern IntPtr sfImage_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, ulong size);
+        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, UIntPtr size);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfImage_copy(IntPtr Image);
