@@ -215,9 +215,9 @@ namespace SFML.Graphics
         /// Callback passed to the C API
         /// </summary>
         ////////////////////////////////////////////////////////////
-        private uint InternalGetPointCount(IntPtr userData)
+        private UIntPtr InternalGetPointCount(IntPtr userData)
         {
-            return GetPointCount();
+            return (UIntPtr)GetPointCount();
         }
 
         ////////////////////////////////////////////////////////////
@@ -225,16 +225,16 @@ namespace SFML.Graphics
         /// Callback passed to the C API
         /// </summary>
         ////////////////////////////////////////////////////////////
-        private Vector2f InternalGetPoint(uint index, IntPtr userData)
+        private Vector2f InternalGetPoint(UIntPtr index, IntPtr userData)
         {
-            return GetPoint(index);
+            return GetPoint((uint)index);
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate uint GetPointCountCallbackType(IntPtr UserData);
+        private delegate UIntPtr GetPointCountCallbackType(IntPtr UserData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate Vector2f GetPointCallbackType(uint index, IntPtr UserData);
+        private delegate Vector2f GetPointCallbackType(UIntPtr index, IntPtr UserData);
 
         private readonly GetPointCountCallbackType myGetPointCountCallback;
         private readonly GetPointCallbackType myGetPointCallback;

@@ -77,7 +77,7 @@ namespace SFML.Audio
             GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
-                CPointer = sfMusic_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length));
+                CPointer = sfMusic_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
             }
             finally
             {
@@ -408,7 +408,7 @@ namespace SFML.Audio
         private unsafe static extern IntPtr sfMusic_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfMusic_createFromMemory(IntPtr data, ulong size);
+        private static extern IntPtr sfMusic_createFromMemory(IntPtr data, UIntPtr size);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfMusic_destroy(IntPtr MusicStream);

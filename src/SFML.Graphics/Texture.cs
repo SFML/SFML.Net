@@ -211,12 +211,12 @@ namespace SFML.Graphics
             {
                 if (srgb)
                 {
-                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref area);
+                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
                 }
                 else
                 {
-                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), Convert.ToUInt64(bytes.Length), ref area);
-                }
+                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
+                } 
             }
             finally
             {
@@ -582,10 +582,10 @@ namespace SFML.Graphics
         private static extern IntPtr sfTexture_createSrgbFromImage(IntPtr image, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfTexture_createFromMemory(IntPtr data, ulong size, ref IntRect area);
+        private static extern IntPtr sfTexture_createFromMemory(IntPtr data, UIntPtr size, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfTexture_createSrgbFromMemory(IntPtr data, ulong size, ref IntRect area);
+        private static extern IntPtr sfTexture_createSrgbFromMemory(IntPtr data, UIntPtr size, ref IntRect area);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_copy(IntPtr texture);

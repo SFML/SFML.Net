@@ -282,7 +282,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f FindCharacterPos(uint index)
         {
-            return sfText_findCharacterPos(CPointer, index);
+            return sfText_findCharacterPos(CPointer, (UIntPtr)index);
         }
 
         ////////////////////////////////////////////////////////////
@@ -451,7 +451,7 @@ namespace SFML.Graphics
         private static extern Styles sfText_getStyle(IntPtr CPointer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, uint Index);
+        private static extern Vector2f sfText_findCharacterPos(IntPtr CPointer, UIntPtr Index);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern FloatRect sfText_getLocalBounds(IntPtr CPointer);

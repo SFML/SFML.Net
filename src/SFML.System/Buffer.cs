@@ -42,7 +42,7 @@ namespace SFML.System
                 return Array.Empty<byte>();
             }
 
-            var data = new byte[size];
+            var data = new byte[(int)size];
             Marshal.Copy(ptr, data, 0, (int)size);
 
             return data;
@@ -78,7 +78,7 @@ namespace SFML.System
         private static extern void sfBuffer_destroy(IntPtr buffer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfBuffer_getSize(IntPtr buffer);
+        private static extern UIntPtr sfBuffer_getSize(IntPtr buffer);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfBuffer_getData(IntPtr buffer);

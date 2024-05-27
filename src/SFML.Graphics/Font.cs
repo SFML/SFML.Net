@@ -41,8 +41,10 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Font(Stream stream) : base(IntPtr.Zero)
         {
-            myStream = new StreamAdaptor(stream);
-            CPointer = sfFont_createFromStream(myStream.InputStreamPtr);
+            using (var adaptor = new StreamAdaptor(stream))
+            {
+                CPointer = sfFont_createFromStream(adaptor.InputStreamPtr);
+            }
 
             if (CPointer == IntPtr.Zero)
             {
@@ -57,7 +59,23 @@ namespace SFML.Graphics
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Font(byte[] bytes) : this(new MemoryStream(bytes)) { }
+        public Font(byte[] bytes) :
+            base(IntPtr.Zero)
+        {
+            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            try
+            {
+                CPointer = sfFont_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
+            }
+            finally
+            {
+                pin.Free();
+            }
+            if (CPointer == IntPtr.Zero)
+            {
+                throw new LoadingFailedException("font");
+            }
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -265,7 +283,7 @@ namespace SFML.Graphics
         private static extern IntPtr sfFont_createFromStream(IntPtr stream);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfFont_createFromMemory(IntPtr data, ulong size);
+        private static extern IntPtr sfFont_createFromMemory(IntPtr data, UIntPtr size);
 
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfFont_copy(IntPtr Font);

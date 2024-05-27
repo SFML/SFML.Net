@@ -45,9 +45,9 @@ namespace SFML.Window
             unsafe
             {
                 var extensionsPtr = sfVulkan_getGraphicsRequiredInstanceExtensions(out var count);
-                var extensions = new string[count];
+                var extensions = new string[(int)count];
 
-                for (uint i = 0; i < count; ++i)
+                for (int i = 0; i < (int)count; ++i)
                 {
                     extensions[i] = Marshal.PtrToStringAnsi(extensionsPtr[i]);
                 }
@@ -64,7 +64,7 @@ namespace SFML.Window
         private static extern IntPtr sfVulkan_getFunction(string name);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr* sfVulkan_getGraphicsRequiredInstanceExtensions(out uint count);
+        private unsafe static extern IntPtr* sfVulkan_getGraphicsRequiredInstanceExtensions(out UIntPtr count);
         #endregion
     }
 }
