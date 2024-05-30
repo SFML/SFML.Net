@@ -18,6 +18,7 @@ namespace SFML.Window
         public KeyEventArgs(KeyEvent e)
         {
             Code = e.Code;
+            Scancode = e.Scancode;
             Alt = e.Alt != 0;
             Control = e.Control != 0;
             Shift = e.Shift != 0;
@@ -34,14 +35,18 @@ namespace SFML.Window
         {
             return "[KeyEventArgs]" +
                    " Code(" + Code + ")" +
+                   " Scancode(" + Scancode + ")" +
                    " Alt(" + Alt + ")" +
                    " Control(" + Control + ")" +
                    " Shift(" + Shift + ")" +
                    " System(" + System + ")";
         }
 
-        /// <summary>Code of the key (see KeyCode enum)</summary>
+        /// <summary>Code of the key (see <see cref="Keyboard.Key"/>)</summary>
         public Keyboard.Key Code;
+
+        /// <summary>Physical code of the key (see <see cref="Keyboard.Scancode"/>)</summary>
+        public Keyboard.Scancode Scancode;
 
         /// <summary>Is the Alt modifier pressed?</summary>
         public bool Alt;

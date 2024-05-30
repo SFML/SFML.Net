@@ -92,6 +92,9 @@ namespace SFML.Window
         /// <summary>Code of the key. See <see cref="Keyboard.Key"/></summary>
         public Keyboard.Key Code;
 
+        /// <summary>Physical code of the key. See <see cref="Keyboard.Scancode"/></summary>
+        public Keyboard.Scancode Scancode;
+
         /// <summary>Is the Alt modifier pressed?</summary>
         public int Alt;
 
@@ -294,7 +297,7 @@ namespace SFML.Window
     /// Event defines a system event and its parameters
     /// </summary>
     ////////////////////////////////////////////////////////////
-    [StructLayout(LayoutKind.Explicit, Size = 20)]
+    [StructLayout(LayoutKind.Explicit, Size = 28)]
     public struct Event
     {
         /// <summary>Type of event (see EventType enum)</summary>
