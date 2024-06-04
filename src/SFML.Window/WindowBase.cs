@@ -57,8 +57,9 @@ namespace SFML.Window
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public WindowBase(VideoMode mode, string title, Styles style) :
+        public WindowBase(VideoMode mode, string title, Styles style = Styles.Default, IEventMan manager = null) :
             base(IntPtr.Zero)
         {
             // Copy the title to a null-terminated UTF-32 byte array
@@ -71,6 +72,11 @@ namespace SFML.Window
                     CPointer = sfWindowBase_createUnicode(mode, (IntPtr)titlePtr, style);
                 }
             }
+            if (manager == null)
+            {
+                manager = new SubscribeManager() { Parent = this };
+            }
+            SfmlEventManager = manager;
         }
 
         ////////////////////////////////////////////////////////////
@@ -78,10 +84,16 @@ namespace SFML.Window
         /// Create the window from an existing control
         /// </summary>
         /// <param name="Handle">Platform-specific handle of the control</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public WindowBase(IntPtr Handle) :
+        public WindowBase(IntPtr Handle, IEventMan manager = null) :
             base(sfWindowBase_createFromHandle(Handle))
         {
+            if (manager == null)
+            {
+                manager = new SubscribeManager() { Parent = this };
+            }
+            SfmlEventManager = manager;
         }
 
         ////////////////////////////////////////////////////////////
@@ -346,13 +358,17 @@ namespace SFML.Window
         /// <summary>
         /// Constructor for derived classes
         /// </summary>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         /// <param name="cPointer">Pointer to the internal object in the C API</param>
-        /// <param name="dummy">Internal hack :)</param>
         ////////////////////////////////////////////////////////////
-        protected WindowBase(IntPtr cPointer, int dummy) :
+        protected WindowBase(IEventMan manager, IntPtr cPointer) :
             base(cPointer)
         {
-            // TODO : find a cleaner way of separating this constructor from WindowBase(IntPtr handle)
+            if (manager == null)
+            {
+                manager = new SubscribeManager() { Parent = this };
+            }
+            SfmlEventManager = manager;
         }
 
         ////////////////////////////////////////////////////////////

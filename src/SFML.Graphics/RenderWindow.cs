@@ -21,9 +21,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(VideoMode mode, string title) :
-            this(mode, title, Styles.Default, new ContextSettings(0, 0))
+        public RenderWindow(VideoMode mode, string title, IEventMan manager = null) :
+            this(mode, title, Styles.Default, new ContextSettings(0, 0), manager)
         {
         }
 
@@ -34,9 +35,10 @@ namespace SFML.Graphics
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(VideoMode mode, string title, Styles style) :
-            this(mode, title, style, new ContextSettings(0, 0))
+        public RenderWindow(VideoMode mode, string title, Styles style, IEventMan manager = null) :
+            this(mode, title, style, new ContextSettings(0, 0), manager)
         {
         }
 
@@ -48,9 +50,10 @@ namespace SFML.Graphics
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
         /// <param name="settings">Creation parameters</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(VideoMode mode, string title, Styles style, ContextSettings settings) :
-            base(IntPtr.Zero, 0)
+        public RenderWindow(VideoMode mode, string title, Styles style, ContextSettings settings, IEventMan manager = null) :
+            base(manager, IntPtr.Zero)
         {
             // Copy the string to a null-terminated UTF-32 byte array
             byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
@@ -70,9 +73,10 @@ namespace SFML.Graphics
         /// Create the window from an existing control with default creation settings
         /// </summary>
         /// <param name="handle">Platform-specific handle of the control</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(IntPtr handle) :
-            this(handle, new ContextSettings(0, 0))
+        public RenderWindow(IntPtr handle, IEventMan manager = null) :
+            this(handle, new ContextSettings(0, 0), manager)
         {
         }
 
@@ -82,9 +86,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="handle">Platform-specific handle of the control</param>
         /// <param name="settings">Creation parameters</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(IntPtr handle, ContextSettings settings) :
-            base(sfRenderWindow_createFromHandle(handle, ref settings), 0)
+        public RenderWindow(IntPtr handle, ContextSettings settings, IEventMan manager = null) :
+            base(manager, sfRenderWindow_createFromHandle(handle, ref settings))
         {
             Initialize();
         }

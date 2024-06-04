@@ -15,26 +15,15 @@ namespace SFML.Window
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Create the window with default style and creation settings
-        /// </summary>
-        /// <param name="mode">Video mode to use</param>
-        /// <param name="title">Title of the window</param>
-        ////////////////////////////////////////////////////////////
-        public Window(VideoMode mode, string title) :
-            this(mode, title, Styles.Default, new ContextSettings(0, 0))
-        {
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
         /// Create the window with default creation settings
         /// </summary>
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public Window(VideoMode mode, string title, Styles style) :
-            this(mode, title, style, new ContextSettings(0, 0))
+        public Window(VideoMode mode, string title, Styles style = Styles.Default, IEventMan manager = null) :
+            this(mode, title, style, new ContextSettings(0, 0), manager)
         {
         }
 
@@ -46,9 +35,10 @@ namespace SFML.Window
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
         /// <param name="settings">Creation parameters</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public Window(VideoMode mode, string title, Styles style, ContextSettings settings) :
-            base(IntPtr.Zero)
+        public Window(VideoMode mode, string title, Styles style, ContextSettings settings, IEventMan manager = null) :
+            base(IntPtr.Zero, manager)
         {
             // Copy the title to a null-terminated UTF-32 byte array
             byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
@@ -79,9 +69,10 @@ namespace SFML.Window
         /// </summary>
         /// <param name="Handle">Platform-specific handle of the control</param>
         /// <param name="settings">Creation parameters</param>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         ////////////////////////////////////////////////////////////
-        public Window(IntPtr Handle, ContextSettings settings) :
-            base(sfWindow_createFromHandle(Handle, ref settings))
+        public Window(IntPtr Handle, ContextSettings settings, IEventMan manager = null) :
+            base(sfWindow_createFromHandle(Handle, ref settings), manager)
         {
         }
 
@@ -379,14 +370,12 @@ namespace SFML.Window
         /// <summary>
         /// Constructor for derived classes
         /// </summary>
+        /// <param name="manager">A custom event manager. By default, a SubscribeManager object is created</param>
         /// <param name="cPointer">Pointer to the internal object in the C API</param>
-        /// <param name="dummy">Internal hack :)</param>
         ////////////////////////////////////////////////////////////
-        protected Window(IntPtr cPointer, int dummy) :
-            base(cPointer, 0)
-        {
-            // TODO : find a cleaner way of separating this constructor from Window(IntPtr handle)
-        }
+        protected Window(IEventMan manager, IntPtr cPointer) :
+            base(manager, cPointer)
+        { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
