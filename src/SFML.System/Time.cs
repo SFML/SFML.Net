@@ -261,15 +261,6 @@ namespace SFML.System
 
         [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Time sfMicroseconds(long Amount);
-
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern float sfTime_asSeconds(Time time);
-
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern int sfTime_asMilliseconds(Time time);
-
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern long sfTime_asMicroseconds(Time time);
         #endregion
     }
 }

@@ -710,9 +710,6 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindowBase_create(VideoMode Mode, string Title, Styles Style);
-
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfWindowBase_createUnicode(VideoMode Mode, IntPtr Title, Styles Style);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -744,9 +741,6 @@ namespace SFML.Window
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindowBase_setSize(IntPtr CPointer, Vector2u size);
-
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setTitle(IntPtr CPointer, string title);
 
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindowBase_setUnicodeTitle(IntPtr CPointer, IntPtr title);
