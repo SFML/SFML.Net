@@ -45,15 +45,10 @@ namespace SFML.Window
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Create the window with default style and creation settings
+        /// The event management for this window
         /// </summary>
-        /// <param name="mode">Video mode to use</param>
-        /// <param name="title">Title of the window</param>
         ////////////////////////////////////////////////////////////
-        public WindowBase(VideoMode mode, string title) :
-            this(mode, title, Styles.Default)
-        {
-        }
+        public readonly IEventMan SfmlEventManager;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -277,10 +272,10 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public void WaitAndDispatchEvents()
         {
-            Event e;
-            if (WaitEvent(out e))
+            SfmlEventManager.PrepareFrame();
+            if (WaitEvent(out Event e))
             {
-                CallEventHandler(e);
+                SfmlEventManager.HandleEvent(e);
             }
         }
 
@@ -291,10 +286,10 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public void DispatchEvents()
         {
-            Event e;
-            while (PollEvent(out e))
+            SfmlEventManager.PrepareFrame();
+            while (PollEvent(out Event e))
             {
-                CallEventHandler(e);
+                SfmlEventManager.HandleEvent(e);
             }
         }
 
@@ -434,280 +429,6 @@ namespace SFML.Window
         {
             sfWindowBase_destroy(CPointer);
         }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Call the event handler for the given event
-        /// </summary>
-        /// <param name="e">Event to dispatch</param>
-        ////////////////////////////////////////////////////////////
-        private void CallEventHandler(Event e)
-        {
-            switch (e.Type)
-            {
-                case EventType.Closed:
-                    if (Closed != null)
-                    {
-                        Closed(this, EventArgs.Empty);
-                    }
-
-                    break;
-
-                case EventType.GainedFocus:
-                    if (GainedFocus != null)
-                    {
-                        GainedFocus(this, EventArgs.Empty);
-                    }
-
-                    break;
-
-                case EventType.JoystickButtonPressed:
-                    if (JoystickButtonPressed != null)
-                    {
-                        JoystickButtonPressed(this, new JoystickButtonEventArgs(e.JoystickButton));
-                    }
-
-                    break;
-
-                case EventType.JoystickButtonReleased:
-                    if (JoystickButtonReleased != null)
-                    {
-                        JoystickButtonReleased(this, new JoystickButtonEventArgs(e.JoystickButton));
-                    }
-
-                    break;
-
-                case EventType.JoystickMoved:
-                    if (JoystickMoved != null)
-                    {
-                        JoystickMoved(this, new JoystickMoveEventArgs(e.JoystickMove));
-                    }
-
-                    break;
-
-                case EventType.JoystickConnected:
-                    if (JoystickConnected != null)
-                    {
-                        JoystickConnected(this, new JoystickConnectEventArgs(e.JoystickConnect));
-                    }
-
-                    break;
-
-                case EventType.JoystickDisconnected:
-                    if (JoystickDisconnected != null)
-                    {
-                        JoystickDisconnected(this, new JoystickConnectEventArgs(e.JoystickConnect));
-                    }
-
-                    break;
-
-                case EventType.KeyPressed:
-                    if (KeyPressed != null)
-                    {
-                        KeyPressed(this, new KeyEventArgs(e.Key));
-                    }
-
-                    break;
-
-                case EventType.KeyReleased:
-                    if (KeyReleased != null)
-                    {
-                        KeyReleased(this, new KeyEventArgs(e.Key));
-                    }
-
-                    break;
-
-                case EventType.LostFocus:
-                    if (LostFocus != null)
-                    {
-                        LostFocus(this, EventArgs.Empty);
-                    }
-
-                    break;
-
-                case EventType.MouseButtonPressed:
-                    if (MouseButtonPressed != null)
-                    {
-                        MouseButtonPressed(this, new MouseButtonEventArgs(e.MouseButton));
-                    }
-
-                    break;
-
-                case EventType.MouseButtonReleased:
-                    if (MouseButtonReleased != null)
-                    {
-                        MouseButtonReleased(this, new MouseButtonEventArgs(e.MouseButton));
-                    }
-
-                    break;
-
-                case EventType.MouseEntered:
-                    if (MouseEntered != null)
-                    {
-                        MouseEntered(this, EventArgs.Empty);
-                    }
-
-                    break;
-
-                case EventType.MouseLeft:
-                    if (MouseLeft != null)
-                    {
-                        MouseLeft(this, EventArgs.Empty);
-                    }
-
-                    break;
-
-                case EventType.MouseMoved:
-                    if (MouseMoved != null)
-                    {
-                        MouseMoved(this, new MouseMoveEventArgs(e.MouseMove));
-                    }
-
-                    break;
-
-                // Disable CS0618 (Obselete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
-#pragma warning disable CS0618
-                case EventType.MouseWheelMoved:
-                    if (MouseWheelMoved != null)
-                    {
-                        MouseWheelMoved(this, new MouseWheelEventArgs(e.MouseWheel));
-                    }
-
-                    break;
-                // restore CS0618
-#pragma warning restore CS0618
-
-                case EventType.MouseWheelScrolled:
-                    if (MouseWheelScrolled != null)
-                    {
-                        MouseWheelScrolled(this, new MouseWheelScrollEventArgs(e.MouseWheelScroll));
-                    }
-
-                    break;
-
-                case EventType.Resized:
-                    if (Resized != null)
-                    {
-                        Resized(this, new SizeEventArgs(e.Size));
-                    }
-
-                    break;
-
-                case EventType.TextEntered:
-                    if (TextEntered != null)
-                    {
-                        TextEntered(this, new TextEventArgs(e.Text));
-                    }
-
-                    break;
-
-                case EventType.TouchBegan:
-                    if (TouchBegan != null)
-                    {
-                        TouchBegan(this, new TouchEventArgs(e.Touch));
-                    }
-
-                    break;
-
-                case EventType.TouchMoved:
-                    if (TouchMoved != null)
-                    {
-                        TouchMoved(this, new TouchEventArgs(e.Touch));
-                    }
-
-                    break;
-
-                case EventType.TouchEnded:
-                    if (TouchEnded != null)
-                    {
-                        TouchEnded(this, new TouchEventArgs(e.Touch));
-                    }
-
-                    break;
-
-                case EventType.SensorChanged:
-                    if (SensorChanged != null)
-                    {
-                        SensorChanged(this, new SensorEventArgs(e.Sensor));
-                    }
-
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        /// <summary>Event handler for the Closed event</summary>
-        public event EventHandler Closed = null;
-
-        /// <summary>Event handler for the Resized event</summary>
-        public event EventHandler<SizeEventArgs> Resized = null;
-
-        /// <summary>Event handler for the LostFocus event</summary>
-        public event EventHandler LostFocus = null;
-
-        /// <summary>Event handler for the GainedFocus event</summary>
-        public event EventHandler GainedFocus = null;
-
-        /// <summary>Event handler for the TextEntered event</summary>
-        public event EventHandler<TextEventArgs> TextEntered = null;
-
-        /// <summary>Event handler for the KeyPressed event</summary>
-        public event EventHandler<KeyEventArgs> KeyPressed = null;
-
-        /// <summary>Event handler for the KeyReleased event</summary>
-        public event EventHandler<KeyEventArgs> KeyReleased = null;
-
-        /// <summary>Event handler for the MouseWheelMoved event</summary>
-        [Obsolete("Use MouseWheelScrolled")]
-        public event EventHandler<MouseWheelEventArgs> MouseWheelMoved = null;
-
-        /// <summary>Event handler for the MouseWheelScrolled event</summary>
-        public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled = null;
-
-        /// <summary>Event handler for the MouseButtonPressed event</summary>
-        public event EventHandler<MouseButtonEventArgs> MouseButtonPressed = null;
-
-        /// <summary>Event handler for the MouseButtonReleased event</summary>
-        public event EventHandler<MouseButtonEventArgs> MouseButtonReleased = null;
-
-        /// <summary>Event handler for the MouseMoved event</summary>
-        public event EventHandler<MouseMoveEventArgs> MouseMoved = null;
-
-        /// <summary>Event handler for the MouseEntered event</summary>
-        public event EventHandler MouseEntered = null;
-
-        /// <summary>Event handler for the MouseLeft event</summary>
-        public event EventHandler MouseLeft = null;
-
-        /// <summary>Event handler for the JoystickButtonPressed event</summary>
-        public event EventHandler<JoystickButtonEventArgs> JoystickButtonPressed = null;
-
-        /// <summary>Event handler for the JoystickButtonReleased event</summary>
-        public event EventHandler<JoystickButtonEventArgs> JoystickButtonReleased = null;
-
-        /// <summary>Event handler for the JoystickMoved event</summary>
-        public event EventHandler<JoystickMoveEventArgs> JoystickMoved = null;
-
-        /// <summary>Event handler for the JoystickConnected event</summary>
-        public event EventHandler<JoystickConnectEventArgs> JoystickConnected = null;
-
-        /// <summary>Event handler for the JoystickDisconnected event</summary>
-        public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected = null;
-
-        /// <summary>Event handler for the TouchBegan event</summary>
-        public event EventHandler<TouchEventArgs> TouchBegan = null;
-
-        /// <summary>Event handler for the TouchMoved event</summary>
-        public event EventHandler<TouchEventArgs> TouchMoved = null;
-
-        /// <summary>Event handler for the TouchEnded event</summary>
-        public event EventHandler<TouchEventArgs> TouchEnded = null;
-
-        /// <summary>Event handler for the SensorChanged event</summary>
-        public event EventHandler<SensorEventArgs> SensorChanged = null;
-
         #region Imports
         [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfWindowBase_create(VideoMode Mode, string Title, Styles Style);
