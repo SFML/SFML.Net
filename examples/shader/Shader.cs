@@ -280,8 +280,9 @@ namespace shader
             window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
-            window.Closed += OnClosed;
-            window.KeyPressed += OnKeyPressed;
+            var handler = window.SfmlEventManager as SubscribeManager;
+            handler.Closed += OnClosed;
+            handler.KeyPressed += OnKeyPressed;
 
             // Load the application font and pass it to the Effect class
             var font = new Font("resources/sansation.ttf");

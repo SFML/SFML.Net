@@ -18,7 +18,7 @@ namespace netcore
             var sound = new Sound(GenerateSineWave(frequency: 440.0, volume: .25, seconds: 1));
 
             var window = new RenderWindow(new VideoMode(800, 600), "SFML running in .NET Core");
-            window.Closed += (_, __) => window.Close();
+            (window.SfmlEventManager as SubscribeManager).Closed += (_, __) => window.Close();
 
             sound.Play();
 

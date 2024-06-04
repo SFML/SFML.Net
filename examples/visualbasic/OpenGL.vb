@@ -177,7 +177,7 @@ Module OpenGL
     ''' <summary>
     ''' Function called when the window is closed
     ''' </summary>
-    Sub App_Closed(ByVal sender As Object, ByVal e As EventArgs) Handles window.Closed
+    Sub App_Closed(ByVal sender As Object, ByVal e As EventArgs) Handles window.SfmlEventManager.Closed
         Dim window = CType(sender, RenderWindow)
         window.Close()
     End Sub
@@ -185,7 +185,7 @@ Module OpenGL
     ''' <summary>
     ''' Function called when a key is pressed
     ''' </summary>
-    Sub App_KeyPressed(ByVal sender As Object, ByVal e As KeyEventArgs) Handles window.KeyPressed
+    Sub App_KeyPressed(ByVal sender As Object, ByVal e As KeyEventArgs) Handles window.SfmlEventManager.KeyPressed
         Dim window = CType(sender, RenderWindow)
         If e.Code = Keyboard.Key.Escape Then
             window.Close()
@@ -195,7 +195,7 @@ Module OpenGL
     ''' <summary>
     ''' Function called when the window is resized
     ''' </summary>
-    Sub App_Resized(ByVal sender As Object, ByVal e As SizeEventArgs) Handles window.Resized
+    Sub App_Resized(ByVal sender As Object, ByVal e As SizeEventArgs) Handles window.SfmlEventManager.Resized
         GL.Viewport(0, 0, e.Width, e.Height)
     End Sub
 

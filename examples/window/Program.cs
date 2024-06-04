@@ -20,7 +20,7 @@ namespace window_core
         {
             var mode = new SFML.Window.VideoMode(800, 600);
             var window = new SFML.Graphics.RenderWindow(mode, "SFML works!");
-            window.KeyPressed += Window_KeyPressed;
+            (window.SfmlEventManager as SFML.Window.SubscribeManager).KeyPressed += Window_KeyPressed;
 
             var circle = new SFML.Graphics.CircleShape(100f)
             {

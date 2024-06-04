@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFML.Window", "..\src\SFML.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "netcore", "netcore\netcore.csproj", "{93B8425A-AC40-4486-96AF-20027B738C09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "custom_eventman", "custom_eventman\custom_eventman.csproj", "{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,18 @@ Global
 		{93B8425A-AC40-4486-96AF-20027B738C09}.Release|x64.Build.0 = Release|Any CPU
 		{93B8425A-AC40-4486-96AF-20027B738C09}.Release|x86.ActiveCfg = Release|Any CPU
 		{93B8425A-AC40-4486-96AF-20027B738C09}.Release|x86.Build.0 = Release|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Release|x64.Build.0 = Release|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{03A24BD1-B960-4E4A-AF8A-22BA8DA9BAFC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

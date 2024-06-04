@@ -31,9 +31,10 @@ namespace opengl
             //GraphicsContext context = new GraphicsContext(new ContextHandle(IntPtr.Zero), null);
 
             // Setup event handlers
-            window.Closed += new EventHandler(OnClosed);
-            window.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
-            window.Resized += new EventHandler<SizeEventArgs>(OnResized);
+            var handler = window.SfmlEventManager as SubscribeManager;
+            handler.Closed += new EventHandler(OnClosed);
+            handler.KeyPressed += new EventHandler<KeyEventArgs>(OnKeyPressed);
+            handler.Resized += new EventHandler<SizeEventArgs>(OnResized);
 
             // Create a sprite for the background
             var background = new Sprite(new Texture("resources/background.jpg"));
