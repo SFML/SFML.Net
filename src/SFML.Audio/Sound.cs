@@ -319,9 +319,6 @@ namespace SFML.Audio
         private static extern void sfSound_setBuffer(IntPtr Sound, IntPtr Buffer);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfSound_getBuffer(IntPtr Sound);
-
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSound_setLoop(IntPtr Sound, bool Loop);
 
         [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
