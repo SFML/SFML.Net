@@ -6,7 +6,7 @@
 		<RootNamespace>window</RootNamespace>
 		<AssemblyName>window</AssemblyName>
 		<Configurations>Debug;Release</Configurations>
-		<Version>2.5.1</Version>
+		<Version>2.6.0</Version>
 		<Platforms>AnyCPU;x64;x86</Platforms>
 	</PropertyGroup>
 
