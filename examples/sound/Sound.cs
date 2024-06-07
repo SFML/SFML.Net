@@ -29,7 +29,7 @@ namespace sound
 
             // Display sound informations
             Console.WriteLine("canary.wav :");
-            Console.WriteLine(" " + buffer.Duration + " sec");
+            Console.WriteLine(" " + buffer.Duration.AsSeconds() + " sec");
             Console.WriteLine(" " + buffer.SampleRate + " samples / sec");
             Console.WriteLine(" " + buffer.ChannelCount + " channels");
 
@@ -42,7 +42,7 @@ namespace sound
             {
                 // Display the playing position
                 Console.CursorLeft = 0;
-                Console.Write("Playing... " + sound.PlayingOffset + " sec     ");
+                Console.Write("Playing... " + sound.PlayingOffset.AsSeconds() + " sec     ");
 
                 // Leave some CPU time for other processes
                 Thread.Sleep(100);
@@ -59,7 +59,7 @@ namespace sound
 
             // Display music informations
             Console.WriteLine("orchestral.ogg :");
-            Console.WriteLine(" " + music.Duration + " sec");
+            Console.WriteLine(" " + music.Duration.AsSeconds() + " sec");
             Console.WriteLine(" " + music.SampleRate + " samples / sec");
             Console.WriteLine(" " + music.ChannelCount + " channels");
 
@@ -71,7 +71,7 @@ namespace sound
             {
                 // Display the playing position
                 Console.CursorLeft = 0;
-                Console.Write("Playing... " + music.PlayingOffset + " sec     ");
+                Console.Write("Playing... " + music.PlayingOffset.AsSeconds() + " sec     ");
 
                 // Leave some CPU time for other processes
                 Thread.Sleep(100);
