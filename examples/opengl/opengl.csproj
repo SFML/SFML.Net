@@ -5,8 +5,9 @@
 		<TargetFramework>net48</TargetFramework>
 		<RootNamespace>opengl</RootNamespace>
 		<AssemblyName>opengl</AssemblyName>
-		<Configurations>Debug;Release;_WINDOWS_;_LINUX_;_OSX_</Configurations>
+		<Configurations>Debug;Release</Configurations>
 		<Version>2.5.1</Version>
+		<Platforms>AnyCPU;x64;x86</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>

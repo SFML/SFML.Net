@@ -5,8 +5,9 @@
 		<TargetFramework>net48</TargetFramework>
 		<RootNamespace>sound</RootNamespace>
 		<AssemblyName>sound</AssemblyName>
-		<Configurations>Debug;Release;_WINDOWS_;_LINUX_;_OSX_</Configurations>
+		<Configurations>Debug;Release</Configurations>
 		<Version>2.5.1</Version>
+		<Platforms>AnyCPU;x64;x86</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -14,6 +15,15 @@
 		<ProjectReference Include="..\..\src\SFML.Graphics\SFML.Graphics.csproj" />
 		<ProjectReference Include="..\..\src\SFML.System\SFML.System.csproj" />
 		<ProjectReference Include="..\..\src\SFML.Window\SFML.Window.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="resources\canary.wav">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="resources\orchestral.ogg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
