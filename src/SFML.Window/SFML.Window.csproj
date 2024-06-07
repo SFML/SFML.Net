@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <SFMLModule>Window</SFMLModule>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <Import Project="..\..\SFML.Module.props" />
