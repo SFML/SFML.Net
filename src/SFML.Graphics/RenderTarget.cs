@@ -4,7 +4,9 @@ namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Abstract base class for render targets (renderwindow, renderimage)
+    /// Interface for render targets.
+    /// This interface should not be implemented on custom types, use
+    /// <see cref="RenderWindow"/> or <see cref="RenderTexture"/> instead.
     /// </summary>
     ////////////////////////////////////////////////////////////
     public interface RenderTarget
