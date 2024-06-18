@@ -214,7 +214,7 @@ namespace SFML.Window
         /// <param name="size">Width and height of the image</param>
         /// <param name="hotspot">(x,y) location of the hotspot</param>
         /// <exception cref="LoadingFailedException" />
-        public Cursor(byte[] pixels, SFML.System.Vector2u size, SFML.System.Vector2u hotspot)
+        public Cursor(Span<byte> pixels, SFML.System.Vector2u size, SFML.System.Vector2u hotspot)
             : base((IntPtr)0)
         {
             unsafe

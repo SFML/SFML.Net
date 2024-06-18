@@ -71,18 +71,17 @@ namespace SFML.Audio
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Music(byte[] bytes) :
+        public Music(Span<byte> bytes) :
             base(IntPtr.Zero)
         {
-            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                CPointer = sfMusic_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
+                fixed (byte* ptr = bytes)
+                {
+                    CPointer = sfMusic_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
+                }
             }
-            finally
-            {
-                pin.Free();
-            }
+
             if (CPointer == IntPtr.Zero)
             {
                 throw new LoadingFailedException("music");

@@ -84,18 +84,17 @@ namespace SFML.Graphics
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(byte[] bytes) :
+        public Image(Span<byte> bytes) :
             base(IntPtr.Zero)
         {
-            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
+                fixed (byte* ptr = bytes)
+                {
+                    CPointer = sfImage_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
+                }
             }
-            finally
-            {
-                pin.Free();
-            }
+
             if (CPointer == IntPtr.Zero)
             {
                 throw new LoadingFailedException("image");
@@ -148,14 +147,14 @@ namespace SFML.Graphics
         /// <param name="pixels">array containing the pixels</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(uint width, uint height, byte[] pixels) :
+        public Image(uint width, uint height, Span<byte> pixels) :
             base(IntPtr.Zero)
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* ptr = pixels)
                 {
-                    CPointer = sfImage_createFromPixels(width, height, PixelsPtr);
+                    CPointer = sfImage_createFromPixels(width, height, ptr);
                 }
             }
 
@@ -310,14 +309,17 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Array of pixels</returns>
         ////////////////////////////////////////////////////////////
-        public byte[] Pixels
+        public Span<byte> Pixels
         {
             get
             {
-                Vector2u size = Size;
-                byte[] PixelsPtr = new byte[size.X * size.Y * 4];
-                Marshal.Copy(sfImage_getPixelsPtr(CPointer), PixelsPtr, 0, PixelsPtr.Length);
-                return PixelsPtr;
+                unsafe
+                {
+                    Vector2u size = Size;
+                    IntPtr ptr = sfImage_getPixelsPtr(CPointer);
+                    uint length = size.X * size.Y * 4;
+                    return new Span<byte>((void*)ptr, (int)length);
+                }
             }
         }
 

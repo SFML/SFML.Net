@@ -180,13 +180,13 @@ namespace SFML.Window
         /// <param name="height">Icon's height, in pixels</param>
         /// <param name="pixels">Array of pixels, format must be RGBA 32 bits</param>
         ////////////////////////////////////////////////////////////
-        public override void SetIcon(uint width, uint height, byte[] pixels)
+        public override void SetIcon(uint width, uint height, Span<byte> pixels)
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* ptr = pixels)
                 {
-                    sfWindow_setIcon(CPointer, width, height, PixelsPtr);
+                    sfWindow_setIcon(CPointer, width, height, ptr);
                 }
             }
         }

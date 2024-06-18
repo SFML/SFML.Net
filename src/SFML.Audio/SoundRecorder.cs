@@ -158,7 +158,7 @@ namespace SFML.Audio
         /// <param name="samples">Array of samples to process</param>
         /// <returns>False to stop recording audio data, true to continue</returns>
         ////////////////////////////////////////////////////////////
-        protected abstract bool OnProcessSamples(short[] samples);
+        protected abstract bool OnProcessSamples(Span<short> samples);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -286,10 +286,10 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         private bool ProcessSamples(IntPtr samples, UIntPtr nbSamples, IntPtr userData)
         {
-            short[] samplesArray = new short[(int)nbSamples];
-            Marshal.Copy(samples, samplesArray, 0, samplesArray.Length);
-
-            return OnProcessSamples(samplesArray);
+            unsafe
+            {
+                return OnProcessSamples(new Span<short>((void*)samples, (int)nbSamples));
+            }
         }
 
         ////////////////////////////////////////////////////////////
