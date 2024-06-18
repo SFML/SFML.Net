@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -81,6 +82,9 @@ namespace SFML.System
     ////////////////////////////////////////////////////////////
     public class StreamAdaptor : IDisposable
     {
+        [ThreadStatic]
+        private static readonly byte[] readBuffer = new byte[1024];
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Construct from a System.IO.Stream
@@ -153,10 +157,22 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         private long Read(IntPtr data, long size, IntPtr userData)
         {
-            byte[] buffer = new byte[size];
-            int count = myStream.Read(buffer, 0, (int)size);
-            Marshal.Copy(buffer, 0, data, count);
-            return count;
+            int totalBytesRead = 0;
+
+            while (totalBytesRead < size)
+            {
+                int bytesRead = myStream.Read(readBuffer, 0, Math.Min((int)size - totalBytesRead, readBuffer.Length));
+
+                if (bytesRead == 0)
+                {
+                    break;
+                }
+
+                Marshal.Copy(readBuffer, 0, data + totalBytesRead, bytesRead);
+                totalBytesRead += bytesRead;
+            }
+
+            return totalBytesRead;
         }
 
         ////////////////////////////////////////////////////////////

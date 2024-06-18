@@ -189,7 +189,7 @@ namespace SFML.Graphics
         /// <param name="srgb">True to convert the texture source from sRGB, false otherwise</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(byte[] bytes, bool srgb = false) :
+        public Texture(Span<byte> bytes, bool srgb = false) :
             this(bytes, new IntRect(0, 0, 0, 0), srgb)
         {
         }
@@ -203,24 +203,22 @@ namespace SFML.Graphics
         /// <param name="srgb">True to convert the texture source from sRGB, false otherwise</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Texture(byte[] bytes, IntRect area, bool srgb = false) :
+        public Texture(Span<byte> bytes, IntRect area, bool srgb = false) :
             base(IntPtr.Zero)
         {
-            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                if (srgb)
+                fixed (byte* ptr = bytes)
                 {
-                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
+                    if (srgb)
+                    {
+                        CPointer = sfTexture_createSrgbFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length, ref area);
+                    }
+                    else
+                    {
+                        CPointer = sfTexture_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length, ref area);
+                    }
                 }
-                else
-                {
-                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
-                } 
-            }
-            finally
-            {
-                pin.Free();
             }
 
             if (CPointer == IntPtr.Zero)
@@ -272,7 +270,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="pixels">Array of pixels to copy to the texture</param>
         ////////////////////////////////////////////////////////////
-        public void Update(byte[] pixels)
+        public void Update(Span<byte> pixels)
         {
             Vector2u size = Size;
             Update(pixels, size.X, size.Y, 0, 0);
@@ -288,7 +286,7 @@ namespace SFML.Graphics
         /// <param name="x">X offset in the texture where to copy the source pixels</param>
         /// <param name="y">Y offset in the texture where to copy the source pixels</param>
         ////////////////////////////////////////////////////////////
-        public void Update(byte[] pixels, uint width, uint height, uint x, uint y)
+        public void Update(Span<byte> pixels, uint width, uint height, uint x, uint y)
         {
             unsafe
             {

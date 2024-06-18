@@ -164,13 +164,13 @@ namespace SFML.Window
         /// <param name="height">Icon's height, in pixels</param>
         /// <param name="pixels">Array of pixels, format must be RGBA 32 bits</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetIcon(uint width, uint height, byte[] pixels)
+        public virtual void SetIcon(uint width, uint height, Span<byte> pixels)
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* ptr = pixels)
                 {
-                    sfWindowBase_setIcon(CPointer, width, height, PixelsPtr);
+                    sfWindowBase_setIcon(CPointer, width, height, ptr);
                 }
             }
         }

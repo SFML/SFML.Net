@@ -69,18 +69,17 @@ namespace SFML.Audio
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public SoundBuffer(byte[] bytes) :
+        public SoundBuffer(Span<byte> bytes) :
             base(IntPtr.Zero)
         {
-            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                CPointer = sfSoundBuffer_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
+                fixed (byte* ptr = bytes)
+                {
+                    CPointer = sfSoundBuffer_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
+                }
             }
-            finally
-            {
-                pin.Free();
-            }
+
             if (CPointer == IntPtr.Zero)
             {
                 throw new LoadingFailedException("sound buffer");
@@ -96,7 +95,7 @@ namespace SFML.Audio
         /// <param name="sampleRate">Sample rate</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public SoundBuffer(short[] samples, uint channelCount, uint sampleRate) :
+        public SoundBuffer(Span<short> samples, uint channelCount, uint sampleRate) :
             base(IntPtr.Zero)
         {
             unsafe
@@ -181,13 +180,17 @@ namespace SFML.Audio
         /// (sf::Int16).
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public short[] Samples
+        public Span<short> Samples
         {
             get
             {
-                short[] SamplesArray = new short[sfSoundBuffer_getSampleCount(CPointer)];
-                Marshal.Copy(sfSoundBuffer_getSamples(CPointer), SamplesArray, 0, SamplesArray.Length);
-                return SamplesArray;
+                ulong count = sfSoundBuffer_getSampleCount(CPointer);
+                IntPtr ptr = sfSoundBuffer_getSamples(CPointer);
+
+                unsafe
+                {
+                    return new Span<short>((void*)ptr, (int)count);
+                }
             }
         }
 

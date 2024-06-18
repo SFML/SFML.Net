@@ -360,7 +360,7 @@ namespace SFML.Graphics
         /// <param name="vertices">Pointer to the vertices</param>
         /// <param name="type">Type of primitives to draw</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, PrimitiveType type)
+        public void Draw(Span<Vertex> vertices, PrimitiveType type)
         {
             Draw(vertices, type, RenderStates.Default);
         }
@@ -373,36 +373,7 @@ namespace SFML.Graphics
         /// <param name="type">Type of primitives to draw</param>
         /// <param name="states">Render states to use for drawing</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, PrimitiveType type, RenderStates states)
-        {
-            Draw(vertices, 0, (uint)vertices.Length, type, states);
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Draw primitives defined by a sub-array of vertices, with default render states
-        /// </summary>
-        /// <param name="vertices">Array of vertices to draw</param>
-        /// <param name="start">Index of the first vertex to draw in the array</param>
-        /// <param name="count">Number of vertices to draw</param>
-        /// <param name="type">Type of primitives to draw</param>
-        ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type)
-        {
-            Draw(vertices, start, count, type, RenderStates.Default);
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Draw primitives defined by a sub-array of vertices
-        /// </summary>
-        /// <param name="vertices">Pointer to the vertices</param>
-        /// <param name="start">Index of the first vertex to use in the array</param>
-        /// <param name="count">Number of vertices to draw</param>
-        /// <param name="type">Type of primitives to draw</param>
-        /// <param name="states">Render states to use for drawing</param>
-        ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type, RenderStates states)
+        public void Draw(Span<Vertex> vertices, PrimitiveType type, RenderStates states)
         {
             RenderStates.MarshalData marshaledStates = states.Marshal();
 
@@ -410,7 +381,7 @@ namespace SFML.Graphics
             {
                 fixed (Vertex* vertexPtr = vertices)
                 {
-                    sfRenderTexture_drawPrimitives(CPointer, vertexPtr + start, (UIntPtr)count, type, ref marshaledStates);
+                    sfRenderTexture_drawPrimitives(CPointer, vertexPtr, (UIntPtr)vertices.Length, type, ref marshaledStates);
                 }
             }
         }

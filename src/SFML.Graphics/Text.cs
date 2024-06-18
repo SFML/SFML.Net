@@ -190,12 +190,11 @@ namespace SFML.Graphics
                     }
                 }
 
-                // Copy it to a byte array
-                byte[] sourceBytes = new byte[length * 4];
-                Marshal.Copy(source, sourceBytes, 0, sourceBytes.Length);
-
                 // Convert it to a C# string
-                return Encoding.UTF32.GetString(sourceBytes);
+                unsafe
+                {
+                    return Encoding.UTF32.GetString((byte*)source, (int)( length * 4 ));
+                }
             }
 
             set

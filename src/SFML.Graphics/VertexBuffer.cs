@@ -143,7 +143,7 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Update the <see cref="VertexBuffer"/> from a <see cref="Vertex"/>[]
+        /// Update the <see cref="VertexBuffer"/> from a <see cref="Span{Vertex}"/>[]
         /// </summary>
         /// <remarks>
         /// <para>
@@ -178,7 +178,7 @@ namespace SFML.Graphics
         /// <param name="vertexCount">Number of vertices to copy</param>
         /// <param name="offset">Offset in the buffer to copy to</param>
         ////////////////////////////////////////////////////////////
-        public bool Update(Vertex[] vertices, uint vertexCount, uint offset)
+        public bool Update(Span<Vertex> vertices, uint vertexCount, uint offset)
         {
             unsafe
             {
@@ -215,7 +215,7 @@ namespace SFML.Graphics
         /// </remarks>
         /// <param name="vertices">Array of vertices to copy to the buffer</param>
         ////////////////////////////////////////////////////////////
-        public bool Update(Vertex[] vertices)
+        public bool Update(Span<Vertex> vertices)
         {
             return this.Update(vertices, (uint)vertices.Length, 0);
         }
@@ -256,7 +256,7 @@ namespace SFML.Graphics
         /// <param name="vertices">Array of vertices to copy to the buffer</param>
         /// <param name="offset">Offset in the buffer to copy to</param>
         ////////////////////////////////////////////////////////////
-        public bool Update(Vertex[] vertices, uint offset)
+        public bool Update(Span<Vertex> vertices, uint offset)
         {
             return this.Update(vertices, (uint)vertices.Length, offset);
         }

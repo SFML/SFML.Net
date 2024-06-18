@@ -1,3 +1,4 @@
+using System;
 using SFML.System;
 
 namespace SFML.Graphics
@@ -179,7 +180,7 @@ namespace SFML.Graphics
         /// <param name="vertices">Array of vertices to draw</param>
         /// <param name="type">Type of primitives to draw</param>
         ////////////////////////////////////////////////////////////
-        void Draw(Vertex[] vertices, PrimitiveType type);
+        void Draw(Span<Vertex> vertices, PrimitiveType type);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -189,30 +190,7 @@ namespace SFML.Graphics
         /// <param name="type">Type of primitives to draw</param>
         /// <param name="states">Render states to use for drawing</param>
         ////////////////////////////////////////////////////////////
-        void Draw(Vertex[] vertices, PrimitiveType type, RenderStates states);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Draw primitives defined by a sub-array of vertices, with default render states
-        /// </summary>
-        /// <param name="vertices">Array of vertices to draw</param>
-        /// <param name="start">Index of the first vertex to draw in the array</param>
-        /// <param name="count">Number of vertices to draw</param>
-        /// <param name="type">Type of primitives to draw</param>
-        ////////////////////////////////////////////////////////////
-        void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Draw primitives defined by a sub-array of vertices
-        /// </summary>
-        /// <param name="vertices">Pointer to the vertices</param>
-        /// <param name="start">Index of the first vertex to use in the array</param>
-        /// <param name="count">Number of vertices to draw</param>
-        /// <param name="type">Type of primitives to draw</param>
-        /// <param name="states">Render states to use for drawing</param>
-        ////////////////////////////////////////////////////////////
-        void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type, RenderStates states);
+        void Draw(Span<Vertex> vertices, PrimitiveType type, RenderStates states);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
