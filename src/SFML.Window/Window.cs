@@ -369,6 +369,9 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[Window]" +
                    " Size(" + Size + ")" +
                    " Position(" + Position + ")" +

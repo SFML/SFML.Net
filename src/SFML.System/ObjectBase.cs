@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace SFML
 {
@@ -78,5 +79,7 @@ namespace SFML
         protected abstract void Destroy(bool disposing);
 
         private IntPtr myCPointer = IntPtr.Zero;
+
+        protected string MakeDisposedObjectString() => $"[{GetType().Name} (disposed)]";
     }
 }

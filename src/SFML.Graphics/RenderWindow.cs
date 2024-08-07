@@ -716,6 +716,9 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[RenderWindow]" +
                    " Size(" + Size + ")" +
                    " Position(" + Position + ")" +
@@ -802,6 +805,8 @@ namespace SFML.Graphics
             {
                 myDefaultView.Dispose();
             }
+
+            myDefaultView = null;
         }
 
         ////////////////////////////////////////////////////////////

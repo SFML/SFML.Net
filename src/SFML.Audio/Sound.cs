@@ -270,6 +270,9 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[Sound]" +
                    " Status(" + Status + ")" +
                    " Loop(" + Loop + ")" +

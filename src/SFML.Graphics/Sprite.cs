@@ -143,7 +143,13 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString() => $"[Sprite] Color({Color}) Texture({Texture}) TextureRect({TextureRect})";
+        public override string ToString()
+        {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
+            return $"[Sprite] Color({Color}) Texture({Texture}) TextureRect({TextureRect})";
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>

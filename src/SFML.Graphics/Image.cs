@@ -354,7 +354,13 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString() => $"[Image] Size({Size})";
+        public override string ToString()
+        {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
+            return $"[Image] Size({Size})";
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
