@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SFML.Audio
@@ -33,6 +34,9 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[SoundBufferRecorder]" +
                    " SampleRate(" + SampleRate + ")" +
                    " SoundBuffer(" + SoundBuffer + ")";

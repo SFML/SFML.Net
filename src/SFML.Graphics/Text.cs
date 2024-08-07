@@ -329,6 +329,9 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[Text]" +
                    " FillColor(" + FillColor + ")" +
                    " OutlineColor(" + OutlineColor + ")" +

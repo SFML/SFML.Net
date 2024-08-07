@@ -237,6 +237,9 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[SoundStream]" +
                    " SampleRate(" + SampleRate + ")" +
                    " ChannelCount(" + ChannelCount + ")" +

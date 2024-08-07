@@ -515,6 +515,9 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
+            if (CPointer == IntPtr.Zero)
+                return MakeDisposedObjectString();
+
             return "[Texture]" +
                    " Size(" + Size + ")" +
                    " Smooth(" + Smooth + ")" +
