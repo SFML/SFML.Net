@@ -27,7 +27,7 @@ namespace SFML.Audio
         public SoundBuffer(string filename) :
             base(sfSoundBuffer_createFromFile(filename))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("sound buffer", filename);
             }
@@ -52,7 +52,7 @@ namespace SFML.Audio
                 CPointer = sfSoundBuffer_createFromStream(adaptor.InputStreamPtr);
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("sound buffer");
             }
@@ -81,7 +81,7 @@ namespace SFML.Audio
             {
                 pin.Free();
             }
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("sound buffer");
             }
@@ -107,7 +107,7 @@ namespace SFML.Audio
                 }
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("sound buffer");
             }
@@ -199,7 +199,7 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
                 return MakeDisposedObjectString();
 
             return "[SoundBuffer]" +

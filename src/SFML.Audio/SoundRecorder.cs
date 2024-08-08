@@ -126,7 +126,7 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
                 return MakeDisposedObjectString();
 
             return "[SoundRecorder]" + " SampleRate(" + SampleRate + ")";

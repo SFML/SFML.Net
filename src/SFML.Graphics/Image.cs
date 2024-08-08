@@ -35,7 +35,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Image(uint width, uint height, Color color) : base(sfImage_createFromColor(width, height, color))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("image");
             }
@@ -50,7 +50,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Image(string filename) : base(sfImage_createFromFile(filename))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("image", filename);
             }
@@ -71,7 +71,7 @@ namespace SFML.Graphics
                 CPointer = sfImage_createFromStream(adaptor.InputStreamPtr);
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("image");
             }
@@ -96,7 +96,7 @@ namespace SFML.Graphics
             {
                 pin.Free();
             }
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("image");
             }
@@ -133,7 +133,7 @@ namespace SFML.Graphics
                 }
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("image");
             }
@@ -159,7 +159,7 @@ namespace SFML.Graphics
                 }
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("image");
             }
@@ -356,7 +356,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
                 return MakeDisposedObjectString();
 
             return $"[Image] Size({Size})";

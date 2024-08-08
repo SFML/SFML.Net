@@ -20,7 +20,7 @@ namespace SFML.System
         public Buffer() :
             base(sfBuffer_create())
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("buffer");
             }

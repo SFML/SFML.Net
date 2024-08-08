@@ -28,7 +28,7 @@ namespace SFML.Audio
         public Music(string filename) :
             base(sfMusic_createFromFile(filename))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("music", filename);
             }
@@ -52,7 +52,7 @@ namespace SFML.Audio
             myStream = new StreamAdaptor(stream);
             CPointer = sfMusic_createFromStream(myStream.InputStreamPtr);
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("music");
             }
@@ -83,7 +83,7 @@ namespace SFML.Audio
             {
                 pin.Free();
             }
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("music");
             }
@@ -335,7 +335,7 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
                 return MakeDisposedObjectString();
 
             return "[Music]" +

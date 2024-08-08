@@ -52,7 +52,7 @@ namespace SFML.Graphics
         public Shader(string vertexShaderFilename, string geometryShaderFilename, string fragmentShaderFilename) :
             base(sfShader_createFromFile(vertexShaderFilename, geometryShaderFilename, fragmentShaderFilename))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("shader", vertexShaderFilename + " " + fragmentShaderFilename);
             }
@@ -91,7 +91,7 @@ namespace SFML.Graphics
                                                      fragmentAdaptor != null ? fragmentAdaptor.InputStreamPtr : IntPtr.Zero);
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("shader");
             }
@@ -712,7 +712,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
                 return MakeDisposedObjectString();
 
             return "[Shader]";
