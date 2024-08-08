@@ -36,13 +36,29 @@ namespace SFML
         /// <summary>
         /// Access to the internal pointer of the object.
         /// For internal use only
+        /// <para/>
+        /// Attempting to get the value while <see cref="IsInvalid"/> is true will throw an <see cref="ObjectDisposedException"/>.
         /// </summary>
         ////////////////////////////////////////////////////////////
         public IntPtr CPointer
         {
-            get { return myCPointer; }
+            get
+            {
+                if (myCPointer == IntPtr.Zero)
+                    throw new ObjectDisposedException($"This {GetType().Name} instance has been disposed and should not be used.");
+
+                return myCPointer;
+            }
             protected set { myCPointer = value; }
         }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Returns true if the object is in an invalid state, false otherwise.
+        /// For internal use only
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public bool IsInvalid => myCPointer == IntPtr.Zero;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -78,8 +94,12 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         protected abstract void Destroy(bool disposing);
 
-        private IntPtr myCPointer = IntPtr.Zero;
-
+        /// <summary>
+        /// Create a string that can be used in <see cref="object.ToString"/> overrides to describe disposed objects
+        /// </summary>
+        /// <returns>A string representation of the disposed object</returns>
         protected string MakeDisposedObjectString() => $"[{GetType().Name} (disposed)]";
+
+        private IntPtr myCPointer = IntPtr.Zero;
     }
 }

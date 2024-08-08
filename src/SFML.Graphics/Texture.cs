@@ -52,7 +52,7 @@ namespace SFML.Graphics
         public Texture(uint width, uint height) :
             base(sfTexture_create(width, height))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("texture");
             }
@@ -92,7 +92,7 @@ namespace SFML.Graphics
                 CPointer = sfTexture_createFromFile(filename, ref area);
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("texture", filename);
             }
@@ -135,7 +135,7 @@ namespace SFML.Graphics
                 }
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("texture");
             }
@@ -175,7 +175,7 @@ namespace SFML.Graphics
                 CPointer = sfTexture_createFromImage(image.CPointer, ref area);
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("texture");
             }
@@ -223,7 +223,7 @@ namespace SFML.Graphics
                 pin.Free();
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("texture");
             }
@@ -515,7 +515,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString()
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
                 return MakeDisposedObjectString();
 
             return "[Texture]" +

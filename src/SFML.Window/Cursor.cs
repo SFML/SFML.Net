@@ -182,7 +182,7 @@ namespace SFML.Window
         public Cursor(CursorType type)
             : base(sfCursor_createFromSystem(type))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("cursor");
             }
@@ -225,7 +225,7 @@ namespace SFML.Window
                 }
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("cursor");
             }

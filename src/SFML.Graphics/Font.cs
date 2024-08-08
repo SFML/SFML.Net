@@ -26,7 +26,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Font(string filename) : base(sfFont_createFromFile(filename))
         {
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("font", filename);
             }
@@ -46,7 +46,7 @@ namespace SFML.Graphics
                 CPointer = sfFont_createFromStream(adaptor.InputStreamPtr);
             }
 
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("font");
             }
@@ -71,7 +71,7 @@ namespace SFML.Graphics
             {
                 pin.Free();
             }
-            if (CPointer == IntPtr.Zero)
+            if (IsInvalid)
             {
                 throw new LoadingFailedException("font");
             }
