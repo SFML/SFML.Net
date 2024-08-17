@@ -947,7 +947,7 @@ namespace SFML.Graphics
         [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfTouch_getPositionRenderWindow(uint Finger, IntPtr RelativeTo);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfRenderWindow_createVulkanSurface(IntPtr CPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
         #endregion
     }
