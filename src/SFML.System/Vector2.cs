@@ -25,6 +25,17 @@ namespace SFML.System
             Y = y;
         }
 
+        /// <summary>
+        /// Deconstructs a Vector2f into a tuple of floats
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        public void Deconstruct(out float x, out float y)
+        {
+            x = X;
+            y = Y;
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Operator - overload ; returns the opposite of a vector
@@ -156,6 +167,12 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public static explicit operator Vector2u(Vector2f v) => new Vector2u((uint)v.X, (uint)v.Y);
 
+        /// <summary>
+        /// Converts a tuple of floats to a Vector2f
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator Vector2f((float X, float Y) tuple) => new Vector2f(tuple.X, tuple.Y);
+
         /// <summary>X (horizontal) component of the vector</summary>
         public float X;
 
@@ -183,6 +200,17 @@ namespace SFML.System
         {
             X = x;
             Y = y;
+        }
+
+        /// <summary>
+        /// Deconstructs a Vector2i into a tuple of ints
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        public void Deconstruct(out int x, out int y)
+        {
+            x = X;
+            y = Y;
         }
 
         ////////////////////////////////////////////////////////////
@@ -316,6 +344,12 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public static explicit operator Vector2u(Vector2i v) => new Vector2u((uint)v.X, (uint)v.Y);
 
+        /// <summary>
+        /// Converts a tuple of ints to a Vector2i
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator Vector2i((int X, int Y) tuple) => new Vector2i(tuple.X, tuple.Y);
+
         /// <summary>X (horizontal) component of the vector</summary>
         public int X;
 
@@ -343,6 +377,17 @@ namespace SFML.System
         {
             X = x;
             Y = y;
+        }
+
+        /// <summary>
+        /// Deconstructs a Vector2u into a tuple of uints
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        public void Deconstruct(out uint x, out uint y)
+        {
+            x = X;
+            y = Y;
         }
 
         ////////////////////////////////////////////////////////////
@@ -466,6 +511,12 @@ namespace SFML.System
         /// <returns>Casting result</returns>
         ////////////////////////////////////////////////////////////
         public static explicit operator Vector2f(Vector2u v) => new Vector2f(v.X, v.Y);
+
+        /// <summary>
+        /// Converts a tuple of uints to a Vector2u
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator Vector2u((uint X, uint Y) tuple) => new Vector2u(tuple.X, tuple.Y);
 
         /// <summary>X (horizontal) component of the vector</summary>
         public uint X;

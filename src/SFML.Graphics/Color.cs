@@ -79,6 +79,21 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override string ToString() => $"[Color] R({R}) G({G}) B({B}) A({A})";
 
+        /// <summary>
+        /// Deconstructs a Color into a tuple of bytes
+        /// </summary>
+        /// <param name="red">Red component</param>
+        /// <param name="green">Green component</param>
+        /// <param name="blue">Blue component</param>
+        /// <param name="alpha">Alpha (transparency) component</param>
+        public void Deconstruct(out byte red, out byte green, out byte blue, out byte alpha)
+        {
+            red = R;
+            green = G;
+            blue = B;
+            alpha = A;
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Compare color and object and checks if they are equal
@@ -165,6 +180,12 @@ namespace SFML.Graphics
                              (byte)( left.B * right.B / 255 ),
                              (byte)( left.A * right.A / 255 ));
         }
+
+        /// <summary>
+        /// Converts a tuple of bytes to a Color
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator Color((byte R, byte G, byte B, byte A) tuple) => new Color(tuple.R, tuple.G, tuple.B, tuple.A);
 
         /// <summary>Red component of the color</summary>
         public byte R;

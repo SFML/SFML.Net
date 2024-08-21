@@ -177,6 +177,21 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2i Size => new Vector2i(Width, Height);
 
+        /// <summary>
+        /// Deconstructs an IntRect into a tuple of ints
+        /// </summary>
+        /// <param name="left">Left coordinate of the rectangle</param>
+        /// <param name="top">Top coordinate of the rectangle</param>
+        /// <param name="width">Width of the rectangle</param>
+        /// <param name="height">Height of the rectangle</param>
+        public void Deconstruct(out int left, out int top, out int width, out int height)
+        {
+            left = Left;
+            top = Top;
+            width = Width;
+            height = Height;
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Provide a string describing the object
@@ -245,6 +260,12 @@ namespace SFML.Graphics
         /// <returns>r1 != r2</returns>
         ////////////////////////////////////////////////////////////
         public static bool operator !=(IntRect r1, IntRect r2) => !r1.Equals(r2);
+
+        /// <summary>
+        /// Converts a tuple of ints to an IntRect
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator IntRect((int Left, int Top, int Width, int Height) tuple) => new IntRect(tuple.Left, tuple.Top, tuple.Width, tuple.Height);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -445,6 +466,21 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Size => new Vector2f(Width, Height);
 
+        /// <summary>
+        /// Deconstructs a FloatRect into a tuple of floats
+        /// </summary>
+        /// <param name="left">Left coordinate of the rectangle</param>
+        /// <param name="top">Top coordinate of the rectangle</param>
+        /// <param name="width">Width of the rectangle</param>
+        /// <param name="height">Height of the rectangle</param>
+        public void Deconstruct(out float left, out float top, out float width, out float height)
+        {
+            left = Left;
+            top = Top;
+            width = Width;
+            height = Height;
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Provide a string describing the object
@@ -526,6 +562,12 @@ namespace SFML.Graphics
         {
             return !r1.Equals(r2);
         }
+
+        /// <summary>
+        /// Converts a tuple of floats to a FloatRect
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator FloatRect((float Left, float Top, float Width, float Height) tuple) => new FloatRect(tuple.Left, tuple.Top, tuple.Width, tuple.Height);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
