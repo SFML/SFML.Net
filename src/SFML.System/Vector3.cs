@@ -27,6 +27,19 @@ namespace SFML.System
             Z = z;
         }
 
+        /// <summary>
+        /// Deconstructs a Vector3f into a tuple of floats
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        /// <param name="z">Z coordinate</param>
+        public void Deconstruct(out float x, out float y, out float z)
+        {
+            x = X;
+            y = Y;
+            z = Z;
+        }
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Operator - overload ; returns the opposite of a vector
@@ -139,6 +152,12 @@ namespace SFML.System
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+
+        /// <summary>
+        /// Converts a tuple of floats to a Vector3f
+        /// </summary>
+        /// <param name="tuple">The tuple to convert</param>
+        public static implicit operator Vector3f((float X, float Y, float Z) tuple) => new Vector3f(tuple.X, tuple.Y, tuple.Z);
 
         /// <summary>X (horizontal) component of the vector</summary>
         public float X;
