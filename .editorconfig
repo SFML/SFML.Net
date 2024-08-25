@@ -17,6 +17,23 @@ indent_style = space
 indent_size = 4
 insert_final_newline = false
 trim_trailing_whitespace = true
+csharp_using_directive_placement = outside_namespace:silent
+csharp_prefer_simple_using_statement = true:suggestion
+csharp_prefer_braces = true:warning
+csharp_style_namespace_declarations = file_scoped:silent
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_style_expression_bodied_methods = true:warning
+csharp_style_expression_bodied_constructors = true:warning
+csharp_style_expression_bodied_operators = true:warning
+csharp_style_expression_bodied_properties = true:warning
+csharp_style_expression_bodied_indexers = true:warning
+csharp_style_expression_bodied_accessors = true:warning
+csharp_style_expression_bodied_lambdas = true:silent
+csharp_style_expression_bodied_local_functions = false:silent
+csharp_indent_labels = no_change
+dotnet_diagnostic.SA1101.severity = none
 
 #########################
 # File Extension Settings
@@ -67,10 +84,10 @@ end_of_line = lf
 [*.{cs,csx,cake,vb}]
 # "this." and "Me." qualifiers
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#this_and_me
-dotnet_style_qualification_for_field = true:warning
-dotnet_style_qualification_for_property = true:warning
-dotnet_style_qualification_for_method = true:warning
-dotnet_style_qualification_for_event = true:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
 # Language keywords instead of framework type names for type references
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#language_keywords
 dotnet_style_predefined_type_for_locals_parameters_members = true:warning
@@ -282,3 +299,45 @@ dotnet_naming_rule.non_interface_types_must_be_pascal_case.style = pascal_case
 dotnet_naming_rule.interface_types_must_be_prefixed_with_i.severity = warning
 dotnet_naming_rule.interface_types_must_be_prefixed_with_i.symbols = interface_types
 dotnet_naming_rule.interface_types_must_be_prefixed_with_i.style = prefix_interface_interface_with_i
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+
+# SA1623: Property summary documentation should match accessors
+dotnet_diagnostic.SA1623.severity = none
+
+# SA1642: Constructor summary documentation should begin with standard text
+dotnet_diagnostic.SA1642.severity = none
+
+# IDE0009: Member access should be qualified.
+dotnet_diagnostic.IDE0009.severity = none
+
+# SA1514: Element documentation header should be preceded by blank line
+dotnet_diagnostic.SA1514.severity = none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1124: Do not use regions
+dotnet_diagnostic.SA1124.severity = none
+
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = none
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+# SA1306: Field names should begin with lower-case letter
+dotnet_diagnostic.SA1306.severity = none
+
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = none
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = none
+
+# SA1407: Arithmetic expressions should declare precedence
+dotnet_diagnostic.SA1407.severity = none
