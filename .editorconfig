@@ -67,10 +67,10 @@ end_of_line = lf
 [*.{cs,csx,cake,vb}]
 # "this." and "Me." qualifiers
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#this_and_me
-dotnet_style_qualification_for_field = true:warning
-dotnet_style_qualification_for_property = true:warning
-dotnet_style_qualification_for_method = true:warning
-dotnet_style_qualification_for_event = true:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
 # Language keywords instead of framework type names for type references
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#language_keywords
 dotnet_style_predefined_type_for_locals_parameters_members = true:warning
@@ -137,6 +137,7 @@ csharp_style_conditional_delegate_call = true:warning
 # Code block preferences
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#code_block
 csharp_prefer_braces = true:warning
+csharp_style_prefer_top_level_statements = false:warning
 
 #############################
 # .NET Formatting Conventions
@@ -282,3 +283,13 @@ dotnet_naming_rule.non_interface_types_must_be_pascal_case.style = pascal_case
 dotnet_naming_rule.interface_types_must_be_prefixed_with_i.severity = warning
 dotnet_naming_rule.interface_types_must_be_prefixed_with_i.symbols = interface_types
 dotnet_naming_rule.interface_types_must_be_prefixed_with_i.style = prefix_interface_interface_with_i
+
+####################
+# Configure severity
+####################
+
+# IDE0130: Namespace does not match folder structure
+dotnet_diagnostic.IDE0130.severity = suggestion
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = suggestion
