@@ -48,9 +48,9 @@ namespace SFML.Graphics
         {
             unchecked
             {
-                R = (byte)( color >> 24 );
-                G = (byte)( color >> 16 );
-                B = (byte)( color >> 8 );
+                R = (byte)(color >> 24);
+                G = (byte)(color >> 16);
+                B = (byte)(color >> 8);
                 A = (byte)color;
             }
         }
@@ -69,7 +69,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Color represented as a 32-bit unsigned integer</returns>
         ////////////////////////////////////////////////////////////
-        public uint ToInteger() => (uint)( ( R << 24 ) | ( G << 16 ) | ( B << 8 ) | A );
+        public uint ToInteger() => (uint)((R << 24) | (G << 16) | (B << 8) | A);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -101,7 +101,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and color are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is Color ) && Equals((Color)obj);
+        public override bool Equals(object obj) => (obj is Color) && Equals((Color)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -110,7 +110,7 @@ namespace SFML.Graphics
         /// <param name="other">Color to check</param>
         /// <returns>Colors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Color other) => ( R == other.R ) && ( G == other.G ) && ( B == other.B ) && ( A == other.A );
+        public bool Equals(Color other) => (R == other.R) && (G == other.G) && (B == other.B) && (A == other.A);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -118,7 +118,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode() => ( R << 24 ) | ( G << 16 ) | ( B << 8 ) | A;
+        public override int GetHashCode() => (R << 24) | (G << 16) | (B << 8) | A;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -167,10 +167,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Result of left * right</returns>
         ////////////////////////////////////////////////////////////
-        public static Color operator *(Color left, Color right) => new Color((byte)( left.R * right.R / 255 ),
-                             (byte)( left.G * right.G / 255 ),
-                             (byte)( left.B * right.B / 255 ),
-                             (byte)( left.A * right.A / 255 ));
+        public static Color operator *(Color left, Color right) => new Color((byte)(left.R * right.R / 255),
+                             (byte)(left.G * right.G / 255),
+                             (byte)(left.B * right.B / 255),
+                             (byte)(left.A * right.A / 255));
 
         /// <summary>
         /// Converts a tuple of bytes to a Color

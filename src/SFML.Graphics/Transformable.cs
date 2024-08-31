@@ -136,8 +136,8 @@ namespace SFML.Graphics
                     var syc = myScale.Y * cosine;
                     var sxs = myScale.X * sine;
                     var sys = myScale.Y * sine;
-                    var tx = ( -myOrigin.X * sxc ) - ( myOrigin.Y * sys ) + myPosition.X;
-                    var ty = ( myOrigin.X * sxs ) - ( myOrigin.Y * syc ) + myPosition.Y;
+                    var tx = (-myOrigin.X * sxc) - (myOrigin.Y * sys) + myPosition.X;
+                    var ty = (myOrigin.X * sxs) - (myOrigin.Y * syc) + myPosition.Y;
 
                     myTransform = new Transform(sxc, sys, tx,
                                                 -sxs, syc, ty,

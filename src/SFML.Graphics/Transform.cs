@@ -206,7 +206,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and transform are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is Transform ) && Equals((Transform)obj);
+        public override bool Equals(object obj) => (obj is Transform) && Equals((Transform)obj);
 
         ////////////////////////////////////////////////////////////
         /// <summary>

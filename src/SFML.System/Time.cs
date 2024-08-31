@@ -73,7 +73,7 @@ namespace SFML.System
         /// Returns the <see cref="Time"/> as a number of milliseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public int AsMilliseconds() => (int)( microseconds / 1000 );
+        public int AsMilliseconds() => (int)(microseconds / 1000);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -87,7 +87,7 @@ namespace SFML.System
         /// Returns the <see cref="Time"/> as a TimeSpan
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * ( TimeSpan.TicksPerMillisecond / 1000 ));
+        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * (TimeSpan.TicksPerMillisecond / 1000));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -119,7 +119,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and time are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is Time ) && Equals((Time)obj);
+        public override bool Equals(object obj) => (obj is Time) && Equals((Time)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>

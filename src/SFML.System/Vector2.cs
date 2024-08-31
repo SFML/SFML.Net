@@ -130,7 +130,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and vector are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is Vector2f ) && Equals((Vector2f)obj);
+        public override bool Equals(object obj) => (obj is Vector2f) && Equals((Vector2f)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -139,7 +139,7 @@ namespace SFML.System
         /// <param name="other">Vector to check</param>
         /// <returns>Vectors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Vector2f other) => ( X == other.X ) && ( Y == other.Y );
+        public bool Equals(Vector2f other) => (X == other.X) && (Y == other.Y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -307,7 +307,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and vector are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is Vector2i ) && Equals((Vector2i)obj);
+        public override bool Equals(object obj) => (obj is Vector2i) && Equals((Vector2i)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -316,7 +316,7 @@ namespace SFML.System
         /// <param name="other">Vector to check</param>
         /// <returns>Vectors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Vector2i other) => ( X == other.X ) && ( Y == other.Y );
+        public bool Equals(Vector2i other) => (X == other.X) && (Y == other.Y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -475,7 +475,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and vector are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is Vector2u ) && Equals((Vector2u)obj);
+        public override bool Equals(object obj) => (obj is Vector2u) && Equals((Vector2u)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -484,7 +484,7 @@ namespace SFML.System
         /// <param name="other">Vector to check</param>
         /// <returns>Vectors are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Vector2u other) => ( X == other.X ) && ( Y == other.Y );
+        public bool Equals(Vector2u other) => (X == other.X) && (Y == other.Y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>

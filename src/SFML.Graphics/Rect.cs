@@ -57,7 +57,7 @@ namespace SFML.Graphics
             var minY = Math.Min(Top, Top + Height);
             var maxY = Math.Max(Top, Top + Height);
 
-            return ( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY );
+            return (x >= minX) && (x < maxX) && (y >= minY) && (y < maxY);
         }
 
 
@@ -130,7 +130,7 @@ namespace SFML.Graphics
             var interBottom = Math.Min(r1MaxY, r2MaxY);
 
             // If the intersection is valid (positive non zero area), then there is an intersection
-            if (( interLeft < interRight ) && ( interTop < interBottom ))
+            if ((interLeft < interRight) && (interTop < interBottom))
             {
                 overlap.Left = interLeft;
                 overlap.Top = interTop;
@@ -194,7 +194,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and rectangle are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is IntRect ) && Equals((IntRect)obj);
+        public override bool Equals(object obj) => (obj is IntRect) && Equals((IntRect)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -203,10 +203,10 @@ namespace SFML.Graphics
         /// <param name="other">Rectangle to check</param>
         /// <returns>Rectangles are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(IntRect other) => ( Left == other.Left ) &&
-                   ( Top == other.Top ) &&
-                   ( Width == other.Width ) &&
-                   ( Height == other.Height );
+        public bool Equals(IntRect other) => (Left == other.Left) &&
+                   (Top == other.Top) &&
+                   (Width == other.Width) &&
+                   (Height == other.Height);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -214,10 +214,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode() => unchecked((int)( (uint)Left ^
-                   ( ( (uint)Top << 13 ) | ( (uint)Top >> 19 ) ) ^
-                   ( ( (uint)Width << 26 ) | ( (uint)Width >> 6 ) ) ^
-                   ( ( (uint)Height << 7 ) | ( (uint)Height >> 25 ) ) ));
+        public override int GetHashCode() => unchecked((int)((uint)Left ^
+                   (((uint)Top << 13) | ((uint)Top >> 19)) ^
+                   (((uint)Width << 26) | ((uint)Width >> 6)) ^
+                   (((uint)Height << 7) | ((uint)Height >> 25))));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -323,7 +323,7 @@ namespace SFML.Graphics
             var minY = Math.Min(Top, Top + Height);
             var maxY = Math.Max(Top, Top + Height);
 
-            return ( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY );
+            return (x >= minX) && (x < maxX) && (y >= minY) && (y < maxY);
         }
 
         ////////////////////////////////////////////////////////////
@@ -394,7 +394,7 @@ namespace SFML.Graphics
             var interBottom = Math.Min(r1MaxY, r2MaxY);
 
             // If the intersection is valid (positive non zero area), then there is an intersection
-            if (( interLeft < interRight ) && ( interTop < interBottom ))
+            if ((interLeft < interRight) && (interTop < interBottom))
             {
                 overlap.Left = interLeft;
                 overlap.Top = interTop;
@@ -462,7 +462,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and rectangle are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is FloatRect ) && Equals((FloatRect)obj);
+        public override bool Equals(object obj) => (obj is FloatRect) && Equals((FloatRect)obj);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -471,10 +471,10 @@ namespace SFML.Graphics
         /// <param name="other">Rectangle to check</param>
         /// <returns>Rectangles are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(FloatRect other) => ( Left == other.Left ) &&
-                   ( Top == other.Top ) &&
-                   ( Width == other.Width ) &&
-                   ( Height == other.Height );
+        public bool Equals(FloatRect other) => (Left == other.Left) &&
+                   (Top == other.Top) &&
+                   (Width == other.Width) &&
+                   (Height == other.Height);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -482,10 +482,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode() => unchecked((int)( (uint)Left ^
-                   ( ( (uint)Top << 13 ) | ( (uint)Top >> 19 ) ) ^
-                   ( ( (uint)Width << 26 ) | ( (uint)Width >> 6 ) ) ^
-                   ( ( (uint)Height << 7 ) | ( (uint)Height >> 25 ) ) ));
+        public override int GetHashCode() => unchecked((int)((uint)Left ^
+                   (((uint)Top << 13) | ((uint)Top >> 19)) ^
+                   (((uint)Width << 26) | ((uint)Width >> 6)) ^
+                   (((uint)Height << 7) | ((uint)Height >> 25))));
 
         ////////////////////////////////////////////////////////////
         /// <summary>

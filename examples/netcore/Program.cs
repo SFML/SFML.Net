@@ -18,7 +18,7 @@ namespace netcore
             var sound = new Sound(GenerateSineWave(frequency: 440.0, volume: .25, seconds: 1));
 
             var window = new RenderWindow(new VideoMode(800, 600), "SFML running in .NET Core");
-            window.Closed += (_, __) => window.Close();
+            window.Closed += (_, _) => window.Close();
 
             sound.Play();
 
@@ -38,7 +38,7 @@ namespace netcore
 
             for (var i = 0; i < samples.Length; i++)
             {
-                samples[i] = (short)( Math.Sin(frequency * ( 2 * Math.PI ) * i / sampleRate) * volume * short.MaxValue );
+                samples[i] = (short)(Math.Sin(frequency * (2 * Math.PI) * i / sampleRate) * volume * short.MaxValue);
             }
 
             return new SoundBuffer(samples, 1, sampleRate);

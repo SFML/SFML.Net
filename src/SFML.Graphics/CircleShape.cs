@@ -96,7 +96,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override Vector2f GetPoint(uint index)
         {
-            var angle = (float)( ( index * 2 * Math.PI / myPointCount ) - ( Math.PI / 2 ) );
+            var angle = (float)((index * 2 * Math.PI / myPointCount) - (Math.PI / 2));
             var x = (float)Math.Cos(angle) * myRadius;
             var y = (float)Math.Sin(angle) * myRadius;
 

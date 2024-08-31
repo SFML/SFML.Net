@@ -56,7 +56,7 @@ namespace shader
             myShader.SetUniform("texture", Shader.CurrentTexture);
         }
 
-        protected override void OnUpdate(float time, float x, float y) => myShader.SetUniform("pixel_threshold", ( x + y ) / 30);
+        protected override void OnUpdate(float time, float x, float y) => myShader.SetUniform("pixel_threshold", (x + y) / 30);
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
         {
@@ -111,7 +111,7 @@ namespace shader
         {
             myShader.SetUniform("wave_phase", time);
             myShader.SetUniform("wave_amplitude", new Vector2f(x * 40, y * 40));
-            myShader.SetUniform("blur_radius", ( x + y ) * 0.008F);
+            myShader.SetUniform("blur_radius", (x + y) * 0.008F);
         }
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
@@ -152,11 +152,11 @@ namespace shader
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            var radius = 200 + ( (float)Math.Cos(time) * 150 );
+            var radius = 200 + ((float)Math.Cos(time) * 150);
             myShader.SetUniform("storm_position", new Vector2f(x * 800, y * 600));
             myShader.SetUniform("storm_inner_radius", radius / 3);
             myShader.SetUniform("storm_total_radius", radius);
-            myShader.SetUniform("blink_alpha", 0.5F + ( (float)Math.Cos(time * 3) * 0.25F ));
+            myShader.SetUniform("blink_alpha", 0.5F + ((float)Math.Cos(time * 3) * 0.25F));
         }
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
@@ -213,13 +213,13 @@ namespace shader
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            myShader.SetUniform("edge_threshold", 1 - ( ( x + y ) / 2 ));
+            myShader.SetUniform("edge_threshold", 1 - ((x + y) / 2));
 
             // Update the position of the moving entities
             for (var i = 0; i < myEntities.Length; ++i)
             {
-                var posX = ( (float)Math.Cos(0.25F * ( ( time * i ) + ( myEntities.Length - i ) )) * 300 ) + 350;
-                var posY = ( (float)Math.Sin(0.25F * ( ( time * ( myEntities.Length - i ) ) + i )) * 200 ) + 250;
+                var posX = ((float)Math.Cos(0.25F * ((time * i) + (myEntities.Length - i))) * 300) + 350;
+                var posY = ((float)Math.Sin(0.25F * ((time * (myEntities.Length - i)) + i)) * 200) + 250;
                 myEntities[i].Position = new Vector2f(posX, posY);
             }
 

@@ -161,8 +161,8 @@ namespace opengl
                 GL.Clear(ClearBufferMask.DepthBufferBit);
 
                 // We get the position of the mouse cursor, so that we can move the box accordingly
-                var x = ( Mouse.GetPosition(window).X * 200.0F / window.Size.X ) - 100.0F;
-                var y = ( -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y ) + 100.0F;
+                var x = (Mouse.GetPosition(window).X * 200.0F / window.Size.X) - 100.0F;
+                var y = (-Mouse.GetPosition(window).Y * 200.0F / window.Size.Y) + 100.0F;
 
                 // Apply some transformations
                 GL.MatrixMode(MatrixMode.Modelview);
