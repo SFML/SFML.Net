@@ -23,10 +23,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="pointCount">Number of points of the shape</param>
         ////////////////////////////////////////////////////////////
-        public ConvexShape(uint pointCount)
-        {
-            SetPointCount(pointCount);
-        }
+        public ConvexShape(uint pointCount) => SetPointCount(pointCount);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -49,7 +46,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The total point count</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount() => (uint)(myPoints?.Length ?? 0);
+        public override uint GetPointCount() => (uint)( myPoints?.Length ?? 0 );
 
         ////////////////////////////////////////////////////////////
         /// <summary>

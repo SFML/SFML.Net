@@ -16,7 +16,7 @@ namespace SFML.System
     /// </remarks>
     ////////////////////////////////////////////////////////////
     [StructLayout(LayoutKind.Sequential)]
-    public struct Time : IEquatable<Time>
+    public readonly struct Time : IEquatable<Time>
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -73,7 +73,7 @@ namespace SFML.System
         /// Returns the <see cref="Time"/> as a number of milliseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public int AsMilliseconds() => (int)(microseconds / 1000);
+        public int AsMilliseconds() => (int)( microseconds / 1000 );
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -87,7 +87,7 @@ namespace SFML.System
         /// Returns the <see cref="Time"/> as a TimeSpan
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * (TimeSpan.TicksPerMillisecond / 1000));
+        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * ( TimeSpan.TicksPerMillisecond / 1000 ));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -250,17 +250,17 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public override int GetHashCode() => microseconds.GetHashCode();
 
-        private long microseconds;
+        private readonly long microseconds;
 
         #region Imports
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Time sfSeconds(float Amount);
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Time sfSeconds(float amount);
 
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Time sfMilliseconds(int Amount);
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Time sfMilliseconds(int amount);
 
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Time sfMicroseconds(long Amount);
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Time sfMicroseconds(long amount);
         #endregion
     }
 }

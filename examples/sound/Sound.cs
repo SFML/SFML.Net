@@ -4,12 +4,12 @@ using SFML.Audio;
 
 namespace sound
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main(string[] args)
+        private static void Main()
         {
             // Play a sound
             PlaySound();
@@ -25,7 +25,7 @@ namespace sound
         private static void PlaySound()
         {
             // Load a sound buffer from a wav file
-            SoundBuffer buffer = new SoundBuffer("resources/canary.wav");
+            var buffer = new SoundBuffer("resources/canary.wav");
 
             // Display sound information
             Console.WriteLine("canary.wav :");
@@ -34,7 +34,7 @@ namespace sound
             Console.WriteLine(" " + buffer.ChannelCount + " channels");
 
             // Create a sound instance and play it
-            Sound sound = new Sound(buffer);
+            var sound = new Sound(buffer);
             sound.Play();
 
             // Loop while the sound is playing
@@ -55,7 +55,7 @@ namespace sound
         private static void PlayMusic()
         {
             // Load an ogg music file
-            Music music = new Music("resources/orchestral.ogg");
+            var music = new Music("resources/orchestral.ogg");
 
             // Display music information
             Console.WriteLine("orchestral.ogg :");

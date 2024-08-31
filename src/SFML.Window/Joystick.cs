@@ -60,10 +60,7 @@ namespace SFML.Window
         /// <param name="joystick">Index of the joystick to check</param>
         /// <returns>True if the joystick is connected, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public static bool IsConnected(uint joystick)
-        {
-            return sfJoystick_isConnected(joystick);
-        }
+        public static bool IsConnected(uint joystick) => sfJoystick_isConnected(joystick);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -73,10 +70,7 @@ namespace SFML.Window
         /// <param name="joystick">Index of the joystick</param>
         /// <returns>Number of buttons supported by the joystick</returns>
         ////////////////////////////////////////////////////////////
-        public static uint GetButtonCount(uint joystick)
-        {
-            return sfJoystick_getButtonCount(joystick);
-        }
+        public static uint GetButtonCount(uint joystick) => sfJoystick_getButtonCount(joystick);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -87,10 +81,7 @@ namespace SFML.Window
         /// <param name="axis">Axis to check</param>
         /// <returns>True if the joystick supports the axis, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public static bool HasAxis(uint joystick, Axis axis)
-        {
-            return sfJoystick_hasAxis(joystick, axis);
-        }
+        public static bool HasAxis(uint joystick, Axis axis) => sfJoystick_hasAxis(joystick, axis);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -101,10 +92,7 @@ namespace SFML.Window
         /// <param name="button">Button to check</param>
         /// <returns>True if the button is pressed, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public static bool IsButtonPressed(uint joystick, uint button)
-        {
-            return sfJoystick_isButtonPressed(joystick, button);
-        }
+        public static bool IsButtonPressed(uint joystick, uint button) => sfJoystick_isButtonPressed(joystick, button);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -115,10 +103,7 @@ namespace SFML.Window
         /// <param name="axis">Axis to check</param>
         /// <returns>Current position of the axis, in range [-100 .. 100]</returns>
         ////////////////////////////////////////////////////////////
-        public static float GetAxisPosition(uint joystick, Axis axis)
-        {
-            return sfJoystick_getAxisPosition(joystick, axis);
-        }
+        public static float GetAxisPosition(uint joystick, Axis axis) => sfJoystick_getAxisPosition(joystick, axis);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -129,10 +114,7 @@ namespace SFML.Window
         /// call it if you have no window yet (or no window at all):
         /// in this case the joysticks states are not updated automatically.
         ////////////////////////////////////////////////////////////
-        public static void Update()
-        {
-            sfJoystick_update();
-        }
+        public static void Update() => sfJoystick_update();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -143,12 +125,13 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public static Identification GetIdentification(uint joystick)
         {
-            IdentificationMarshalData identification = sfJoystick_getIdentification(joystick);
-            Identification retIdentification = new Identification();
-
-            retIdentification.Name = Marshal.PtrToStringAnsi(identification.Name);
-            retIdentification.VendorId = identification.VendorId;
-            retIdentification.ProductId = identification.ProductId;
+            var identification = sfJoystick_getIdentification(joystick);
+            var retIdentification = new Identification
+            {
+                Name = Marshal.PtrToStringAnsi(identification.Name),
+                VendorId = identification.VendorId,
+                ProductId = identification.ProductId
+            };
 
             return retIdentification;
         }
@@ -185,25 +168,25 @@ namespace SFML.Window
         }
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfJoystick_isConnected(uint joystick);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfJoystick_getButtonCount(uint joystick);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfJoystick_hasAxis(uint joystick, Axis axis);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfJoystick_isButtonPressed(uint joystick, uint button);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfJoystick_getAxisPosition(uint joystick, Axis axis);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfJoystick_update();
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IdentificationMarshalData sfJoystick_getIdentification(uint joystick);
         #endregion
     }

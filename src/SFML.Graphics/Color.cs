@@ -143,13 +143,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Result of left + right</returns>
         ////////////////////////////////////////////////////////////
-        public static Color operator +(Color left, Color right)
-        {
-            return new Color((byte)Math.Min(left.R + right.R, 255),
+        public static Color operator +(Color left, Color right) => new Color((byte)Math.Min(left.R + right.R, 255),
                              (byte)Math.Min(left.G + right.G, 255),
                              (byte)Math.Min(left.B + right.B, 255),
                              (byte)Math.Min(left.A + right.A, 255));
-        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -158,13 +155,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Result of left - right</returns>
         ////////////////////////////////////////////////////////////
-        public static Color operator -(Color left, Color right)
-        {
-            return new Color((byte)Math.Max(left.R - right.R, 0),
+        public static Color operator -(Color left, Color right) => new Color((byte)Math.Max(left.R - right.R, 0),
                              (byte)Math.Max(left.G - right.G, 0),
                              (byte)Math.Max(left.B - right.B, 0),
                              (byte)Math.Max(left.A - right.A, 0));
-        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -173,13 +167,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Result of left * right</returns>
         ////////////////////////////////////////////////////////////
-        public static Color operator *(Color left, Color right)
-        {
-            return new Color((byte)( left.R * right.R / 255 ),
+        public static Color operator *(Color left, Color right) => new Color((byte)( left.R * right.R / 255 ),
                              (byte)( left.G * right.G / 255 ),
                              (byte)( left.B * right.B / 255 ),
                              (byte)( left.A * right.A / 255 ));
-        }
 
         /// <summary>
         /// Converts a tuple of bytes to a Color

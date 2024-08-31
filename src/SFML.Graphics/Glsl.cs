@@ -443,15 +443,15 @@ namespace SFML.Graphics.Glsl
         {
             fixed (float* m = array)
             {
-                m[0] = transform.m00;
-                m[3] = transform.m01;
-                m[6] = transform.m02;
-                m[1] = transform.m10;
-                m[4] = transform.m11;
-                m[7] = transform.m12;
-                m[2] = transform.m20;
-                m[5] = transform.m21;
-                m[8] = transform.m22;
+                m[0] = transform.M00;
+                m[3] = transform.M01;
+                m[6] = transform.M02;
+                m[1] = transform.M10;
+                m[4] = transform.M11;
+                m[7] = transform.M12;
+                m[2] = transform.M20;
+                m[5] = transform.M21;
+                m[8] = transform.M22;
             }
         }
 
@@ -476,16 +476,10 @@ namespace SFML.Graphics.Glsl
         /// Keep in mind that a Mat4 cannot be modified after construction
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public static Mat4 Identity
-        {
-            get
-            {
-                return new Mat4(1, 0, 0, 0,
+        public static Mat4 Identity => new Mat4(1, 0, 0, 0,
                                 0, 1, 0, 0,
                                 0, 0, 1, 0,
                                 0, 0, 0, 1);
-            }
-        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -536,22 +530,22 @@ namespace SFML.Graphics.Glsl
                 // swapping to column-major (OpenGL) from row-major (SFML) order
                 // in addition, filling in the blanks (from expanding to a mat4) with values from
                 // an identity matrix
-                m[0] = transform.m00;
-                m[4] = transform.m01;
+                m[0] = transform.M00;
+                m[4] = transform.M01;
                 m[8] = 0;
-                m[12] = transform.m02;
-                m[1] = transform.m10;
-                m[5] = transform.m11;
+                m[12] = transform.M02;
+                m[1] = transform.M10;
+                m[5] = transform.M11;
                 m[9] = 0;
-                m[13] = transform.m12;
+                m[13] = transform.M12;
                 m[2] = 0;
                 m[6] = 0;
                 m[10] = 1;
                 m[14] = 0;
-                m[3] = transform.m20;
-                m[7] = transform.m21;
+                m[3] = transform.M20;
+                m[7] = transform.M21;
                 m[11] = 0;
-                m[15] = transform.m22;
+                m[15] = transform.M22;
             }
         }
 

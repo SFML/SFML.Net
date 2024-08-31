@@ -69,8 +69,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Center
         {
-            get { return sfView_getCenter(CPointer); }
-            set { sfView_setCenter(CPointer, value); }
+            get => sfView_getCenter(CPointer);
+            set => sfView_setCenter(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -80,8 +80,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Size
         {
-            get { return sfView_getSize(CPointer); }
-            set { sfView_setSize(CPointer, value); }
+            get => sfView_getSize(CPointer);
+            set => sfView_setSize(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -91,8 +91,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public float Rotation
         {
-            get { return sfView_getRotation(CPointer); }
-            set { sfView_setRotation(CPointer, value); }
+            get => sfView_getRotation(CPointer);
+            set => sfView_setRotation(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -103,8 +103,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public FloatRect Viewport
         {
-            get { return sfView_getViewport(CPointer); }
-            set { sfView_setViewport(CPointer, value); }
+            get => sfView_getViewport(CPointer);
+            set => sfView_setViewport(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -113,10 +113,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="rectangle">Rectangle defining the position and size of the view</param>
         ////////////////////////////////////////////////////////////
-        public void Reset(FloatRect rectangle)
-        {
-            sfView_reset(CPointer, rectangle);
-        }
+        public void Reset(FloatRect rectangle) => sfView_reset(CPointer, rectangle);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -124,10 +121,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="offset">Offset to move the view</param>
         ////////////////////////////////////////////////////////////
-        public void Move(Vector2f offset)
-        {
-            sfView_move(CPointer, offset);
-        }
+        public void Move(Vector2f offset) => sfView_move(CPointer, offset);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -135,10 +129,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="angle">Angle of rotation, in degrees</param>
         ////////////////////////////////////////////////////////////
-        public void Rotate(float angle)
-        {
-            sfView_rotate(CPointer, angle);
-        }
+        public void Rotate(float angle) => sfView_rotate(CPointer, angle);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -146,10 +137,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="factor">Zoom factor to apply, relative to the current zoom</param>
         ////////////////////////////////////////////////////////////
-        public void Zoom(float factor)
-        {
-            sfView_zoom(CPointer, factor);
-        }
+        public void Zoom(float factor) => sfView_zoom(CPointer, factor);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -160,7 +148,9 @@ namespace SFML.Graphics
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return "[View]" +
                    " Center(" + Center + ")" +
@@ -176,10 +166,7 @@ namespace SFML.Graphics
         /// <param name="cPointer">Direct pointer to the view object in the C library</param>
         ////////////////////////////////////////////////////////////
         internal View(IntPtr cPointer) :
-            base(cPointer)
-        {
-            myExternal = true;
-        }
+            base(cPointer) => myExternal = true;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -198,53 +185,53 @@ namespace SFML.Graphics
         private readonly bool myExternal = false;
 
         #region Imports
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfView_create();
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfView_createFromRect(FloatRect Rect);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfView_createFromRect(FloatRect rect);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfView_copy(IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfView_copy(IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_destroy(IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_destroy(IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_setCenter(IntPtr View, Vector2f center);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_setCenter(IntPtr view, Vector2f center);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_setSize(IntPtr View, Vector2f size);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_setSize(IntPtr view, Vector2f size);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_setRotation(IntPtr View, float Angle);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_setRotation(IntPtr view, float angle);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_setViewport(IntPtr View, FloatRect Viewport);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_setViewport(IntPtr view, FloatRect viewport);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_reset(IntPtr View, FloatRect Rectangle);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_reset(IntPtr view, FloatRect rectangle);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2f sfView_getCenter(IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2f sfView_getCenter(IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2f sfView_getSize(IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2f sfView_getSize(IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern float sfView_getRotation(IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfView_getRotation(IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern FloatRect sfView_getViewport(IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern FloatRect sfView_getViewport(IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_move(IntPtr View, Vector2f offset);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_move(IntPtr view, Vector2f offset);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_rotate(IntPtr View, float Angle);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_rotate(IntPtr view, float angle);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_zoom(IntPtr View, float Factor);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfView_zoom(IntPtr view, float factor);
         #endregion
     }
 }

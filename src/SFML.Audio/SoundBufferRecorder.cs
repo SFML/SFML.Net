@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace SFML.Audio
@@ -21,10 +20,7 @@ namespace SFML.Audio
         /// to make any modifications to it.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public SoundBuffer SoundBuffer
-        {
-            get { return mySoundBuffer; }
-        }
+        public SoundBuffer SoundBuffer { get; private set; } = null;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -35,7 +31,9 @@ namespace SFML.Audio
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return "[SoundBufferRecorder]" +
                    " SampleRate(" + SampleRate + ")" +
@@ -72,12 +70,8 @@ namespace SFML.Audio
         /// Called when the current capture stops
         /// </summary>
         ////////////////////////////////////////////////////////////
-        protected override void OnStop()
-        {
-            mySoundBuffer = new SoundBuffer(mySamplesArray.ToArray(), 1, SampleRate);
-        }
+        protected override void OnStop() => SoundBuffer = new SoundBuffer(mySamplesArray.ToArray(), 1, SampleRate);
 
-        private List<short> mySamplesArray = new List<short>();
-        private SoundBuffer mySoundBuffer = null;
+        private readonly List<short> mySamplesArray = new List<short>();
     }
 }

@@ -55,10 +55,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Position
         {
-            get
-            {
-                return myPosition;
-            }
+            get => myPosition;
             set
             {
                 myPosition = value;
@@ -74,10 +71,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public float Rotation
         {
-            get
-            {
-                return myRotation;
-            }
+            get => myRotation;
             set
             {
                 myRotation = value;
@@ -93,10 +87,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Scale
         {
-            get
-            {
-                return myScale;
-            }
+            get => myScale;
             set
             {
                 myScale = value;
@@ -116,10 +107,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Origin
         {
-            get
-            {
-                return myOrigin;
-            }
+            get => myOrigin;
             set
             {
                 myOrigin = value;
@@ -141,15 +129,15 @@ namespace SFML.Graphics
                 {
                     myTransformNeedUpdate = false;
 
-                    float angle = -myRotation * 3.141592654F / 180.0F;
-                    float cosine = (float)Math.Cos(angle);
-                    float sine = (float)Math.Sin(angle);
-                    float sxc = myScale.X * cosine;
-                    float syc = myScale.Y * cosine;
-                    float sxs = myScale.X * sine;
-                    float sys = myScale.Y * sine;
-                    float tx = -myOrigin.X * sxc - myOrigin.Y * sys + myPosition.X;
-                    float ty = myOrigin.X * sxs - myOrigin.Y * syc + myPosition.Y;
+                    var angle = -myRotation * 3.141592654F / 180.0F;
+                    var cosine = (float)Math.Cos(angle);
+                    var sine = (float)Math.Sin(angle);
+                    var sxc = myScale.X * cosine;
+                    var syc = myScale.Y * cosine;
+                    var sxs = myScale.X * sine;
+                    var sys = myScale.Y * sine;
+                    var tx = ( -myOrigin.X * sxc ) - ( myOrigin.Y * sys ) + myPosition.X;
+                    var ty = ( myOrigin.X * sxs ) - ( myOrigin.Y * syc ) + myPosition.Y;
 
                     myTransform = new Transform(sxc, sys, tx,
                                                 -sxs, syc, ty,

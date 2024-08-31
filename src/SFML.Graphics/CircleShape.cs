@@ -57,7 +57,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public float Radius
         {
-            get { return myRadius; }
+            get => myRadius;
             set { myRadius = value; Update(); }
         }
 
@@ -96,9 +96,9 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override Vector2f GetPoint(uint index)
         {
-            float angle = (float)( index * 2 * Math.PI / myPointCount - Math.PI / 2 );
-            float x = (float)Math.Cos(angle) * myRadius;
-            float y = (float)Math.Sin(angle) * myRadius;
+            var angle = (float)( ( index * 2 * Math.PI / myPointCount ) - ( Math.PI / 2 ) );
+            var x = (float)Math.Cos(angle) * myRadius;
+            var y = (float)Math.Sin(angle) * myRadius;
 
             return new Vector2f(myRadius + x, myRadius + y);
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using SFML.Audio;
 using SFML.Graphics;
 using SFML.System;
@@ -6,9 +6,9 @@ using SFML.Window;
 
 namespace netcore
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             var shape = new RectangleShape(new Vector2f(100, 100))
             {
@@ -36,8 +36,10 @@ namespace netcore
             uint sampleRate = 44100;
             var samples = new short[seconds * sampleRate];
 
-            for (int i = 0; i < samples.Length; i++)
-                samples[i] = (short)(Math.Sin(frequency * (2 * Math.PI) * i / sampleRate) * volume * short.MaxValue);
+            for (var i = 0; i < samples.Length; i++)
+            {
+                samples[i] = (short)( Math.Sin(frequency * ( 2 * Math.PI ) * i / sampleRate) * volume * short.MaxValue );
+            }
 
             return new SoundBuffer(samples, 1, sampleRate);
         }

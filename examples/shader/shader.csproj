@@ -1,57 +1,57 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="../../SFML.CodeStyle.props" />
-  
+
   <PropertyGroup>
-		<OutputType>Exe</OutputType>
-		<TargetFramework>net48</TargetFramework>
-		<RootNamespace>shader</RootNamespace>
-		<AssemblyName>shader</AssemblyName>
-		<Configurations>Debug;Release</Configurations>
-		<Version>2.6.0</Version>
-		<Platforms>AnyCPU;x64;x86</Platforms>
-	</PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>shader</RootNamespace>
+    <AssemblyName>shader</AssemblyName>
+    <Configurations>Debug;Release</Configurations>
+    <Version>2.6.0</Version>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\SFML.Graphics\SFML.Graphics.csproj" />
-	  <ProjectReference Include="..\..\src\SFML.System\SFML.System.csproj" />
-	  <ProjectReference Include="..\..\src\SFML.Window\SFML.Window.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SFML.Graphics\SFML.Graphics.csproj" />
+    <ProjectReference Include="..\..\src\SFML.System\SFML.System.csproj" />
+    <ProjectReference Include="..\..\src\SFML.Window\SFML.Window.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <None Update="resources\background.jpg">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\blink.frag">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\blur.frag">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\devices.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\edge.frag">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\pixelate.frag">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\sansation.ttf">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\sfml.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\storm.vert">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\text-background.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="resources\wave.vert">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
+  <ItemGroup>
+    <None Update="resources\background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\blink.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\blur.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\devices.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\edge.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\pixelate.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\sansation.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\sfml.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\storm.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\text-background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\wave.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

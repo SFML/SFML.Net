@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 // [assembly: AssemblyTitle("sfml-audio")]
 //[assembly: AssemblyDescription("Audio module of the SFML library")]

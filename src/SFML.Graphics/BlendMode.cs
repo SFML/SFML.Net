@@ -96,11 +96,11 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the blend mode given the factors and equation
         /// </summary>
-        /// <param name="SourceFactor">Specifies how to compute the source factor for the color and alpha channels.</param>
-        /// <param name="DestinationFactor">Specifies how to compute the destination factor for the color and alpha channels.</param>
+        /// <param name="sourceFactor">Specifies how to compute the source factor for the color and alpha channels.</param>
+        /// <param name="destinationFactor">Specifies how to compute the destination factor for the color and alpha channels.</param>
         ////////////////////////////////////////////////////////////
-        public BlendMode(Factor SourceFactor, Factor DestinationFactor)
-            : this(SourceFactor, DestinationFactor, Equation.Add)
+        public BlendMode(Factor sourceFactor, Factor destinationFactor)
+            : this(sourceFactor, destinationFactor, Equation.Add)
         {
         }
 
@@ -108,12 +108,12 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the blend mode given the factors and equation
         /// </summary>
-        /// <param name="SourceFactor">Specifies how to compute the source factor for the color and alpha channels.</param>
-        /// <param name="DestinationFactor">Specifies how to compute the destination factor for the color and alpha channels.</param>
-        /// <param name="BlendEquation">Specifies how to combine the source and destination colors and alpha.</param>
+        /// <param name="sourceFactor">Specifies how to compute the source factor for the color and alpha channels.</param>
+        /// <param name="destinationFactor">Specifies how to compute the destination factor for the color and alpha channels.</param>
+        /// <param name="blendEquation">Specifies how to combine the source and destination colors and alpha.</param>
         ////////////////////////////////////////////////////////////
-        public BlendMode(Factor SourceFactor, Factor DestinationFactor, Equation BlendEquation)
-            : this(SourceFactor, DestinationFactor, BlendEquation, SourceFactor, DestinationFactor, BlendEquation)
+        public BlendMode(Factor sourceFactor, Factor destinationFactor, Equation blendEquation)
+            : this(sourceFactor, destinationFactor, blendEquation, sourceFactor, destinationFactor, blendEquation)
         {
         }
 
@@ -121,21 +121,21 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the blend mode given the factors and equation
         /// </summary>
-        /// <param name="ColorSourceFactor">Specifies how to compute the source factor for the color channels.</param>
-        /// <param name="ColorDestinationFactor">Specifies how to compute the destination factor for the color channels.</param>
-        /// <param name="ColorBlendEquation">Specifies how to combine the source and destination colors.</param>
-        /// <param name="AlphaSourceFactor">Specifies how to compute the source factor.</param>
-        /// <param name="AlphaDestinationFactor">Specifies how to compute the destination factor.</param>
-        /// <param name="AlphaBlendEquation">Specifies how to combine the source and destination alphas.</param>
+        /// <param name="colorSourceFactor">Specifies how to compute the source factor for the color channels.</param>
+        /// <param name="colorDestinationFactor">Specifies how to compute the destination factor for the color channels.</param>
+        /// <param name="colorBlendEquation">Specifies how to combine the source and destination colors.</param>
+        /// <param name="alphaSourceFactor">Specifies how to compute the source factor.</param>
+        /// <param name="alphaDestinationFactor">Specifies how to compute the destination factor.</param>
+        /// <param name="alphaBlendEquation">Specifies how to combine the source and destination alphas.</param>
         ////////////////////////////////////////////////////////////
-        public BlendMode(Factor ColorSourceFactor, Factor ColorDestinationFactor, Equation ColorBlendEquation, Factor AlphaSourceFactor, Factor AlphaDestinationFactor, Equation AlphaBlendEquation)
+        public BlendMode(Factor colorSourceFactor, Factor colorDestinationFactor, Equation colorBlendEquation, Factor alphaSourceFactor, Factor alphaDestinationFactor, Equation alphaBlendEquation)
         {
-            ColorSrcFactor = ColorSourceFactor;
-            ColorDstFactor = ColorDestinationFactor;
-            ColorEquation = ColorBlendEquation;
-            AlphaSrcFactor = AlphaSourceFactor;
-            AlphaDstFactor = AlphaDestinationFactor;
-            AlphaEquation = AlphaBlendEquation;
+            ColorSrcFactor = colorSourceFactor;
+            ColorDstFactor = colorDestinationFactor;
+            ColorEquation = colorBlendEquation;
+            AlphaSrcFactor = alphaSourceFactor;
+            AlphaDstFactor = alphaDestinationFactor;
+            AlphaEquation = alphaBlendEquation;
         }
 
         ////////////////////////////////////////////////////////////
@@ -161,7 +161,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and blend mode are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => ( obj is BlendMode ) && Equals((BlendMode)obj);
+        public override bool Equals(object obj) => ( obj is BlendMode mode ) && Equals(mode);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -170,15 +170,12 @@ namespace SFML.Graphics
         /// <param name="other">Blend Mode to check</param>
         /// <returns>blend modes are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(BlendMode other)
-        {
-            return ( ColorSrcFactor == other.ColorSrcFactor ) &&
+        public bool Equals(BlendMode other) => ( ColorSrcFactor == other.ColorSrcFactor ) &&
                    ( ColorDstFactor == other.ColorDstFactor ) &&
                    ( ColorEquation == other.ColorEquation ) &&
                    ( AlphaSrcFactor == other.AlphaSrcFactor ) &&
                    ( AlphaDstFactor == other.AlphaDstFactor ) &&
                    ( AlphaEquation == other.AlphaEquation );
-        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -186,15 +183,12 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode()
-        {
-            return ColorSrcFactor.GetHashCode() ^
+        public override int GetHashCode() => ColorSrcFactor.GetHashCode() ^
                    ColorDstFactor.GetHashCode() ^
                    ColorEquation.GetHashCode() ^
                    AlphaSrcFactor.GetHashCode() ^
                    AlphaDstFactor.GetHashCode() ^
                    AlphaEquation.GetHashCode();
-        }
 
         /// <summary>Source blending factor for the color channels</summary>
         public Factor ColorSrcFactor;

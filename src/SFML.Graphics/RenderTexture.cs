@@ -11,7 +11,7 @@ namespace SFML.Graphics
     /// Target for off-screen 2D rendering into an texture
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public class RenderTexture : ObjectBase, RenderTarget
+    public class RenderTexture : ObjectBase, IRenderTarget
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -39,9 +39,9 @@ namespace SFML.Graphics
             base(sfRenderTexture_create(width, height, depthBuffer))
         {
             myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
-            myTexture = new Texture(sfRenderTexture_getTexture(CPointer));
+            Texture = new Texture(sfRenderTexture_getTexture(CPointer));
             GC.SuppressFinalize(myDefaultView);
-            GC.SuppressFinalize(myTexture);
+            GC.SuppressFinalize(Texture);
         }
 
         ////////////////////////////////////////////////////////////
@@ -57,9 +57,9 @@ namespace SFML.Graphics
             base(sfRenderTexture_createWithSettings(width, height, ref contextSettings))
         {
             myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
-            myTexture = new Texture(sfRenderTexture_getTexture(CPointer));
+            Texture = new Texture(sfRenderTexture_getTexture(CPointer));
             GC.SuppressFinalize(myDefaultView);
-            GC.SuppressFinalize(myTexture);
+            GC.SuppressFinalize(Texture);
         }
 
         ////////////////////////////////////////////////////////////
@@ -70,10 +70,7 @@ namespace SFML.Graphics
         /// <param name="active">True to activate, false to deactivate (true by default)</param>
         /// <returns>True if operation was successful, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public bool SetActive(bool active)
-        {
-            return sfRenderTexture_setActive(CPointer, active);
-        }
+        public bool SetActive(bool active) => sfRenderTexture_setActive(CPointer, active);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -87,8 +84,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public bool Repeated
         {
-            get { return sfRenderTexture_isRepeated(CPointer); }
-            set { sfRenderTexture_setRepeated(CPointer, value); }
+            get => sfRenderTexture_isRepeated(CPointer);
+            set => sfRenderTexture_setRepeated(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -96,30 +93,21 @@ namespace SFML.Graphics
         /// Size of the rendering region of the render texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public Vector2u Size
-        {
-            get { return sfRenderTexture_getSize(CPointer); }
-        }
+        public Vector2u Size => sfRenderTexture_getSize(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Tell if the render texture will use sRGB encoding when drawing on it
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public bool IsSrgb
-        {
-            get { return sfRenderTexture_isSrgb(CPointer); }
-        }
+        public bool IsSrgb => sfRenderTexture_isSrgb(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Default view of the render texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public View DefaultView
-        {
-            get { return new View(myDefaultView); }
-        }
+        public View DefaultView => new View(myDefaultView);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -127,10 +115,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The current view</returns>
         ////////////////////////////////////////////////////////////
-        public View GetView()
-        {
-            return new View(sfRenderTexture_getView(CPointer));
-        }
+        public View GetView() => new View(sfRenderTexture_getView(CPointer));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -138,10 +123,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="view">New view</param>
         ////////////////////////////////////////////////////////////
-        public void SetView(View view)
-        {
-            sfRenderTexture_setView(CPointer, view.CPointer);
-        }
+        public void SetView(View view) => sfRenderTexture_setView(CPointer, view.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -150,10 +132,7 @@ namespace SFML.Graphics
         /// <param name="view">Target view</param>
         /// <returns>Viewport rectangle, expressed in pixels in the current target</returns>
         ////////////////////////////////////////////////////////////
-        public IntRect GetViewport(View view)
-        {
-            return sfRenderTexture_getViewport(CPointer, view.CPointer);
-        }
+        public IntRect GetViewport(View view) => sfRenderTexture_getViewport(CPointer, view.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -168,10 +147,7 @@ namespace SFML.Graphics
         /// <param name="point">Pixel to convert</param>
         /// <returns>The converted point, in "world" coordinates</returns>
         ////////////////////////////////////////////////////////////
-        public Vector2f MapPixelToCoords(Vector2i point)
-        {
-            return MapPixelToCoords(point, GetView());
-        }
+        public Vector2f MapPixelToCoords(Vector2i point) => MapPixelToCoords(point, GetView());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -199,10 +175,7 @@ namespace SFML.Graphics
         /// <param name="view">The view to use for converting the point</param>
         /// <returns>The converted point, in "world" coordinates</returns>
         ////////////////////////////////////////////////////////////
-        public Vector2f MapPixelToCoords(Vector2i point, View view)
-        {
-            return sfRenderTexture_mapPixelToCoords(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
-        }
+        public Vector2f MapPixelToCoords(Vector2i point, View view) => sfRenderTexture_mapPixelToCoords(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -217,10 +190,7 @@ namespace SFML.Graphics
         /// <param name="point">Point to convert</param>
         /// <returns>The converted point, in target coordinates (pixels)</returns>
         ////////////////////////////////////////////////////////////
-        public Vector2i MapCoordsToPixel(Vector2f point)
-        {
-            return MapCoordsToPixel(point, GetView());
-        }
+        public Vector2i MapCoordsToPixel(Vector2f point) => MapCoordsToPixel(point, GetView());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -244,10 +214,7 @@ namespace SFML.Graphics
         /// <param name="view">The view to use for converting the point</param>
         /// <returns>The converted point, in target coordinates (pixels)</returns>
         ////////////////////////////////////////////////////////////
-        public Vector2i MapCoordsToPixel(Vector2f point, View view)
-        {
-            return sfRenderTexture_mapCoordsToPixel(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
-        }
+        public Vector2i MapCoordsToPixel(Vector2f point, View view) => sfRenderTexture_mapCoordsToPixel(CPointer, point, view != null ? view.CPointer : IntPtr.Zero);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -266,20 +233,14 @@ namespace SFML.Graphics
         ///
         /// <returns>True if mipmap generation was successful, false if unsuccessful</returns>
         ////////////////////////////////////////////////////////////
-        public bool GenerateMipmap()
-        {
-            return sfRenderTexture_generateMipmap(CPointer);
-        }
+        public bool GenerateMipmap() => sfRenderTexture_generateMipmap(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Clear the entire render texture with black color
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void Clear()
-        {
-            sfRenderTexture_clear(CPointer, Color.Black);
-        }
+        public void Clear() => sfRenderTexture_clear(CPointer, Color.Black);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -287,37 +248,28 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="color">Color to use to clear the texture</param>
         ////////////////////////////////////////////////////////////
-        public void Clear(Color color)
-        {
-            sfRenderTexture_clear(CPointer, color);
-        }
+        public void Clear(Color color) => sfRenderTexture_clear(CPointer, color);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Update the contents of the target texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void Display()
-        {
-            sfRenderTexture_display(CPointer);
-        }
+        public void Display() => sfRenderTexture_display(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Target texture of the render texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public Texture Texture
-        {
-            get { return myTexture; }
-        }
+        public Texture Texture { get; } = null;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// The maximum anti-aliasing level supported by the system
         /// </summary>
         ////////////////////////////////////////////////////////////
-        static public uint MaximumAntialiasingLevel => sfRenderTexture_getMaximumAntialiasingLevel();
+        public static uint MaximumAntialiasingLevel => sfRenderTexture_getMaximumAntialiasingLevel();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -326,8 +278,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public bool Smooth
         {
-            get { return sfRenderTexture_isSmooth(CPointer); }
-            set { sfRenderTexture_setSmooth(CPointer, value); }
+            get => sfRenderTexture_isSmooth(CPointer);
+            set => sfRenderTexture_setSmooth(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -336,10 +288,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="drawable">Object to draw</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Drawable drawable)
-        {
-            Draw(drawable, RenderStates.Default);
-        }
+        public void Draw(IDrawable drawable) => Draw(drawable, RenderStates.Default);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -348,10 +297,7 @@ namespace SFML.Graphics
         /// <param name="drawable">Object to draw</param>
         /// <param name="states">Render states to use for drawing</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Drawable drawable, RenderStates states)
-        {
-            drawable.Draw(this, states);
-        }
+        public void Draw(IDrawable drawable, RenderStates states) => drawable.Draw(this, states);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -360,10 +306,7 @@ namespace SFML.Graphics
         /// <param name="vertices">Pointer to the vertices</param>
         /// <param name="type">Type of primitives to draw</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, PrimitiveType type)
-        {
-            Draw(vertices, type, RenderStates.Default);
-        }
+        public void Draw(Vertex[] vertices, PrimitiveType type) => Draw(vertices, type, RenderStates.Default);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -373,10 +316,7 @@ namespace SFML.Graphics
         /// <param name="type">Type of primitives to draw</param>
         /// <param name="states">Render states to use for drawing</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, PrimitiveType type, RenderStates states)
-        {
-            Draw(vertices, 0, (uint)vertices.Length, type, states);
-        }
+        public void Draw(Vertex[] vertices, PrimitiveType type, RenderStates states) => Draw(vertices, 0, (uint)vertices.Length, type, states);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -387,10 +327,7 @@ namespace SFML.Graphics
         /// <param name="count">Number of vertices to draw</param>
         /// <param name="type">Type of primitives to draw</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type)
-        {
-            Draw(vertices, start, count, type, RenderStates.Default);
-        }
+        public void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type) => Draw(vertices, start, count, type, RenderStates.Default);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -404,7 +341,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type, RenderStates states)
         {
-            RenderStates.MarshalData marshaledStates = states.Marshal();
+            var marshaledStates = states.Marshal();
 
             unsafe
             {
@@ -445,10 +382,7 @@ namespace SFML.Graphics
         /// function if you do so.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void PushGLStates()
-        {
-            sfRenderTexture_pushGLStates(CPointer);
-        }
+        public void PushGLStates() => sfRenderTexture_pushGLStates(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -458,10 +392,7 @@ namespace SFML.Graphics
         /// description of these functions.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void PopGLStates()
-        {
-            sfRenderTexture_popGLStates(CPointer);
-        }
+        public void PopGLStates() => sfRenderTexture_popGLStates(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -484,10 +415,7 @@ namespace SFML.Graphics
         /// // OpenGL code here...
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void ResetGLStates()
-        {
-            sfRenderTexture_resetGLStates(CPointer);
-        }
+        public void ResetGLStates() => sfRenderTexture_resetGLStates(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -498,7 +426,9 @@ namespace SFML.Graphics
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return "[RenderTexture]" +
                    " Size(" + Size + ")" +
@@ -517,7 +447,7 @@ namespace SFML.Graphics
         {
             if (!disposing)
             {
-                Context.Global.SetActive(true);
+                _ = Context.Global.SetActive(true);
             }
 
             sfRenderTexture_destroy(CPointer);
@@ -525,93 +455,92 @@ namespace SFML.Graphics
             if (disposing)
             {
                 myDefaultView.Dispose();
-                myTexture.Dispose();
+                Texture.Dispose();
             }
 
             if (!disposing)
             {
-                Context.Global.SetActive(false);
+                _ = Context.Global.SetActive(false);
             }
         }
 
-        private View myDefaultView = null;
-        private Texture myTexture = null;
+        private readonly View myDefaultView = null;
 
         #region Imports
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern IntPtr sfRenderTexture_create(uint Width, uint Height, bool DepthBuffer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
+        private static extern IntPtr sfRenderTexture_create(uint width, uint height, bool depthBuffer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderTexture_createWithSettings(uint Width, uint Height, ref ContextSettings Settings);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfRenderTexture_createWithSettings(uint width, uint height, ref ContextSettings settings);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_destroy(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_clear(IntPtr CPointer, Color ClearColor);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_clear(IntPtr cPointer, Color clearColor);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2u sfRenderTexture_getSize(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2u sfRenderTexture_getSize(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderTexture_isSrgb(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderTexture_isSrgb(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderTexture_setActive(IntPtr CPointer, bool Active);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderTexture_setActive(IntPtr cPointer, bool active);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_display(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_display(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_setView(IntPtr CPointer, IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_setView(IntPtr cPointer, IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderTexture_getView(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfRenderTexture_getView(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderTexture_getDefaultView(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfRenderTexture_getDefaultView(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntRect sfRenderTexture_getViewport(IntPtr CPointer, IntPtr TargetView);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntRect sfRenderTexture_getViewport(IntPtr cPointer, IntPtr targetView);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfRenderTexture_mapCoordsToPixel(IntPtr CPointer, Vector2f point, IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfRenderTexture_mapCoordsToPixel(IntPtr cPointer, Vector2f point, IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2f sfRenderTexture_mapPixelToCoords(IntPtr CPointer, Vector2i point, IntPtr View);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2f sfRenderTexture_mapPixelToCoords(IntPtr cPointer, Vector2i point, IntPtr view);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderTexture_getTexture(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfRenderTexture_getTexture(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfRenderTexture_getMaximumAntialiasingLevel();
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_setSmooth(IntPtr CPointer, bool smooth);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_setSmooth(IntPtr cPointer, bool smooth);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderTexture_isSmooth(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderTexture_isSmooth(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_setRepeated(IntPtr CPointer, bool repeated);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_setRepeated(IntPtr cPointer, bool repeated);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderTexture_isRepeated(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderTexture_isRepeated(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderTexture_generateMipmap(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfRenderTexture_generateMipmap(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern void sfRenderTexture_drawPrimitives(IntPtr CPointer, Vertex* vertexPtr, UIntPtr vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfRenderTexture_drawPrimitives(IntPtr cPointer, Vertex* vertexPtr, UIntPtr vertexCount, PrimitiveType type, ref RenderStates.MarshalData renderStates);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_pushGLStates(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_pushGLStates(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_popGLStates(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_popGLStates(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_resetGLStates(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_resetGLStates(IntPtr cPointer);
         #endregion
     }
 }

@@ -51,7 +51,7 @@ namespace SFML.Window
             base(IntPtr.Zero)
         {
             // Copy the title to a null-terminated UTF-32 byte array
-            byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
+            var titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
             unsafe
             {
@@ -77,11 +77,11 @@ namespace SFML.Window
         /// <summary>
         /// Create the window from an existing control
         /// </summary>
-        /// <param name="Handle">Platform-specific handle of the control</param>
+        /// <param name="handle">Platform-specific handle of the control</param>
         /// <param name="settings">Creation parameters</param>
         ////////////////////////////////////////////////////////////
-        public Window(IntPtr Handle, ContextSettings settings) :
-            base(sfWindow_createFromHandle(Handle, ref settings))
+        public Window(IntPtr handle, ContextSettings settings) :
+            base(sfWindow_createFromHandle(handle, ref settings))
         {
         }
 
@@ -93,10 +93,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>True if the window is opened</returns>
         ////////////////////////////////////////////////////////////
-        public override bool IsOpen
-        {
-            get { return sfWindow_isOpen(CPointer); }
-        }
+        public override bool IsOpen => sfWindow_isOpen(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -105,30 +102,21 @@ namespace SFML.Window
         /// Create to recreate the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public override void Close()
-        {
-            sfWindow_close(CPointer);
-        }
+        public override void Close() => sfWindow_close(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Display the window on screen
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public virtual void Display()
-        {
-            sfWindow_display(CPointer);
-        }
+        public virtual void Display() => sfWindow_display(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Creation settings of the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public virtual ContextSettings Settings
-        {
-            get { return sfWindow_getSettings(CPointer); }
-        }
+        public virtual ContextSettings Settings => sfWindow_getSettings(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -137,8 +125,8 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public override Vector2i Position
         {
-            get { return sfWindow_getPosition(CPointer); }
-            set { sfWindow_setPosition(CPointer, value); }
+            get => sfWindow_getPosition(CPointer);
+            set => sfWindow_setPosition(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -148,8 +136,8 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public override Vector2u Size
         {
-            get { return sfWindow_getSize(CPointer); }
-            set { sfWindow_setSize(CPointer, value); }
+            get => sfWindow_getSize(CPointer);
+            set => sfWindow_setSize(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -161,7 +149,7 @@ namespace SFML.Window
         public override void SetTitle(string title)
         {
             // Copy the title to a null-terminated UTF-32 byte array
-            byte[] titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
+            var titleAsUtf32 = Encoding.UTF32.GetBytes(title + '\0');
 
             unsafe
             {
@@ -197,10 +185,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="visible">True to show the window, false to hide it</param>
         ////////////////////////////////////////////////////////////
-        public override void SetVisible(bool visible)
-        {
-            sfWindow_setVisible(CPointer, visible);
-        }
+        public override void SetVisible(bool visible) => sfWindow_setVisible(CPointer, visible);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -208,10 +193,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="show">True to show, false to hide</param>
         ////////////////////////////////////////////////////////////
-        public override void SetMouseCursorVisible(bool show)
-        {
-            sfWindow_setMouseCursorVisible(CPointer, show);
-        }
+        public override void SetMouseCursorVisible(bool show) => sfWindow_setMouseCursorVisible(CPointer, show);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -228,10 +210,7 @@ namespace SFML.Window
         /// cursor).
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public override void SetMouseCursorGrabbed(bool grabbed)
-        {
-            sfWindow_setMouseCursorGrabbed(CPointer, grabbed);
-        }
+        public override void SetMouseCursorGrabbed(bool grabbed) => sfWindow_setMouseCursorGrabbed(CPointer, grabbed);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -239,10 +218,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="cursor">Native system cursor type to display</param>
         ////////////////////////////////////////////////////////////
-        public override void SetMouseCursor(Cursor cursor)
-        {
-            sfWindow_setMouseCursor(CPointer, cursor.CPointer);
-        }
+        public override void SetMouseCursor(Cursor cursor) => sfWindow_setMouseCursor(CPointer, cursor.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -250,10 +226,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="enable">True to enable v-sync, false to deactivate</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetVerticalSyncEnabled(bool enable)
-        {
-            sfWindow_setVerticalSyncEnabled(CPointer, enable);
-        }
+        public virtual void SetVerticalSyncEnabled(bool enable) => sfWindow_setVerticalSyncEnabled(CPointer, enable);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -262,10 +235,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="enable">True to enable, false to disable</param>
         ////////////////////////////////////////////////////////////
-        public override void SetKeyRepeatEnabled(bool enable)
-        {
-            sfWindow_setKeyRepeatEnabled(CPointer, enable);
-        }
+        public override void SetKeyRepeatEnabled(bool enable) => sfWindow_setKeyRepeatEnabled(CPointer, enable);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -274,10 +244,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>True if operation was successful, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public virtual bool SetActive()
-        {
-            return SetActive(true);
-        }
+        public virtual bool SetActive() => SetActive(true);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -287,10 +254,7 @@ namespace SFML.Window
         /// <param name="active">True to activate, false to deactivate (true by default)</param>
         /// <returns>True if operation was successful, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public virtual bool SetActive(bool active)
-        {
-            return sfWindow_setActive(CPointer, active);
-        }
+        public virtual bool SetActive(bool active) => sfWindow_setActive(CPointer, active);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -298,10 +262,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="limit">Framerate limit, in frames per seconds (use 0 to disable limit)</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetFramerateLimit(uint limit)
-        {
-            sfWindow_setFramerateLimit(CPointer, limit);
-        }
+        public virtual void SetFramerateLimit(uint limit) => sfWindow_setFramerateLimit(CPointer, limit);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -310,20 +271,14 @@ namespace SFML.Window
         /// </summary>
         /// <param name="threshold">New threshold, in range [0, 100]</param>
         ////////////////////////////////////////////////////////////
-        public override void SetJoystickThreshold(float threshold)
-        {
-            sfWindow_setJoystickThreshold(CPointer, threshold);
-        }
+        public override void SetJoystickThreshold(float threshold) => sfWindow_setJoystickThreshold(CPointer, threshold);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// OS-specific handle of the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public override IntPtr SystemHandle
-        {
-            get { return sfWindow_getSystemHandle(CPointer); }
-        }
+        public override IntPtr SystemHandle => sfWindow_getSystemHandle(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -331,10 +286,7 @@ namespace SFML.Window
         /// foreground window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public override void RequestFocus()
-        {
-            sfWindow_requestFocus(CPointer);
-        }
+        public override void RequestFocus() => sfWindow_requestFocus(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -342,10 +294,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>True if the window has focus, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public override bool HasFocus()
-        {
-            return sfWindow_hasFocus(CPointer);
-        }
+        public override bool HasFocus() => sfWindow_hasFocus(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -356,10 +305,7 @@ namespace SFML.Window
         /// <param name="vkAllocator">Allocator to use</param>
         /// <returns>True if surface creation was successful, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public override bool CreateVulkanSurface(IntPtr vkInstance, out IntPtr vkSurface, IntPtr vkAllocator)
-        {
-            return sfWindow_createVulkanSurface(CPointer, vkInstance, out vkSurface, vkAllocator);
-        }
+        public override bool CreateVulkanSurface(IntPtr vkInstance, out IntPtr vkSurface, IntPtr vkAllocator) => sfWindow_createVulkanSurface(CPointer, vkInstance, out vkSurface, vkAllocator);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -370,7 +316,9 @@ namespace SFML.Window
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return "[Window]" +
                    " Size(" + Size + ")" +
@@ -399,10 +347,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>Relative mouse position</returns>
         ////////////////////////////////////////////////////////////
-        protected internal override Vector2i InternalGetMousePosition()
-        {
-            return sfMouse_getPosition(CPointer);
-        }
+        protected internal override Vector2i InternalGetMousePosition() => sfMouse_getPosition(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -412,10 +357,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="position">Relative mouse position</param>
         ////////////////////////////////////////////////////////////
-        protected internal override void InternalSetMousePosition(Vector2i position)
-        {
-            sfMouse_setPosition(position, CPointer);
-        }
+        protected internal override void InternalSetMousePosition(Vector2i position) => sfMouse_setPosition(position, CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -423,13 +365,10 @@ namespace SFML.Window
         /// This function is protected because it is called by another class of
         /// another module, it is not meant to be called by users.
         /// </summary>
-        /// <param name="Finger">Finger index</param>
+        /// <param name="finger">Finger index</param>
         /// <returns>Relative touch position</returns>
         ////////////////////////////////////////////////////////////
-        protected internal override Vector2i InternalGetTouchPosition(uint Finger)
-        {
-            return sfTouch_getPosition(Finger, CPointer);
-        }
+        protected internal override Vector2i InternalGetTouchPosition(uint finger) => sfTouch_getPosition(finger, CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -438,10 +377,7 @@ namespace SFML.Window
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
         /// <returns>True if there was an event, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        protected override bool PollEvent(out Event eventToFill)
-        {
-            return sfWindow_pollEvent(CPointer, out eventToFill);
-        }
+        protected override bool PollEvent(out Event eventToFill) => sfWindow_pollEvent(CPointer, out eventToFill);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -450,10 +386,7 @@ namespace SFML.Window
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
         /// <returns>False if any error occurred</returns>
         ////////////////////////////////////////////////////////////
-        protected override bool WaitEvent(out Event eventToFill)
-        {
-            return sfWindow_waitEvent(CPointer, out eventToFill);
-        }
+        protected override bool WaitEvent(out Event eventToFill) => sfWindow_waitEvent(CPointer, out eventToFill);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -461,104 +394,101 @@ namespace SFML.Window
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        protected override void Destroy(bool disposing)
-        {
-            sfWindow_destroy(CPointer);
-        }
+        protected override void Destroy(bool disposing) => sfWindow_destroy(CPointer);
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindow_createUnicode(VideoMode Mode, IntPtr Title, Styles Style, ref ContextSettings Params);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfWindow_createUnicode(VideoMode mode, IntPtr title, Styles style, ref ContextSettings settings);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindow_createFromHandle(IntPtr Handle, ref ContextSettings Params);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfWindow_createFromHandle(IntPtr handle, ref ContextSettings settings);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_destroy(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindow_isOpen(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindow_isOpen(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_close(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_close(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindow_pollEvent(IntPtr CPointer, out Event Evt);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindow_pollEvent(IntPtr cPointer, out Event evt);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindow_waitEvent(IntPtr CPointer, out Event Evt);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindow_waitEvent(IntPtr cPointer, out Event evt);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_display(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_display(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern ContextSettings sfWindow_getSettings(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern ContextSettings sfWindow_getSettings(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfWindow_getPosition(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfWindow_getPosition(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setPosition(IntPtr CPointer, Vector2i position);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setPosition(IntPtr cPointer, Vector2i position);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2u sfWindow_getSize(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2u sfWindow_getSize(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setSize(IntPtr CPointer, Vector2u size);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setSize(IntPtr cPointer, Vector2u size);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setUnicodeTitle(IntPtr CPointer, IntPtr title);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setUnicodeTitle(IntPtr cPointer, IntPtr title);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern void sfWindow_setIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfWindow_setIcon(IntPtr cPointer, uint width, uint height, byte* pixels);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setVisible(IntPtr CPointer, bool visible);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setVisible(IntPtr cPointer, bool visible);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setMouseCursorVisible(IntPtr CPointer, bool Show);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setMouseCursorVisible(IntPtr cPointer, bool show);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setMouseCursorGrabbed(IntPtr cPointer, bool grabbed);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setMouseCursor(IntPtr CPointer, IntPtr cursor);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setMouseCursor(IntPtr cPointer, IntPtr cursor);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setVerticalSyncEnabled(IntPtr CPointer, bool Enable);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setVerticalSyncEnabled(IntPtr cPointer, bool enable);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setKeyRepeatEnabled(IntPtr CPointer, bool Enable);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setKeyRepeatEnabled(IntPtr cPointer, bool enable);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindow_setActive(IntPtr CPointer, bool Active);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindow_setActive(IntPtr cPointer, bool active);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setFramerateLimit(IntPtr CPointer, uint Limit);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setFramerateLimit(IntPtr cPointer, uint limit);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_setJoystickThreshold(IntPtr CPointer, float Threshold);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_setJoystickThreshold(IntPtr cPointer, float threshold);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindow_getSystemHandle(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfWindow_getSystemHandle(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindow_requestFocus(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindow_requestFocus(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindow_hasFocus(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindow_hasFocus(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfMouse_getPosition(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfMouse_getPosition(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfMouse_setPosition(Vector2i position, IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfMouse_setPosition(Vector2i position, IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfTouch_getPosition(uint finger, IntPtr relativeTo);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindow_createVulkanSurface(IntPtr CPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindow_createVulkanSurface(IntPtr cPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
         #endregion
     }
 }

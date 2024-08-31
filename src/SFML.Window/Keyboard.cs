@@ -578,10 +578,7 @@ namespace SFML.Window
         /// <param name="key">Key to check</param>
         /// <returns>True if the key is pressed, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public static bool IsKeyPressed(Key key)
-        {
-            return sfKeyboard_isKeyPressed(key);
-        }
+        public static bool IsKeyPressed(Key key) => sfKeyboard_isKeyPressed(key);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -590,10 +587,7 @@ namespace SFML.Window
         /// <param name="code">Scancode to check</param>
         /// <returns>True if the physical key is pressed, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public static bool IsScancodePressed(Scancode code)
-        {
-            return sfKeyboard_isScancodePressed(code);
-        }
+        public static bool IsScancodePressed(Scancode code) => sfKeyboard_isScancodePressed(code);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -607,10 +601,7 @@ namespace SFML.Window
         /// to a <see cref="Key"/>.
         /// </returns>
         ////////////////////////////////////////////////////////////
-        public static Key Localize(Scancode code)
-        {
-            return sfKeyboard_localize(code);
-        }
+        public static Key Localize(Scancode code) => sfKeyboard_localize(code);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -624,10 +615,7 @@ namespace SFML.Window
         /// to a <see cref="Scancode"/>.
         /// </returns>
         ////////////////////////////////////////////////////////////
-        public static Scancode Delocalize(Key key)
-        {
-            return sfKeyboard_delocalize(key);
-        }
+        public static Scancode Delocalize(Key key) => sfKeyboard_delocalize(key);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -667,28 +655,25 @@ namespace SFML.Window
         /// <remarks>Applicable only on Android and iOS</remarks>
         /// <param name="visible">Whether to make the virtual keyboard visible (true) or not (false)</param>
         ////////////////////////////////////////////////////////////
-        public static void SetVirtualKeyboardVisible(bool visible)
-        {
-            sfKeyboard_setVirtualKeyboardVisible(visible);
-        }
+        public static void SetVirtualKeyboardVisible(bool visible) => sfKeyboard_setVirtualKeyboardVisible(visible);
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfKeyboard_isKeyPressed(Key Key);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfKeyboard_isKeyPressed(Key key);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfKeyboard_isScancodePressed(Scancode code);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Key sfKeyboard_localize(Scancode code);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Scancode sfKeyboard_delocalize(Key key);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfKeyboard_getDescription(Scancode code);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfKeyboard_setVirtualKeyboardVisible(bool visible);
         #endregion
     }

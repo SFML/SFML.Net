@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Security;
 using SFML.System;
 using SFML.Window;
@@ -123,7 +122,7 @@ namespace SFML.Graphics
         public Texture(Stream stream, IntRect area, bool srgb = false) :
             base(IntPtr.Zero)
         {
-            using (StreamAdaptor adaptor = new StreamAdaptor(stream))
+            using (var adaptor = new StreamAdaptor(stream))
             {
                 if (srgb)
                 {
@@ -206,7 +205,7 @@ namespace SFML.Graphics
         public Texture(byte[] bytes, IntRect area, bool srgb = false) :
             base(IntPtr.Zero)
         {
-            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
                 if (srgb)
@@ -216,7 +215,7 @@ namespace SFML.Graphics
                 else
                 {
                     CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
-                } 
+                }
             }
             finally
             {
@@ -250,10 +249,7 @@ namespace SFML.Graphics
         /// or implement a temporary workaround until a bug is fixed.
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public uint NativeHandle
-        {
-            get { return sfTexture_getNativeHandle(CPointer); }
-        }
+        public uint NativeHandle => sfTexture_getNativeHandle(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -261,10 +257,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Image containing the texture's pixels</returns>
         ////////////////////////////////////////////////////////////
-        public Image CopyToImage()
-        {
-            return new Image(sfTexture_copyToImage(CPointer));
-        }
+        public Image CopyToImage() => new Image(sfTexture_copyToImage(CPointer));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -274,7 +267,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public void Update(byte[] pixels)
         {
-            Vector2u size = Size;
+            var size = Size;
             Update(pixels, size.X, size.Y, 0, 0);
         }
 
@@ -307,10 +300,7 @@ namespace SFML.Graphics
         /// <param name="x">X offset in this texture where to copy the source texture</param>
         /// <param name="y">Y offset in this texture where to copy the source texture</param>
         ////////////////////////////////////////////////////////////
-        public void Update(Texture texture, uint x, uint y)
-        {
-            sfTexture_updateFromTexture(CPointer, texture.CPointer, x, y);
-        }
+        public void Update(Texture texture, uint x, uint y) => sfTexture_updateFromTexture(CPointer, texture.CPointer, x, y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -318,10 +308,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="image">Image to copy to the texture</param>
         ////////////////////////////////////////////////////////////
-        public void Update(Image image)
-        {
-            Update(image, 0, 0);
-        }
+        public void Update(Image image) => Update(image, 0, 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -331,10 +318,7 @@ namespace SFML.Graphics
         /// <param name="x">X offset in the texture where to copy the source pixels</param>
         /// <param name="y">Y offset in the texture where to copy the source pixels</param>
         ////////////////////////////////////////////////////////////
-        public void Update(Image image, uint x, uint y)
-        {
-            sfTexture_updateFromImage(CPointer, image.CPointer, x, y);
-        }
+        public void Update(Image image, uint x, uint y) => sfTexture_updateFromImage(CPointer, image.CPointer, x, y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -342,10 +326,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="window">Window to copy to the texture</param>
         ////////////////////////////////////////////////////////////
-        public void Update(SFML.Window.Window window)
-        {
-            Update(window, 0, 0);
-        }
+        public void Update(SFML.Window.Window window) => Update(window, 0, 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -355,10 +336,7 @@ namespace SFML.Graphics
         /// <param name="x">X offset in the texture where to copy the source pixels</param>
         /// <param name="y">Y offset in the texture where to copy the source pixels</param>
         ////////////////////////////////////////////////////////////
-        public void Update(SFML.Window.Window window, uint x, uint y)
-        {
-            sfTexture_updateFromWindow(CPointer, window.CPointer, x, y);
-        }
+        public void Update(SFML.Window.Window window, uint x, uint y) => sfTexture_updateFromWindow(CPointer, window.CPointer, x, y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -366,10 +344,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="window">Render-window to copy to the texture</param>
         ////////////////////////////////////////////////////////////
-        public void Update(RenderWindow window)
-        {
-            Update(window, 0, 0);
-        }
+        public void Update(RenderWindow window) => Update(window, 0, 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -379,10 +354,7 @@ namespace SFML.Graphics
         /// <param name="x">X offset in the texture where to copy the source pixels</param>
         /// <param name="y">Y offset in the texture where to copy the source pixels</param>
         ////////////////////////////////////////////////////////////
-        public void Update(RenderWindow window, uint x, uint y)
-        {
-            sfTexture_updateFromRenderWindow(CPointer, window.CPointer, x, y);
-        }
+        public void Update(RenderWindow window, uint x, uint y) => sfTexture_updateFromRenderWindow(CPointer, window.CPointer, x, y);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -410,10 +382,7 @@ namespace SFML.Graphics
         /// 
         /// <returns>True if mipmap generation was successful, false if unsuccessful</returns>
         ////////////////////////////////////////////////////////////
-        public bool GenerateMipmap()
-        {
-            return sfTexture_generateMipmap(CPointer);
-        }
+        public bool GenerateMipmap() => sfTexture_generateMipmap(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -421,10 +390,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="right">Instance to swap with</param>
         ////////////////////////////////////////////////////////////
-        public void Swap(Texture right)
-        {
-            sfTexture_swap(CPointer, right.CPointer);
-        }
+        public void Swap(Texture right) => sfTexture_swap(CPointer, right.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -433,8 +399,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public bool Smooth
         {
-            get { return sfTexture_isSmooth(CPointer); }
-            set { sfTexture_setSmooth(CPointer, value); }
+            get => sfTexture_isSmooth(CPointer);
+            set => sfTexture_setSmooth(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -459,10 +425,7 @@ namespace SFML.Graphics
         /// framebuffer. This can be requested during window creation.</para>
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public bool Srgb
-        {
-            get { return sfTexture_isSrgb(CPointer); }
-        }
+        public bool Srgb => sfTexture_isSrgb(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -471,8 +434,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public bool Repeated
         {
-            get { return sfTexture_isRepeated(CPointer); }
-            set { sfTexture_setRepeated(CPointer, value); }
+            get => sfTexture_isRepeated(CPointer);
+            set => sfTexture_setRepeated(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -480,10 +443,7 @@ namespace SFML.Graphics
         /// Size of the texture, in pixels
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public Vector2u Size
-        {
-            get { return sfTexture_getSize(CPointer); }
-        }
+        public Vector2u Size => sfTexture_getSize(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -492,20 +452,14 @@ namespace SFML.Graphics
         /// <param name="texture">Shader to bind (can be null to use no texture)</param>
         /// <param name="type">Type of texture coordinates to use</param>
         ////////////////////////////////////////////////////////////
-        public static void Bind(Texture texture, TextureCoordinateType type)
-        {
-            sfTexture_bind(texture != null ? texture.CPointer : IntPtr.Zero, type);
-        }
+        public static void Bind(Texture texture, TextureCoordinateType type) => sfTexture_bind(texture != null ? texture.CPointer : IntPtr.Zero, type);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Maximum texture size allowed
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public static uint MaximumSize
-        {
-            get { return sfTexture_getMaximumSize(); }
-        }
+        public static uint MaximumSize => sfTexture_getMaximumSize();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -516,7 +470,9 @@ namespace SFML.Graphics
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return "[Texture]" +
                    " Size(" + Size + ")" +
@@ -531,10 +487,7 @@ namespace SFML.Graphics
         /// <param name="cPointer">Pointer to the object in C library</param>
         ////////////////////////////////////////////////////////////
         internal Texture(IntPtr cPointer) :
-            base(cPointer)
-        {
-            myExternal = true;
-        }
+            base(cPointer) => myExternal = true;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -548,14 +501,14 @@ namespace SFML.Graphics
             {
                 if (!disposing)
                 {
-                    Context.Global.SetActive(true);
+                    _ = Context.Global.SetActive(true);
                 }
 
                 sfTexture_destroy(CPointer);
 
                 if (!disposing)
                 {
-                    Context.Global.SetActive(false);
+                    _ = Context.Global.SetActive(false);
                 }
             }
         }
@@ -563,88 +516,88 @@ namespace SFML.Graphics
         private readonly bool myExternal = false;
 
         #region Imports
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_create(uint width, uint height);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromFile(string filename, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createSrgbFromFile(string filename, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromStream(IntPtr stream, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createSrgbFromStream(IntPtr stream, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromImage(IntPtr image, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createSrgbFromImage(IntPtr image, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createFromMemory(IntPtr data, UIntPtr size, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_createSrgbFromMemory(IntPtr data, UIntPtr size, ref IntRect area);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_copy(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_destroy(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2u sfTexture_getSize(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfTexture_copyToImage(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern void sfTexture_updateFromPixels(IntPtr texture, byte* pixels, uint width, uint height, uint x, uint y);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfTexture_updateFromPixels(IntPtr texture, byte* pixels, uint width, uint height, uint x, uint y);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTexture_updateFromTexture(IntPtr CPointer, IntPtr texture, uint x, uint y);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfTexture_updateFromTexture(IntPtr cPointer, IntPtr texture, uint x, uint y);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_updateFromImage(IntPtr texture, IntPtr image, uint x, uint y);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_updateFromWindow(IntPtr texture, IntPtr window, uint x, uint y);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_updateFromRenderWindow(IntPtr texture, IntPtr renderWindow, uint x, uint y);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_bind(IntPtr texture, TextureCoordinateType type);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_setSmooth(IntPtr texture, bool smooth);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfTexture_isSmooth(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfTexture_isSrgb(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTexture_setRepeated(IntPtr texture, bool repeated);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfTexture_isRepeated(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfTexture_generateMipmap(IntPtr texture);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTexture_swap(IntPtr CPointer, IntPtr right);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfTexture_swap(IntPtr cPointer, IntPtr right);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfTexture_getNativeHandle(IntPtr shader);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfTexture_getMaximumSize();
         #endregion
     }

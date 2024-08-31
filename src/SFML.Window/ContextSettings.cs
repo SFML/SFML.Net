@@ -74,7 +74,7 @@ namespace SFML.Window
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             AttributeFlags = attributes;
-            _SRgbCapable = sRgbCapable ? 1 : 0;
+            srgbCapable = sRgbCapable ? 1 : 0;
         }
 
         ////////////////////////////////////////////////////////////
@@ -83,9 +83,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[ContextSettings]" +
+        public override string ToString() => "[ContextSettings]" +
                    " DepthBits(" + DepthBits + ")" +
                    " StencilBits(" + StencilBits + ")" +
                    " AntialiasingLevel(" + AntialiasingLevel + ")" +
@@ -93,7 +91,6 @@ namespace SFML.Window
                    " MinorVersion(" + MinorVersion + ")" +
                    " AttributeFlags(" + AttributeFlags + ")" +
                    " SRgbCapable(" + SRgbCapable + ")";
-        }
 
         /// <summary>Depth buffer bits (0 is disabled)</summary>
         public uint DepthBits;
@@ -114,13 +111,13 @@ namespace SFML.Window
         public Attribute AttributeFlags;
 
         /// <summary>Internal Representation</summary>
-        private int _SRgbCapable;
+        private int srgbCapable;
 
         /// <summary>Whether the context framebuffer is sRGB capable</summary>
         public bool SRgbCapable
         {
-            get => _SRgbCapable == 1;
-            set { _SRgbCapable = value ? 1 : 0; }
+            get => srgbCapable == 1;
+            set => srgbCapable = value ? 1 : 0;
         }
     }
 }

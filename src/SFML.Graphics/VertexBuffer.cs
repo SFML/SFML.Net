@@ -14,7 +14,7 @@ namespace SFML.Graphics
     /// Unlike SFML.VertexArray, the vertex data is stored in graphics memory.
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public class VertexBuffer : ObjectBase, Drawable
+    public class VertexBuffer : ObjectBase, IDrawable
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -49,7 +49,7 @@ namespace SFML.Graphics
         /// any attempt to use <see cref="VertexBuffer"/> will fail.
         /// </remarks>
         ///////////////////////////////////////////////////////////
-        public static bool Available { get { return sfVertexBuffer_isAvailable(); } }
+        public static bool Available => sfVertexBuffer_isAvailable();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -86,7 +86,7 @@ namespace SFML.Graphics
         /// Total vertex count
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public uint VertexCount { get { return sfVertexBuffer_getVertexCount(CPointer); } }
+        public uint VertexCount => sfVertexBuffer_getVertexCount(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -98,10 +98,7 @@ namespace SFML.Graphics
         /// or implement a temporary workaround until a bug is fixed.
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public uint NativeHandle
-        {
-            get { return sfVertexBuffer_getNativeHandle(CPointer); }
-        }
+        public uint NativeHandle => sfVertexBuffer_getNativeHandle(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -110,8 +107,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public PrimitiveType PrimitiveType
         {
-            get { return sfVertexBuffer_getPrimitiveType(CPointer); }
-            set { sfVertexBuffer_setPrimitiveType(CPointer, value); }
+            get => sfVertexBuffer_getPrimitiveType(CPointer);
+            set => sfVertexBuffer_setPrimitiveType(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -121,8 +118,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public UsageSpecifier Usage
         {
-            get { return sfVertexBuffer_getUsage(CPointer); }
-            set { sfVertexBuffer_setUsage(CPointer, value); }
+            get => sfVertexBuffer_getUsage(CPointer);
+            set => sfVertexBuffer_setUsage(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -136,10 +133,7 @@ namespace SFML.Graphics
         /// </remarks>
         /// <param name="vertexBuffer">The vertex buffer to bind; can be null to use no vertex buffer</param>
         ////////////////////////////////////////////////////////////
-        public static void Bind(VertexBuffer vertexBuffer)
-        {
-            sfVertexBuffer_bind(vertexBuffer?.CPointer ?? IntPtr.Zero);
-        }
+        public static void Bind(VertexBuffer vertexBuffer) => sfVertexBuffer_bind(vertexBuffer?.CPointer ?? IntPtr.Zero);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -215,10 +209,7 @@ namespace SFML.Graphics
         /// </remarks>
         /// <param name="vertices">Array of vertices to copy to the buffer</param>
         ////////////////////////////////////////////////////////////
-        public bool Update(Vertex[] vertices)
-        {
-            return this.Update(vertices, (uint)vertices.Length, 0);
-        }
+        public bool Update(Vertex[] vertices) => Update(vertices, (uint)vertices.Length, 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -256,10 +247,7 @@ namespace SFML.Graphics
         /// <param name="vertices">Array of vertices to copy to the buffer</param>
         /// <param name="offset">Offset in the buffer to copy to</param>
         ////////////////////////////////////////////////////////////
-        public bool Update(Vertex[] vertices, uint offset)
-        {
-            return this.Update(vertices, (uint)vertices.Length, offset);
-        }
+        public bool Update(Vertex[] vertices, uint offset) => Update(vertices, (uint)vertices.Length, offset);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -267,10 +255,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="other">VertexBuffer whose contents to copy from</param>
         ////////////////////////////////////////////////////////////
-        public bool Update(VertexBuffer other)
-        {
-            return sfVertexBuffer_updateFromVertexBuffer(CPointer, other.CPointer);
-        }
+        public bool Update(VertexBuffer other) => sfVertexBuffer_updateFromVertexBuffer(CPointer, other.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -278,10 +263,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="other">VertexBuffer whose contents to swap with</param>
         ////////////////////////////////////////////////////////////
-        public void Swap(VertexBuffer other)
-        {
-            sfVertexBuffer_swap(CPointer, other.CPointer);
-        }
+        public void Swap(VertexBuffer other) => sfVertexBuffer_swap(CPointer, other.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -289,29 +271,26 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        protected override void Destroy(bool disposing)
-        {
-            sfVertexBuffer_destroy(CPointer);
-        }
+        protected override void Destroy(bool disposing) => sfVertexBuffer_destroy(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Draw the <see cref="VertexBuffer"/> to a <see cref="RenderTarget"/>
+        /// Draw the <see cref="VertexBuffer"/> to a <see cref="IRenderTarget"/>
         /// </summary>
         /// <param name="target">Render target to draw to</param>
         /// <param name="states">Current render states</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(RenderTarget target, RenderStates states)
+        public void Draw(IRenderTarget target, RenderStates states)
         {
-            RenderStates.MarshalData marshaledStates = states.Marshal();
+            var marshaledStates = states.Marshal();
 
-            if(target is RenderWindow)
+            if (target is RenderWindow window)
             {
-                sfRenderWindow_drawVertexBuffer(((RenderWindow)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderWindow_drawVertexBuffer(window.CPointer, CPointer, ref marshaledStates);
             }
-            else if(target is RenderTexture)
+            else if (target is RenderTexture texture)
             {
-                sfRenderTexture_drawVertexBuffer(((RenderTexture)target).CPointer, CPointer, ref marshaledStates);
+                sfRenderTexture_drawVertexBuffer(texture.CPointer, CPointer, ref marshaledStates);
             }
         }
 
@@ -324,74 +303,74 @@ namespace SFML.Graphics
         /// <param name="vertexCount">Number of vertices to render</param>
         /// <param name="states">Current render states</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(RenderTarget target, uint firstVertex, uint vertexCount, RenderStates states)
+        public void Draw(IRenderTarget target, uint firstVertex, uint vertexCount, RenderStates states)
         {
-            RenderStates.MarshalData marshaledStates = states.Marshal();
+            var marshaledStates = states.Marshal();
 
-            if (target is RenderWindow)
+            if (target is RenderWindow window)
             {
-                sfRenderWindow_drawVertexBufferRange(( (RenderWindow)target ).CPointer, CPointer, (UIntPtr)firstVertex, (UIntPtr)vertexCount, ref marshaledStates);
+                sfRenderWindow_drawVertexBufferRange(window.CPointer, CPointer, (UIntPtr)firstVertex, (UIntPtr)vertexCount, ref marshaledStates);
             }
-            else if (target is RenderTexture)
+            else if (target is RenderTexture texture)
             {
-                sfRenderTexture_drawVertexBufferRange(( (RenderTexture)target ).CPointer, CPointer, (UIntPtr)firstVertex, (UIntPtr)vertexCount, ref marshaledStates);
+                sfRenderTexture_drawVertexBufferRange(texture.CPointer, CPointer, (UIntPtr)firstVertex, (UIntPtr)vertexCount, ref marshaledStates);
             }
         }
 
         #region Imports
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfVertexBuffer_create(uint vertexCount, PrimitiveType type, UsageSpecifier usage);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfVertexBuffer_copy(IntPtr copy);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfVertexBuffer_destroy(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfVertexBuffer_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfVertexBuffer_getVertexCount(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern uint sfVertexBuffer_getVertexCount(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe bool sfVertexBuffer_update(IntPtr CPointer, Vertex* vertices, uint vertexCount, uint offset);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe bool sfVertexBuffer_update(IntPtr cPointer, Vertex* vertices, uint vertexCount, uint offset);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfVertexBuffer_updateFromVertexBuffer(IntPtr CPointer, IntPtr other);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfVertexBuffer_updateFromVertexBuffer(IntPtr cPointer, IntPtr other);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfVertexBuffer_swap(IntPtr CPointer, IntPtr other);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfVertexBuffer_swap(IntPtr cPointer, IntPtr other);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfVertexBuffer_getNativeHandle(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern uint sfVertexBuffer_getNativeHandle(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfVertexBuffer_setPrimitiveType(IntPtr CPointer, PrimitiveType primitiveType);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfVertexBuffer_setPrimitiveType(IntPtr cPointer, PrimitiveType primitiveType);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern PrimitiveType sfVertexBuffer_getPrimitiveType(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern PrimitiveType sfVertexBuffer_getPrimitiveType(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfVertexBuffer_setUsage(IntPtr CPointer, UsageSpecifier usageType);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfVertexBuffer_setUsage(IntPtr cPointer, UsageSpecifier usageType);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern UsageSpecifier sfVertexBuffer_getUsage(IntPtr CPointer);
-		
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfVertexBuffer_bind(IntPtr CPointer);
-		
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern UsageSpecifier sfVertexBuffer_getUsage(IntPtr cPointer);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfVertexBuffer_bind(IntPtr cPointer);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfVertexBuffer_isAvailable();
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderWindow_drawVertexBuffer(IntPtr CPointer, IntPtr VertexArray, ref RenderStates.MarshalData states);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderWindow_drawVertexBuffer(IntPtr cPointer, IntPtr vertexArray, ref RenderStates.MarshalData states);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderWindow_drawVertexBufferRange(IntPtr CPointer, IntPtr VertexBuffer, UIntPtr firstVertex, UIntPtr vertexCount, ref RenderStates.MarshalData states);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderWindow_drawVertexBufferRange(IntPtr cPointer, IntPtr vertexBuffer, UIntPtr firstVertex, UIntPtr vertexCount, ref RenderStates.MarshalData states);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_drawVertexBuffer(IntPtr CPointer, IntPtr VertexBuffer, ref RenderStates.MarshalData states);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_drawVertexBuffer(IntPtr cPointer, IntPtr vertexBuffer, ref RenderStates.MarshalData states);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_drawVertexBufferRange(IntPtr CPointer, IntPtr VertexBuffer, UIntPtr firstVertex, UIntPtr vertexCount, ref RenderStates.MarshalData states);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_drawVertexBufferRange(IntPtr cPointer, IntPtr vertexBuffer, UIntPtr firstVertex, UIntPtr vertexCount, ref RenderStates.MarshalData states);
         #endregion
     }
 }

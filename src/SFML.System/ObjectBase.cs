@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace SFML
 {
@@ -17,10 +16,7 @@ namespace SFML
         /// </summary>
         /// <param name="cPointer">Internal pointer to the object in the C libraries</param>
         ////////////////////////////////////////////////////////////
-        public ObjectBase(IntPtr cPointer)
-        {
-            myCPointer = cPointer;
-        }
+        public ObjectBase(IntPtr cPointer) => myCPointer = cPointer;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -45,11 +41,13 @@ namespace SFML
             get
             {
                 if (myCPointer == IntPtr.Zero)
+                {
                     throw new ObjectDisposedException($"This {GetType().Name} instance has been disposed and should not be used.");
+                }
 
                 return myCPointer;
             }
-            protected set { myCPointer = value; }
+            protected set => myCPointer = value;
         }
 
         ////////////////////////////////////////////////////////////
