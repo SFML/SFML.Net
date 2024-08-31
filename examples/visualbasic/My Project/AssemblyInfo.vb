@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("visualbasic")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Wam")>
+<Assembly: AssemblyDescription("SFML.Net example project for Visual Basic")>
+<Assembly: AssemblyCompany("SFML")>
 <Assembly: AssemblyProduct("visualbasic")>
-<Assembly: AssemblyCopyright("Copyright © Wam 2008")>
+<Assembly: AssemblyCopyright("Copyright © Laurent Gomila")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
