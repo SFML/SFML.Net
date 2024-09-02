@@ -101,9 +101,9 @@ namespace SFML.Audio
         {
             unsafe
             {
-                fixed (short* SamplesPtr = samples)
+                fixed (short* samplesPtr = samples)
                 {
-                    CPointer = sfSoundBuffer_createFromSamples(SamplesPtr, (uint)samples.Length, channelCount, sampleRate);
+                    CPointer = sfSoundBuffer_createFromSamples(samplesPtr, (uint)samples.Length, channelCount, sampleRate);
                 }
             }
 
@@ -173,9 +173,9 @@ namespace SFML.Audio
         {
             get
             {
-                var SamplesArray = new short[sfSoundBuffer_getSampleCount(CPointer)];
-                Marshal.Copy(sfSoundBuffer_getSamples(CPointer), SamplesArray, 0, SamplesArray.Length);
-                return SamplesArray;
+                var samplesArray = new short[sfSoundBuffer_getSampleCount(CPointer)];
+                Marshal.Copy(sfSoundBuffer_getSamples(CPointer), samplesArray, 0, samplesArray.Length);
+                return samplesArray;
             }
         }
 

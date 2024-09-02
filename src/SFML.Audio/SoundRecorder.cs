@@ -189,14 +189,14 @@ namespace SFML.Audio
             {
                 unsafe
                 {
-                    var DevicesPtr = sfSoundRecorder_getAvailableDevices(out var Count);
-                    var Devices = new string[(int)Count];
-                    for (var i = 0; i < (int)Count; ++i)
+                    var devicesPtr = sfSoundRecorder_getAvailableDevices(out var count);
+                    var devices = new string[(int)count];
+                    for (var i = 0; i < (int)count; ++i)
                     {
-                        Devices[i] = Marshal.PtrToStringAnsi(DevicesPtr[i]);
+                        devices[i] = Marshal.PtrToStringAnsi(devicesPtr[i]);
                     }
 
-                    return Devices;
+                    return devices;
                 }
             }
         }

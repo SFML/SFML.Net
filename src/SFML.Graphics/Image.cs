@@ -112,14 +112,14 @@ namespace SFML.Graphics
         public Image(Color[,] pixels) :
             base(IntPtr.Zero)
         {
-            var Width = (uint)pixels.GetLength(0);
-            var Height = (uint)pixels.GetLength(1);
+            var width = (uint)pixels.GetLength(0);
+            var height = (uint)pixels.GetLength(1);
 
             // Transpose the array (.Net gives dimensions in reverse order of what SFML expects)
-            var transposed = new Color[Height, Width];
-            for (var x = 0; x < Width; ++x)
+            var transposed = new Color[height, width];
+            for (var x = 0; x < width; ++x)
             {
-                for (var y = 0; y < Height; ++y)
+                for (var y = 0; y < height; ++y)
                 {
                     transposed[y, x] = pixels[x, y];
                 }
@@ -127,9 +127,9 @@ namespace SFML.Graphics
 
             unsafe
             {
-                fixed (Color* PixelsPtr = transposed)
+                fixed (Color* pixelsPtr = transposed)
                 {
-                    CPointer = sfImage_createFromPixels(Width, Height, (byte*)PixelsPtr);
+                    CPointer = sfImage_createFromPixels(width, height, (byte*)pixelsPtr);
                 }
             }
 
@@ -153,9 +153,9 @@ namespace SFML.Graphics
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* pixelsPtr = pixels)
                 {
-                    CPointer = sfImage_createFromPixels(width, height, PixelsPtr);
+                    CPointer = sfImage_createFromPixels(width, height, pixelsPtr);
                 }
             }
 
@@ -297,9 +297,9 @@ namespace SFML.Graphics
             get
             {
                 var size = Size;
-                var PixelsPtr = new byte[size.X * size.Y * 4];
-                Marshal.Copy(sfImage_getPixelsPtr(CPointer), PixelsPtr, 0, PixelsPtr.Length);
-                return PixelsPtr;
+                var pixelsPtr = new byte[size.X * size.Y * 4];
+                Marshal.Copy(sfImage_getPixelsPtr(CPointer), pixelsPtr, 0, pixelsPtr.Length);
+                return pixelsPtr;
             }
         }
 

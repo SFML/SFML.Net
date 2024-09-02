@@ -61,14 +61,14 @@ namespace SFML.Window
             {
                 unsafe
                 {
-                    var ModesPtr = sfVideoMode_getFullscreenModes(out var Count);
-                    var Modes = new VideoMode[(int)Count];
-                    for (var i = 0; i < (int)Count; ++i)
+                    var modesPtr = sfVideoMode_getFullscreenModes(out var count);
+                    var modes = new VideoMode[(int)count];
+                    for (var i = 0; i < (int)count; ++i)
                     {
-                        Modes[i] = ModesPtr[i];
+                        modes[i] = modesPtr[i];
                     }
 
-                    return Modes;
+                    return modes;
                 }
             }
         }

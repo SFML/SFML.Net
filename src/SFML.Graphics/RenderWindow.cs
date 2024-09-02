@@ -173,9 +173,9 @@ namespace SFML.Graphics
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* pixelsPtr = pixels)
                 {
-                    sfRenderWindow_setIcon(CPointer, width, height, PixelsPtr);
+                    sfRenderWindow_setIcon(CPointer, width, height, pixelsPtr);
                 }
             }
         }

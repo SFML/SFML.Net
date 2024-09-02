@@ -172,9 +172,9 @@ namespace SFML.Window
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* pixelsPtr = pixels)
                 {
-                    sfWindow_setIcon(CPointer, width, height, PixelsPtr);
+                    sfWindow_setIcon(CPointer, width, height, pixelsPtr);
                 }
             }
         }
