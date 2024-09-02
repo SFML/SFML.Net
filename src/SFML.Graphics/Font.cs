@@ -157,8 +157,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Texture GetTexture(uint characterSize)
         {
-            myTextures[characterSize] = new Texture(sfFont_getTexture(CPointer, characterSize));
-            return myTextures[characterSize];
+            _textures[characterSize] = new Texture(sfFont_getTexture(CPointer, characterSize));
+            return _textures[characterSize];
         }
 
         ////////////////////////////////////////////////////////////
@@ -225,7 +225,7 @@ namespace SFML.Graphics
 
             if (disposing)
             {
-                foreach (var texture in myTextures.Values)
+                foreach (var texture in _textures.Values)
                 {
                     texture.Dispose();
                 }
@@ -268,7 +268,7 @@ namespace SFML.Graphics
             public IntPtr Family;
         }
 
-        private readonly Dictionary<uint, Texture> myTextures = new Dictionary<uint, Texture>();
+        private readonly Dictionary<uint, Texture> _textures = new Dictionary<uint, Texture>();
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

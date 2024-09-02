@@ -83,8 +83,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Texture Texture
         {
-            get => myTexture;
-            set { myTexture = value; sfSprite_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
+            get => _texture;
+            set { _texture = value; sfSprite_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -175,7 +175,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing) => sfSprite_destroy(CPointer);
 
-        private Texture myTexture;
+        private Texture _texture;
 
         #region Imports
 

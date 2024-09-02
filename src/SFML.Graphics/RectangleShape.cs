@@ -43,8 +43,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Size
         {
-            get => mySize;
-            set { mySize = value; Update(); }
+            get => _size;
+            set { _size = value; Update(); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -76,14 +76,14 @@ namespace SFML.Graphics
                 case 0:
                     return new Vector2f(0, 0);
                 case 1:
-                    return new Vector2f(mySize.X, 0);
+                    return new Vector2f(_size.X, 0);
                 case 2:
-                    return new Vector2f(mySize.X, mySize.Y);
+                    return new Vector2f(_size.X, _size.Y);
                 case 3:
-                    return new Vector2f(0, mySize.Y);
+                    return new Vector2f(0, _size.Y);
             }
         }
 
-        private Vector2f mySize;
+        private Vector2f _size;
     }
 }

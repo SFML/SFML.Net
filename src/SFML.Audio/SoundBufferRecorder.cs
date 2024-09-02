@@ -48,7 +48,7 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         protected override bool OnStart()
         {
-            mySamplesArray.Clear();
+            _samplesArray.Clear();
             return true;
         }
 
@@ -61,7 +61,7 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         protected override bool OnProcessSamples(short[] samples)
         {
-            mySamplesArray.AddRange(samples);
+            _samplesArray.AddRange(samples);
             return true;
         }
 
@@ -70,8 +70,8 @@ namespace SFML.Audio
         /// Called when the current capture stops
         /// </summary>
         ////////////////////////////////////////////////////////////
-        protected override void OnStop() => SoundBuffer = new SoundBuffer(mySamplesArray.ToArray(), 1, SampleRate);
+        protected override void OnStop() => SoundBuffer = new SoundBuffer(_samplesArray.ToArray(), 1, SampleRate);
 
-        private readonly List<short> mySamplesArray = new List<short>();
+        private readonly List<short> _samplesArray = new List<short>();
     }
 }

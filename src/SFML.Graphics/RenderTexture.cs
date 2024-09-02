@@ -38,9 +38,9 @@ namespace SFML.Graphics
         public RenderTexture(uint width, uint height, bool depthBuffer) :
             base(sfRenderTexture_create(width, height, depthBuffer))
         {
-            myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
+            _defaultView = new View(sfRenderTexture_getDefaultView(CPointer));
             Texture = new Texture(sfRenderTexture_getTexture(CPointer));
-            GC.SuppressFinalize(myDefaultView);
+            GC.SuppressFinalize(_defaultView);
             GC.SuppressFinalize(Texture);
         }
 
@@ -56,9 +56,9 @@ namespace SFML.Graphics
         public RenderTexture(uint width, uint height, ContextSettings contextSettings) :
             base(sfRenderTexture_createWithSettings(width, height, ref contextSettings))
         {
-            myDefaultView = new View(sfRenderTexture_getDefaultView(CPointer));
+            _defaultView = new View(sfRenderTexture_getDefaultView(CPointer));
             Texture = new Texture(sfRenderTexture_getTexture(CPointer));
-            GC.SuppressFinalize(myDefaultView);
+            GC.SuppressFinalize(_defaultView);
             GC.SuppressFinalize(Texture);
         }
 
@@ -107,7 +107,7 @@ namespace SFML.Graphics
         /// Default view of the render texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public View DefaultView => new View(myDefaultView);
+        public View DefaultView => new View(_defaultView);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -454,7 +454,7 @@ namespace SFML.Graphics
 
             if (disposing)
             {
-                myDefaultView.Dispose();
+                _defaultView.Dispose();
                 Texture.Dispose();
             }
 
@@ -464,7 +464,7 @@ namespace SFML.Graphics
             }
         }
 
-        private readonly View myDefaultView;
+        private readonly View _defaultView;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]

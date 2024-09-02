@@ -342,7 +342,7 @@ namespace SFML.Graphics
         /// Default view of the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public View DefaultView => new View(myDefaultView);
+        public View DefaultView => new View(_defaultView);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -676,10 +676,10 @@ namespace SFML.Graphics
 
             if (disposing)
             {
-                myDefaultView.Dispose();
+                _defaultView.Dispose();
             }
 
-            myDefaultView = null;
+            _defaultView = null;
         }
 
         ////////////////////////////////////////////////////////////
@@ -689,11 +689,11 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         private void Initialize()
         {
-            myDefaultView = new View(sfRenderWindow_getDefaultView(CPointer));
-            GC.SuppressFinalize(myDefaultView);
+            _defaultView = new View(sfRenderWindow_getDefaultView(CPointer));
+            GC.SuppressFinalize(_defaultView);
         }
 
-        private View myDefaultView;
+        private View _defaultView;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

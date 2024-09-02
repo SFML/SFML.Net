@@ -419,7 +419,7 @@ namespace SFML.Graphics.Glsl
                     float a10, float a11, float a12,
                     float a20, float a21, float a22)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 m[0] = a00;
                 m[3] = a01;
@@ -441,7 +441,7 @@ namespace SFML.Graphics.Glsl
         ////////////////////////////////////////////////////////////
         public Mat3(Transform transform)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 m[0] = transform.M00;
                 m[3] = transform.M01;
@@ -456,7 +456,7 @@ namespace SFML.Graphics.Glsl
         }
 
         // column-major!
-        private fixed float array[3 * 3];
+        private fixed float _array[3 * 3];
     }
 
     ////////////////////////////////////////////////////////////
@@ -495,7 +495,7 @@ namespace SFML.Graphics.Glsl
                     float a20, float a21, float a22, float a23,
                     float a30, float a31, float a32, float a33)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 // transpose to column major
                 m[0] = a00;
@@ -525,7 +525,7 @@ namespace SFML.Graphics.Glsl
         ////////////////////////////////////////////////////////////
         public Mat4(Transform transform)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 // swapping to column-major (OpenGL) from row-major (SFML) order
                 // in addition, filling in the blanks (from expanding to a mat4) with values from
@@ -550,7 +550,7 @@ namespace SFML.Graphics.Glsl
         }
 
         // column major!
-        private fixed float array[4 * 4];
+        private fixed float _array[4 * 4];
     }
     #endregion
 }

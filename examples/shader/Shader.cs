@@ -48,28 +48,28 @@ namespace shader
         public Pixelate() : base("pixelate")
         {
             // Load the texture and initialize the sprite
-            myTexture = new Texture("resources/background.jpg");
-            mySprite = new Sprite(myTexture);
+            _texture = new Texture("resources/background.jpg");
+            _sprite = new Sprite(_texture);
 
             // Load the shader
-            myShader = new Shader(null, null, "resources/pixelate.frag");
-            myShader.SetUniform("texture", Shader.CurrentTexture);
+            _shader = new Shader(null, null, "resources/pixelate.frag");
+            _shader.SetUniform("texture", Shader.CurrentTexture);
         }
 
-        protected override void OnUpdate(float time, float x, float y) => myShader.SetUniform("pixel_threshold", (x + y) / 30);
+        protected override void OnUpdate(float time, float x, float y) => _shader.SetUniform("pixel_threshold", (x + y) / 30);
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
         {
             states = new RenderStates(states)
             {
-                Shader = myShader
+                Shader = _shader
             };
-            target.Draw(mySprite, states);
+            target.Draw(_sprite, states);
         }
 
-        private readonly Texture myTexture;
-        private readonly Sprite mySprite;
-        private readonly Shader myShader;
+        private readonly Texture _texture;
+        private readonly Sprite _sprite;
+        private readonly Shader _shader;
     }
 
     /// <summary>"Wave" vertex shader + "blur" fragment shader</summary>
@@ -78,7 +78,7 @@ namespace shader
         public WaveBlur() : base("wave + blur")
         {
             // Create the text
-            myText = new Text
+            _text = new Text
             {
                 DisplayedString = "Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
                                      "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
@@ -104,27 +104,27 @@ namespace shader
             };
 
             // Load the shader
-            myShader = new Shader("resources/wave.vert", null, "resources/blur.frag");
+            _shader = new Shader("resources/wave.vert", null, "resources/blur.frag");
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            myShader.SetUniform("wave_phase", time);
-            myShader.SetUniform("wave_amplitude", new Vector2f(x * 40, y * 40));
-            myShader.SetUniform("blur_radius", (x + y) * 0.008F);
+            _shader.SetUniform("wave_phase", time);
+            _shader.SetUniform("wave_amplitude", new Vector2f(x * 40, y * 40));
+            _shader.SetUniform("blur_radius", (x + y) * 0.008F);
         }
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
         {
             states = new RenderStates(states)
             {
-                Shader = myShader
+                Shader = _shader
             };
-            target.Draw(myText, states);
+            target.Draw(_text, states);
         }
 
-        private readonly Text myText;
-        private readonly Shader myShader;
+        private readonly Text _text;
+        private readonly Shader _shader;
     }
 
     /// <summary>"Storm" vertex shader + "blink" fragment shader</summary>
@@ -135,7 +135,7 @@ namespace shader
             var random = new Random();
 
             // Create the points
-            myPoints = new VertexArray(PrimitiveType.Points);
+            _points = new VertexArray(PrimitiveType.Points);
             for (var i = 0; i < 40000; ++i)
             {
                 float x = random.Next(0, 800);
@@ -143,33 +143,33 @@ namespace shader
                 var r = (byte)random.Next(0, 255);
                 var g = (byte)random.Next(0, 255);
                 var b = (byte)random.Next(0, 255);
-                myPoints.Append(new Vertex(new Vector2f(x, y), new Color(r, g, b)));
+                _points.Append(new Vertex(new Vector2f(x, y), new Color(r, g, b)));
             }
 
             // Load the shader
-            myShader = new Shader("resources/storm.vert", null, "resources/blink.frag");
+            _shader = new Shader("resources/storm.vert", null, "resources/blink.frag");
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
             var radius = 200 + ((float)Math.Cos(time) * 150);
-            myShader.SetUniform("storm_position", new Vector2f(x * 800, y * 600));
-            myShader.SetUniform("storm_inner_radius", radius / 3);
-            myShader.SetUniform("storm_total_radius", radius);
-            myShader.SetUniform("blink_alpha", 0.5F + ((float)Math.Cos(time * 3) * 0.25F));
+            _shader.SetUniform("storm_position", new Vector2f(x * 800, y * 600));
+            _shader.SetUniform("storm_inner_radius", radius / 3);
+            _shader.SetUniform("storm_total_radius", radius);
+            _shader.SetUniform("blink_alpha", 0.5F + ((float)Math.Cos(time * 3) * 0.25F));
         }
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
         {
             states = new RenderStates(states)
             {
-                Shader = myShader
+                Shader = _shader
             };
-            target.Draw(myPoints, states);
+            target.Draw(_points, states);
         }
 
-        private readonly VertexArray myPoints;
-        private readonly Shader myShader;
+        private readonly VertexArray _points;
+        private readonly Shader _shader;
     }
 
     /// <summary>"Edge" post-effect fragment shader</summary>
@@ -178,84 +178,84 @@ namespace shader
         public Edge() : base("edge post-effect")
         {
             // Create the off-screen surface
-            mySurface = new RenderTexture(800, 600)
+            _surface = new RenderTexture(800, 600)
             {
                 Smooth = true
             };
 
             // Load the textures
-            myBackgroundTexture = new Texture("resources/sfml.png")
+            _backgroundTexture = new Texture("resources/sfml.png")
             {
                 Smooth = true
             };
-            myEntityTexture = new Texture("resources/devices.png")
+            _entityTexture = new Texture("resources/devices.png")
             {
                 Smooth = true
             };
 
             // Initialize the background sprite
-            myBackgroundSprite = new Sprite(myBackgroundTexture)
+            _backgroundSprite = new Sprite(_backgroundTexture)
             {
                 Position = new Vector2f(135, 100)
             };
 
             // Load the moving entities
-            myEntities = new Sprite[6];
-            for (var i = 0; i < myEntities.Length; ++i)
+            _entities = new Sprite[6];
+            for (var i = 0; i < _entities.Length; ++i)
             {
-                myEntities[i] = new Sprite(myEntityTexture, new IntRect(96 * i, 0, 96, 96));
+                _entities[i] = new Sprite(_entityTexture, new IntRect(96 * i, 0, 96, 96));
             }
 
             // Load the shader
-            myShader = new Shader(null, null, "resources/edge.frag");
-            myShader.SetUniform("texture", Shader.CurrentTexture);
+            _shader = new Shader(null, null, "resources/edge.frag");
+            _shader.SetUniform("texture", Shader.CurrentTexture);
         }
 
         protected override void OnUpdate(float time, float x, float y)
         {
-            myShader.SetUniform("edge_threshold", 1 - ((x + y) / 2));
+            _shader.SetUniform("edge_threshold", 1 - ((x + y) / 2));
 
             // Update the position of the moving entities
-            for (var i = 0; i < myEntities.Length; ++i)
+            for (var i = 0; i < _entities.Length; ++i)
             {
-                var posX = ((float)Math.Cos(0.25F * ((time * i) + (myEntities.Length - i))) * 300) + 350;
-                var posY = ((float)Math.Sin(0.25F * ((time * (myEntities.Length - i)) + i)) * 200) + 250;
-                myEntities[i].Position = new Vector2f(posX, posY);
+                var posX = ((float)Math.Cos(0.25F * ((time * i) + (_entities.Length - i))) * 300) + 350;
+                var posY = ((float)Math.Sin(0.25F * ((time * (_entities.Length - i)) + i)) * 200) + 250;
+                _entities[i].Position = new Vector2f(posX, posY);
             }
 
             // Render the updated scene to the off-screen surface
-            mySurface.Clear(Color.White);
-            mySurface.Draw(myBackgroundSprite);
-            foreach (var entity in myEntities)
+            _surface.Clear(Color.White);
+            _surface.Draw(_backgroundSprite);
+            foreach (var entity in _entities)
             {
-                mySurface.Draw(entity);
+                _surface.Draw(entity);
             }
 
-            mySurface.Display();
+            _surface.Display();
         }
 
         protected override void OnDraw(IRenderTarget target, RenderStates states)
         {
             states = new RenderStates(states)
             {
-                Shader = myShader
+                Shader = _shader
             };
-            target.Draw(new Sprite(mySurface.Texture), states);
+            target.Draw(new Sprite(_surface.Texture), states);
         }
 
-        private readonly RenderTexture mySurface;
-        private readonly Texture myBackgroundTexture;
-        private readonly Texture myEntityTexture;
-        private readonly Sprite myBackgroundSprite;
-        private readonly Sprite[] myEntities;
-        private readonly Shader myShader;
+        private readonly RenderTexture _surface;
+        private readonly Texture _backgroundTexture;
+        private readonly Texture _entityTexture;
+        private readonly Sprite _backgroundSprite;
+        private readonly Sprite[] _entities;
+        private readonly Shader _shader;
     }
 
     internal static class Program
     {
-        private static Effect[] effects;
-        private static int current;
-        private static Text description;
+        private static Effect[] _effects;
+        private static int _current;
+        private static Text _description;
 
         /// <summary>
         /// The main entry point for the application.
@@ -275,14 +275,14 @@ namespace shader
             Effect.Font = font;
 
             // Create the effects
-            effects = new Effect[]
+            _effects = new Effect[]
             {
                 new Pixelate(),
                 new WaveBlur(),
                 new StormBlink(),
                 new Edge()
             };
-            current = 0;
+            _current = 0;
 
             // Create the messages background
             var textBackgroundTexture = new Texture("resources/text-background.png");
@@ -293,7 +293,7 @@ namespace shader
             };
 
             // Create the description text
-            description = new Text("Current effect: " + effects[current].Name, font, 20)
+            _description = new Text("Current effect: " + _effects[_current].Name, font, 20)
             {
                 Position = new Vector2f(10, 530),
                 FillColor = new Color(80, 80, 80)
@@ -316,18 +316,18 @@ namespace shader
                 // Update the current example
                 var x = (float)Mouse.GetPosition(window).X / window.Size.X;
                 var y = (float)Mouse.GetPosition(window).Y / window.Size.Y;
-                effects[current].Update(clock.ElapsedTime.AsSeconds(), x, y);
+                _effects[_current].Update(clock.ElapsedTime.AsSeconds(), x, y);
 
                 // Clear the window
                 window.Clear(new Color(255, 128, 0));
 
                 // Draw the current example
-                window.Draw(effects[current]);
+                window.Draw(_effects[_current]);
 
                 // Draw the text
                 window.Draw(textBackground);
                 window.Draw(instructions);
-                window.Draw(description);
+                window.Draw(_description);
 
                 // Finally, display the rendered frame on screen
                 window.Display();
@@ -360,31 +360,31 @@ namespace shader
             // Left arrow key: previous shader
             if (e.Code == Keyboard.Key.Left)
             {
-                if (current == 0)
+                if (_current == 0)
                 {
-                    current = effects.Length - 1;
+                    _current = _effects.Length - 1;
                 }
                 else
                 {
-                    current--;
+                    _current--;
                 }
 
-                description.DisplayedString = $"Current effect: {effects[current].Name}";
+                _description.DisplayedString = $"Current effect: {_effects[_current].Name}";
             }
 
             // Right arrow key: next shader
             if (e.Code == Keyboard.Key.Right)
             {
-                if (current == effects.Length - 1)
+                if (_current == _effects.Length - 1)
                 {
-                    current = 0;
+                    _current = 0;
                 }
                 else
                 {
-                    current++;
+                    _current++;
                 }
 
-                description.DisplayedString = $"Current effect: {effects[current].Name}";
+                _description.DisplayedString = $"Current effect: {_effects[_current].Name}";
             }
         }
     }

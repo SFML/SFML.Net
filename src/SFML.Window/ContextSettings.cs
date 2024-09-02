@@ -74,7 +74,7 @@ namespace SFML.Window
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             AttributeFlags = attributes;
-            srgbCapable = sRgbCapable ? 1 : 0;
+            _srgbCapable = sRgbCapable ? 1 : 0;
         }
 
         ////////////////////////////////////////////////////////////
@@ -111,13 +111,13 @@ namespace SFML.Window
         public Attribute AttributeFlags;
 
         /// <summary>Internal Representation</summary>
-        private int srgbCapable;
+        private int _srgbCapable;
 
         /// <summary>Whether the context framebuffer is sRGB capable</summary>
         public bool SRgbCapable
         {
-            get => srgbCapable == 1;
-            set => srgbCapable = value ? 1 : 0;
+            get => _srgbCapable == 1;
+            set => _srgbCapable = value ? 1 : 0;
         }
     }
 }

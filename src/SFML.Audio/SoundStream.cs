@@ -247,9 +247,9 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         protected void Initialize(uint channelCount, uint sampleRate)
         {
-            myGetDataCallback = new GetDataCallbackType(GetData);
-            mySeekCallback = new SeekCallbackType(Seek);
-            CPointer = sfSoundStream_create(myGetDataCallback, mySeekCallback, channelCount, sampleRate, IntPtr.Zero);
+            _getDataCallback = new GetDataCallbackType(GetData);
+            _seekCallback = new SeekCallbackType(Seek);
+            CPointer = sfSoundStream_create(_getDataCallback, _seekCallback, channelCount, sampleRate, IntPtr.Zero);
         }
 
         ////////////////////////////////////////////////////////////
@@ -299,14 +299,14 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         private bool GetData(ref Chunk dataChunk, IntPtr userData)
         {
-            if (OnGetData(out myTempBuffer))
+            if (OnGetData(out _tempBuffer))
             {
                 unsafe
                 {
-                    fixed (short* samplesPtr = myTempBuffer)
+                    fixed (short* samplesPtr = _tempBuffer)
                     {
                         dataChunk.Samples = samplesPtr;
-                        dataChunk.SampleCount = (uint)myTempBuffer.Length;
+                        dataChunk.SampleCount = (uint)_tempBuffer.Length;
                     }
                 }
 
@@ -334,9 +334,9 @@ namespace SFML.Audio
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void SeekCallbackType(Time timeOffset, IntPtr userData);
 
-        private GetDataCallbackType myGetDataCallback;
-        private SeekCallbackType mySeekCallback;
-        private short[] myTempBuffer;
+        private GetDataCallbackType _getDataCallback;
+        private SeekCallbackType _seekCallback;
+        private short[] _tempBuffer;
 
         #region Imports
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

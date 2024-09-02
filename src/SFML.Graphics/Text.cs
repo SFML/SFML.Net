@@ -221,8 +221,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Font Font
         {
-            get => myFont;
-            set { myFont = value; sfText_setFont(CPointer, value != null ? value.CPointer : IntPtr.Zero); }
+            get => _font;
+            set { _font = value; sfText_setFont(CPointer, value != null ? value.CPointer : IntPtr.Zero); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -366,7 +366,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing) => sfText_destroy(CPointer);
 
-        private Font myFont;
+        private Font _font;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

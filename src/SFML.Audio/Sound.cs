@@ -102,8 +102,8 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public SoundBuffer SoundBuffer
         {
-            get => myBuffer;
-            set { myBuffer = value; sfSound_setBuffer(CPointer, value != null ? value.CPointer : IntPtr.Zero); }
+            get => _buffer;
+            set { _buffer = value; sfSound_setBuffer(CPointer, value != null ? value.CPointer : IntPtr.Zero); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -278,7 +278,7 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing) => sfSound_destroy(CPointer);
 
-        private SoundBuffer myBuffer;
+        private SoundBuffer _buffer;
 
         #region Imports
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

@@ -18,7 +18,7 @@ namespace SFML.Window
         /// Default constructor
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public Context() => myThis = sfContext_create();
+        public Context() => _this = sfContext_create();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -27,7 +27,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         ~Context()
         {
-            sfContext_destroy(myThis);
+            sfContext_destroy(_this);
         }
 
         ////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ namespace SFML.Window
         /// <param name="active">True to activate, false to deactivate</param>
         /// <returns>True on success, false on failure</returns>
         ////////////////////////////////////////////////////////////
-        public bool SetActive(bool active) => sfContext_setActive(myThis, active);
+        public bool SetActive(bool active) => sfContext_setActive(_this, active);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -62,7 +62,7 @@ namespace SFML.Window
         /// Get the settings of the context.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public ContextSettings Settings => sfContext_getSettings(myThis);
+        public ContextSettings Settings => sfContext_getSettings(_this);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -73,12 +73,12 @@ namespace SFML.Window
         {
             get
             {
-                if (ourGlobalContext == null)
+                if (_globalContext == null)
                 {
-                    ourGlobalContext = new Context();
+                    _globalContext = new Context();
                 }
 
-                return ourGlobalContext;
+                return _globalContext;
             }
         }
 
@@ -90,9 +90,9 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[Context]";
 
-        private static Context ourGlobalContext;
+        private static Context _globalContext;
 
-        private readonly IntPtr myThis = IntPtr.Zero;
+        private readonly IntPtr _this = IntPtr.Zero;
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

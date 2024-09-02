@@ -312,7 +312,7 @@ namespace SFML.Graphics
         public void SetUniform(string name, Texture texture)
         {
             // Keep a reference to the Texture so it doesn't get GC'd
-            myTextures[name] = texture;
+            _textures[name] = texture;
             sfShader_setTextureUniform(CPointer, name, texture.CPointer);
         }
 
@@ -562,7 +562,7 @@ namespace SFML.Graphics
         public void SetParameter(string name, Texture texture)
         {
             // Keep a reference to the Texture so it doesn't get GC'd
-            myTextures[name] = texture;
+            _textures[name] = texture;
             sfShader_setTextureParameter(CPointer, name, texture.CPointer);
         }
 
@@ -649,7 +649,7 @@ namespace SFML.Graphics
                 _ = Context.Global.SetActive(true);
             }
 
-            myTextures.Clear();
+            _textures.Clear();
             sfShader_destroy(CPointer);
 
             if (!disposing)
@@ -670,7 +670,7 @@ namespace SFML.Graphics
         }
 
         // Keeps references to used Textures for GC prevention during use
-        private readonly Dictionary<string, Texture> myTextures = new Dictionary<string, Texture>();
+        private readonly Dictionary<string, Texture> _textures = new Dictionary<string, Texture>();
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

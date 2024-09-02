@@ -66,28 +66,28 @@ namespace SFML.System
         /// Returns the <see cref="Time"/> as a number of seconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public float AsSeconds() => microseconds / 1000000f;
+        public float AsSeconds() => _microseconds / 1000000f;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the <see cref="Time"/> as a number of milliseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public int AsMilliseconds() => (int)(microseconds / 1000);
+        public int AsMilliseconds() => (int)(_microseconds / 1000);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the <see cref="Time"/> as a number of microseconds
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public long AsMicroseconds() => microseconds;
+        public long AsMicroseconds() => _microseconds;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Returns the <see cref="Time"/> as a TimeSpan
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(microseconds * (TimeSpan.TicksPerMillisecond / 1000));
+        public TimeSpan ToTimeSpan() => TimeSpan.FromTicks(_microseconds * (TimeSpan.TicksPerMillisecond / 1000));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -128,7 +128,7 @@ namespace SFML.System
         /// <param name="other">Time to check</param>
         /// <returns>times are equal</returns>
         ////////////////////////////////////////////////////////////
-        public bool Equals(Time other) => microseconds == other.microseconds;
+        public bool Equals(Time other) => _microseconds == other._microseconds;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -248,9 +248,9 @@ namespace SFML.System
         /// </summary>
         /// <returns>Integer description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override int GetHashCode() => microseconds.GetHashCode();
+        public override int GetHashCode() => _microseconds.GetHashCode();
 
-        private readonly long microseconds;
+        private readonly long _microseconds;
 
         #region Imports
         [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

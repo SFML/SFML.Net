@@ -19,8 +19,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Texture Texture
         {
-            get => myTexture;
-            set { myTexture = value; sfShape_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
+            get => _texture;
+            set { _texture = value; sfShape_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -150,9 +150,9 @@ namespace SFML.Graphics
         protected Shape() :
             base(IntPtr.Zero)
         {
-            myGetPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
-            myGetPointCallback = new GetPointCallbackType(InternalGetPoint);
-            CPointer = sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero);
+            _getPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
+            _getPointCallback = new GetPointCallbackType(InternalGetPoint);
+            CPointer = sfShape_create(_getPointCountCallback, _getPointCallback, IntPtr.Zero);
         }
 
         ////////////////////////////////////////////////////////////
@@ -164,9 +164,9 @@ namespace SFML.Graphics
         public Shape(Shape copy) :
             base(IntPtr.Zero)
         {
-            myGetPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
-            myGetPointCallback = new GetPointCallbackType(InternalGetPoint);
-            CPointer = sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero);
+            _getPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
+            _getPointCallback = new GetPointCallbackType(InternalGetPoint);
+            CPointer = sfShape_create(_getPointCountCallback, _getPointCallback, IntPtr.Zero);
 
             Origin = copy.Origin;
             Position = copy.Position;
@@ -219,10 +219,10 @@ namespace SFML.Graphics
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate Vector2f GetPointCallbackType(UIntPtr index, IntPtr userData);
 
-        private readonly GetPointCountCallbackType myGetPointCountCallback;
-        private readonly GetPointCallbackType myGetPointCallback;
+        private readonly GetPointCountCallbackType _getPointCountCallback;
+        private readonly GetPointCallbackType _getPointCallback;
 
-        private Texture myTexture;
+        private Texture _texture;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

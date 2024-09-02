@@ -487,7 +487,7 @@ namespace SFML.Graphics
         /// <param name="cPointer">Pointer to the object in C library</param>
         ////////////////////////////////////////////////////////////
         internal Texture(IntPtr cPointer) :
-            base(cPointer) => myExternal = true;
+            base(cPointer) => _external = true;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -497,7 +497,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing)
         {
-            if (!myExternal)
+            if (!_external)
             {
                 if (!disposing)
                 {
@@ -513,7 +513,7 @@ namespace SFML.Graphics
             }
         }
 
-        private readonly bool myExternal;
+        private readonly bool _external;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

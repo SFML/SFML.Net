@@ -89,9 +89,9 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public StreamAdaptor(Stream stream)
         {
-            myStream = stream;
+            _stream = stream;
 
-            myInputStream = new InputStream
+            _inputStream = new InputStream
             {
                 Read = new InputStream.ReadCallbackType(Read),
                 Seek = new InputStream.SeekCallbackType(Seek),
@@ -99,8 +99,8 @@ namespace SFML.System
                 GetSize = new InputStream.GetSizeCallbackType(GetSize)
             };
 
-            InputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(myInputStream));
-            Marshal.StructureToPtr(myInputStream, InputStreamPtr, false);
+            InputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(_inputStream));
+            Marshal.StructureToPtr(_inputStream, InputStreamPtr, false);
         }
 
         ////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ namespace SFML.System
         private long Read(IntPtr data, long size, IntPtr userData)
         {
             var buffer = new byte[size];
-            var count = myStream.Read(buffer, 0, (int)size);
+            var count = _stream.Read(buffer, 0, (int)size);
             Marshal.Copy(buffer, 0, data, count);
             return count;
         }
@@ -164,7 +164,7 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Actual position</returns>
         ////////////////////////////////////////////////////////////
-        private long Seek(long position, IntPtr userData) => myStream.Seek(position, SeekOrigin.Begin);
+        private long Seek(long position, IntPtr userData) => _stream.Seek(position, SeekOrigin.Begin);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -173,7 +173,7 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Current position in the stream</returns>
         ////////////////////////////////////////////////////////////
-        private long Tell(IntPtr userData) => myStream.Position;
+        private long Tell(IntPtr userData) => _stream.Position;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -182,9 +182,9 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Number of bytes in the stream</returns>
         ////////////////////////////////////////////////////////////
-        private long GetSize(IntPtr userData) => myStream.Length;
+        private long GetSize(IntPtr userData) => _stream.Length;
 
-        private readonly Stream myStream;
-        private InputStream myInputStream;
+        private readonly Stream _stream;
+        private InputStream _inputStream;
     }
 }

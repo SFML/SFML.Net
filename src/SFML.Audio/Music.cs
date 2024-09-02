@@ -49,8 +49,8 @@ namespace SFML.Audio
         public Music(Stream stream) :
             base(IntPtr.Zero)
         {
-            myStream = new StreamAdaptor(stream);
-            CPointer = sfMusic_createFromStream(myStream.InputStreamPtr);
+            _stream = new StreamAdaptor(stream);
+            CPointer = sfMusic_createFromStream(_stream.InputStreamPtr);
 
             if (IsInvalid)
             {
@@ -342,13 +342,13 @@ namespace SFML.Audio
         {
             if (disposing)
             {
-                myStream?.Dispose();
+                _stream?.Dispose();
             }
 
             sfMusic_destroy(CPointer);
         }
 
-        private readonly StreamAdaptor myStream;
+        private readonly StreamAdaptor _stream;
 
         /// <summary>
         /// Structure defining a Time range. 

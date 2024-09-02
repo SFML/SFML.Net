@@ -166,7 +166,7 @@ namespace SFML.Graphics
         /// <param name="cPointer">Direct pointer to the view object in the C library</param>
         ////////////////////////////////////////////////////////////
         internal View(IntPtr cPointer) :
-            base(cPointer) => myExternal = true;
+            base(cPointer) => _external = true;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -176,13 +176,13 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing)
         {
-            if (!myExternal)
+            if (!_external)
             {
                 sfView_destroy(CPointer);
             }
         }
 
-        private readonly bool myExternal;
+        private readonly bool _external;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

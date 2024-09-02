@@ -20,11 +20,11 @@ namespace SFML.Audio
         public SoundRecorder() :
             base(IntPtr.Zero)
         {
-            myStartCallback = new StartCallback(StartRecording);
-            myProcessCallback = new ProcessCallback(ProcessSamples);
-            myStopCallback = new StopCallback(StopRecording);
+            _startCallback = new StartCallback(StartRecording);
+            _processCallback = new ProcessCallback(ProcessSamples);
+            _stopCallback = new StopCallback(StopRecording);
 
-            CPointer = sfSoundRecorder_create(myStartCallback, myProcessCallback, myStopCallback, IntPtr.Zero);
+            CPointer = sfSoundRecorder_create(_startCallback, _processCallback, _stopCallback, IntPtr.Zero);
         }
 
         ////////////////////////////////////////////////////////////
@@ -279,9 +279,9 @@ namespace SFML.Audio
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate void StopCallback(IntPtr userData);
 
-        private readonly StartCallback myStartCallback;
-        private readonly ProcessCallback myProcessCallback;
-        private readonly StopCallback myStopCallback;
+        private readonly StartCallback _startCallback;
+        private readonly ProcessCallback _processCallback;
+        private readonly StopCallback _stopCallback;
 
         #region Imports
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
