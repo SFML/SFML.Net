@@ -262,7 +262,7 @@ namespace SFML.Graphics
         /// Target texture of the render texture
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public Texture Texture { get; } = null;
+        public Texture Texture { get; }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -464,7 +464,7 @@ namespace SFML.Graphics
             }
         }
 
-        private readonly View myDefaultView = null;
+        private readonly View myDefaultView;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]

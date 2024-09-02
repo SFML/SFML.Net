@@ -494,74 +494,74 @@ namespace SFML.Window
         }
 
         /// <summary>Event handler for the Closed event</summary>
-        public event EventHandler Closed = null;
+        public event EventHandler Closed;
 
         /// <summary>Event handler for the Resized event</summary>
-        public event EventHandler<SizeEventArgs> Resized = null;
+        public event EventHandler<SizeEventArgs> Resized;
 
         /// <summary>Event handler for the LostFocus event</summary>
-        public event EventHandler LostFocus = null;
+        public event EventHandler LostFocus;
 
         /// <summary>Event handler for the GainedFocus event</summary>
-        public event EventHandler GainedFocus = null;
+        public event EventHandler GainedFocus;
 
         /// <summary>Event handler for the TextEntered event</summary>
-        public event EventHandler<TextEventArgs> TextEntered = null;
+        public event EventHandler<TextEventArgs> TextEntered;
 
         /// <summary>Event handler for the KeyPressed event</summary>
-        public event EventHandler<KeyEventArgs> KeyPressed = null;
+        public event EventHandler<KeyEventArgs> KeyPressed;
 
         /// <summary>Event handler for the KeyReleased event</summary>
-        public event EventHandler<KeyEventArgs> KeyReleased = null;
+        public event EventHandler<KeyEventArgs> KeyReleased;
 
         /// <summary>Event handler for the MouseWheelMoved event</summary>
         [Obsolete("Use MouseWheelScrolled")]
-        public event EventHandler<MouseWheelEventArgs> MouseWheelMoved = null;
+        public event EventHandler<MouseWheelEventArgs> MouseWheelMoved;
 
         /// <summary>Event handler for the MouseWheelScrolled event</summary>
-        public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled = null;
+        public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled;
 
         /// <summary>Event handler for the MouseButtonPressed event</summary>
-        public event EventHandler<MouseButtonEventArgs> MouseButtonPressed = null;
+        public event EventHandler<MouseButtonEventArgs> MouseButtonPressed;
 
         /// <summary>Event handler for the MouseButtonReleased event</summary>
-        public event EventHandler<MouseButtonEventArgs> MouseButtonReleased = null;
+        public event EventHandler<MouseButtonEventArgs> MouseButtonReleased;
 
         /// <summary>Event handler for the MouseMoved event</summary>
-        public event EventHandler<MouseMoveEventArgs> MouseMoved = null;
+        public event EventHandler<MouseMoveEventArgs> MouseMoved;
 
         /// <summary>Event handler for the MouseEntered event</summary>
-        public event EventHandler MouseEntered = null;
+        public event EventHandler MouseEntered;
 
         /// <summary>Event handler for the MouseLeft event</summary>
-        public event EventHandler MouseLeft = null;
+        public event EventHandler MouseLeft;
 
         /// <summary>Event handler for the JoystickButtonPressed event</summary>
-        public event EventHandler<JoystickButtonEventArgs> JoystickButtonPressed = null;
+        public event EventHandler<JoystickButtonEventArgs> JoystickButtonPressed;
 
         /// <summary>Event handler for the JoystickButtonReleased event</summary>
-        public event EventHandler<JoystickButtonEventArgs> JoystickButtonReleased = null;
+        public event EventHandler<JoystickButtonEventArgs> JoystickButtonReleased;
 
         /// <summary>Event handler for the JoystickMoved event</summary>
-        public event EventHandler<JoystickMoveEventArgs> JoystickMoved = null;
+        public event EventHandler<JoystickMoveEventArgs> JoystickMoved;
 
         /// <summary>Event handler for the JoystickConnected event</summary>
-        public event EventHandler<JoystickConnectEventArgs> JoystickConnected = null;
+        public event EventHandler<JoystickConnectEventArgs> JoystickConnected;
 
         /// <summary>Event handler for the JoystickDisconnected event</summary>
-        public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected = null;
+        public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected;
 
         /// <summary>Event handler for the TouchBegan event</summary>
-        public event EventHandler<TouchEventArgs> TouchBegan = null;
+        public event EventHandler<TouchEventArgs> TouchBegan;
 
         /// <summary>Event handler for the TouchMoved event</summary>
-        public event EventHandler<TouchEventArgs> TouchMoved = null;
+        public event EventHandler<TouchEventArgs> TouchMoved;
 
         /// <summary>Event handler for the TouchEnded event</summary>
-        public event EventHandler<TouchEventArgs> TouchEnded = null;
+        public event EventHandler<TouchEventArgs> TouchEnded;
 
         /// <summary>Event handler for the SensorChanged event</summary>
-        public event EventHandler<SensorEventArgs> SensorChanged = null;
+        public event EventHandler<SensorEventArgs> SensorChanged;
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

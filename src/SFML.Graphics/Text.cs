@@ -366,7 +366,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing) => sfText_destroy(CPointer);
 
-        private Font myFont = null;
+        private Font myFont;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

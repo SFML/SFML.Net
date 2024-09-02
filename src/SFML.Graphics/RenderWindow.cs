@@ -693,7 +693,7 @@ namespace SFML.Graphics
             GC.SuppressFinalize(myDefaultView);
         }
 
-        private View myDefaultView = null;
+        private View myDefaultView;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

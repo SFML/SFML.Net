@@ -222,7 +222,7 @@ namespace SFML.Graphics
         private readonly GetPointCountCallbackType myGetPointCountCallback;
         private readonly GetPointCallbackType myGetPointCallback;
 
-        private Texture myTexture = null;
+        private Texture myTexture;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

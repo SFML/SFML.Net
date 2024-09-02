@@ -90,7 +90,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[Context]";
 
-        private static Context ourGlobalContext = null;
+        private static Context ourGlobalContext;
 
         private readonly IntPtr myThis = IntPtr.Zero;
 

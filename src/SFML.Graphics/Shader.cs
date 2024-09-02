@@ -29,7 +29,7 @@ namespace SFML.Graphics
         /// and that represents the texture of the object being drawn
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public static readonly CurrentTextureType CurrentTexture = null;
+        public static readonly CurrentTextureType CurrentTexture;
 
         ////////////////////////////////////////////////////////////
         /// <summary>

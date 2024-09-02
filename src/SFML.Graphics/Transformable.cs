@@ -190,7 +190,7 @@ namespace SFML.Graphics
 
         private Vector2f myOrigin = new Vector2f(0, 0);
         private Vector2f myPosition = new Vector2f(0, 0);
-        private float myRotation = 0;
+        private float myRotation;
         private Vector2f myScale = new Vector2f(1, 1);
         private Transform myTransform;
         private Transform myInverseTransform;

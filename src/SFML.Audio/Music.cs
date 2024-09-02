@@ -348,7 +348,7 @@ namespace SFML.Audio
             sfMusic_destroy(CPointer);
         }
 
-        private readonly StreamAdaptor myStream = null;
+        private readonly StreamAdaptor myStream;
 
         /// <summary>
         /// Structure defining a Time range. 

@@ -513,7 +513,7 @@ namespace SFML.Graphics
             }
         }
 
-        private readonly bool myExternal = false;
+        private readonly bool myExternal;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

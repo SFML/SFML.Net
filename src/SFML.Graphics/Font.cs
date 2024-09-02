@@ -229,8 +229,6 @@ namespace SFML.Graphics
                 {
                     texture.Dispose();
                 }
-
-                myStream?.Dispose();
             }
 
             if (!disposing)
@@ -271,7 +269,6 @@ namespace SFML.Graphics
         }
 
         private readonly Dictionary<uint, Texture> myTextures = new Dictionary<uint, Texture>();
-        private readonly SFML.System.StreamAdaptor myStream = null;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

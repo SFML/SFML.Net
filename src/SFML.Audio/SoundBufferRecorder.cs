@@ -20,7 +20,7 @@ namespace SFML.Audio
         /// to make any modifications to it.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public SoundBuffer SoundBuffer { get; private set; } = null;
+        public SoundBuffer SoundBuffer { get; private set; }
 
         ////////////////////////////////////////////////////////////
         /// <summary>

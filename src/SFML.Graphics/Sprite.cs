@@ -175,7 +175,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         protected override void Destroy(bool disposing) => sfSprite_destroy(CPointer);
 
-        private Texture myTexture = null;
+        private Texture myTexture;
 
         #region Imports
 
