@@ -300,7 +300,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>Depth component of the vector</summary>
         public float Z;
 
-        /// <summary>Projective/Homogenous component of the vector</summary>
+        /// <summary>Projective/Homogeneous component of the vector</summary>
         public float W;
     }
 
@@ -350,7 +350,7 @@ namespace SFML.Graphics.Glsl
         /// <summary>Depth component of the vector</summary>
         public int Z;
 
-        /// <summary>Projective/Homogenous component of the vector</summary>
+        /// <summary>Projective/Homogeneous component of the vector</summary>
         public int W;
     }
 
@@ -391,7 +391,7 @@ namespace SFML.Graphics.Glsl
         [MarshalAs(UnmanagedType.Bool)]
         public bool Z;
 
-        /// <summary>Projective/Homogenous component of the vector</summary>
+        /// <summary>Projective/Homogeneous component of the vector</summary>
         [MarshalAs(UnmanagedType.Bool)]
         public bool W;
     }

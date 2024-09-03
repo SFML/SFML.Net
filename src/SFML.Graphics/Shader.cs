@@ -650,7 +650,7 @@ namespace SFML.Graphics
         /// (sampler2D GLSL type).
         /// </summary>
         /// <param name="name">Name of the texture in the shader</param>
-        /// <param name="current">Always pass the spacial value Shader.CurrentTexture</param>
+        /// <param name="current">Always pass the special value Shader.CurrentTexture</param>
         ////////////////////////////////////////////////////////////
         [Obsolete("Use SetUniform()")]
         public void SetParameter(string name, CurrentTextureType current)

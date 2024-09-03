@@ -33,7 +33,7 @@ namespace SFML.System
         /// Failure to load a resource from memory
         /// </summary>
         /// <param name="resourceName">Name of the resource</param>
-        /// <param name="innerException">Exception which is the cause ofthe current exception</param>
+        /// <param name="innerException">Exception which is the cause of the current exception</param>
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(string resourceName, Exception innerException) :
             base($"Failed to load {resourceName} from memory", innerException)
@@ -58,7 +58,7 @@ namespace SFML.System
         /// </summary>
         /// <param name="resourceName">Name of the resource</param>
         /// <param name="filename">Path of the file</param>
-        /// <param name="innerException">Exception which is the cause ofthe current exception</param>
+        /// <param name="innerException">Exception which is the cause of the current exception</param>
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(string resourceName, string filename, Exception innerException) :
             base($"Failed to load {resourceName} from file {filename}", innerException)
@@ -70,7 +70,7 @@ namespace SFML.System
         /// Initialize an instance of the exception with serialized data
         /// </summary>
         /// <param name="info">Serialized data</param>
-        /// <param name="context">Contextual informations</param>
+        /// <param name="context">Contextual information</param>
         ////////////////////////////////////////////////////////////
         public LoadingFailedException(SerializationInfo info, StreamingContext context) :
             base(info, context)
