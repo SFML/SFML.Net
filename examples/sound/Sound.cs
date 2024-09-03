@@ -27,7 +27,7 @@ namespace sound
             // Load a sound buffer from a wav file
             SoundBuffer buffer = new SoundBuffer("resources/canary.wav");
 
-            // Display sound informations
+            // Display sound information
             Console.WriteLine("canary.wav :");
             Console.WriteLine(" " + buffer.Duration.AsSeconds() + " sec");
             Console.WriteLine(" " + buffer.SampleRate + " samples / sec");
@@ -57,7 +57,7 @@ namespace sound
             // Load an ogg music file
             Music music = new Music("resources/orchestral.ogg");
 
-            // Display music informations
+            // Display music information
             Console.WriteLine("orchestral.ogg :");
             Console.WriteLine(" " + music.Duration.AsSeconds() + " sec");
             Console.WriteLine(" " + music.SampleRate + " samples / sec");

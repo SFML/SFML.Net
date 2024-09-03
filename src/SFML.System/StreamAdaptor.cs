@@ -61,7 +61,7 @@ namespace SFML.System
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Function that is called to return the positon
+        /// Function that is called to return the position
         /// </summary>
         ////////////////////////////////////////////////////////////
         public TellCallbackType Tell;

@@ -744,7 +744,7 @@ namespace SFML.Graphics
         /// Internal function to get the next event (blocking)
         /// </summary>
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
-        /// <returns>False if any error occured</returns>
+        /// <returns>False if any error occurred</returns>
         ////////////////////////////////////////////////////////////
         protected override bool WaitEvent(out Event eventToFill)
         {

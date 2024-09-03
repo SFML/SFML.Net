@@ -380,7 +380,7 @@ namespace SFML.Window
         /// Internal function to get the next event (blocking)
         /// </summary>
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
-        /// <returns>False if any error occured</returns>
+        /// <returns>False if any error occurred</returns>
         ////////////////////////////////////////////////////////////
         protected virtual bool WaitEvent(out Event eventToFill)
         {
@@ -568,7 +568,7 @@ namespace SFML.Window
 
                     break;
 
-                // Disable CS0618 (Obselete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
+                // Disable CS0618 (Obsolete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
 #pragma warning disable CS0618
                 case EventType.MouseWheelMoved:
                     if (MouseWheelMoved != null)

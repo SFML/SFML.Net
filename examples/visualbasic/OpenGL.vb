@@ -16,7 +16,7 @@ Module OpenGL
     ''' </summary>
     Sub Main()
 
-        ' Request a 24-bits depth bufer when creating the window
+        ' Request a 24-bits depth buffer when creating the window
         Dim contextSettings As New ContextSettings()
         contextSettings.DepthBits = 24
 

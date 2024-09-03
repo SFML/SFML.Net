@@ -38,7 +38,7 @@ namespace sound_capture
             // Get the buffer containing the captured data
             SoundBuffer buffer = recorder.SoundBuffer;
 
-            // Display captured sound informations
+            // Display captured sound information
             Console.WriteLine("Sound information :");
             Console.WriteLine(" " + buffer.Duration + " seconds");
             Console.WriteLine(" " + buffer.SampleRate + " samples / seconds");
