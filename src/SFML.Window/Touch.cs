@@ -16,53 +16,47 @@ namespace SFML.Window
         /// <summary>
         /// Check if a touch event is currently down
         /// </summary>
-        /// <param name="Finger">Finger index</param>
+        /// <param name="finger">Finger index</param>
         /// <returns>True if the finger is currently touching the screen, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public static bool IsDown(uint Finger)
-        {
-            return sfTouch_isDown(Finger);
-        }
+        public static bool IsDown(uint finger) => sfTouch_isDown(finger);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// This function returns the current touch position
         /// </summary>
-        /// <param name="Finger">Finger index</param>
+        /// <param name="finger">Finger index</param>
         /// <returns>Current position of the finger</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector2i GetPosition(uint Finger)
-        {
-            return GetPosition(Finger, null);
-        }
+        public static Vector2i GetPosition(uint finger) => GetPosition(finger, null);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// This function returns the current touch position
         /// relative to the given window
         /// </summary>
-        /// <param name="Finger">Finger index</param>
-        /// <param name="RelativeTo">Reference window</param>
+        /// <param name="finger">Finger index</param>
+        /// <param name="relativeTo">Reference window</param>
         /// <returns>Current position of the finger</returns>
         ////////////////////////////////////////////////////////////
-        public static Vector2i GetPosition(uint Finger, WindowBase RelativeTo)
+        public static Vector2i GetPosition(uint finger, WindowBase relativeTo)
         {
-            if (RelativeTo != null)
+            if (relativeTo != null)
             {
-                return RelativeTo.InternalGetTouchPosition(Finger);
+                return relativeTo.InternalGetTouchPosition(finger);
             }
             else
             {
-                return sfTouch_getPosition(Finger, IntPtr.Zero);
+                return sfTouch_getPosition(finger, IntPtr.Zero);
             }
         }
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfTouch_isDown(uint Finger);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfTouch_isDown(uint finger);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfTouch_getPosition(uint Finger, IntPtr RelativeTo);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfTouch_getPosition(uint finger, IntPtr relativeTo);
         #endregion
     }
 }

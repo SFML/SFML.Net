@@ -3,6 +3,7 @@
   <!-- This file contains the data shared by all SFML Modules. -->
 
   <Import Project="SFML.NuGet.props" />
+  <Import Project="SFML.CodeStyle.props" />
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

@@ -89,9 +89,9 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public StreamAdaptor(Stream stream)
         {
-            myStream = stream;
+            _stream = stream;
 
-            myInputStream = new InputStream
+            _inputStream = new InputStream
             {
                 Read = new InputStream.ReadCallbackType(Read),
                 Seek = new InputStream.SeekCallbackType(Seek),
@@ -99,8 +99,8 @@ namespace SFML.System
                 GetSize = new InputStream.GetSizeCallbackType(GetSize)
             };
 
-            myInputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(myInputStream));
-            Marshal.StructureToPtr(myInputStream, myInputStreamPtr, false);
+            InputStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(_inputStream));
+            Marshal.StructureToPtr(_inputStream, InputStreamPtr, false);
         }
 
         ////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ namespace SFML.System
         /// The pointer to the CSFML InputStream structure
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public IntPtr InputStreamPtr => myInputStreamPtr;
+        public IntPtr InputStreamPtr { get; }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -137,10 +137,7 @@ namespace SFML.System
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        private void Dispose(bool disposing)
-        {
-            Marshal.FreeHGlobal(myInputStreamPtr);
-        }
+        private void Dispose(bool disposing) => Marshal.FreeHGlobal(InputStreamPtr);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -153,8 +150,8 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         private long Read(IntPtr data, long size, IntPtr userData)
         {
-            byte[] buffer = new byte[size];
-            int count = myStream.Read(buffer, 0, (int)size);
+            var buffer = new byte[size];
+            var count = _stream.Read(buffer, 0, (int)size);
             Marshal.Copy(buffer, 0, data, count);
             return count;
         }
@@ -167,10 +164,7 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Actual position</returns>
         ////////////////////////////////////////////////////////////
-        private long Seek(long position, IntPtr userData)
-        {
-            return myStream.Seek(position, SeekOrigin.Begin);
-        }
+        private long Seek(long position, IntPtr userData) => _stream.Seek(position, SeekOrigin.Begin);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -179,10 +173,7 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Current position in the stream</returns>
         ////////////////////////////////////////////////////////////
-        private long Tell(IntPtr userData)
-        {
-            return myStream.Position;
-        }
+        private long Tell(IntPtr userData) => _stream.Position;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -191,10 +182,9 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Number of bytes in the stream</returns>
         ////////////////////////////////////////////////////////////
-        private long GetSize(IntPtr userData) => myStream.Length;
+        private long GetSize(IntPtr userData) => _stream.Length;
 
-        private Stream myStream;
-        private InputStream myInputStream;
-        private readonly IntPtr myInputStreamPtr;
+        private readonly Stream _stream;
+        private InputStream _inputStream;
     }
 }

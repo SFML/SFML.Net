@@ -88,10 +88,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         /// <summary>Special instance holding the default render states</summary>
         ////////////////////////////////////////////////////////////
-        public static RenderStates Default
-        {
-            get { return new RenderStates(BlendMode.Alpha, Transform.Identity, null, null); }
-        }
+        public static RenderStates Default => new RenderStates(BlendMode.Alpha, Transform.Identity, null, null);
 
         /// <summary>Blending mode</summary>
         public BlendMode BlendMode;
@@ -108,11 +105,13 @@ namespace SFML.Graphics
         // Return a marshalled version of the instance, that can directly be passed to the C API
         internal MarshalData Marshal()
         {
-            MarshalData data = new MarshalData();
-            data.blendMode = BlendMode;
-            data.transform = Transform;
-            data.texture = Texture != null ? Texture.CPointer : IntPtr.Zero;
-            data.shader = Shader != null ? Shader.CPointer : IntPtr.Zero;
+            var data = new MarshalData
+            {
+                BlendMode = BlendMode,
+                Transform = Transform,
+                Texture = Texture != null ? Texture.CPointer : IntPtr.Zero,
+                Shader = Shader != null ? Shader.CPointer : IntPtr.Zero
+            };
 
             return data;
         }
@@ -120,10 +119,10 @@ namespace SFML.Graphics
         [StructLayout(LayoutKind.Sequential)]
         internal struct MarshalData
         {
-            public BlendMode blendMode;
-            public Transform transform;
-            public IntPtr texture;
-            public IntPtr shader;
+            public BlendMode BlendMode;
+            public Transform Transform;
+            public IntPtr Texture;
+            public IntPtr Shader;
         }
     }
 }

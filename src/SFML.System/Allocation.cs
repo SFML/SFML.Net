@@ -20,7 +20,7 @@ namespace SFML.System
         /// <param name="ptr">Pointer to the memory to deallocate</param>
         public static void Free(IntPtr ptr) => sfFree(ptr);
 
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfFree(IntPtr ptr);
     }
 }

@@ -5,7 +5,7 @@ namespace SFML.Graphics
     /// Interface for every object that can be drawn to a render window
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public interface Drawable
+    public interface IDrawable
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -17,6 +17,6 @@ namespace SFML.Graphics
         /// <param name="target">Render target to draw to</param>
         /// <param name="states">Current render states</param>
         ////////////////////////////////////////////////////////////
-        void Draw(RenderTarget target, RenderStates states);
+        void Draw(IRenderTarget target, RenderStates states);
     }
 }

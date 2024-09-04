@@ -31,16 +31,13 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[KeyEventArgs]" +
+        public override string ToString() => "[KeyEventArgs]" +
                    " Code(" + Code + ")" +
                    " Scancode(" + Scancode + ")" +
                    " Alt(" + Alt + ")" +
                    " Control(" + Control + ")" +
                    " Shift(" + Shift + ")" +
                    " System(" + System + ")";
-        }
 
         /// <summary>Code of the key (see <see cref="Keyboard.Key"/>)</summary>
         public Keyboard.Key Code;
@@ -74,10 +71,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="e">Text event</param>
         ////////////////////////////////////////////////////////////
-        public TextEventArgs(TextEvent e)
-        {
-            Unicode = Char.ConvertFromUtf32((int)e.Unicode);
-        }
+        public TextEventArgs(TextEvent e) => Unicode = Char.ConvertFromUtf32((int)e.Unicode);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -85,11 +79,8 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[TextEventArgs]" +
+        public override string ToString() => "[TextEventArgs]" +
                    " Unicode(" + Unicode + ")";
-        }
 
         /// <summary>UTF-16 value of the character</summary>
         public string Unicode;
@@ -120,12 +111,9 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[MouseMoveEventArgs]" +
+        public override string ToString() => "[MouseMoveEventArgs]" +
                    " X(" + X + ")" +
                    " Y(" + Y + ")";
-        }
 
         /// <summary>X coordinate of the mouse cursor</summary>
         public int X;
@@ -160,13 +148,10 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[MouseButtonEventArgs]" +
+        public override string ToString() => "[MouseButtonEventArgs]" +
                    " Button(" + Button + ")" +
                    " X(" + X + ")" +
                    " Y(" + Y + ")";
-        }
 
         /// <summary>Code of the button (see MouseButton enum)</summary>
         public Mouse.Button Button;
@@ -205,13 +190,10 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[MouseWheelEventArgs]" +
+        public override string ToString() => "[MouseWheelEventArgs]" +
                    " Delta(" + Delta + ")" +
                    " X(" + X + ")" +
                    " Y(" + Y + ")";
-        }
 
         /// <summary>Scroll amount</summary>
         public int Delta;
@@ -250,14 +232,11 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[MouseWheelScrollEventArgs]" +
+        public override string ToString() => "[MouseWheelScrollEventArgs]" +
                    " Wheel(" + Wheel + ")" +
                    " Delta(" + Delta + ")" +
                    " X(" + X + ")" +
                    " Y(" + Y + ")";
-        }
 
         /// <summary>Mouse Wheel which triggered the event</summary>
         public Mouse.Wheel Wheel;
@@ -298,13 +277,10 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[JoystickMoveEventArgs]" +
+        public override string ToString() => "[JoystickMoveEventArgs]" +
                    " JoystickId(" + JoystickId + ")" +
                    " Axis(" + Axis + ")" +
                    " Position(" + Position + ")";
-        }
 
         /// <summary>Index of the joystick which triggered the event</summary>
         public uint JoystickId;
@@ -341,12 +317,9 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[JoystickButtonEventArgs]" +
+        public override string ToString() => "[JoystickButtonEventArgs]" +
                    " JoystickId(" + JoystickId + ")" +
                    " Button(" + Button + ")";
-        }
 
         /// <summary>Index of the joystick which triggered the event</summary>
         public uint JoystickId;
@@ -368,10 +341,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="e">Joystick button event</param>
         ////////////////////////////////////////////////////////////
-        public JoystickConnectEventArgs(JoystickConnectEvent e)
-        {
-            JoystickId = e.JoystickId;
-        }
+        public JoystickConnectEventArgs(JoystickConnectEvent e) => JoystickId = e.JoystickId;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -379,11 +349,8 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[JoystickConnectEventArgs]" +
+        public override string ToString() => "[JoystickConnectEventArgs]" +
                    " JoystickId(" + JoystickId + ")";
-        }
 
         /// <summary>Index of the joystick which triggered the event</summary>
         public uint JoystickId;
@@ -414,12 +381,9 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[SizeEventArgs]" +
+        public override string ToString() => "[SizeEventArgs]" +
                    " Width(" + Width + ")" +
                    " Height(" + Height + ")";
-        }
 
         /// <summary>New width of the window</summary>
         public uint Width;
@@ -454,13 +418,10 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[TouchEventArgs]" +
+        public override string ToString() => "[TouchEventArgs]" +
                    " Finger(" + Finger + ")" +
                    " X(" + X + ")" +
                    " Y(" + Y + ")";
-        }
 
         /// <summary>Index of the finger in case of multi-touch events</summary>
         public uint Finger;
@@ -499,14 +460,11 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[SensorEventArgs]" +
+        public override string ToString() => "[SensorEventArgs]" +
                    " Type(" + Type + ")" +
                    " X(" + X + ")" +
                    " Y(" + Y + ")" +
                    " Z(" + Z + ")";
-        }
 
         /// <summary>Type of the sensor</summary>
         public Sensor.Type Type;

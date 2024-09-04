@@ -21,8 +21,8 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public static float GlobalVolume
         {
-            get { return sfListener_getGlobalVolume(); }
-            set { sfListener_setGlobalVolume(value); }
+            get => sfListener_getGlobalVolume();
+            set => sfListener_setGlobalVolume(value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -32,8 +32,8 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public static Vector3f Position
         {
-            get { return sfListener_getPosition(); }
-            set { sfListener_setPosition(value); }
+            get => sfListener_getPosition();
+            set => sfListener_setPosition(value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -48,8 +48,8 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public static Vector3f Direction
         {
-            get { return sfListener_getDirection(); }
-            set { sfListener_setDirection(value); }
+            get => sfListener_getDirection();
+            set => sfListener_setDirection(value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -64,33 +64,33 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public static Vector3f UpVector
         {
-            get { return sfListener_getUpVector(); }
-            set { sfListener_setUpVector(value); }
+            get => sfListener_getUpVector();
+            set => sfListener_setUpVector(value);
         }
 
         #region Imports
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfListener_setGlobalVolume(float Volume);
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfListener_setGlobalVolume(float volume);
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfListener_getGlobalVolume();
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfListener_setPosition(Vector3f position);
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector3f sfListener_getPosition();
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfListener_setDirection(Vector3f direction);
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector3f sfListener_getDirection();
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfListener_setUpVector(Vector3f upVector);
 
-        [DllImport(CSFML.audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector3f sfListener_getUpVector();
         #endregion
     }

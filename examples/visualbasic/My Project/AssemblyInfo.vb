@@ -1,4 +1,3 @@
-﻿Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -8,17 +7,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("visualbasic")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Wam")> 
-<Assembly: AssemblyProduct("visualbasic")> 
-<Assembly: AssemblyCopyright("Copyright © Wam 2008")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("visualbasic")>
+<Assembly: AssemblyDescription("SFML.Net example project for Visual Basic")>
+<Assembly: AssemblyCompany("SFML")>
+<Assembly: AssemblyProduct("visualbasic")>
+<Assembly: AssemblyCopyright("Copyright © Laurent Gomila")>
+<Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("6694830f-34ec-4c32-b1c8-895dbbf41593")> 
+<Assembly: Guid("6694830f-34ec-4c32-b1c8-895dbbf41593")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>

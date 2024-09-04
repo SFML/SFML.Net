@@ -18,25 +18,25 @@ namespace SFML.Window
         {
             get
             {
-                IntPtr source = sfClipboard_getUnicodeString();
+                var source = sfClipboard_getUnicodeString();
 
                 uint length = 0;
                 unsafe
                 {
-                    for(uint* ptr = (uint*)source.ToPointer(); *ptr != 0; ++ptr)
+                    for (var ptr = (uint*)source.ToPointer(); *ptr != 0; ++ptr)
                     {
                         length++;
                     }
                 }
-                
-                byte[] sourceBytes = new byte[length * 4];
+
+                var sourceBytes = new byte[length * 4];
                 Marshal.Copy(source, sourceBytes, 0, sourceBytes.Length);
-                
+
                 return Encoding.UTF32.GetString(sourceBytes);
             }
             set
             {
-                byte[] utf32 = Encoding.UTF32.GetBytes(value + '\0');
+                var utf32 = Encoding.UTF32.GetBytes(value + '\0');
 
                 unsafe
                 {
@@ -48,10 +48,10 @@ namespace SFML.Window
             }
         }
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfClipboard_getUnicodeString();
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfClipboard_setUnicodeString(IntPtr ptr);
     }
 }

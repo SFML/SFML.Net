@@ -18,10 +18,7 @@ namespace SFML.Window
         /// Default constructor
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public Context()
-        {
-            myThis = sfContext_create();
-        }
+        public Context() => _this = sfContext_create();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -30,7 +27,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         ~Context()
         {
-            sfContext_destroy(myThis);
+            sfContext_destroy(_this);
         }
 
         ////////////////////////////////////////////////////////////
@@ -40,10 +37,7 @@ namespace SFML.Window
         /// <param name="name">Name of the extension to check for</param>
         /// <returns>True if available, false if unavailable</returns>
         ////////////////////////////////////////////////////////////
-        public static bool IsExtensionAvailable(string name)
-        {
-            return sfContext_isExtensionAvailable(name);
-        }
+        public static bool IsExtensionAvailable(string name) => sfContext_isExtensionAvailable(name);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -52,10 +46,7 @@ namespace SFML.Window
         /// <param name="active">True to activate, false to deactivate</param>
         /// <returns>True on success, false on failure</returns>
         ////////////////////////////////////////////////////////////
-        public bool SetActive(bool active)
-        {
-            return sfContext_setActive(myThis, active);
-        }
+        public bool SetActive(bool active) => sfContext_setActive(_this, active);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -64,20 +55,14 @@ namespace SFML.Window
         /// <param name="name">Name of the function to get the address of</param>
         /// <returns>Address of the OpenGL function, <see cref="IntPtr.Zero"/> on failure</returns>
         ////////////////////////////////////////////////////////////
-        public static IntPtr GetFunction(string name)
-        {
-            return sfContext_getFunction(name);
-        }
+        public static IntPtr GetFunction(string name) => sfContext_getFunction(name);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Get the settings of the context.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public ContextSettings Settings
-        {
-            get { return sfContext_getSettings(myThis); }
-        }
+        public ContextSettings Settings => sfContext_getSettings(_this);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -88,12 +73,12 @@ namespace SFML.Window
         {
             get
             {
-                if (ourGlobalContext == null)
+                if (_globalContext == null)
                 {
-                    ourGlobalContext = new Context();
+                    _globalContext = new Context();
                 }
 
-                return ourGlobalContext;
+                return _globalContext;
             }
         }
 
@@ -103,33 +88,30 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[Context]";
-        }
+        public override string ToString() => "[Context]";
 
-        private static Context ourGlobalContext = null;
+        private static Context _globalContext;
 
-        private readonly IntPtr myThis = IntPtr.Zero;
+        private readonly IntPtr _this = IntPtr.Zero;
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfContext_create();
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfContext_destroy(IntPtr View);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfContext_destroy(IntPtr view);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfContext_isExtensionAvailable(string name);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfContext_setActive(IntPtr View, bool Active);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfContext_setActive(IntPtr view, bool active);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfContext_getFunction(string name);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern ContextSettings sfContext_getSettings(IntPtr View);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern ContextSettings sfContext_getSettings(IntPtr view);
         #endregion
     }
 }

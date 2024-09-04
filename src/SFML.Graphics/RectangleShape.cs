@@ -25,10 +25,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="size">Size of the shape</param>
         ////////////////////////////////////////////////////////////
-        public RectangleShape(Vector2f size)
-        {
-            Size = size;
-        }
+        public RectangleShape(Vector2f size) => Size = size;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -37,10 +34,7 @@ namespace SFML.Graphics
         /// <param name="copy">Shape to copy</param>
         ////////////////////////////////////////////////////////////
         public RectangleShape(RectangleShape copy) :
-            base(copy)
-        {
-            Size = copy.Size;
-        }
+            base(copy) => Size = copy.Size;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -49,8 +43,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Vector2f Size
         {
-            get { return mySize; }
-            set { mySize = value; Update(); }
+            get => _size;
+            set { _size = value; Update(); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -82,14 +76,14 @@ namespace SFML.Graphics
                 case 0:
                     return new Vector2f(0, 0);
                 case 1:
-                    return new Vector2f(mySize.X, 0);
+                    return new Vector2f(_size.X, 0);
                 case 2:
-                    return new Vector2f(mySize.X, mySize.Y);
+                    return new Vector2f(_size.X, _size.Y);
                 case 3:
-                    return new Vector2f(0, mySize.Y);
+                    return new Vector2f(0, _size.Y);
             }
         }
 
-        private Vector2f mySize;
+        private Vector2f _size;
     }
 }

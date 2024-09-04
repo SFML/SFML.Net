@@ -23,10 +23,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="pointCount">Number of points of the shape</param>
         ////////////////////////////////////////////////////////////
-        public ConvexShape(uint pointCount)
-        {
-            SetPointCount(pointCount);
-        }
+        public ConvexShape(uint pointCount) => SetPointCount(pointCount);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -49,7 +46,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The total point count</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount() => (uint)(myPoints?.Length ?? 0);
+        public override uint GetPointCount() => (uint)(_points?.Length ?? 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -60,7 +57,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public void SetPointCount(uint count)
         {
-            Array.Resize(ref myPoints, (int)count);
+            Array.Resize(ref _points, (int)count);
             Update();
         }
 
@@ -76,7 +73,7 @@ namespace SFML.Graphics
         /// <param name="index">Index of the point to get, in range [0 .. PointCount - 1]</param>
         /// <returns>index-th point of the shape</returns>
         ////////////////////////////////////////////////////////////
-        public override Vector2f GetPoint(uint index) => myPoints[index];
+        public override Vector2f GetPoint(uint index) => _points[index];
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -93,10 +90,10 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public void SetPoint(uint index, Vector2f point)
         {
-            myPoints[index] = point;
+            _points[index] = point;
             Update();
         }
 
-        private Vector2f[] myPoints;
+        private Vector2f[] _points;
     }
 }

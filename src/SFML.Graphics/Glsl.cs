@@ -419,7 +419,7 @@ namespace SFML.Graphics.Glsl
                     float a10, float a11, float a12,
                     float a20, float a21, float a22)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 m[0] = a00;
                 m[3] = a01;
@@ -441,22 +441,22 @@ namespace SFML.Graphics.Glsl
         ////////////////////////////////////////////////////////////
         public Mat3(Transform transform)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
-                m[0] = transform.m00;
-                m[3] = transform.m01;
-                m[6] = transform.m02;
-                m[1] = transform.m10;
-                m[4] = transform.m11;
-                m[7] = transform.m12;
-                m[2] = transform.m20;
-                m[5] = transform.m21;
-                m[8] = transform.m22;
+                m[0] = transform.M00;
+                m[3] = transform.M01;
+                m[6] = transform.M02;
+                m[1] = transform.M10;
+                m[4] = transform.M11;
+                m[7] = transform.M12;
+                m[2] = transform.M20;
+                m[5] = transform.M21;
+                m[8] = transform.M22;
             }
         }
 
         // column-major!
-        private fixed float array[3 * 3];
+        private fixed float _array[3 * 3];
     }
 
     ////////////////////////////////////////////////////////////
@@ -476,16 +476,10 @@ namespace SFML.Graphics.Glsl
         /// Keep in mind that a Mat4 cannot be modified after construction
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public static Mat4 Identity
-        {
-            get
-            {
-                return new Mat4(1, 0, 0, 0,
+        public static Mat4 Identity => new Mat4(1, 0, 0, 0,
                                 0, 1, 0, 0,
                                 0, 0, 1, 0,
                                 0, 0, 0, 1);
-            }
-        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -501,7 +495,7 @@ namespace SFML.Graphics.Glsl
                     float a20, float a21, float a22, float a23,
                     float a30, float a31, float a32, float a33)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 // transpose to column major
                 m[0] = a00;
@@ -531,32 +525,32 @@ namespace SFML.Graphics.Glsl
         ////////////////////////////////////////////////////////////
         public Mat4(Transform transform)
         {
-            fixed (float* m = array)
+            fixed (float* m = _array)
             {
                 // swapping to column-major (OpenGL) from row-major (SFML) order
                 // in addition, filling in the blanks (from expanding to a mat4) with values from
                 // an identity matrix
-                m[0] = transform.m00;
-                m[4] = transform.m01;
+                m[0] = transform.M00;
+                m[4] = transform.M01;
                 m[8] = 0;
-                m[12] = transform.m02;
-                m[1] = transform.m10;
-                m[5] = transform.m11;
+                m[12] = transform.M02;
+                m[1] = transform.M10;
+                m[5] = transform.M11;
                 m[9] = 0;
-                m[13] = transform.m12;
+                m[13] = transform.M12;
                 m[2] = 0;
                 m[6] = 0;
                 m[10] = 1;
                 m[14] = 0;
-                m[3] = transform.m20;
-                m[7] = transform.m21;
+                m[3] = transform.M20;
+                m[7] = transform.M21;
                 m[11] = 0;
-                m[15] = transform.m22;
+                m[15] = transform.M22;
             }
         }
 
         // column major!
-        private fixed float array[4 * 4];
+        private fixed float _array[4 * 4];
     }
     #endregion
 }

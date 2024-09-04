@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace SFML
 {
@@ -17,10 +16,7 @@ namespace SFML
         /// </summary>
         /// <param name="cPointer">Internal pointer to the object in the C libraries</param>
         ////////////////////////////////////////////////////////////
-        public ObjectBase(IntPtr cPointer)
-        {
-            myCPointer = cPointer;
-        }
+        public ObjectBase(IntPtr cPointer) => _cPointer = cPointer;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -44,12 +40,14 @@ namespace SFML
         {
             get
             {
-                if (myCPointer == IntPtr.Zero)
+                if (_cPointer == IntPtr.Zero)
+                {
                     throw new ObjectDisposedException($"This {GetType().Name} instance has been disposed and should not be used.");
+                }
 
-                return myCPointer;
+                return _cPointer;
             }
-            protected set { myCPointer = value; }
+            protected set => _cPointer = value;
         }
 
         ////////////////////////////////////////////////////////////
@@ -58,7 +56,7 @@ namespace SFML
         /// For internal use only
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public bool IsInvalid => myCPointer == IntPtr.Zero;
+        public bool IsInvalid => _cPointer == IntPtr.Zero;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -79,10 +77,10 @@ namespace SFML
         ////////////////////////////////////////////////////////////
         private void Dispose(bool disposing)
         {
-            if (myCPointer != IntPtr.Zero)
+            if (_cPointer != IntPtr.Zero)
             {
                 Destroy(disposing);
-                myCPointer = IntPtr.Zero;
+                _cPointer = IntPtr.Zero;
             }
         }
 
@@ -100,6 +98,6 @@ namespace SFML
         /// <returns>A string representation of the disposed object</returns>
         protected string MakeDisposedObjectString() => $"[{GetType().Name} (disposed)]";
 
-        private IntPtr myCPointer = IntPtr.Zero;
+        private IntPtr _cPointer = IntPtr.Zero;
     }
 }

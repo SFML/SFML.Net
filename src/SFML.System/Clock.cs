@@ -24,10 +24,7 @@ namespace SFML.System
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        protected override void Destroy(bool disposing)
-        {
-            sfClock_destroy(CPointer);
-        }
+        protected override void Destroy(bool disposing) => sfClock_destroy(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -45,17 +42,17 @@ namespace SFML.System
         public Time Restart() => sfClock_restart(CPointer);
 
         #region Imports
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfClock_create();
 
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfClock_destroy(IntPtr CPointer);
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfClock_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Time sfClock_getElapsedTime(IntPtr Clock);
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Time sfClock_getElapsedTime(IntPtr clock);
 
-        [DllImport(CSFML.system, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Time sfClock_restart(IntPtr Clock);
+        [DllImport(CSFML.System, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Time sfClock_restart(IntPtr clock);
         #endregion
     }
 }

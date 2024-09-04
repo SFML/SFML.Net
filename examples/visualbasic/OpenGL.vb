@@ -1,4 +1,3 @@
-Imports System
 Imports System.Runtime.InteropServices
 Imports SFML.System
 Imports SFML.Window
@@ -7,37 +6,38 @@ Imports OpenTK
 Imports OpenTK.Graphics
 Imports OpenTk.Graphics.OpenGL
 
-Module OpenGL
-
-    Dim WithEvents window As RenderWindow
+Friend Module OpenGL
+    Private WithEvents window As RenderWindow
 
     ''' <summary>
     ''' Entry point of application
     ''' </summary>
-    Sub Main()
+    Public Sub Main()
 
         ' Request a 24-bits depth buffer when creating the window
-        Dim contextSettings As New ContextSettings()
-        contextSettings.DepthBits = 24
+        Dim contextSettings As New ContextSettings With {
+            .DepthBits = 24
+        }
 
         ' Create main window
         window = New RenderWindow(New VideoMode(800, 600), "SFML graphics with OpenGL (Visual Basic)", Styles.Default, contextSettings)
         window.SetVerticalSyncEnabled(True)
 
         ' Initialize OpenTK
-        Toolkit.Init()
-        Dim context As GraphicsContext = New GraphicsContext(New ContextHandle(IntPtr.Zero), Nothing)
+        Dim unused1 = Toolkit.Init()
+        Dim context As New GraphicsContext(New ContextHandle(IntPtr.Zero), Nothing)
 
         ' Create a sprite for the background
         Dim background = New Sprite(New Texture("resources/background.jpg"))
 
         ' Create a text to display on top of the OpenGL object
-        Dim text = New Text("SFML / OpenGL demo", New Font("resources/sansation.ttf"))
-        text.Position = New Vector2f(250, 450)
-        text.FillColor = New SFML.Graphics.Color(255, 255, 255, 170)
+        Dim text = New Text("SFML / OpenGL demo", New Font("resources/sansation.ttf")) With {
+            .Position = New Vector2f(250, 450),
+            .FillColor = New SFML.Graphics.Color(255, 255, 255, 170)
+        }
 
         ' Make it the active window for OpenGL calls
-        window.SetActive(True)
+        Dim unused2 = window.SetActive(True)
 
         ' Load an OpenGL texture
         ' We could directly use a SFML.Graphics.Texture as an OpenGL texture (with its Bind() member function),
@@ -131,7 +131,7 @@ Module OpenGL
         Dim clock = New Clock()
 
         ' Start the game loop
-        While (window.IsOpen)
+        While window.IsOpen
 
             ' Process events
             window.DispatchEvents()
@@ -145,8 +145,8 @@ Module OpenGL
             window.PopGLStates()
 
             ' We get the position of the mouse cursor, so that we can move the box accordingly
-            Dim x = Mouse.GetPosition(window).X * 200.0F / window.Size.X - 100.0F
-            Dim y = -Mouse.GetPosition(window).Y * 200.0F / window.Size.Y + 100.0F
+            Dim x = (Mouse.GetPosition(window).X * 200.0F / window.Size.X) - 100.0F
+            Dim y = (-Mouse.GetPosition(window).Y * 200.0F / window.Size.Y) + 100.0F
 
             ' Apply some transformations
             GL.MatrixMode(MatrixMode.Modelview)
@@ -177,7 +177,7 @@ Module OpenGL
     ''' <summary>
     ''' Function called when the window is closed
     ''' </summary>
-    Sub App_Closed(ByVal sender As Object, ByVal e As EventArgs) Handles window.Closed
+    Public Sub App_Closed(sender As Object, e As EventArgs) Handles window.Closed
         Dim window = CType(sender, RenderWindow)
         window.Close()
     End Sub
@@ -185,7 +185,7 @@ Module OpenGL
     ''' <summary>
     ''' Function called when a key is pressed
     ''' </summary>
-    Sub App_KeyPressed(ByVal sender As Object, ByVal e As KeyEventArgs) Handles window.KeyPressed
+    Public Sub App_KeyPressed(sender As Object, e As KeyEventArgs) Handles window.KeyPressed
         Dim window = CType(sender, RenderWindow)
         If e.Code = Keyboard.Key.Escape Then
             window.Close()
@@ -195,7 +195,7 @@ Module OpenGL
     ''' <summary>
     ''' Function called when the window is resized
     ''' </summary>
-    Sub App_Resized(ByVal sender As Object, ByVal e As SizeEventArgs) Handles window.Resized
+    Public Sub App_Resized(sender As Object, e As SizeEventArgs) Handles window.Resized
         GL.Viewport(0, 0, e.Width, e.Height)
     End Sub
 

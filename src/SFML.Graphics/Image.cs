@@ -87,7 +87,7 @@ namespace SFML.Graphics
         public Image(byte[] bytes) :
             base(IntPtr.Zero)
         {
-            GCHandle pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             try
             {
                 CPointer = sfImage_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
@@ -112,14 +112,14 @@ namespace SFML.Graphics
         public Image(Color[,] pixels) :
             base(IntPtr.Zero)
         {
-            uint Width = (uint)pixels.GetLength(0);
-            uint Height = (uint)pixels.GetLength(1);
+            var width = (uint)pixels.GetLength(0);
+            var height = (uint)pixels.GetLength(1);
 
             // Transpose the array (.Net gives dimensions in reverse order of what SFML expects)
-            Color[,] transposed = new Color[Height, Width];
-            for (int x = 0; x < Width; ++x)
+            var transposed = new Color[height, width];
+            for (var x = 0; x < width; ++x)
             {
-                for (int y = 0; y < Height; ++y)
+                for (var y = 0; y < height; ++y)
                 {
                     transposed[y, x] = pixels[x, y];
                 }
@@ -127,9 +127,9 @@ namespace SFML.Graphics
 
             unsafe
             {
-                fixed (Color* PixelsPtr = transposed)
+                fixed (Color* pixelsPtr = transposed)
                 {
-                    CPointer = sfImage_createFromPixels(Width, Height, (byte*)PixelsPtr);
+                    CPointer = sfImage_createFromPixels(width, height, (byte*)pixelsPtr);
                 }
             }
 
@@ -153,9 +153,9 @@ namespace SFML.Graphics
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* pixelsPtr = pixels)
                 {
-                    CPointer = sfImage_createFromPixels(width, height, PixelsPtr);
+                    CPointer = sfImage_createFromPixels(width, height, pixelsPtr);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public bool SaveToMemory(out byte[] output, string format)
         {
-            using (SFML.System.Buffer buffer = new SFML.System.Buffer())
+            using (var buffer = new SFML.System.Buffer())
             {
                 var success = sfImage_saveToMemory(CPointer, buffer.CPointer, format);
 
@@ -215,10 +215,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="color">Color to become transparent</param>
         ////////////////////////////////////////////////////////////
-        public void CreateMaskFromColor(Color color)
-        {
-            CreateMaskFromColor(color, 0);
-        }
+        public void CreateMaskFromColor(Color color) => CreateMaskFromColor(color, 0);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -227,10 +224,7 @@ namespace SFML.Graphics
         /// <param name="color">Color to become transparent</param>
         /// <param name="alpha">Alpha value to use for transparent pixels</param>
         ////////////////////////////////////////////////////////////
-        public void CreateMaskFromColor(Color color, byte alpha)
-        {
-            sfImage_createMaskFromColor(CPointer, color, alpha);
-        }
+        public void CreateMaskFromColor(Color color, byte alpha) => sfImage_createMaskFromColor(CPointer, color, alpha);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -242,10 +236,7 @@ namespace SFML.Graphics
         /// <param name="destX">X coordinate of the destination position</param>
         /// <param name="destY">Y coordinate of the destination position</param>
         ////////////////////////////////////////////////////////////
-        public void Copy(Image source, uint destX, uint destY)
-        {
-            Copy(source, destX, destY, new IntRect(0, 0, 0, 0));
-        }
+        public void Copy(Image source, uint destX, uint destY) => Copy(source, destX, destY, new IntRect(0, 0, 0, 0));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -258,10 +249,7 @@ namespace SFML.Graphics
         /// <param name="destY">Y coordinate of the destination position</param>
         /// <param name="sourceRect">Sub-rectangle of the source image to copy</param>
         ////////////////////////////////////////////////////////////
-        public void Copy(Image source, uint destX, uint destY, IntRect sourceRect)
-        {
-            Copy(source, destX, destY, sourceRect, false);
-        }
+        public void Copy(Image source, uint destX, uint destY, IntRect sourceRect) => Copy(source, destX, destY, sourceRect, false);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -275,10 +263,7 @@ namespace SFML.Graphics
         /// <param name="sourceRect">Sub-rectangle of the source image to copy</param>
         /// <param name="applyAlpha">Should the copy take in account the source transparency?</param>
         ////////////////////////////////////////////////////////////
-        public void Copy(Image source, uint destX, uint destY, IntRect sourceRect, bool applyAlpha)
-        {
-            sfImage_copyImage(CPointer, source.CPointer, destX, destY, sourceRect, applyAlpha);
-        }
+        public void Copy(Image source, uint destX, uint destY, IntRect sourceRect, bool applyAlpha) => sfImage_copyImage(CPointer, source.CPointer, destX, destY, sourceRect, applyAlpha);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -298,10 +283,7 @@ namespace SFML.Graphics
         /// <param name="y">Y coordinate of pixel in the image</param>
         /// <param name="color">New color for pixel (x, y)</param>
         ////////////////////////////////////////////////////////////
-        public void SetPixel(uint x, uint y, Color color)
-        {
-            sfImage_setPixel(CPointer, x, y, color);
-        }
+        public void SetPixel(uint x, uint y, Color color) => sfImage_setPixel(CPointer, x, y, color);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -314,10 +296,10 @@ namespace SFML.Graphics
         {
             get
             {
-                Vector2u size = Size;
-                byte[] PixelsPtr = new byte[size.X * size.Y * 4];
-                Marshal.Copy(sfImage_getPixelsPtr(CPointer), PixelsPtr, 0, PixelsPtr.Length);
-                return PixelsPtr;
+                var size = Size;
+                var pixelsPtr = new byte[size.X * size.Y * 4];
+                Marshal.Copy(sfImage_getPixelsPtr(CPointer), pixelsPtr, 0, pixelsPtr.Length);
+                return pixelsPtr;
             }
         }
 
@@ -333,20 +315,14 @@ namespace SFML.Graphics
         /// Flip the image horizontally
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void FlipHorizontally()
-        {
-            sfImage_flipHorizontally(CPointer);
-        }
+        public void FlipHorizontally() => sfImage_flipHorizontally(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Flip the image vertically
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void FlipVertically()
-        {
-            sfImage_flipVertically(CPointer);
-        }
+        public void FlipVertically() => sfImage_flipVertically(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -357,7 +333,9 @@ namespace SFML.Graphics
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return $"[Image] Size({Size})";
         }
@@ -376,62 +354,59 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        protected override void Destroy(bool disposing)
-        {
-            sfImage_destroy(CPointer);
-        }
+        protected override void Destroy(bool disposing) => sfImage_destroy(CPointer);
 
         #region Imports
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfImage_createFromColor(uint Width, uint Height, Color Col);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfImage_createFromColor(uint width, uint height, Color col);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfImage_createFromPixels(uint Width, uint Height, byte* Pixels);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe IntPtr sfImage_createFromPixels(uint width, uint height, byte* pixels);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfImage_createFromFile(string Filename);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfImage_createFromFile(string filename);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfImage_createFromStream(IntPtr stream);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe IntPtr sfImage_createFromStream(IntPtr stream);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr sfImage_createFromMemory(IntPtr data, UIntPtr size);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe IntPtr sfImage_createFromMemory(IntPtr data, UIntPtr size);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfImage_copy(IntPtr Image);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfImage_copy(IntPtr image);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_destroy(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfImage_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfImage_saveToFile(IntPtr CPointer, string Filename);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfImage_saveToFile(IntPtr cPointer, string filename);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfImage_saveToMemory(IntPtr CPointer, IntPtr bufferOutput, string format);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfImage_saveToMemory(IntPtr cPointer, IntPtr bufferOutput, string format);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_createMaskFromColor(IntPtr CPointer, Color Col, byte Alpha);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfImage_createMaskFromColor(IntPtr cPointer, Color col, byte alpha);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_copyImage(IntPtr CPointer, IntPtr Source, uint DestX, uint DestY, IntRect SourceRect, bool applyAlpha);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfImage_copyImage(IntPtr cPointer, IntPtr source, uint destX, uint destY, IntRect sourceRect, bool applyAlpha);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_setPixel(IntPtr CPointer, uint X, uint Y, Color Col);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfImage_setPixel(IntPtr cPointer, uint x, uint y, Color col);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Color sfImage_getPixel(IntPtr CPointer, uint X, uint Y);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Color sfImage_getPixel(IntPtr cPointer, uint x, uint y);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfImage_getPixelsPtr(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfImage_getPixelsPtr(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2u sfImage_getSize(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2u sfImage_getSize(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_flipHorizontally(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfImage_flipHorizontally(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_flipVertically(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfImage_flipVertically(IntPtr cPointer);
         #endregion
     }
 }

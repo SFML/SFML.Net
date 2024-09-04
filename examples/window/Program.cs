@@ -2,9 +2,9 @@ using System;
 
 namespace window_core
 {
-    static class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             Console.WriteLine("Press ESC key to close window");
             var window = new SimpleWindow();
@@ -14,7 +14,7 @@ namespace window_core
         }
     }
 
-    class SimpleWindow
+    internal class SimpleWindow
     {
         public void Run()
         {

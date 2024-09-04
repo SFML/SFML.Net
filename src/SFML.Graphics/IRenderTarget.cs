@@ -9,7 +9,7 @@ namespace SFML.Graphics
     /// <see cref="RenderWindow"/> or <see cref="RenderTexture"/> instead.
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public interface RenderTarget
+    public interface IRenderTarget
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -161,7 +161,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="drawable">Object to draw</param>
         ////////////////////////////////////////////////////////////
-        void Draw(Drawable drawable);
+        void Draw(IDrawable drawable);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -170,7 +170,7 @@ namespace SFML.Graphics
         /// <param name="drawable">Object to draw</param>
         /// <param name="states">Render states to use for drawing</param>
         ////////////////////////////////////////////////////////////
-        void Draw(Drawable drawable, RenderStates states);
+        void Draw(IDrawable drawable, RenderStates states);
 
         ////////////////////////////////////////////////////////////
         /// <summary>

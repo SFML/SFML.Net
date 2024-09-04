@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -82,10 +80,10 @@ namespace SFML.Window
         /// <summary>
         /// Create the window from an existing control
         /// </summary>
-        /// <param name="Handle">Platform-specific handle of the control</param>
+        /// <param name="handle">Platform-specific handle of the control</param>
         ////////////////////////////////////////////////////////////
-        public WindowBase(IntPtr Handle) :
-            base(sfWindowBase_createFromHandle(Handle))
+        public WindowBase(IntPtr handle) :
+            base(sfWindowBase_createFromHandle(handle))
         {
         }
 
@@ -97,10 +95,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>True if the window is opened</returns>
         ////////////////////////////////////////////////////////////
-        public virtual bool IsOpen
-        {
-            get { return sfWindowBase_isOpen(CPointer); }
-        }
+        public virtual bool IsOpen => sfWindowBase_isOpen(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -109,10 +104,7 @@ namespace SFML.Window
         /// Create to recreate the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public virtual void Close()
-        {
-            sfWindowBase_close(CPointer);
-        }
+        public virtual void Close() => sfWindowBase_close(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -121,8 +113,8 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public virtual Vector2i Position
         {
-            get { return sfWindowBase_getPosition(CPointer); }
-            set { sfWindowBase_setPosition(CPointer, value); }
+            get => sfWindowBase_getPosition(CPointer);
+            set => sfWindowBase_setPosition(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -132,8 +124,8 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public virtual Vector2u Size
         {
-            get { return sfWindowBase_getSize(CPointer); }
-            set { sfWindowBase_setSize(CPointer, value); }
+            get => sfWindowBase_getSize(CPointer);
+            set => sfWindowBase_setSize(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -168,9 +160,9 @@ namespace SFML.Window
         {
             unsafe
             {
-                fixed (byte* PixelsPtr = pixels)
+                fixed (byte* pixelsPtr = pixels)
                 {
-                    sfWindowBase_setIcon(CPointer, width, height, PixelsPtr);
+                    sfWindowBase_setIcon(CPointer, width, height, pixelsPtr);
                 }
             }
         }
@@ -181,10 +173,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="visible">True to show the window, false to hide it</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetVisible(bool visible)
-        {
-            sfWindowBase_setVisible(CPointer, visible);
-        }
+        public virtual void SetVisible(bool visible) => sfWindowBase_setVisible(CPointer, visible);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -192,10 +181,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="show">True to show, false to hide</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetMouseCursorVisible(bool show)
-        {
-            sfWindowBase_setMouseCursorVisible(CPointer, show);
-        }
+        public virtual void SetMouseCursorVisible(bool show) => sfWindowBase_setMouseCursorVisible(CPointer, show);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -212,10 +198,7 @@ namespace SFML.Window
         /// cursor).
         /// </remarks>
         ////////////////////////////////////////////////////////////
-        public virtual void SetMouseCursorGrabbed(bool grabbed)
-        {
-            sfWindowBase_setMouseCursorGrabbed(CPointer, grabbed);
-        }
+        public virtual void SetMouseCursorGrabbed(bool grabbed) => sfWindowBase_setMouseCursorGrabbed(CPointer, grabbed);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -225,10 +208,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="cursor">Native system cursor type to display</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetMouseCursor(Cursor cursor)
-        {
-            sfWindowBase_setMouseCursor(CPointer, cursor.CPointer);
-        }
+        public virtual void SetMouseCursor(Cursor cursor) => sfWindowBase_setMouseCursor(CPointer, cursor.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -242,10 +222,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="enable">True to enable, false to disable</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetKeyRepeatEnabled(bool enable)
-        {
-            sfWindowBase_setKeyRepeatEnabled(CPointer, enable);
-        }
+        public virtual void SetKeyRepeatEnabled(bool enable) => sfWindowBase_setKeyRepeatEnabled(CPointer, enable);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -254,20 +231,14 @@ namespace SFML.Window
         /// </summary>
         /// <param name="threshold">New threshold, in range [0, 100]</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetJoystickThreshold(float threshold)
-        {
-            sfWindowBase_setJoystickThreshold(CPointer, threshold);
-        }
+        public virtual void SetJoystickThreshold(float threshold) => sfWindowBase_setJoystickThreshold(CPointer, threshold);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// OS-specific handle of the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public virtual IntPtr SystemHandle
-        {
-            get { return sfWindowBase_getSystemHandle(CPointer); }
-        }
+        public virtual IntPtr SystemHandle => sfWindowBase_getSystemHandle(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -277,8 +248,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public void WaitAndDispatchEvents()
         {
-            Event e;
-            if (WaitEvent(out e))
+            if (WaitEvent(out var e))
             {
                 CallEventHandler(e);
             }
@@ -291,8 +261,7 @@ namespace SFML.Window
         ////////////////////////////////////////////////////////////
         public void DispatchEvents()
         {
-            Event e;
-            while (PollEvent(out e))
+            while (PollEvent(out var e))
             {
                 CallEventHandler(e);
             }
@@ -304,10 +273,7 @@ namespace SFML.Window
         /// foreground window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public virtual void RequestFocus()
-        {
-            sfWindowBase_requestFocus(CPointer);
-        }
+        public virtual void RequestFocus() => sfWindowBase_requestFocus(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -315,10 +281,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>True if the window has focus, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public virtual bool HasFocus()
-        {
-            return sfWindowBase_hasFocus(CPointer);
-        }
+        public virtual bool HasFocus() => sfWindowBase_hasFocus(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -329,10 +292,7 @@ namespace SFML.Window
         /// <param name="vkAllocator">Allocator to use</param>
         /// <returns>True if surface creation was successful, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public virtual bool CreateVulkanSurface(IntPtr vkInstance, out IntPtr vkSurface, IntPtr vkAllocator)
-        {
-            return sfWindowBase_createVulkanSurface(CPointer, vkInstance, out vkSurface, vkAllocator);
-        }
+        public virtual bool CreateVulkanSurface(IntPtr vkInstance, out IntPtr vkSurface, IntPtr vkAllocator) => sfWindowBase_createVulkanSurface(CPointer, vkInstance, out vkSurface, vkAllocator);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -343,7 +303,9 @@ namespace SFML.Window
         public override string ToString()
         {
             if (IsInvalid)
+            {
                 return MakeDisposedObjectString();
+            }
 
             return "[WindowBase]" +
                    " Size(" + Size + ")" +
@@ -370,10 +332,7 @@ namespace SFML.Window
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
         /// <returns>True if there was an event, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        protected virtual bool PollEvent(out Event eventToFill)
-        {
-            return sfWindowBase_pollEvent(CPointer, out eventToFill);
-        }
+        protected virtual bool PollEvent(out Event eventToFill) => sfWindowBase_pollEvent(CPointer, out eventToFill);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -382,10 +341,7 @@ namespace SFML.Window
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
         /// <returns>False if any error occurred</returns>
         ////////////////////////////////////////////////////////////
-        protected virtual bool WaitEvent(out Event eventToFill)
-        {
-            return sfWindowBase_waitEvent(CPointer, out eventToFill);
-        }
+        protected virtual bool WaitEvent(out Event eventToFill) => sfWindowBase_waitEvent(CPointer, out eventToFill);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -395,10 +351,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>Relative mouse position</returns>
         ////////////////////////////////////////////////////////////
-        protected internal virtual Vector2i InternalGetMousePosition()
-        {
-            return sfMouse_getPositionWindowBase(CPointer);
-        }
+        protected internal virtual Vector2i InternalGetMousePosition() => sfMouse_getPositionWindowBase(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -408,10 +361,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="position">Relative mouse position</param>
         ////////////////////////////////////////////////////////////
-        protected internal virtual void InternalSetMousePosition(Vector2i position)
-        {
-            sfMouse_setPositionWindowBase(position, CPointer);
-        }
+        protected internal virtual void InternalSetMousePosition(Vector2i position) => sfMouse_setPositionWindowBase(position, CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -419,13 +369,10 @@ namespace SFML.Window
         /// This function is protected because it is called by another class of
         /// another module, it is not meant to be called by users.
         /// </summary>
-        /// <param name="Finger">Finger index</param>
+        /// <param name="finger">Finger index</param>
         /// <returns>Relative touch position</returns>
         ////////////////////////////////////////////////////////////
-        protected internal virtual Vector2i InternalGetTouchPosition(uint Finger)
-        {
-            return sfTouch_getPositionWindowBase(Finger, CPointer);
-        }
+        protected internal virtual Vector2i InternalGetTouchPosition(uint finger) => sfTouch_getPositionWindowBase(finger, CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -433,10 +380,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        protected override void Destroy(bool disposing)
-        {
-            sfWindowBase_destroy(CPointer);
-        }
+        protected override void Destroy(bool disposing) => sfWindowBase_destroy(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -449,191 +393,99 @@ namespace SFML.Window
             switch (e.Type)
             {
                 case EventType.Closed:
-                    if (Closed != null)
-                    {
-                        Closed(this, EventArgs.Empty);
-                    }
-
+                    Closed?.Invoke(this, EventArgs.Empty);
                     break;
 
                 case EventType.GainedFocus:
-                    if (GainedFocus != null)
-                    {
-                        GainedFocus(this, EventArgs.Empty);
-                    }
-
+                    GainedFocus?.Invoke(this, EventArgs.Empty);
                     break;
 
                 case EventType.JoystickButtonPressed:
-                    if (JoystickButtonPressed != null)
-                    {
-                        JoystickButtonPressed(this, new JoystickButtonEventArgs(e.JoystickButton));
-                    }
-
+                    JoystickButtonPressed?.Invoke(this, new JoystickButtonEventArgs(e.JoystickButton));
                     break;
 
                 case EventType.JoystickButtonReleased:
-                    if (JoystickButtonReleased != null)
-                    {
-                        JoystickButtonReleased(this, new JoystickButtonEventArgs(e.JoystickButton));
-                    }
-
+                    JoystickButtonReleased?.Invoke(this, new JoystickButtonEventArgs(e.JoystickButton));
                     break;
 
                 case EventType.JoystickMoved:
-                    if (JoystickMoved != null)
-                    {
-                        JoystickMoved(this, new JoystickMoveEventArgs(e.JoystickMove));
-                    }
-
+                    JoystickMoved?.Invoke(this, new JoystickMoveEventArgs(e.JoystickMove));
                     break;
 
                 case EventType.JoystickConnected:
-                    if (JoystickConnected != null)
-                    {
-                        JoystickConnected(this, new JoystickConnectEventArgs(e.JoystickConnect));
-                    }
-
+                    JoystickConnected?.Invoke(this, new JoystickConnectEventArgs(e.JoystickConnect));
                     break;
 
                 case EventType.JoystickDisconnected:
-                    if (JoystickDisconnected != null)
-                    {
-                        JoystickDisconnected(this, new JoystickConnectEventArgs(e.JoystickConnect));
-                    }
-
+                    JoystickDisconnected?.Invoke(this, new JoystickConnectEventArgs(e.JoystickConnect));
                     break;
 
                 case EventType.KeyPressed:
-                    if (KeyPressed != null)
-                    {
-                        KeyPressed(this, new KeyEventArgs(e.Key));
-                    }
-
+                    KeyPressed?.Invoke(this, new KeyEventArgs(e.Key));
                     break;
 
                 case EventType.KeyReleased:
-                    if (KeyReleased != null)
-                    {
-                        KeyReleased(this, new KeyEventArgs(e.Key));
-                    }
-
+                    KeyReleased?.Invoke(this, new KeyEventArgs(e.Key));
                     break;
 
                 case EventType.LostFocus:
-                    if (LostFocus != null)
-                    {
-                        LostFocus(this, EventArgs.Empty);
-                    }
-
+                    LostFocus?.Invoke(this, EventArgs.Empty);
                     break;
 
                 case EventType.MouseButtonPressed:
-                    if (MouseButtonPressed != null)
-                    {
-                        MouseButtonPressed(this, new MouseButtonEventArgs(e.MouseButton));
-                    }
-
+                    MouseButtonPressed?.Invoke(this, new MouseButtonEventArgs(e.MouseButton));
                     break;
 
                 case EventType.MouseButtonReleased:
-                    if (MouseButtonReleased != null)
-                    {
-                        MouseButtonReleased(this, new MouseButtonEventArgs(e.MouseButton));
-                    }
-
+                    MouseButtonReleased?.Invoke(this, new MouseButtonEventArgs(e.MouseButton));
                     break;
 
                 case EventType.MouseEntered:
-                    if (MouseEntered != null)
-                    {
-                        MouseEntered(this, EventArgs.Empty);
-                    }
-
+                    MouseEntered?.Invoke(this, EventArgs.Empty);
                     break;
 
                 case EventType.MouseLeft:
-                    if (MouseLeft != null)
-                    {
-                        MouseLeft(this, EventArgs.Empty);
-                    }
-
+                    MouseLeft?.Invoke(this, EventArgs.Empty);
                     break;
 
                 case EventType.MouseMoved:
-                    if (MouseMoved != null)
-                    {
-                        MouseMoved(this, new MouseMoveEventArgs(e.MouseMove));
-                    }
-
+                    MouseMoved?.Invoke(this, new MouseMoveEventArgs(e.MouseMove));
                     break;
 
                 // Disable CS0618 (Obsolete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
 #pragma warning disable CS0618
                 case EventType.MouseWheelMoved:
-                    if (MouseWheelMoved != null)
-                    {
-                        MouseWheelMoved(this, new MouseWheelEventArgs(e.MouseWheel));
-                    }
-
+                    MouseWheelMoved?.Invoke(this, new MouseWheelEventArgs(e.MouseWheel));
                     break;
                 // restore CS0618
 #pragma warning restore CS0618
 
                 case EventType.MouseWheelScrolled:
-                    if (MouseWheelScrolled != null)
-                    {
-                        MouseWheelScrolled(this, new MouseWheelScrollEventArgs(e.MouseWheelScroll));
-                    }
-
+                    MouseWheelScrolled?.Invoke(this, new MouseWheelScrollEventArgs(e.MouseWheelScroll));
                     break;
 
                 case EventType.Resized:
-                    if (Resized != null)
-                    {
-                        Resized(this, new SizeEventArgs(e.Size));
-                    }
-
+                    Resized?.Invoke(this, new SizeEventArgs(e.Size));
                     break;
 
                 case EventType.TextEntered:
-                    if (TextEntered != null)
-                    {
-                        TextEntered(this, new TextEventArgs(e.Text));
-                    }
-
+                    TextEntered?.Invoke(this, new TextEventArgs(e.Text));
                     break;
 
                 case EventType.TouchBegan:
-                    if (TouchBegan != null)
-                    {
-                        TouchBegan(this, new TouchEventArgs(e.Touch));
-                    }
-
+                    TouchBegan?.Invoke(this, new TouchEventArgs(e.Touch));
                     break;
 
                 case EventType.TouchMoved:
-                    if (TouchMoved != null)
-                    {
-                        TouchMoved(this, new TouchEventArgs(e.Touch));
-                    }
-
+                    TouchMoved?.Invoke(this, new TouchEventArgs(e.Touch));
                     break;
 
                 case EventType.TouchEnded:
-                    if (TouchEnded != null)
-                    {
-                        TouchEnded(this, new TouchEventArgs(e.Touch));
-                    }
-
+                    TouchEnded?.Invoke(this, new TouchEventArgs(e.Touch));
                     break;
 
                 case EventType.SensorChanged:
-                    if (SensorChanged != null)
-                    {
-                        SensorChanged(this, new SensorEventArgs(e.Sensor));
-                    }
-
+                    SensorChanged?.Invoke(this, new SensorEventArgs(e.Sensor));
                     break;
 
                 default:
@@ -642,153 +494,153 @@ namespace SFML.Window
         }
 
         /// <summary>Event handler for the Closed event</summary>
-        public event EventHandler Closed = null;
+        public event EventHandler Closed;
 
         /// <summary>Event handler for the Resized event</summary>
-        public event EventHandler<SizeEventArgs> Resized = null;
+        public event EventHandler<SizeEventArgs> Resized;
 
         /// <summary>Event handler for the LostFocus event</summary>
-        public event EventHandler LostFocus = null;
+        public event EventHandler LostFocus;
 
         /// <summary>Event handler for the GainedFocus event</summary>
-        public event EventHandler GainedFocus = null;
+        public event EventHandler GainedFocus;
 
         /// <summary>Event handler for the TextEntered event</summary>
-        public event EventHandler<TextEventArgs> TextEntered = null;
+        public event EventHandler<TextEventArgs> TextEntered;
 
         /// <summary>Event handler for the KeyPressed event</summary>
-        public event EventHandler<KeyEventArgs> KeyPressed = null;
+        public event EventHandler<KeyEventArgs> KeyPressed;
 
         /// <summary>Event handler for the KeyReleased event</summary>
-        public event EventHandler<KeyEventArgs> KeyReleased = null;
+        public event EventHandler<KeyEventArgs> KeyReleased;
 
         /// <summary>Event handler for the MouseWheelMoved event</summary>
         [Obsolete("Use MouseWheelScrolled")]
-        public event EventHandler<MouseWheelEventArgs> MouseWheelMoved = null;
+        public event EventHandler<MouseWheelEventArgs> MouseWheelMoved;
 
         /// <summary>Event handler for the MouseWheelScrolled event</summary>
-        public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled = null;
+        public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled;
 
         /// <summary>Event handler for the MouseButtonPressed event</summary>
-        public event EventHandler<MouseButtonEventArgs> MouseButtonPressed = null;
+        public event EventHandler<MouseButtonEventArgs> MouseButtonPressed;
 
         /// <summary>Event handler for the MouseButtonReleased event</summary>
-        public event EventHandler<MouseButtonEventArgs> MouseButtonReleased = null;
+        public event EventHandler<MouseButtonEventArgs> MouseButtonReleased;
 
         /// <summary>Event handler for the MouseMoved event</summary>
-        public event EventHandler<MouseMoveEventArgs> MouseMoved = null;
+        public event EventHandler<MouseMoveEventArgs> MouseMoved;
 
         /// <summary>Event handler for the MouseEntered event</summary>
-        public event EventHandler MouseEntered = null;
+        public event EventHandler MouseEntered;
 
         /// <summary>Event handler for the MouseLeft event</summary>
-        public event EventHandler MouseLeft = null;
+        public event EventHandler MouseLeft;
 
         /// <summary>Event handler for the JoystickButtonPressed event</summary>
-        public event EventHandler<JoystickButtonEventArgs> JoystickButtonPressed = null;
+        public event EventHandler<JoystickButtonEventArgs> JoystickButtonPressed;
 
         /// <summary>Event handler for the JoystickButtonReleased event</summary>
-        public event EventHandler<JoystickButtonEventArgs> JoystickButtonReleased = null;
+        public event EventHandler<JoystickButtonEventArgs> JoystickButtonReleased;
 
         /// <summary>Event handler for the JoystickMoved event</summary>
-        public event EventHandler<JoystickMoveEventArgs> JoystickMoved = null;
+        public event EventHandler<JoystickMoveEventArgs> JoystickMoved;
 
         /// <summary>Event handler for the JoystickConnected event</summary>
-        public event EventHandler<JoystickConnectEventArgs> JoystickConnected = null;
+        public event EventHandler<JoystickConnectEventArgs> JoystickConnected;
 
         /// <summary>Event handler for the JoystickDisconnected event</summary>
-        public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected = null;
+        public event EventHandler<JoystickConnectEventArgs> JoystickDisconnected;
 
         /// <summary>Event handler for the TouchBegan event</summary>
-        public event EventHandler<TouchEventArgs> TouchBegan = null;
+        public event EventHandler<TouchEventArgs> TouchBegan;
 
         /// <summary>Event handler for the TouchMoved event</summary>
-        public event EventHandler<TouchEventArgs> TouchMoved = null;
+        public event EventHandler<TouchEventArgs> TouchMoved;
 
         /// <summary>Event handler for the TouchEnded event</summary>
-        public event EventHandler<TouchEventArgs> TouchEnded = null;
+        public event EventHandler<TouchEventArgs> TouchEnded;
 
         /// <summary>Event handler for the SensorChanged event</summary>
-        public event EventHandler<SensorEventArgs> SensorChanged = null;
+        public event EventHandler<SensorEventArgs> SensorChanged;
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindowBase_createUnicode(VideoMode Mode, IntPtr Title, Styles Style);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfWindowBase_createUnicode(VideoMode mode, IntPtr title, Styles style);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindowBase_createFromHandle(IntPtr Handle);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfWindowBase_createFromHandle(IntPtr handle);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_destroy(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_close(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_close(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindowBase_isOpen(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindowBase_isOpen(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindowBase_pollEvent(IntPtr CPointer, out Event Evt);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindowBase_pollEvent(IntPtr cPointer, out Event evt);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindowBase_waitEvent(IntPtr CPointer, out Event Evt);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindowBase_waitEvent(IntPtr cPointer, out Event evt);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfWindowBase_getPosition(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfWindowBase_getPosition(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setPosition(IntPtr CPointer, Vector2i position);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setPosition(IntPtr cPointer, Vector2i position);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2u sfWindowBase_getSize(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2u sfWindowBase_getSize(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setSize(IntPtr CPointer, Vector2u size);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setSize(IntPtr cPointer, Vector2u size);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setUnicodeTitle(IntPtr CPointer, IntPtr title);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setUnicodeTitle(IntPtr cPointer, IntPtr title);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern void sfWindowBase_setIcon(IntPtr CPointer, uint Width, uint Height, byte* Pixels);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfWindowBase_setIcon(IntPtr cPointer, uint width, uint height, byte* pixels);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setVisible(IntPtr CPointer, bool visible);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setVisible(IntPtr cPointer, bool visible);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setMouseCursorVisible(IntPtr CPointer, bool Show);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setMouseCursorVisible(IntPtr cPointer, bool show);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setMouseCursorGrabbed(IntPtr CPointer, bool grabbed);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setMouseCursorGrabbed(IntPtr cPointer, bool grabbed);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setMouseCursor(IntPtr CPointer, IntPtr cursor);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setMouseCursor(IntPtr cPointer, IntPtr cursor);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setKeyRepeatEnabled(IntPtr CPointer, bool Enable);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setKeyRepeatEnabled(IntPtr cPointer, bool enable);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_setJoystickThreshold(IntPtr CPointer, float Threshold);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_setJoystickThreshold(IntPtr cPointer, float threshold);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfWindowBase_requestFocus(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfWindowBase_requestFocus(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindowBase_hasFocus(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindowBase_hasFocus(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindowBase_getSystemHandle(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntPtr sfWindowBase_getSystemHandle(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindowBase_createVulkanSurface(IntPtr CPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfWindowBase_createVulkanSurface(IntPtr cPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfMouse_getPositionWindowBase(IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfMouse_getPositionWindowBase(IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfMouse_setPositionWindowBase(Vector2i position, IntPtr CPointer);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfMouse_setPositionWindowBase(Vector2i position, IntPtr cPointer);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Vector2i sfTouch_getPositionWindowBase(uint Finger, IntPtr RelativeTo);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2i sfTouch_getPositionWindowBase(uint finger, IntPtr relativeTo);
         #endregion
     }
 }

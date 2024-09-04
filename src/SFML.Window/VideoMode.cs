@@ -48,10 +48,7 @@ namespace SFML.Window
         /// </summary>
         /// <returns>True if the video mode is valid, false otherwise</returns>
         ////////////////////////////////////////////////////////////
-        public bool IsValid()
-        {
-            return sfVideoMode_isValid(this);
-        }
+        public bool IsValid() => sfVideoMode_isValid(this);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -64,15 +61,14 @@ namespace SFML.Window
             {
                 unsafe
                 {
-                    UIntPtr Count;
-                    VideoMode* ModesPtr = sfVideoMode_getFullscreenModes(out Count);
-                    VideoMode[] Modes = new VideoMode[(int)Count];
-                    for (int i = 0; i < (int)Count; ++i)
+                    var modesPtr = sfVideoMode_getFullscreenModes(out var count);
+                    var modes = new VideoMode[(int)count];
+                    for (var i = 0; i < (int)count; ++i)
                     {
-                        Modes[i] = ModesPtr[i];
+                        modes[i] = modesPtr[i];
                     }
 
-                    return Modes;
+                    return modes;
                 }
             }
         }
@@ -82,10 +78,7 @@ namespace SFML.Window
         /// Get the current desktop video mode
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public static VideoMode DesktopMode
-        {
-            get { return sfVideoMode_getDesktopMode(); }
-        }
+        public static VideoMode DesktopMode => sfVideoMode_getDesktopMode();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -93,13 +86,10 @@ namespace SFML.Window
         /// </summary>
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
-        public override string ToString()
-        {
-            return "[VideoMode]" +
+        public override string ToString() => "[VideoMode]" +
                    " Width(" + Width + ")" +
                    " Height(" + Height + ")" +
                    " BitsPerPixel(" + BitsPerPixel + ")";
-        }
 
         /// <summary>Video mode width, in pixels</summary>
         public uint Width;
@@ -111,14 +101,14 @@ namespace SFML.Window
         public uint BitsPerPixel;
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern VideoMode sfVideoMode_getDesktopMode();
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern VideoMode* sfVideoMode_getFullscreenModes(out UIntPtr Count);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe VideoMode* sfVideoMode_getFullscreenModes(out UIntPtr count);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfVideoMode_isValid(VideoMode Mode);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern bool sfVideoMode_isValid(VideoMode mode);
         #endregion
     }
 }

@@ -47,7 +47,7 @@ namespace SFML.Window
                 var extensionsPtr = sfVulkan_getGraphicsRequiredInstanceExtensions(out var count);
                 var extensions = new string[(int)count];
 
-                for (int i = 0; i < (int)count; ++i)
+                for (var i = 0; i < (int)count; ++i)
                 {
                     extensions[i] = Marshal.PtrToStringAnsi(extensionsPtr[i]);
                 }
@@ -57,14 +57,14 @@ namespace SFML.Window
         }
 
         #region Imports
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern bool sfVulkan_isAvailable(bool requireGraphics);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfVulkan_getFunction(string name);
 
-        [DllImport(CSFML.window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private unsafe static extern IntPtr* sfVulkan_getGraphicsRequiredInstanceExtensions(out UIntPtr count);
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe IntPtr* sfVulkan_getGraphicsRequiredInstanceExtensions(out UIntPtr count);
         #endregion
     }
 }

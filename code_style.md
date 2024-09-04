@@ -1,5 +1,5 @@
 # Code style
 
-## VS Code references
+Visual Studio and VS Code use the rules defined in [.editorconfig](./.editorconfig) for code style and formatting.
 
-VS Code uses Omnisharp.json instead `.editorconfig` for setting up formatting style. References to setup can be found [here](https://github.com/OmniSharp/omnisharp-roslyn/wiki/Configuration-Options).
+For VS Code, you may need to install [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) and [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) for the configuration to function correctly.

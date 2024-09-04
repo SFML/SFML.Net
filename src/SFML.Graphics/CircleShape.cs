@@ -57,8 +57,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public float Radius
         {
-            get { return myRadius; }
-            set { myRadius = value; Update(); }
+            get => _radius;
+            set { _radius = value; Update(); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>The total point count</returns>
         ////////////////////////////////////////////////////////////
-        public override uint GetPointCount() => myPointCount;
+        public override uint GetPointCount() => _pointCount;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -78,7 +78,7 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public void SetPointCount(uint count)
         {
-            myPointCount = count;
+            _pointCount = count;
             Update();
         }
 
@@ -96,14 +96,14 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public override Vector2f GetPoint(uint index)
         {
-            float angle = (float)( index * 2 * Math.PI / myPointCount - Math.PI / 2 );
-            float x = (float)Math.Cos(angle) * myRadius;
-            float y = (float)Math.Sin(angle) * myRadius;
+            var angle = (float)((index * 2 * Math.PI / _pointCount) - (Math.PI / 2));
+            var x = (float)Math.Cos(angle) * _radius;
+            var y = (float)Math.Sin(angle) * _radius;
 
-            return new Vector2f(myRadius + x, myRadius + y);
+            return new Vector2f(_radius + x, _radius + y);
         }
 
-        private float myRadius;
-        private uint myPointCount;
+        private float _radius;
+        private uint _pointCount;
     }
 }

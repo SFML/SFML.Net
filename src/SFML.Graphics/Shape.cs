@@ -10,7 +10,7 @@ namespace SFML.Graphics
     /// Base class for textured shapes with outline
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public abstract class Shape : Transformable, Drawable
+    public abstract class Shape : Transformable, IDrawable
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -19,8 +19,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Texture Texture
         {
-            get { return myTexture; }
-            set { myTexture = value; sfShape_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
+            get => _texture;
+            set { _texture = value; sfShape_setTexture(CPointer, value != null ? value.CPointer : IntPtr.Zero, false); }
         }
 
         ////////////////////////////////////////////////////////////
@@ -30,8 +30,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public IntRect TextureRect
         {
-            get { return sfShape_getTextureRect(CPointer); }
-            set { sfShape_setTextureRect(CPointer, value); }
+            get => sfShape_getTextureRect(CPointer);
+            set => sfShape_setTextureRect(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -41,8 +41,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Color FillColor
         {
-            get { return sfShape_getFillColor(CPointer); }
-            set { sfShape_setFillColor(CPointer, value); }
+            get => sfShape_getFillColor(CPointer);
+            set => sfShape_setFillColor(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -52,8 +52,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Color OutlineColor
         {
-            get { return sfShape_getOutlineColor(CPointer); }
-            set { sfShape_setOutlineColor(CPointer, value); }
+            get => sfShape_getOutlineColor(CPointer);
+            set => sfShape_setOutlineColor(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -63,8 +63,8 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public float OutlineThickness
         {
-            get { return sfShape_getOutlineThickness(CPointer); }
-            set { sfShape_setOutlineThickness(CPointer, value); }
+            get => sfShape_getOutlineThickness(CPointer);
+            set => sfShape_setOutlineThickness(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -101,10 +101,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Local bounding rectangle of the entity</returns>
         ////////////////////////////////////////////////////////////
-        public FloatRect GetLocalBounds()
-        {
-            return sfShape_getLocalBounds(CPointer);
-        }
+        public FloatRect GetLocalBounds() => sfShape_getLocalBounds(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -118,12 +115,10 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Global bounding rectangle of the entity</returns>
         ////////////////////////////////////////////////////////////
-        public FloatRect GetGlobalBounds()
-        {
+        public FloatRect GetGlobalBounds() =>
             // we don't use the native getGlobalBounds function,
             // because we override the object's transform
-            return Transform.TransformRect(GetLocalBounds());
-        }
+            Transform.TransformRect(GetLocalBounds());
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -132,18 +127,18 @@ namespace SFML.Graphics
         /// <param name="target">Render target to draw to</param>
         /// <param name="states">Current render states</param>
         ////////////////////////////////////////////////////////////
-        public void Draw(RenderTarget target, RenderStates states)
+        public void Draw(IRenderTarget target, RenderStates states)
         {
             states.Transform *= Transform;
-            RenderStates.MarshalData marshaledStates = states.Marshal();
+            var marshaledStates = states.Marshal();
 
-            if (target is RenderWindow)
+            if (target is RenderWindow window)
             {
-                sfRenderWindow_drawShape(( (RenderWindow)target ).CPointer, CPointer, ref marshaledStates);
+                sfRenderWindow_drawShape(window.CPointer, CPointer, ref marshaledStates);
             }
-            else if (target is RenderTexture)
+            else if (target is RenderTexture texture)
             {
-                sfRenderTexture_drawShape(( (RenderTexture)target ).CPointer, CPointer, ref marshaledStates);
+                sfRenderTexture_drawShape(texture.CPointer, CPointer, ref marshaledStates);
             }
         }
 
@@ -155,9 +150,9 @@ namespace SFML.Graphics
         protected Shape() :
             base(IntPtr.Zero)
         {
-            myGetPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
-            myGetPointCallback = new GetPointCallbackType(InternalGetPoint);
-            CPointer = sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero);
+            _getPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
+            _getPointCallback = new GetPointCallbackType(InternalGetPoint);
+            CPointer = sfShape_create(_getPointCountCallback, _getPointCallback, IntPtr.Zero);
         }
 
         ////////////////////////////////////////////////////////////
@@ -169,9 +164,9 @@ namespace SFML.Graphics
         public Shape(Shape copy) :
             base(IntPtr.Zero)
         {
-            myGetPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
-            myGetPointCallback = new GetPointCallbackType(InternalGetPoint);
-            CPointer = sfShape_create(myGetPointCountCallback, myGetPointCallback, IntPtr.Zero);
+            _getPointCountCallback = new GetPointCountCallbackType(InternalGetPointCount);
+            _getPointCallback = new GetPointCallbackType(InternalGetPoint);
+            CPointer = sfShape_create(_getPointCountCallback, _getPointCallback, IntPtr.Zero);
 
             Origin = copy.Origin;
             Position = copy.Position;
@@ -194,10 +189,7 @@ namespace SFML.Graphics
         /// PointCount or GetPoint is different).
         /// </summary>
         ////////////////////////////////////////////////////////////
-        protected void Update()
-        {
-            sfShape_update(CPointer);
-        }
+        protected void Update() => sfShape_update(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -205,87 +197,78 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
         ////////////////////////////////////////////////////////////
-        protected override void Destroy(bool disposing)
-        {
-            sfShape_destroy(CPointer);
-        }
+        protected override void Destroy(bool disposing) => sfShape_destroy(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Callback passed to the C API
         /// </summary>
         ////////////////////////////////////////////////////////////
-        private UIntPtr InternalGetPointCount(IntPtr userData)
-        {
-            return (UIntPtr)GetPointCount();
-        }
+        private UIntPtr InternalGetPointCount(IntPtr userData) => (UIntPtr)GetPointCount();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Callback passed to the C API
         /// </summary>
         ////////////////////////////////////////////////////////////
-        private Vector2f InternalGetPoint(UIntPtr index, IntPtr userData)
-        {
-            return GetPoint((uint)index);
-        }
+        private Vector2f InternalGetPoint(UIntPtr index, IntPtr userData) => GetPoint((uint)index);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate UIntPtr GetPointCountCallbackType(IntPtr UserData);
+        private delegate UIntPtr GetPointCountCallbackType(IntPtr userData);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate Vector2f GetPointCallbackType(UIntPtr index, IntPtr UserData);
+        private delegate Vector2f GetPointCallbackType(UIntPtr index, IntPtr userData);
 
-        private readonly GetPointCountCallbackType myGetPointCountCallback;
-        private readonly GetPointCallbackType myGetPointCallback;
+        private readonly GetPointCountCallbackType _getPointCountCallback;
+        private readonly GetPointCallbackType _getPointCallback;
 
-        private Texture myTexture = null;
+        private Texture _texture;
 
         #region Imports
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfShape_create(GetPointCountCallbackType getPointCount, GetPointCallbackType getPoint, IntPtr userData);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_destroy(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_destroy(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_setTexture(IntPtr CPointer, IntPtr Texture, bool AdjustToNewSize);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_setTexture(IntPtr cPointer, IntPtr texture, bool adjustToNewSize);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_setTextureRect(IntPtr CPointer, IntRect Rect);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_setTextureRect(IntPtr cPointer, IntRect rect);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntRect sfShape_getTextureRect(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntRect sfShape_getTextureRect(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_setFillColor(IntPtr CPointer, Color Color);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_setFillColor(IntPtr cPointer, Color color);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Color sfShape_getFillColor(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Color sfShape_getFillColor(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_setOutlineColor(IntPtr CPointer, Color Color);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_setOutlineColor(IntPtr cPointer, Color color);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Color sfShape_getOutlineColor(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Color sfShape_getOutlineColor(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_setOutlineThickness(IntPtr CPointer, float Thickness);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_setOutlineThickness(IntPtr cPointer, float thickness);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern float sfShape_getOutlineThickness(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfShape_getOutlineThickness(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern FloatRect sfShape_getLocalBounds(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern FloatRect sfShape_getLocalBounds(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfShape_update(IntPtr CPointer);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfShape_update(IntPtr cPointer);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderWindow_drawShape(IntPtr CPointer, IntPtr Shape, ref RenderStates.MarshalData states);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderWindow_drawShape(IntPtr cPointer, IntPtr shape, ref RenderStates.MarshalData states);
 
-        [DllImport(CSFML.graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfRenderTexture_drawShape(IntPtr CPointer, IntPtr Shape, ref RenderStates.MarshalData states);
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_drawShape(IntPtr cPointer, IntPtr shape, ref RenderStates.MarshalData states);
         #endregion
     }
 }
