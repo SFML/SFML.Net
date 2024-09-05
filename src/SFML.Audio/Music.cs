@@ -74,15 +74,14 @@ namespace SFML.Audio
         public Music(byte[] bytes) :
             base(IntPtr.Zero)
         {
-            var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                CPointer = sfMusic_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
+                fixed (void* ptr = bytes)
+                {
+                    CPointer = sfMusic_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
+                }
             }
-            finally
-            {
-                pin.Free();
-            }
+
             if (IsInvalid)
             {
                 throw new LoadingFailedException("music");
