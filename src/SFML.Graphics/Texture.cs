@@ -205,21 +205,19 @@ namespace SFML.Graphics
         public Texture(byte[] bytes, IntRect area, bool srgb = false) :
             base(IntPtr.Zero)
         {
-            var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                if (srgb)
+                fixed (void* ptr = bytes)
                 {
-                    CPointer = sfTexture_createSrgbFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
+                    if (srgb)
+                    {
+                        CPointer = sfTexture_createSrgbFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length, ref area);
+                    }
+                    else
+                    {
+                        CPointer = sfTexture_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length, ref area);
+                    }
                 }
-                else
-                {
-                    CPointer = sfTexture_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length, ref area);
-                }
-            }
-            finally
-            {
-                pin.Free();
             }
 
             if (IsInvalid)

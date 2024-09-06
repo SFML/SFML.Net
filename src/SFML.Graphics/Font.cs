@@ -62,15 +62,14 @@ namespace SFML.Graphics
         public Font(byte[] bytes) :
             base(IntPtr.Zero)
         {
-            var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                CPointer = sfFont_createFromMemory(pin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
+                fixed (void* ptr = bytes)
+                {
+                    CPointer = sfFont_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
+                }
             }
-            finally
-            {
-                pin.Free();
-            }
+
             if (IsInvalid)
             {
                 throw new LoadingFailedException("font");
