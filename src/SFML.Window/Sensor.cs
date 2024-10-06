@@ -34,11 +34,15 @@ namespace SFML.Window
             UserAcceleration,
 
             /// <summary>Measures the absolute 3D orientation (degrees)</summary>
-            Orientation,
-
-            /// <summary>Keep last -- the total number of sensor types</summary>
-            TypeCount
+            Orientation
         };
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// The total number of sensor types
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static readonly uint Count = (uint)Type.Orientation + 1;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -69,6 +73,7 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfSensor_isAvailable(Type sensor);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

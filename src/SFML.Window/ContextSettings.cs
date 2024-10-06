@@ -74,7 +74,7 @@ namespace SFML.Window
             MajorVersion = majorVersion;
             MinorVersion = minorVersion;
             AttributeFlags = attributes;
-            _srgbCapable = sRgbCapable ? 1 : 0;
+            SRgbCapable = sRgbCapable;
         }
 
         ////////////////////////////////////////////////////////////
@@ -84,13 +84,13 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[ContextSettings]" +
-                   " DepthBits(" + DepthBits + ")" +
-                   " StencilBits(" + StencilBits + ")" +
-                   " AntialiasingLevel(" + AntialiasingLevel + ")" +
-                   " MajorVersion(" + MajorVersion + ")" +
-                   " MinorVersion(" + MinorVersion + ")" +
-                   " AttributeFlags(" + AttributeFlags + ")" +
-                   " SRgbCapable(" + SRgbCapable + ")";
+                   $" DepthBits({DepthBits})" +
+                   $" StencilBits({StencilBits})" +
+                   $" AntialiasingLevel({AntialiasingLevel})" +
+                   $" MajorVersion({MajorVersion})" +
+                   $" MinorVersion({MinorVersion})" +
+                   $" AttributeFlags({AttributeFlags})" +
+                   $" SRgbCapable({SRgbCapable})";
 
         /// <summary>Depth buffer bits (0 is disabled)</summary>
         public uint DepthBits;
@@ -110,14 +110,8 @@ namespace SFML.Window
         /// <summary>The attribute flags to create the context with</summary>
         public Attribute AttributeFlags;
 
-        /// <summary>Internal Representation</summary>
-        private int _srgbCapable;
-
         /// <summary>Whether the context framebuffer is sRGB capable</summary>
-        public bool SRgbCapable
-        {
-            get => _srgbCapable == 1;
-            set => _srgbCapable = value ? 1 : 0;
-        }
+        [MarshalAs(UnmanagedType.I1)]
+        public bool SRgbCapable;
     }
 }

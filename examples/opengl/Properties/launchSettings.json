@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "opengl": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

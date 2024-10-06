@@ -2,6 +2,8 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+// TODO REIMPLEMENT WITH 4x4 MATRIX
+
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -56,16 +58,6 @@ namespace SFML.Graphics
         /// <summary>
         /// Transform a 2D point.
         /// </summary>
-        /// <param name="x">X coordinate of the point to transform</param>
-        /// <param name="y">Y coordinate of the point to transform</param>
-        /// <returns>Transformed point</returns>
-        ////////////////////////////////////////////////////////////
-        public Vector2f TransformPoint(float x, float y) => TransformPoint(new Vector2f(x, y));
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Transform a 2D point.
-        /// </summary>
         /// <param name="point">Point to transform</param>
         /// <returns>Transformed point</returns>
         ////////////////////////////////////////////////////////////
@@ -102,41 +94,17 @@ namespace SFML.Graphics
         /// <summary>
         /// Combine the current transform with a translation.
         /// </summary>
-        /// <param name="x">Offset to apply on X axis</param>
-        /// <param name="y">Offset to apply on Y axis</param>
-        ////////////////////////////////////////////////////////////
-        public void Translate(float x, float y) => sfTransform_translate(ref this, x, y);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Combine the current transform with a translation.
-        /// </summary>
         /// <param name="offset">Translation offset to apply</param>
         ////////////////////////////////////////////////////////////
-        public void Translate(Vector2f offset) => Translate(offset.X, offset.Y);
+        public void Translate(Vector2f offset) => sfTransform_translate(ref this, offset);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Combine the current transform with a rotation.
         /// </summary>
-        /// <param name="angle">Rotation angle, in degrees</param>
+        /// <param name="angle">Rotation angle</param>
         ////////////////////////////////////////////////////////////
-        public void Rotate(float angle) => sfTransform_rotate(ref this, angle);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Combine the current transform with a rotation.
-        /// 
-        /// The center of rotation is provided for convenience as a second
-        /// argument, so that you can build rotations around arbitrary points
-        /// more easily (and efficiently) than the usual
-        /// Translate(-center); Rotate(angle); Translate(center).
-        /// </summary>
-        /// <param name="angle">Rotation angle, in degrees</param>
-        /// <param name="centerX">X coordinate of the center of rotation</param>
-        /// <param name="centerY">Y coordinate of the center of rotation</param>
-        ////////////////////////////////////////////////////////////
-        public void Rotate(float angle, float centerX, float centerY) => sfTransform_rotateWithCenter(ref this, angle, centerX, centerY);
+        public void Rotate(Angle angle) => sfTransform_rotate(ref this, angle.Degrees);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -147,35 +115,10 @@ namespace SFML.Graphics
         /// more easily (and efficiently) than the usual
         /// Translate(-center); Rotate(angle); Translate(center).
         /// </summary>
-        /// <param name="angle">Rotation angle, in degrees</param>
+        /// <param name="angle">Rotation angle</param>
         /// <param name="center">Center of rotation</param>
         ////////////////////////////////////////////////////////////
-        public void Rotate(float angle, Vector2f center) => Rotate(angle, center.X, center.Y);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Combine the current transform with a scaling.
-        /// </summary>
-        /// <param name="scaleX">Scaling factor on the X axis</param>
-        /// <param name="scaleY">Scaling factor on the Y axis</param>
-        ////////////////////////////////////////////////////////////
-        public void Scale(float scaleX, float scaleY) => sfTransform_scale(ref this, scaleX, scaleY);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Combine the current transform with a scaling.
-        /// 
-        /// The center of scaling is provided for convenience as a second
-        /// argument, so that you can build scaling around arbitrary points
-        /// more easily (and efficiently) than the usual
-        /// Translate(-center); Scale(factors); Translate(center).
-        /// </summary>
-        /// <param name="scaleX">Scaling factor on X axis</param>
-        /// <param name="scaleY">Scaling factor on Y axis</param>
-        /// <param name="centerX">X coordinate of the center of scaling</param>
-        /// <param name="centerY">Y coordinate of the center of scaling</param>
-        ////////////////////////////////////////////////////////////
-        public void Scale(float scaleX, float scaleY, float centerX, float centerY) => sfTransform_scaleWithCenter(ref this, scaleX, scaleY, centerX, centerY);
+        public void Rotate(Angle angle, Vector2f center) => sfTransform_rotateWithCenter(ref this, angle.Degrees, center);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -183,7 +126,7 @@ namespace SFML.Graphics
         /// </summary>
         /// <param name="factors">Scaling factors</param>
         ////////////////////////////////////////////////////////////
-        public void Scale(Vector2f factors) => Scale(factors.X, factors.Y);
+        public void Scale(Vector2f factors) => sfTransform_scale(ref this, factors);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -197,7 +140,7 @@ namespace SFML.Graphics
         /// <param name="factors">Scaling factors</param>
         /// <param name="center">Center of scaling</param>
         ////////////////////////////////////////////////////////////
-        public void Scale(Vector2f factors, Vector2f center) => Scale(factors.X, factors.Y, center.X, center.Y);
+        public void Scale(Vector2f factors, Vector2f center) => sfTransform_scaleWithCenter(ref this, factors, center);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -206,7 +149,7 @@ namespace SFML.Graphics
         /// <param name="obj">Object to check</param>
         /// <returns>Object and transform are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => (obj is Transform) && Equals((Transform)obj);
+        public override bool Equals(object obj) => (obj is Transform transform) && Equals(transform);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -300,21 +243,22 @@ namespace SFML.Graphics
         private static extern void sfTransform_combine(ref Transform transform, ref Transform other);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTransform_translate(ref Transform transform, float x, float y);
+        private static extern void sfTransform_translate(ref Transform transform, Vector2f offset);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfTransform_rotate(ref Transform transform, float angle);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTransform_rotateWithCenter(ref Transform transform, float angle, float centerX, float centerY);
+        private static extern void sfTransform_rotateWithCenter(ref Transform transform, float angle, Vector2f center);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTransform_scale(ref Transform transform, float scaleX, float scaleY);
+        private static extern void sfTransform_scale(ref Transform transform, Vector2f scale);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfTransform_scaleWithCenter(ref Transform transform, float scaleX, float scaleY, float centerX, float centerY);
+        private static extern void sfTransform_scaleWithCenter(ref Transform transform, Vector2f scale, Vector2f center);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfTransform_equal(ref Transform left, ref Transform right);
         #endregion
     }

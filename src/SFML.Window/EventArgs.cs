@@ -1,4 +1,5 @@
 using System;
+using SFML.System;
 
 namespace SFML.Window
 {
@@ -19,10 +20,10 @@ namespace SFML.Window
         {
             Code = e.Code;
             Scancode = e.Scancode;
-            Alt = e.Alt != 0;
-            Control = e.Control != 0;
-            Shift = e.Shift != 0;
-            System = e.System != 0;
+            Alt = e.Alt;
+            Control = e.Control;
+            Shift = e.Shift;
+            System = e.System;
         }
 
         ////////////////////////////////////////////////////////////
@@ -71,7 +72,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="e">Text event</param>
         ////////////////////////////////////////////////////////////
-        public TextEventArgs(TextEvent e) => Unicode = Char.ConvertFromUtf32((int)e.Unicode);
+        public TextEventArgs(TextEvent e) => Unicode = char.ConvertFromUtf32((int)e.Unicode);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -99,11 +100,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="e">Mouse move event</param>
         ////////////////////////////////////////////////////////////
-        public MouseMoveEventArgs(MouseMoveEvent e)
-        {
-            X = e.X;
-            Y = e.Y;
-        }
+        public MouseMoveEventArgs(MouseMoveEvent e) => Position = e.Position;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -112,14 +109,38 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[MouseMoveEventArgs]" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")";
+                   $" Position({Position.X}, {Position.Y})";
 
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
+        /// <summary>Coordinates of the mouse cursor</summary>
+        public Vector2i Position;
+    }
 
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Mouse move raw event parameters
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public class MouseMoveRawEventArgs : EventArgs
+    {
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Construct the mouse move raw arguments from a mouse move raw event
+        /// </summary>
+        /// <param name="e">Mouse move event</param>
+        ////////////////////////////////////////////////////////////
+        public MouseMoveRawEventArgs(MouseMoveRawEvent e) => Delta = e.Delta;
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Provide a string describing the object
+        /// </summary>
+        /// <returns>String description of the object</returns>
+        ////////////////////////////////////////////////////////////
+        public override string ToString() => "[MouseMoveRawEventArgs]" +
+                   $" Delta({Delta.X}, {Delta.Y})";
+
+        /// <summary>Delta movement of the mouse since last event</summary>
+        public Vector2i Delta;
     }
 
     ////////////////////////////////////////////////////////////
@@ -138,8 +159,7 @@ namespace SFML.Window
         public MouseButtonEventArgs(MouseButtonEvent e)
         {
             Button = e.Button;
-            X = e.X;
-            Y = e.Y;
+            Position = e.Position;
         }
 
         ////////////////////////////////////////////////////////////
@@ -149,60 +169,14 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[MouseButtonEventArgs]" +
-                   " Button(" + Button + ")" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")";
+                   $" Button({Button})" +
+                   $" Position({Position.X}, {Position.Y})";
 
         /// <summary>Code of the button (see MouseButton enum)</summary>
         public Mouse.Button Button;
 
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
-
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
-    }
-
-    ////////////////////////////////////////////////////////////
-    /// <summary>
-    /// Mouse wheel event parameters
-    /// </summary>
-    ////////////////////////////////////////////////////////////
-    [Obsolete("Use MouseWheelScrollEventArgs")]
-    public class MouseWheelEventArgs : EventArgs
-    {
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Construct the mouse wheel arguments from a mouse wheel event
-        /// </summary>
-        /// <param name="e">Mouse wheel event</param>
-        ////////////////////////////////////////////////////////////
-        public MouseWheelEventArgs(MouseWheelEvent e)
-        {
-            Delta = e.Delta;
-            X = e.X;
-            Y = e.Y;
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Provide a string describing the object
-        /// </summary>
-        /// <returns>String description of the object</returns>
-        ////////////////////////////////////////////////////////////
-        public override string ToString() => "[MouseWheelEventArgs]" +
-                   " Delta(" + Delta + ")" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")";
-
-        /// <summary>Scroll amount</summary>
-        public int Delta;
-
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
-
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
+        /// <summary>Coordinates of the mouse cursor</summary>
+        public Vector2i Position;
     }
 
     ////////////////////////////////////////////////////////////
@@ -222,8 +196,7 @@ namespace SFML.Window
         {
             Delta = e.Delta;
             Wheel = e.Wheel;
-            X = e.X;
-            Y = e.Y;
+            Position = e.Position;
         }
 
         ////////////////////////////////////////////////////////////
@@ -233,10 +206,9 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[MouseWheelScrollEventArgs]" +
-                   " Wheel(" + Wheel + ")" +
-                   " Delta(" + Delta + ")" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")";
+                   $" Wheel({Wheel})" +
+                   $" Delta({Delta})" +
+                   $" Position(${Position.X}, {Position.Y})";
 
         /// <summary>Mouse Wheel which triggered the event</summary>
         public Mouse.Wheel Wheel;
@@ -244,11 +216,8 @@ namespace SFML.Window
         /// <summary>Scroll amount</summary>
         public float Delta;
 
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
-
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
+        /// <summary>Coordinate of the mouse cursor</summary>
+        public Vector2i Position;
     }
 
     ////////////////////////////////////////////////////////////
@@ -278,9 +247,9 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[JoystickMoveEventArgs]" +
-                   " JoystickId(" + JoystickId + ")" +
-                   " Axis(" + Axis + ")" +
-                   " Position(" + Position + ")";
+                   $" JoystickId({JoystickId})" +
+                   $" Axis({Axis})" +
+                   $" Position({Position})";
 
         /// <summary>Index of the joystick which triggered the event</summary>
         public uint JoystickId;
@@ -318,8 +287,8 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[JoystickButtonEventArgs]" +
-                   " JoystickId(" + JoystickId + ")" +
-                   " Button(" + Button + ")";
+                   $" JoystickId({JoystickId})" +
+                   $" Button({Button})";
 
         /// <summary>Index of the joystick which triggered the event</summary>
         public uint JoystickId;
@@ -350,7 +319,7 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[JoystickConnectEventArgs]" +
-                   " JoystickId(" + JoystickId + ")";
+                   $" JoystickId({JoystickId})";
 
         /// <summary>Index of the joystick which triggered the event</summary>
         public uint JoystickId;
@@ -369,11 +338,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="e">Size event</param>
         ////////////////////////////////////////////////////////////
-        public SizeEventArgs(SizeEvent e)
-        {
-            Width = e.Width;
-            Height = e.Height;
-        }
+        public SizeEventArgs(SizeEvent e) => Size = e.Size;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -382,14 +347,10 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[SizeEventArgs]" +
-                   " Width(" + Width + ")" +
-                   " Height(" + Height + ")";
+                   $" Size({Size.X}, {Size.Y})";
 
-        /// <summary>New width of the window</summary>
-        public uint Width;
-
-        /// <summary>New height of the window</summary>
-        public uint Height;
+        /// <summary>New size of the window</summary>
+        public Vector2u Size;
     }
 
     ////////////////////////////////////////////////////////////
@@ -408,8 +369,7 @@ namespace SFML.Window
         public TouchEventArgs(TouchEvent e)
         {
             Finger = e.Finger;
-            X = e.X;
-            Y = e.Y;
+            Position = e.Position;
         }
 
         ////////////////////////////////////////////////////////////
@@ -419,18 +379,14 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[TouchEventArgs]" +
-                   " Finger(" + Finger + ")" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")";
+                   $" Finger({Finger})" +
+                   $" Position({Position.X}, {Position.Y})";
 
         /// <summary>Index of the finger in case of multi-touch events</summary>
         public uint Finger;
 
-        /// <summary>X position of the touch, relative to the left of the owner window</summary>
-        public int X;
-
-        /// <summary>Y position of the touch, relative to the top of the owner window</summary>
-        public int Y;
+        /// <summary>Position of the touch, relative to the left of the owner window</summary>
+        public Vector2i Position;
     }
 
     ////////////////////////////////////////////////////////////
@@ -449,9 +405,7 @@ namespace SFML.Window
         public SensorEventArgs(SensorEvent e)
         {
             Type = e.Type;
-            X = e.X;
-            Y = e.Y;
-            Z = e.Z;
+            Value = e.Value;
         }
 
         ////////////////////////////////////////////////////////////
@@ -461,21 +415,13 @@ namespace SFML.Window
         /// <returns>String description of the object</returns>
         ////////////////////////////////////////////////////////////
         public override string ToString() => "[SensorEventArgs]" +
-                   " Type(" + Type + ")" +
-                   " X(" + X + ")" +
-                   " Y(" + Y + ")" +
-                   " Z(" + Z + ")";
+                   $" Type({Type})" +
+                   $" Value({Value.X}, {Value.Y}, {Value.Z})";
 
         /// <summary>Type of the sensor</summary>
         public Sensor.Type Type;
 
-        /// <summary>Current value of the sensor on X axis</summary>
-        public float X;
-
-        /// <summary>Current value of the sensor on Y axis</summary>
-        public float Y;
-
-        /// <summary>Current value of the sensor on Z axis</summary>
-        public float Z;
+        /// <summary>Current value of the sensor on X, Y and Z axes</summary>
+        public Vector3f Value;
     }
 }

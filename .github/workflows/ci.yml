@@ -46,6 +46,10 @@ jobs:
         run: dotnet restore
       - name: Build SFML.Net
         run: dotnet build --configuration Release --no-restore
+        # FIXME: Run tests on .NET 7 / 8 / 9
+      - name: Test SFML.Net
+        if: matrix.dotnet.name == '.NET 6'
+        run: dotnet test --configuration Release --no-restore
       - name: Pack SFML.Net
         run: dotnet pack --configuration Release -o Publish
 

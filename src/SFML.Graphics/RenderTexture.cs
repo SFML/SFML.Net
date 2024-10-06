@@ -17,31 +17,11 @@ namespace SFML.Graphics
         /// <summary>
         /// Create the render-texture with the given dimensions
         /// </summary>
-        /// <param name="width">Width of the render-texture</param>
-        /// <param name="height">Height of the render-texture</param>
+        /// <param name="size">Width and height of the render-texture</param>
         ////////////////////////////////////////////////////////////
-        public RenderTexture(uint width, uint height) :
-            this(width, height, default(ContextSettings))
+        public RenderTexture(Vector2u size) :
+            this(size, default)
         {
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Create the render-texture with the given dimensions and
-        /// an optional depth-buffer attached
-        /// </summary>
-        /// <param name="width">Width of the render-texture</param>
-        /// <param name="height">Height of the render-texture</param>
-        /// <param name="depthBuffer">Do you want a depth-buffer attached?</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use RenderTexture(width, height, contextSettings)")]
-        public RenderTexture(uint width, uint height, bool depthBuffer) :
-            base(sfRenderTexture_create(width, height, depthBuffer))
-        {
-            _defaultView = new View(sfRenderTexture_getDefaultView(CPointer));
-            Texture = new Texture(sfRenderTexture_getTexture(CPointer));
-            GC.SuppressFinalize(_defaultView);
-            GC.SuppressFinalize(Texture);
         }
 
         ////////////////////////////////////////////////////////////
@@ -49,12 +29,11 @@ namespace SFML.Graphics
         /// Create the render-texture with the given dimensions and
         /// a ContextSettings.
         /// </summary>
-        /// <param name="width">Width of the render-texture</param>
-        /// <param name="height">Height of the render-texture</param>
+        /// <param name="size">Width and height of the render-texture</param>
         /// <param name="contextSettings">A ContextSettings struct representing settings for the RenderTexture</param>
         ////////////////////////////////////////////////////////////
-        public RenderTexture(uint width, uint height, ContextSettings contextSettings) :
-            base(sfRenderTexture_createWithSettings(width, height, ref contextSettings))
+        public RenderTexture(Vector2u size, ContextSettings contextSettings) :
+            base(sfRenderTexture_create(size, ref contextSettings))
         {
             _defaultView = new View(sfRenderTexture_getDefaultView(CPointer));
             Texture = new Texture(sfRenderTexture_getTexture(CPointer));
@@ -133,6 +112,20 @@ namespace SFML.Graphics
         /// <returns>Viewport rectangle, expressed in pixels in the current target</returns>
         ////////////////////////////////////////////////////////////
         public IntRect GetViewport(View view) => sfRenderTexture_getViewport(CPointer, view.CPointer);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the scissor rectangle of a view, applied to this render target
+        /// <para/>
+        /// The scissor rectangle is defined in the view as a ratio. This
+        /// function simply applies this ratio to the current dimensions
+        /// of the render target to calculate the pixels rectangle
+        /// that the scissor rectangle actually covers in the target.
+        /// </summary>
+        /// <param name="view">The view for which we want to compute the scissor rectangle</param>
+        /// <returns>Scissor rectangle, expressed in pixels</returns>
+        ////////////////////////////////////////////////////////////
+        public IntRect GetScissor(View view) => sfRenderTexture_getScissor(CPointer, view.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -252,6 +245,29 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Clear the entire target with a single color and stencil value
+        /// <para/>
+        /// The specified stencil value is truncated to the bit
+        /// width of the current stencil buffer.
+        /// </summary>
+        /// <param name="color">Fill color to use to clear the render target</param> 
+        /// <param name="stencilValue">Stencil value to clear to</param>
+        ////////////////////////////////////////////////////////////
+        public void Clear(Color color, StencilValue stencilValue) => sfRenderTexture_clearColorAndStencil(CPointer, color, stencilValue);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Clear the stencil buffer to a specific value
+        /// <para/>
+        /// The specified value is truncated to the bit width of
+        /// the current stencil buffer.
+        /// </summary>
+        /// <param name="stencilValue">Stencil value to clear to</param>
+        ////////////////////////////////////////////////////////////
+        public void ClearStencil(StencilValue stencilValue) => sfRenderTexture_clearStencil(CPointer, stencilValue);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Update the contents of the target texture
         /// </summary>
         ////////////////////////////////////////////////////////////
@@ -269,7 +285,7 @@ namespace SFML.Graphics
         /// The maximum anti-aliasing level supported by the system
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public static uint MaximumAntialiasingLevel => sfRenderTexture_getMaximumAntialiasingLevel();
+        public static uint MaximumAntiAliasingLevel => sfRenderTexture_getMaximumAntiAliasingLevel();
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -467,11 +483,8 @@ namespace SFML.Graphics
         private readonly View _defaultView;
 
         #region Imports
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern IntPtr sfRenderTexture_create(uint width, uint height, bool depthBuffer);
-
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderTexture_createWithSettings(uint width, uint height, ref ContextSettings settings);
+        private static extern IntPtr sfRenderTexture_create(Vector2u size, ref ContextSettings settings);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderTexture_destroy(IntPtr cPointer);
@@ -480,12 +493,20 @@ namespace SFML.Graphics
         private static extern void sfRenderTexture_clear(IntPtr cPointer, Color clearColor);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_clearStencil(IntPtr cPointer, StencilValue stencilValue);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderTexture_clearColorAndStencil(IntPtr cPointer, Color clearColor, StencilValue stencilValue);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2u sfRenderTexture_getSize(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderTexture_isSrgb(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderTexture_setActive(IntPtr cPointer, bool active);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -504,6 +525,9 @@ namespace SFML.Graphics
         private static extern IntRect sfRenderTexture_getViewport(IntPtr cPointer, IntPtr targetView);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntRect sfRenderTexture_getScissor(IntPtr cPointer, IntPtr targetView);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfRenderTexture_mapCoordsToPixel(IntPtr cPointer, Vector2f point, IntPtr view);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -513,21 +537,24 @@ namespace SFML.Graphics
         private static extern IntPtr sfRenderTexture_getTexture(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern uint sfRenderTexture_getMaximumAntialiasingLevel();
+        private static extern uint sfRenderTexture_getMaximumAntiAliasingLevel();
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderTexture_setSmooth(IntPtr cPointer, bool smooth);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderTexture_isSmooth(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderTexture_setRepeated(IntPtr cPointer, bool repeated);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderTexture_isRepeated(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderTexture_generateMipmap(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

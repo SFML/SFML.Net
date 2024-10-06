@@ -18,22 +18,12 @@ namespace SFML.Graphics
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Default constructor
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        public Sprite() :
-            base(sfSprite_create())
-        {
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
         /// Construct the sprite from a source texture
         /// </summary>
         /// <param name="texture">Source texture to assign to the sprite</param>
         ////////////////////////////////////////////////////////////
         public Sprite(Texture texture) :
-            base(sfSprite_create()) => Texture = texture;
+            base(sfSprite_create(texture.CPointer)) => Texture = texture;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -43,7 +33,7 @@ namespace SFML.Graphics
         /// <param name="rectangle">Sub-rectangle of the texture to assign to the sprite</param>
         ////////////////////////////////////////////////////////////
         public Sprite(Texture texture, IntRect rectangle) :
-            base(sfSprite_create())
+            base(sfSprite_create(texture.CPointer))
         {
             Texture = texture;
             TextureRect = rectangle;
@@ -180,7 +170,7 @@ namespace SFML.Graphics
         #region Imports
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfSprite_create();
+        private static extern IntPtr sfSprite_create(IntPtr texture);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfSprite_copy(IntPtr sprite);

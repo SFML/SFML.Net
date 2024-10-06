@@ -5,7 +5,7 @@
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-    <Version>2.6.0</Version>
+    <Version>3.0.0-alpha1</Version>
     <Authors>Laurent Gomila</Authors>
     <PackageTags>sfml sfml.net</PackageTags>
     <Copyright>Copyright © Laurent Gomila</Copyright>

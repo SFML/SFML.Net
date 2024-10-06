@@ -27,7 +27,7 @@ namespace shader
             }
             else
             {
-                var error = new Text("Shader not\nsupported", Font)
+                var error = new Text(Font, "Shader not\nsupported")
                 {
                     Position = new Vector2f(320, 200),
                     CharacterSize = 36
@@ -78,7 +78,7 @@ namespace shader
         public WaveBlur() : base("wave + blur")
         {
             // Create the text
-            _text = new Text
+            _text = new Text(Font)
             {
                 DisplayedString = "Praesent suscipit augue in velit pulvinar hendrerit varius purus aliquam.\n" +
                                      "Mauris mi odio, bibendum quis fringilla a, laoreet vel orci. Proin vitae vulputate tortor.\n" +
@@ -98,7 +98,6 @@ namespace shader
                                      "Mauris ultricies dolor sed massa convallis sed aliquet augue fringilla.\n" +
                                      "Duis erat eros, porta in accumsan in, blandit quis sem.\n" +
                                      "In hac habitasse platea dictumst. Etiam fringilla est id odio dapibus sit amet semper dui laoreet.\n",
-                Font = Font,
                 CharacterSize = 22,
                 Position = new Vector2f(30, 20)
             };
@@ -178,7 +177,7 @@ namespace shader
         public Edge() : base("edge post-effect")
         {
             // Create the off-screen surface
-            _surface = new RenderTexture(800, 600)
+            _surface = new RenderTexture((800, 600))
             {
                 Smooth = true
             };
@@ -203,7 +202,7 @@ namespace shader
             _entities = new Sprite[6];
             for (var i = 0; i < _entities.Length; ++i)
             {
-                _entities[i] = new Sprite(_entityTexture, new IntRect(96 * i, 0, 96, 96));
+                _entities[i] = new Sprite(_entityTexture, new IntRect((96 * i, 0), (96, 96)));
             }
 
             // Load the shader
@@ -263,7 +262,7 @@ namespace shader
         private static void Main()
         {
             // Create the main window
-            var window = new RenderWindow(new VideoMode(800, 600), "SFML.Net Shader");
+            var window = new RenderWindow(new VideoMode((800, 600)), "SFML.Net Shader");
             window.SetVerticalSyncEnabled(true);
 
             // Setup event handlers
@@ -293,14 +292,14 @@ namespace shader
             };
 
             // Create the description text
-            _description = new Text("Current effect: " + _effects[_current].Name, font, 20)
+            _description = new Text(font, "Current effect: " + _effects[_current].Name, 20)
             {
                 Position = new Vector2f(10, 530),
                 FillColor = new Color(80, 80, 80)
             };
 
             // Create the instructions text
-            var instructions = new Text("Press left and right arrows to change the current shader", font, 20)
+            var instructions = new Text(font, "Press left and right arrows to change the current shader", 20)
             {
                 Position = new Vector2f(280, 555),
                 FillColor = new Color(80, 80, 80)

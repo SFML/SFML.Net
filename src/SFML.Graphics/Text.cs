@@ -42,11 +42,12 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Default constructor
+        /// Construct the text from a <see cref="SFML.Graphics.Font"/>
         /// </summary>
+        /// <param name="font">Font to use</param>
         ////////////////////////////////////////////////////////////
-        public Text() :
-            this("", null)
+        public Text(Font font) :
+            this(font, "", 30)
         {
         }
 
@@ -54,11 +55,11 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the text from a string and a <see cref="SFML.Graphics.Font"/>
         /// </summary>
-        /// <param name="str">String to display</param>
         /// <param name="font">Font to use</param>
+        /// <param name="str">String to display</param>
         ////////////////////////////////////////////////////////////
-        public Text(string str, Font font) :
-            this(str, font, 30)
+        public Text(Font font, string str) :
+            this(font, str, 30)
         {
         }
 
@@ -66,12 +67,12 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the text from a string, <see cref="SFML.Graphics.Font"/> and size
         /// </summary>
-        /// <param name="str">String to display</param>
         /// <param name="font">Font to use</param>
+        /// <param name="str">String to display</param>
         /// <param name="characterSize">Font size</param>
         ////////////////////////////////////////////////////////////
-        public Text(string str, Font font, uint characterSize) :
-            base(sfText_create())
+        public Text(Font font, string str, uint characterSize) :
+            base(sfText_create(font.CPointer))
         {
             DisplayedString = str;
             Font = font;
@@ -93,28 +94,6 @@ namespace SFML.Graphics
             Scale = copy.Scale;
 
             Font = copy.Font;
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// DEPRECATED Fill <see cref="SFML.Graphics.Color"/> of the <see cref="Text"/>
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Use <see cref="FillColor"/> instead.
-        /// 
-        /// By default, the text's fill <see cref="SFML.Graphics.Color"/> is <see cref="SFML.Graphics.Color.White">opaque White</see>.
-        /// <para>
-        /// Setting the fill color to a transparent <see cref="SFML.Graphics.Color"/> with an outline
-        /// will cause the outline to be displayed in the fill area of the text.
-        /// </para>
-        /// </remarks>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use FillColor and OutlineColor")]
-        public Color Color
-        {
-            get => sfText_getFillColor(CPointer);
-            set => sfText_setFillColor(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -370,7 +349,7 @@ namespace SFML.Graphics
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfText_create();
+        private static extern IntPtr sfText_create(IntPtr font);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfText_copy(IntPtr text);

@@ -18,7 +18,7 @@ namespace window_core
     {
         public void Run()
         {
-            var mode = new SFML.Window.VideoMode(800, 600);
+            var mode = new SFML.Window.VideoMode((800, 600));
             var window = new SFML.Graphics.RenderWindow(mode, "SFML works!");
             window.KeyPressed += Window_KeyPressed;
 

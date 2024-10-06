@@ -98,6 +98,23 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Determine if this font has a glyph representing the requested code point
+        /// <para/>
+        /// Most fonts only include a very limited selection of glyphs from
+        /// specific Unicode subsets, like Latin, Cyrillic, or Asian characters.
+        /// <para/>
+        /// While code points without representation will return a font specific
+        /// default character, it might be useful to verify whether specific
+        /// code points are included to determine whether a font is suited
+        /// to display text in a specific language.
+        /// </summary>
+        /// <param name="codePoint">Unicode code point to check</param>
+        /// <returns>True if the codepoint has a glyph representation, false otherwise</returns>
+        ////////////////////////////////////////////////////////////
+        public bool HasGlyph(uint codePoint) => sfFont_hasGlyph(CPointer, codePoint);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Get the kerning value corresponding to a given pair of
         /// characters in a font
         /// </summary>
@@ -289,6 +306,10 @@ namespace SFML.Graphics
         private static extern Glyph sfFont_getGlyph(IntPtr cPointer, uint codePoint, uint characterSize, bool bold, float outlineThickness);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool sfFont_hasGlyph(IntPtr font, uint codePoint);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfFont_getKerning(IntPtr cPointer, uint first, uint second, uint characterSize);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -310,6 +331,7 @@ namespace SFML.Graphics
         private static extern void sfFont_setSmooth(IntPtr cPointer, bool smooth);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfFont_isSmooth(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

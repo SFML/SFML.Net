@@ -89,10 +89,10 @@ namespace SFML.Graphics
         /// Rotation of the view, in degrees
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public float Rotation
+        public Angle Rotation
         {
-            get => sfView_getRotation(CPointer);
-            set => sfView_setRotation(CPointer, value);
+            get => Angle.FromDegrees(sfView_getRotation(CPointer));
+            set => sfView_setRotation(CPointer, value.Degrees);
         }
 
         ////////////////////////////////////////////////////////////
@@ -109,11 +109,26 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Rebuild the view from a rectangle
+        /// The scissor rectangle, expressed as a factor (between 0 and 1) of
+        /// the RenderTarget, specifies the region of the RenderTarget whose
+        /// pixels are able to be modified by draw or clear operations.
+        /// Any pixels which lie outside of the scissor rectangle will
+        /// not be modified by draw or clear operations.
+        /// For example, a scissor rectangle which only allows modifications
+        /// to the right side of the target would be defined
+        /// with View.setScissor(sf::FloatRect({0.5f, 0.f}, {0.5f, 1.f})).
+        /// By default, a view has a scissor rectangle which allows
+        /// modifications to the entire target. This is equivalent to
+        /// disabling the scissor test entirely. Passing the default
+        /// scissor rectangle to this function will also disable
+        /// scissor testing.
         /// </summary>
-        /// <param name="rectangle">Rectangle defining the position and size of the view</param>
         ////////////////////////////////////////////////////////////
-        public void Reset(FloatRect rectangle) => sfView_reset(CPointer, rectangle);
+        public FloatRect Scissor
+        {
+            get => sfView_getScissor(CPointer);
+            set => sfView_setScissor(CPointer, value);
+        }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -210,7 +225,7 @@ namespace SFML.Graphics
         private static extern void sfView_setViewport(IntPtr view, FloatRect viewport);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfView_reset(IntPtr view, FloatRect rectangle);
+        private static extern void sfView_setScissor(IntPtr view, FloatRect viewport);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2f sfView_getCenter(IntPtr view);
@@ -223,6 +238,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern FloatRect sfView_getViewport(IntPtr view);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern FloatRect sfView_getScissor(IntPtr view);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfView_move(IntPtr view, Vector2f offset);

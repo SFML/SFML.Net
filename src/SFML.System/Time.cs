@@ -119,7 +119,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and time are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => (obj is Time) && Equals((Time)obj);
+        public override bool Equals(object obj) => (obj is Time time) && Equals(time);
 
         ///////////////////////////////////////////////////////////
         /// <summary>

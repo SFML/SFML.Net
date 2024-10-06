@@ -436,155 +436,6 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Change a float parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a float
-        /// (float GLSL type).
-        /// </summary>
-        ///
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="x">Value to assign</param>
-        ///
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, float x) => sfShader_setFloatParameter(CPointer, name, x);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a 2-components vector parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 2x1 vector
-        /// (vec2 GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="x">First component of the value to assign</param>
-        /// <param name="y">Second component of the value to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, float x, float y) => sfShader_setFloat2Parameter(CPointer, name, x, y);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a 3-components vector parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 3x1 vector
-        /// (vec3 GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="x">First component of the value to assign</param>
-        /// <param name="y">Second component of the value to assign</param>
-        /// <param name="z">Third component of the value to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, float x, float y, float z) => sfShader_setFloat3Parameter(CPointer, name, x, y, z);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a 4-components vector parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 4x1 vector
-        /// (vec4 GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="x">First component of the value to assign</param>
-        /// <param name="y">Second component of the value to assign</param>
-        /// <param name="z">Third component of the value to assign</param>
-        /// <param name="w">Fourth component of the value to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, float x, float y, float z, float w) => sfShader_setFloat4Parameter(CPointer, name, x, y, z, w);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a 2-components vector parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 2x1 vector
-        /// (vec2 GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="vector">Vector to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, Vector2f vector) => SetParameter(name, vector.X, vector.Y);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a color parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 4x1 vector
-        /// (vec4 GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="color">Color to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, Color color) => sfShader_setColorParameter(CPointer, name, color);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a matrix parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 4x4 matrix
-        /// (mat4 GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the parameter in the shader</param>
-        /// <param name="transform">Transform to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, Transform transform) => sfShader_setTransformParameter(CPointer, name, transform);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a texture parameter of the shader
-        ///
-        /// "name" is the name of the variable to change in the shader.
-        /// The corresponding parameter in the shader must be a 2D texture
-        /// (sampler2D GLSL type).
-        ///
-        /// It is important to note that \a texture must remain alive as long
-        /// as the shader uses it, no copy is made internally.
-        ///
-        /// To use the texture of the object being draw, which cannot be
-        /// known in advance, you can pass the special value
-        /// Shader.CurrentTexture.
-        /// </summary>
-        /// <param name="name">Name of the texture in the shader</param>
-        /// <param name="texture">Texture to assign</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, Texture texture)
-        {
-            // Keep a reference to the Texture so it doesn't get GC'd
-            _textures[name] = texture;
-            sfShader_setTextureParameter(CPointer, name, texture.CPointer);
-        }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// Change a texture parameter of the shader
-        ///
-        /// This overload maps a shader texture variable to the
-        /// texture of the object being drawn, which cannot be
-        /// known in advance. The second argument must be
-        /// sf::Shader::CurrentTexture.
-        /// The corresponding parameter in the shader must be a 2D texture
-        /// (sampler2D GLSL type).
-        /// </summary>
-        /// <param name="name">Name of the texture in the shader</param>
-        /// <param name="current">Always pass the special value Shader.CurrentTexture</param>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use SetUniform()")]
-        public void SetParameter(string name, CurrentTextureType current) => sfShader_setCurrentTextureParameter(CPointer, name);
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
         /// Bind a shader for rendering
         /// </summary>
         /// <param name="shader">Shader to bind (can be null to use no shader)</param>
@@ -754,30 +605,6 @@ namespace SFML.Graphics
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern unsafe void sfShader_setMat4UniformArray(IntPtr shader, string name, Glsl.Mat4* data, UIntPtr length);
 
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setFloatParameter(IntPtr shader, string name, float x);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setFloat2Parameter(IntPtr shader, string name, float x, float y);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setFloat3Parameter(IntPtr shader, string name, float x, float y, float z);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setFloat4Parameter(IntPtr shader, string name, float x, float y, float z, float w);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setColorParameter(IntPtr shader, string name, Color color);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setTransformParameter(IntPtr shader, string name, Transform transform);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setTextureParameter(IntPtr shader, string name, IntPtr texture);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity, Obsolete]
-        private static extern void sfShader_setCurrentTextureParameter(IntPtr shader, string name);
-
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfShader_getNativeHandle(IntPtr shader);
 
@@ -785,9 +612,11 @@ namespace SFML.Graphics
         private static extern void sfShader_bind(IntPtr shader);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfShader_isAvailable();
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfShader_isGeometryAvailable();
         #endregion
     }

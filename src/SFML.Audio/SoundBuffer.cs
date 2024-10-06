@@ -93,16 +93,20 @@ namespace SFML.Audio
         /// <param name="samples">Array of samples</param>
         /// <param name="channelCount">Channel count</param>
         /// <param name="sampleRate">Sample rate</param>
+        /// <param name="channelMapData">Map of position in sample frame to sound channel</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public SoundBuffer(short[] samples, uint channelCount, uint sampleRate) :
+        public SoundBuffer(short[] samples, uint channelCount, uint sampleRate, SoundChannel[] channelMapData) :
             base(IntPtr.Zero)
         {
             unsafe
             {
                 fixed (short* samplesPtr = samples)
                 {
-                    CPointer = sfSoundBuffer_createFromSamples(samplesPtr, (uint)samples.Length, channelCount, sampleRate);
+                    fixed (SoundChannel* channels = channelMapData)
+                    {
+                        CPointer = sfSoundBuffer_createFromSamples(samplesPtr, (uint)samples.Length, channelCount, sampleRate, channels, (UIntPtr)channelMapData.Length);
+                    }
                 }
             }
 
@@ -180,6 +184,33 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Get the map of position in sample frame to sound channel
+        /// <para/>
+        /// This is used to map a sample in the sample stream to a
+        /// position during spatialisation.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public virtual SoundChannel[] ChannelMap
+        {
+            get
+            {
+                unsafe
+                {
+                    var channels = sfSoundBuffer_getChannelMap(CPointer, out var count);
+                    var arr = new SoundChannel[(int)count];
+
+                    for (var i = 0; i < arr.Length; i++)
+                    {
+                        arr[i] = channels[i];
+                    }
+
+                    return arr;
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Provide a string describing the object
         /// </summary>
         /// <returns>String description of the object</returns>
@@ -216,7 +247,7 @@ namespace SFML.Audio
         private static extern unsafe IntPtr sfSoundBuffer_createFromMemory(IntPtr data, UIntPtr size);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe IntPtr sfSoundBuffer_createFromSamples(short* samples, ulong sampleCount, uint channelsCount, uint sampleRate);
+        private static extern unsafe IntPtr sfSoundBuffer_createFromSamples(short* samples, ulong sampleCount, uint channelsCount, uint sampleRate, SoundChannel* channelMapData, UIntPtr channelMapSize);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfSoundBuffer_copy(IntPtr soundBuffer);
@@ -225,6 +256,7 @@ namespace SFML.Audio
         private static extern void sfSoundBuffer_destroy(IntPtr soundBuffer);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfSoundBuffer_saveToFile(IntPtr soundBuffer, string filename);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -238,6 +270,9 @@ namespace SFML.Audio
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfSoundBuffer_getChannelCount(IntPtr soundBuffer);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe SoundChannel* sfSoundBuffer_getChannelMap(IntPtr soundBuffer, out UIntPtr count);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Time sfSoundBuffer_getDuration(IntPtr soundBuffer);

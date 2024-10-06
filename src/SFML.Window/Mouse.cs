@@ -29,14 +29,18 @@ namespace SFML.Window
             Middle,
 
             /// <summary>The first extra mouse button</summary>
-            XButton1,
+            Extra1,
 
             /// <summary>The second extra mouse button</summary>
-            XButton2,
-
-            /// <summary>Keep last -- the total number of mouse buttons</summary>
-            ButtonCount
+            Extra2
         };
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// The total number of mouse buttons
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static readonly uint ButtonCount = (uint)Button.Extra2 + 1;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -46,10 +50,10 @@ namespace SFML.Window
         public enum Wheel
         {
             /// <summary>The vertical mouse wheel</summary>
-            VerticalWheel,
+            Vertical,
 
             /// <summary>The horizontal mouse wheel</summary>
-            HorizontalWheel
+            Horizontal
         };
 
         ////////////////////////////////////////////////////////////
@@ -125,6 +129,7 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfMouse_isButtonPressed(Button button);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

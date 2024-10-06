@@ -18,7 +18,6 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         Vector2u Size { get; }
 
-
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Tell if the render target will use sRGB encoding when drawing on it
@@ -57,6 +56,20 @@ namespace SFML.Graphics
         /// <returns>Viewport rectangle, expressed in pixels in the current target</returns>
         ////////////////////////////////////////////////////////////
         IntRect GetViewport(View view);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the scissor rectangle of a view, applied to this render target
+        /// <para/>
+        /// The scissor rectangle is defined in the view as a ratio. This
+        /// function simply applies this ratio to the current dimensions
+        /// of the render target to calculate the pixels rectangle
+        /// that the scissor rectangle actually covers in the target.
+        /// </summary>
+        /// <param name="view">The view for which we want to compute the scissor rectangle</param>
+        /// <returns>Scissor rectangle, expressed in pixels</returns>
+        ////////////////////////////////////////////////////////////
+        IntRect GetScissor(View view);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -157,6 +170,29 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Clear the stencil buffer to a specific value
+        /// <para/>
+        /// The specified value is truncated to the bit width of
+        /// the current stencil buffer.
+        /// </summary>
+        /// <param name="stencilValue">Stencil value to clear to</param>
+        ////////////////////////////////////////////////////////////
+        void ClearStencil(StencilValue stencilValue);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Clear the entire target with a single color and stencil value
+        /// <para/>
+        /// The specified stencil value is truncated to the bit
+        /// width of the current stencil buffer.
+        /// </summary>
+        /// <param name="color">Fill color to use to clear the render target</param> 
+        /// <param name="stencilValue">Stencil value to clear to</param>
+        ////////////////////////////////////////////////////////////
+        void Clear(Color color, StencilValue stencilValue);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Draw a drawable object to the render-target, with default render states
         /// </summary>
         /// <param name="drawable">Object to draw</param>
@@ -213,6 +249,27 @@ namespace SFML.Graphics
         /// <param name="states">Render states to use for drawing</param>
         ////////////////////////////////////////////////////////////
         void Draw(Vertex[] vertices, uint start, uint count, PrimitiveType type, RenderStates states);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Activate or deactivate the render target for rendering
+        /// <para/>
+        /// This function makes the render target's context current for
+        /// future OpenGL rendering operations (so you shouldn't care
+        /// about it if you're not doing direct OpenGL stuff).
+        /// A render target's context is active only on the current thread,
+        /// if you want to make it active on another thread you have
+        /// to deactivate it on the previous thread first if it was active.
+        /// Only one context can be current in a thread, so if you
+        /// want to draw OpenGL geometry to another render target
+        /// don't forget to activate it again. Activating a render
+        /// target will automatically deactivate the previously active
+        /// context (if any).
+        /// </summary>
+        /// <param name="active">True to activate, false to deactivate</param>
+        /// <returns>True if operation was successful, false otherwise</returns>
+        ////////////////////////////////////////////////////////////
+        bool SetActive(bool active);
 
         ////////////////////////////////////////////////////////////
         /// <summary>

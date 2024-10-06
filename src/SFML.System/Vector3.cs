@@ -27,12 +27,78 @@ namespace SFML.System
             Z = z;
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Length of the vector
+        /// <para/>
+        /// If you are not interested in the actual length, but only in comparisons, consider using <see cref="LengthSquared"/>.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float Length => (float)Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Square of vector's length
+        /// <para/>
+        /// Suitable for comparisons, more efficient than <see cref="Length"/>
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float LengthSquared => Dot(this);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Vector with same direction but length 1
+        /// <para/>
+        /// <see langword="this"/> should not be a zero vector
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Vector3f Normalized() => this / Length;
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Dot product of two 3D vectors.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float Dot(Vector3f rhs) => (X * rhs.X) + (Y * rhs.Y) + (Z * rhs.Z);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Cross product of two 3D vectors
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Vector3f Cross(Vector3f rhs) => new Vector3f((Y * rhs.Z) - (Z * rhs.Y), (Z * rhs.X) - (X * rhs.Z), (X * rhs.Y) - (Y * rhs.X));
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Component-wise multiplication of <see langword="this"/> and <paramref name="rhs"/>
+        /// <para/>
+        /// Computes <code>(this.X * rhs.X, this.Y * rhs.Y, this.Z * rhs.Z)</code>
+        /// <para/>
+        /// Scaling is the most common use case for component-wise multiplication/division.
+        /// This operation is also known as the Hadamard or Schur product.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Vector3f ComponentWiseMul(Vector3f rhs) => new Vector3f(X * rhs.X, Y * rhs.Y, Z * rhs.Z);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Component-wise division of <see langword="this"/> and <paramref name="rhs"/>
+        /// <para/>
+        /// Computes <code>(this.X / rhs.X, this.Y / rhs.Y, this.Z * rhs.Z)</code>
+        /// <para/>
+        /// Scaling is the most common use case for component-wise multiplication/division.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Vector3f ComponentWiseDiv(Vector3f rhs) => new Vector3f(X / rhs.X, Y / rhs.Y, Z / rhs.Z);
+
+        ////////////////////////////////////////////////////////////
         /// <summary>
         /// Deconstructs a Vector3f into a tuple of floats
         /// </summary>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
         /// <param name="z">Z coordinate</param>
+        ////////////////////////////////////////////////////////////
         public void Deconstruct(out float x, out float y, out float z)
         {
             x = X;
@@ -134,7 +200,7 @@ namespace SFML.System
         /// <param name="obj">Object to check</param>
         /// <returns>Object and vector are equal</returns>
         ////////////////////////////////////////////////////////////
-        public override bool Equals(object obj) => (obj is Vector3f) && Equals((Vector3f)obj);
+        public override bool Equals(object obj) => (obj is Vector3f vec) && Equals(vec);
 
         ///////////////////////////////////////////////////////////
         /// <summary>
@@ -153,10 +219,12 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
+        ////////////////////////////////////////////////////////////
         /// <summary>
         /// Converts a tuple of floats to a Vector3f
         /// </summary>
         /// <param name="tuple">The tuple to convert</param>
+        ////////////////////////////////////////////////////////////
         public static implicit operator Vector3f((float X, float Y, float Z) tuple) => new Vector3f(tuple.X, tuple.Y, tuple.Z);
 
         /// <summary>X (horizontal) component of the vector</summary>

@@ -5,9 +5,11 @@ using System.Security;
 
 namespace SFML.Window
 {
+    ////////////////////////////////////////////////////////////
     /// <summary>
     /// Cursor defines the appearance of a system cursor. 
     /// </summary>
+    ////////////////////////////////////////////////////////////
     public class Cursor : ObjectBase
     {
         /// <summary>
@@ -164,6 +166,7 @@ namespace SFML.Window
             NotAllowed
         }
 
+        ////////////////////////////////////////////////////////////
         /// <summary>
         /// Create a native system cursor
         ///
@@ -174,6 +177,7 @@ namespace SFML.Window
         /// </summary>
         /// <param name="type">System cursor type</param>
         /// <exception cref="LoadingFailedException" />
+        ////////////////////////////////////////////////////////////
         public Cursor(CursorType type)
             : base(sfCursor_createFromSystem(type))
         {
@@ -183,6 +187,7 @@ namespace SFML.Window
             }
         }
 
+        ////////////////////////////////////////////////////////////
         /// <summary>
         /// Create a cursor with the provided image
         ///
@@ -209,7 +214,8 @@ namespace SFML.Window
         /// <param name="size">Width and height of the image</param>
         /// <param name="hotspot">(x,y) location of the hotspot</param>
         /// <exception cref="LoadingFailedException" />
-        public Cursor(byte[] pixels, SFML.System.Vector2u size, SFML.System.Vector2u hotspot)
+        ////////////////////////////////////////////////////////////
+        public Cursor(byte[] pixels, Vector2u size, Vector2u hotspot)
             : base((IntPtr)0)
         {
             unsafe

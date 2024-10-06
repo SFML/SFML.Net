@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 using System.Security;
 using SFML.System;
 
+// TODO getActiveContext
+// TODO getActiveContextId
+
 namespace SFML.Window
 {
     //////////////////////////////////////////////////////////////////
@@ -102,9 +105,11 @@ namespace SFML.Window
         private static extern void sfContext_destroy(IntPtr view);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfContext_isExtensionAvailable(string name);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfContext_setActive(IntPtr view, bool active);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

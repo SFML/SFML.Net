@@ -1,4 +1,6 @@
 using System;
+using System.Runtime.InteropServices;
+using System.Security;
 using SFML.System;
 
 namespace SFML.Graphics
@@ -103,7 +105,24 @@ namespace SFML.Graphics
             return new Vector2f(_radius + x, _radius + y);
         }
 
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the geometric center of the circle
+        ///
+        /// The returned point is in local coordinates, that is,
+        /// the shape's transforms (position, rotation, scale) are
+        /// not taken into account.
+        /// </summary>
+        /// <returns>The geometric center of the shape</returns>
+        ////////////////////////////////////////////////////////////
+        public override Vector2f GetGeometricCenter() => sfCircleShape_getGeometricCenter(CPointer);
+
         private float _radius;
         private uint _pointCount;
+
+        #region Imports
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2f sfCircleShape_getGeometricCenter(IntPtr cPointer);
+        #endregion
     }
 }

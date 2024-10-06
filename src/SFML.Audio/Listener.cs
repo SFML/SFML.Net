@@ -54,6 +54,29 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// The velocity of the listener in the scene (default is (0, 0, -1))
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static Vector3f Velocity
+        {
+            get => sfListener_getVelocity();
+            set => sfListener_setVelocity(value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// The cone defines how directional attenuation is applied.
+        /// The default cone of a sound is {2 * PI, 2 * PI, 1}.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static Cone Cone
+        {
+            get => new Cone(sfListener_getCone());
+            set => sfListener_setCone(value.Marshal());
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// The up vector is the vector that points upward from the
         /// listener's perspective. Together with the direction, it
         /// defines the 3D orientation of the listener in the scene.
@@ -86,6 +109,18 @@ namespace SFML.Audio
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector3f sfListener_getDirection();
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfListener_setVelocity(Vector3f direction);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector3f sfListener_getVelocity();
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfListener_setCone(Cone.MarshalData cone);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Cone.MarshalData sfListener_getCone();
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfListener_setUpVector(Vector3f upVector);

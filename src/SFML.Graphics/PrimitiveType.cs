@@ -1,5 +1,3 @@
-using System;
-
 namespace SFML.Graphics
 {
     ////////////////////////////////////////////////////////////
@@ -31,21 +29,6 @@ namespace SFML.Graphics
         TriangleStrip,
 
         /// <summary>Connected Triangles; each point uses the first point and the previous point to form a triangle</summary>
-        TriangleFan,
-
-        /// <summary>Quadrilaterals; each set of four points forms a 4-sided shape</summary>
-        Quads,
-
-        /// <summary><c>DEPRECATED:</c> Use <see cref="LineStrip">LineStrip</see></summary>
-        [Obsolete("LineStrip")]
-        LinesStrip = LineStrip,
-
-        /// <summary><c>DEPRECATED:</c> Use <see cref="TriangleStrip">TriangleStrip</see></summary>
-        [Obsolete("Use TriangleStrip")]
-        TrianglesStrip = TriangleStrip,
-
-        /// <summary><c>DEPRECATED:</c> Use <see cref="TriangleFan">TriangleFan</see></summary>
-        [Obsolete("Use TriangleFan")]
-        TrianglesFan = TriangleFan,
+        TriangleFan
     }
 }
