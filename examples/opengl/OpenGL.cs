@@ -24,7 +24,7 @@ namespace opengl
             };
 
             // Create the main window
-            var window = new RenderWindow(new VideoMode(800, 600), "SFML graphics with OpenGL", Styles.Default, contextSettings);
+            var window = new RenderWindow(new VideoMode((800, 600)), "SFML graphics with OpenGL", Styles.Default, State.Windowed, contextSettings);
             window.SetVerticalSyncEnabled(true);
 
             // Initialize OpenTK
@@ -41,7 +41,7 @@ namespace opengl
             var background = new Sprite(new Texture("resources/background.jpg"));
 
             // Create a text to display on top of the OpenGL object
-            var text = new Text("SFML / OpenGL demo", new Font("resources/sansation.ttf"))
+            var text = new Text(new Font("resources/sansation.ttf"), "SFML / OpenGL demo")
             {
                 Position = new Vector2f(250, 450),
                 FillColor = new SFML.Graphics.Color(255, 255, 255, 170)
@@ -212,6 +212,6 @@ namespace opengl
         /// <summary>
         /// Function called when the window is resized
         /// </summary>
-        private static void OnResized(object sender, SizeEventArgs e) => GL.Viewport(0, 0, (int)e.Width, (int)e.Height);
+        private static void OnResized(object sender, SizeEventArgs e) => GL.Viewport(0, 0, (int)e.Size.X, (int)e.Size.Y);
     }
 }

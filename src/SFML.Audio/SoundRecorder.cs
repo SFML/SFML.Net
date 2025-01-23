@@ -91,6 +91,33 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Get the map of position in sample frame to sound channel
+        /// <para/>
+        /// This is used to map a sample in the sample stream to a
+        /// position during spatialisation.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public SoundChannel[] ChannelMap
+        {
+            get
+            {
+                unsafe
+                {
+                    var channels = sfSoundRecorder_getChannelMap(CPointer, out var count);
+                    var arr = new SoundChannel[(int)count];
+
+                    for (var i = 0; i < arr.Length; i++)
+                    {
+                        arr[i] = channels[i];
+                    }
+
+                    return arr;
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Check if the system supports audio capture.
         /// </summary>
         /// 
@@ -162,21 +189,6 @@ namespace SFML.Audio
         {
             // Does nothing by default
         }
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
-        /// The processing interval controls the period
-        /// between calls to the onProcessSamples function. You may
-        /// want to use a small interval if you want to process the
-        /// recorded data in real time, for example.
-        ///
-        /// Note: this is only a hint, the actual period may vary.
-        /// So don't rely on this parameter to implement precise timing.
-        ///
-        /// The default processing interval is 100 ms.
-        /// </summary>
-        ////////////////////////////////////////////////////////////
-        protected void SetProcessingInterval(Time interval) => sfSoundRecorder_setProcessingInterval(CPointer, interval);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -291,6 +303,7 @@ namespace SFML.Audio
         private static extern void sfSoundRecorder_destroy(IntPtr soundRecorder);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfSoundRecorder_start(IntPtr soundRecorder, uint sampleRate);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -300,10 +313,8 @@ namespace SFML.Audio
         private static extern uint sfSoundRecorder_getSampleRate(IntPtr soundRecorder);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfSoundRecorder_isAvailable();
-
-        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfSoundRecorder_setProcessingInterval(IntPtr soundRecorder, Time interval);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern unsafe IntPtr* sfSoundRecorder_getAvailableDevices(out UIntPtr count);
@@ -312,6 +323,7 @@ namespace SFML.Audio
         private static extern IntPtr sfSoundRecorder_getDefaultDevice();
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfSoundRecorder_setDevice(IntPtr soundRecorder, string name);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -322,6 +334,9 @@ namespace SFML.Audio
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern uint sfSoundRecorder_getChannelCount(IntPtr soundRecorder);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe SoundChannel* sfSoundRecorder_getChannelMap(IntPtr soundRecorder, out UIntPtr count);
         #endregion
     }
 }

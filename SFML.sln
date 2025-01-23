@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BBA7B74-E003-4D9B-826A-43BD6BA48111}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		SFML.Module.props = SFML.Module.props
+		SFML.NuGet.props = SFML.NuGet.props
+		SFML.CodeStyle.props = SFML.CodeStyle.props
 	EndProjectSection
 EndProject
 Global

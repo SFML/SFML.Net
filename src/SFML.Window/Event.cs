@@ -1,5 +1,5 @@
-using System;
 using System.Runtime.InteropServices;
+using SFML.System;
 
 namespace SFML.Window
 {
@@ -31,10 +31,6 @@ namespace SFML.Window
         /// <summary>Event triggered when a keyboard key is released</summary>
         KeyReleased,
 
-        /// <summary>Event triggered when the mouse wheel is scrolled</summary>
-        [Obsolete("Use MouseWheelScrolled")]
-        MouseWheelMoved,
-
         /// <summary>Event triggered when a mouse wheel is scrolled</summary>
         MouseWheelScrolled,
 
@@ -46,6 +42,9 @@ namespace SFML.Window
 
         /// <summary>Event triggered when the mouse moves within the area of a window</summary>
         MouseMoved,
+
+        /// <summary>Event triggered when the mouse moves within the area of a window, as raw mouse movement data</summary>
+        MouseMovedRaw,
 
         /// <summary>Event triggered when the mouse enters the area of a window</summary>
         MouseEntered,
@@ -96,16 +95,20 @@ namespace SFML.Window
         public Keyboard.Scancode Scancode;
 
         /// <summary>Is the Alt modifier pressed?</summary>
-        public int Alt;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool Alt;
 
         /// <summary>Is the Control modifier pressed?</summary>
-        public int Control;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool Control;
 
         /// <summary>Is the Shift modifier pressed?</summary>
-        public int Shift;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool Shift;
 
         /// <summary>Is the System modifier pressed?</summary>
-        public int System;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool System;
     }
 
     ////////////////////////////////////////////////////////////
@@ -128,11 +131,20 @@ namespace SFML.Window
     [StructLayout(LayoutKind.Sequential)]
     public struct MouseMoveEvent
     {
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
+        /// <summary>Coordinates of the mouse cursor</summary>
+        public Vector2i Position;
+    }
 
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Mouse move event parameters
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MouseMoveRawEvent
+    {
+        /// <summary>Delta movement of the mouse since the last event</summary>
+        public Vector2i Delta;
     }
 
     ////////////////////////////////////////////////////////////
@@ -146,30 +158,8 @@ namespace SFML.Window
         /// <summary>Code of the button (see MouseButton enum)</summary>
         public Mouse.Button Button;
 
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
-
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
-    }
-
-    ////////////////////////////////////////////////////////////
-    /// <summary>
-    /// Mouse wheel move event parameters
-    /// </summary>
-    ////////////////////////////////////////////////////////////
-    [StructLayout(LayoutKind.Sequential)]
-    [Obsolete("Use MouseWheelScrollEvent")]
-    public struct MouseWheelEvent
-    {
-        /// <summary>Scroll amount</summary>
-        public int Delta;
-
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
-
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
+        /// <summary>Coordinates of the mouse cursor</summary>
+        public Vector2i Position;
     }
 
     ////////////////////////////////////////////////////////////
@@ -186,11 +176,8 @@ namespace SFML.Window
         /// <summary>Scroll amount</summary>
         public float Delta;
 
-        /// <summary>X coordinate of the mouse cursor</summary>
-        public int X;
-
-        /// <summary>Y coordinate of the mouse cursor</summary>
-        public int Y;
+        /// <summary>Coordinates of the mouse cursor</summary>
+        public Vector2i Position;
     }
 
     ////////////////////////////////////////////////////////////
@@ -246,11 +233,8 @@ namespace SFML.Window
     [StructLayout(LayoutKind.Sequential)]
     public struct SizeEvent
     {
-        /// <summary>New width of the window</summary>
-        public uint Width;
-
-        /// <summary>New height of the window</summary>
-        public uint Height;
+        /// <summary>New size of the window</summary>
+        public Vector2u Size;
     }
 
     ////////////////////////////////////////////////////////////
@@ -264,11 +248,8 @@ namespace SFML.Window
         /// <summary>Index of the finger in case of multi-touch events</summary>
         public uint Finger;
 
-        /// <summary>X position of the touch, relative to the left of the owner window</summary>
-        public int X;
-
-        /// <summary>Y position of the touch, relative to the top of the owner window</summary>
-        public int Y;
+        /// <summary>Position of the touch, relative to the left of the owner window</summary>
+        public Vector2i Position;
     }
 
     ////////////////////////////////////////////////////////////
@@ -282,14 +263,8 @@ namespace SFML.Window
         /// <summary>Type of the sensor</summary>
         public Sensor.Type Type;
 
-        /// <summary>Current value of the sensor on X axis</summary>
-        public float X;
-
-        /// <summary>Current value of the sensor on Y axis</summary>
-        public float Y;
-
-        /// <summary>Current value of the sensor on Z axis</summary>
-        public float Z;
+        /// <summary>Current value of the sensor on X, Y and Z axes</summary>
+        public Vector3f Value;
     }
 
     ////////////////////////////////////////////////////////////
@@ -297,7 +272,7 @@ namespace SFML.Window
     /// Event defines a system event and its parameters
     /// </summary>
     ////////////////////////////////////////////////////////////
-    [StructLayout(LayoutKind.Explicit, Size = 28)]
+    [StructLayout(LayoutKind.Explicit, Size = 20)]
     public struct Event
     {
         /// <summary>Type of event (see EventType enum)</summary>
@@ -320,14 +295,13 @@ namespace SFML.Window
         [FieldOffset(4)]
         public MouseMoveEvent MouseMove;
 
+        /// <summary>Arguments for mouse move raw events (MouseMovedRaw)</summary>
+        [FieldOffset(4)]
+        public MouseMoveRawEvent MouseMoveRaw;
+
         /// <summary>Arguments for mouse button events (MouseButtonPressed, MouseButtonReleased)</summary>
         [FieldOffset(4)]
         public MouseButtonEvent MouseButton;
-
-        /// <summary>Arguments for mouse wheel events (MouseWheelMoved)</summary>
-        [FieldOffset(4)]
-        [Obsolete("Use MouseWheelScroll")]
-        public MouseWheelEvent MouseWheel;
 
         /// <summary>Arguments for mouse wheel scroll events (MouseWheelScrolled)</summary>
         [FieldOffset(4)]

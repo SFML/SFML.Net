@@ -19,7 +19,7 @@ namespace SFML.System
         /// </summary>
         ////////////////////////////////////////////////////////////
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate long ReadCallbackType(IntPtr data, long size, IntPtr userData);
+        public delegate long ReadCallbackType(IntPtr data, UIntPtr size, IntPtr userData);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -27,7 +27,7 @@ namespace SFML.System
         /// </summary>
         ////////////////////////////////////////////////////////////
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate long SeekCallbackType(long position, IntPtr userData);
+        public delegate long SeekCallbackType(UIntPtr position, IntPtr userData);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -148,9 +148,9 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Number of bytes read</returns>
         ////////////////////////////////////////////////////////////
-        private long Read(IntPtr data, long size, IntPtr userData)
+        private long Read(IntPtr data, UIntPtr size, IntPtr userData)
         {
-            var buffer = new byte[size];
+            var buffer = new byte[(int)size];
             var count = _stream.Read(buffer, 0, (int)size);
             Marshal.Copy(buffer, 0, data, count);
             return count;
@@ -164,7 +164,7 @@ namespace SFML.System
         /// <param name="userData">User data -- unused</param>
         /// <returns>Actual position</returns>
         ////////////////////////////////////////////////////////////
-        private long Seek(long position, IntPtr userData) => _stream.Seek(position, SeekOrigin.Begin);
+        private long Seek(UIntPtr position, IntPtr userData) => _stream.Seek((long)position, SeekOrigin.Begin);
 
         ////////////////////////////////////////////////////////////
         /// <summary>

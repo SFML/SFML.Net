@@ -70,8 +70,12 @@ namespace SFML.Audio
         /// Called when the current capture stops
         /// </summary>
         ////////////////////////////////////////////////////////////
-        protected override void OnStop() => SoundBuffer = new SoundBuffer(_samplesArray.ToArray(), 1, SampleRate);
+        protected override void OnStop() => SoundBuffer = new SoundBuffer(_samplesArray.ToArray(), 1, SampleRate, _channels);
 
         private readonly List<short> _samplesArray = new List<short>();
+        private static readonly SoundChannel[] _channels = new SoundChannel[]
+        {
+            SoundChannel.Mono
+        };
     }
 }
