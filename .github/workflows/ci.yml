@@ -41,11 +41,15 @@ jobs:
         run: dotnet new globaljson --sdk-version ${{ steps.setup-dotnet.outputs.dotnet-version }} --force
       - name: Verify SDK Installation
         run: dotnet --info
+        continue-on-error: true
 
       - name: Install SFML.Net Dependencies
         run: dotnet restore
       - name: Build SFML.Net
         run: dotnet build --configuration Release --no-restore
+      - name: Test SFML.Net
+        if: matrix.dotnet.name == '.NET 6'
+        run: dotnet test --configuration Release --no-restore
       - name: Pack SFML.Net
         run: dotnet pack --configuration Release -o Publish
 
