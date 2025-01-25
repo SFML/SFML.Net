@@ -68,6 +68,33 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Get the map of position in sample frame to sound channel
+        /// <para/>
+        /// This is used to map a sample in the sample stream to a
+        /// position during spatialisation.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public SoundChannel[] ChannelMap
+        {
+            get
+            {
+                unsafe
+                {
+                    var channels = sfSoundStream_getChannelMap(CPointer, out var count);
+                    var arr = new SoundChannel[(int)count];
+
+                    for (var i = 0; i < arr.Length; i++)
+                    {
+                        arr[i] = channels[i];
+                    }
+
+                    return arr;
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Number of channels (1 = mono, 2 = stereo)
         /// </summary>
         ////////////////////////////////////////////////////////////
@@ -86,14 +113,14 @@ namespace SFML.Audio
         ///
         /// If set, the music will restart from beginning after
         /// reaching the end and so on, until it is stopped or
-        /// Loop = false is set.
+        /// IsLooping = false is set.
         /// The default looping state for music is false.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public bool Loop
+        public bool IsLooping
         {
-            get => sfSoundStream_getLoop(CPointer);
-            set => sfSoundStream_setLoop(CPointer, value);
+            get => sfSoundStream_isLooping(CPointer);
+            set => sfSoundStream_setLooping(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -115,6 +142,22 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Set the pan of the sound
+        /// <para/>
+        /// Using panning, a mono sound can be panned between
+        /// stereo channels. When the pan is set to -1, the sound
+        /// is played only on the left channel, when the pan is set
+        /// to +1, the sound is played only on the right channel.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float Pan
+        {
+            get => sfSoundStream_getPan(CPointer);
+            set => sfSoundStream_setPan(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Volume of the stream.
         /// 
         /// The volume is a value between 0 (mute) and 100 (full volume).
@@ -125,6 +168,22 @@ namespace SFML.Audio
         {
             get => sfSoundStream_getVolume(CPointer);
             set => sfSoundStream_setVolume(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Gets or sets whether spatialization of the sound is enabled
+        /// <para/>
+        /// Spatialization is the application of various effects to
+        /// simulate a sound being emitted at a virtual position in
+        /// 3D space and exhibiting various physical phenomena such as
+        /// directional attenuation and doppler shift.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public bool IsSpatializationEnabled
+        {
+            get => sfSoundStream_isSpatializationEnabled(CPointer);
+            set => sfSoundStream_setSpatializationEnabled(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -140,6 +199,84 @@ namespace SFML.Audio
         {
             get => sfSoundStream_getPosition(CPointer);
             set => sfSoundStream_setPosition(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// 3D direction of the sound in the audio scene
+        /// <para/>
+        /// The direction defines where the sound source is facing
+        /// in 3D space. It will affect how the sound is attenuated
+        /// if facing away from the listener.
+        /// The default direction of a sound is (0, 0, -1).
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Vector3f Direction
+        {
+            get => sfSoundStream_getPosition(CPointer);
+            set => sfSoundStream_setPosition(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Set the cone properties of the sound in the audio scene
+        /// <para/>
+        /// The cone defines how directional attenuation is applied.
+        /// The default cone of a sound is (2 * PI, 2 * PI, 1).
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Cone Cone
+        {
+            get => new Cone(sfSoundStream_getCone(CPointer));
+            set => sfSoundStream_setCone(CPointer, value.Marshal());
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// 3D velocity of the sound in the audio scene
+        /// <para/>
+        /// The velocity is used to determine how to doppler shift
+        /// the sound. Sounds moving towards the listener will be
+        /// perceived to have a higher pitch and sounds moving away
+        /// from the listener will be perceived to have a lower pitch.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public Vector3f Velocity
+        {
+            get => sfSoundStream_getVelocity(CPointer);
+            set => sfSoundStream_setVelocity(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Doppler factor of the sound
+        /// <para/>
+        /// The doppler factor determines how strong the doppler
+        /// shift will be.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float DopplerFactor
+        {
+            get => sfSoundStream_getDopplerFactor(CPointer);
+            set => sfSoundStream_setDopplerFactor(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Directional attenuation factor of the sound
+        /// <para/>
+        /// Depending on the virtual position of an output channel
+        /// relative to the listener (such as in surround sound
+        /// setups), sounds will be attenuated when emitting them
+        /// from certain channels. This factor determines how strong
+        /// the attenuation based on output channel position
+        /// relative to the listener is.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float DirectionalAttenuationFactor
+        {
+            get => sfSoundStream_getDirectionalAttenuationFactor(CPointer);
+            set => sfSoundStream_setDirectionalAttenuationFactor(CPointer, value);
         }
 
         ////////////////////////////////////////////////////////////
@@ -179,6 +316,54 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Maximum distance of the sound
+        /// <para/>
+        /// The "maximum distance" of a sound is the minimum
+        /// distance at which it is heard at its minimum volume. Closer
+        /// than the maximum distance, it will start to fade in according
+        /// to its attenuation factor.
+        /// The default value of the maximum distance is the maximum
+        /// value a float can represent.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float MaxDistance
+        {
+            get => sfSoundStream_getMaxDistance(CPointer);
+            set => sfSoundStream_setMaxDistance(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Minimum gain of the sound
+        /// <para/>
+        /// When the sound is further away from the listener than
+        /// the "maximum distance" the attenuated gain is clamped
+        /// so it cannot go below the minimum gain value.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float MinGain
+        {
+            get => sfSoundStream_getMinGain(CPointer);
+            set => sfSoundStream_setMinGain(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Maximum gain of the sound
+        /// <para/>
+        /// When the sound is closer from the listener than
+        /// the "minimum distance" the attenuated gain is clamped
+        /// so it cannot go above the maximum gain value.
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public float MaxGain
+        {
+            get => sfSoundStream_getMaxGain(CPointer);
+            set => sfSoundStream_setMaxGain(CPointer, value);
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Attenuation factor of the stream.
         ///
         /// The attenuation is a multiplicative factor which makes
@@ -213,6 +398,32 @@ namespace SFML.Audio
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Set the effect processor to be applied to the sound.
+        /// <para/>
+        /// The effect processor is a callable that will be called
+        /// with sound data to be processed.
+        /// </summary>
+        /// <param name="effectProcessor">The effect processor to attach to this sound, attach a null processor to disable processing</param>
+        ////////////////////////////////////////////////////////////
+        public void SetEffectProcessor(EffectProcessor effectProcessor)
+        {
+            _effectProcessor = (inputFrames, inputFrameCount, outputFrames, outputFrameCount, frameChannelCount) =>
+            {
+                var inputFramesArray = new float[inputFrameCount];
+                var outputFramesArray = new float[outputFrameCount];
+
+                Marshal.Copy(inputFrames, inputFramesArray, 0, inputFramesArray.Length);
+                var written = effectProcessor(inputFramesArray, outputFramesArray, frameChannelCount);
+                Marshal.Copy(outputFramesArray, 0, outputFrames, outputFramesArray.Length);
+
+                return written;
+            };
+
+            sfSoundStream_setEffectProcessor(CPointer, Marshal.GetFunctionPointerForDelegate(_effectProcessor));
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Provide a string describing the object
         /// </summary>
         /// <returns>String description of the object</returns>
@@ -228,7 +439,7 @@ namespace SFML.Audio
                    " SampleRate(" + SampleRate + ")" +
                    " ChannelCount(" + ChannelCount + ")" +
                    " Status(" + Status + ")" +
-                   " Loop(" + Loop + ")" +
+                   " IsLooping(" + IsLooping + ")" +
                    " Pitch(" + Pitch + ")" +
                    " Volume(" + Volume + ")" +
                    " Position(" + Position + ")" +
@@ -244,12 +455,20 @@ namespace SFML.Audio
         /// </summary>
         /// <param name="channelCount">Number of channels</param>
         /// <param name="sampleRate">Sample rate, in samples per second</param>
+        /// <param name="channelMapData">Map of position in sample frame to sound channel</param>
         ////////////////////////////////////////////////////////////
-        protected void Initialize(uint channelCount, uint sampleRate)
+        protected void Initialize(uint channelCount, uint sampleRate, SoundChannel[] channelMapData)
         {
             _getDataCallback = new GetDataCallbackType(GetData);
             _seekCallback = new SeekCallbackType(Seek);
-            CPointer = sfSoundStream_create(_getDataCallback, _seekCallback, channelCount, sampleRate, IntPtr.Zero);
+
+            unsafe
+            {
+                fixed (SoundChannel* data = channelMapData)
+                {
+                    CPointer = sfSoundStream_create(_getDataCallback, _seekCallback, channelCount, sampleRate, data, (UIntPtr)channelMapData.Length, IntPtr.Zero);
+                }
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -336,11 +555,12 @@ namespace SFML.Audio
 
         private GetDataCallbackType _getDataCallback;
         private SeekCallbackType _seekCallback;
+        private EffectProcessorInternal _effectProcessor;
         private short[] _tempBuffer;
 
         #region Imports
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfSoundStream_create(GetDataCallbackType onGetData, SeekCallbackType onSeek, uint channelCount, uint sampleRate, IntPtr userData);
+        private static extern unsafe IntPtr sfSoundStream_create(GetDataCallbackType onGetData, SeekCallbackType onSeek, uint channelCount, uint sampleRate, SoundChannel* channelMapData, UIntPtr channelMapSize, IntPtr userData);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_destroy(IntPtr soundStream);
@@ -364,16 +584,37 @@ namespace SFML.Audio
         private static extern uint sfSoundStream_getSampleRate(IntPtr soundStream);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfSoundStream_setLoop(IntPtr soundStream, bool loop);
+        private static extern unsafe SoundChannel* sfSoundStream_getChannelMap(IntPtr soundStream, out UIntPtr count);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_setPitch(IntPtr soundStream, float pitch);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setPan(IntPtr soundStream, float pan);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_setVolume(IntPtr soundStream, float volume);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setSpatializationEnabled(IntPtr soundStream, bool enabled);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_setPosition(IntPtr soundStream, Vector3f position);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setDirection(IntPtr soundStream, Vector3f direction);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setCone(IntPtr soundStream, Cone.MarshalData cone);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setVelocity(IntPtr soundStream, Vector3f velocity);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setDopplerFactor(IntPtr soundStream, float factor);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setDirectionalAttenuationFactor(IntPtr soundStream, float factor);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_setRelativeToListener(IntPtr soundStream, bool relative);
@@ -382,31 +623,79 @@ namespace SFML.Audio
         private static extern void sfSoundStream_setMinDistance(IntPtr soundStream, float minDistance);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setMaxDistance(IntPtr soundStream, float maxDistance);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setMinGain(IntPtr soundStream, float gain);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setMaxGain(IntPtr soundStream, float gain);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_setAttenuation(IntPtr soundStream, float attenuation);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfSoundStream_setPlayingOffset(IntPtr soundStream, Time timeOffset);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfSoundStream_getLoop(IntPtr soundStream);
+        private static extern void sfSoundStream_setLooping(IntPtr soundStream, bool loop);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfSoundStream_getPitch(IntPtr soundStream);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfSoundStream_getPan(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfSoundStream_getVolume(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool sfSoundStream_isSpatializationEnabled(IntPtr soundStream);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector3f sfSoundStream_getPosition(IntPtr soundStream);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector3f sfSoundStream_getDirection(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Cone.MarshalData sfSoundStream_getCone(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector3f sfSoundStream_getVelocity(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfSoundStream_getDopplerFactor(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfSoundStream_getDirectionalAttenuationFactor(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfSoundStream_isRelativeToListener(IntPtr soundStream);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfSoundStream_getMinDistance(IntPtr soundStream);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfSoundStream_getMaxDistance(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfSoundStream_getMinGain(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern float sfSoundStream_getMaxGain(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfSoundStream_getAttenuation(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool sfSoundStream_isLooping(IntPtr soundStream);
+
+        [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfSoundStream_setEffectProcessor(IntPtr soundStream, IntPtr effectProcessor);
 
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Time sfSoundStream_getPlayingOffset(IntPtr soundStream);

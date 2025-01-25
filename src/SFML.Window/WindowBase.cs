@@ -26,13 +26,23 @@ namespace SFML.Window
         /// <summary>Titlebar + close button</summary>
         Close = 1 << 2,
 
-        /// <summary>Fullscreen mode (this flag and all others are mutually exclusive))</summary>
-        Fullscreen = 1 << 3,
-
         /// <summary>Default window style (titlebar + resize + close)</summary>
         Default = Titlebar | Resize | Close
     }
 
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Enumeration of window states
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public enum State
+    {
+        /// <summary>Floating window</summary>
+        Windowed,
+
+        /// <summary>Fullscreen window</summary>
+        Fullscreen
+    }
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -49,7 +59,7 @@ namespace SFML.Window
         /// <param name="title">Title of the window</param>
         ////////////////////////////////////////////////////////////
         public WindowBase(VideoMode mode, string title) :
-            this(mode, title, Styles.Default)
+            this(mode, title, Styles.Default, State.Windowed)
         {
         }
 
@@ -60,8 +70,9 @@ namespace SFML.Window
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
+        /// <param name="state">Window state</param>
         ////////////////////////////////////////////////////////////
-        public WindowBase(VideoMode mode, string title, Styles style) :
+        public WindowBase(VideoMode mode, string title, Styles style, State state) :
             base(IntPtr.Zero)
         {
             // Copy the title to a null-terminated UTF-32 byte array
@@ -71,7 +82,7 @@ namespace SFML.Window
             {
                 fixed (byte* titlePtr = titleAsUtf32)
                 {
-                    CPointer = sfWindowBase_createUnicode(mode, (IntPtr)titlePtr, style);
+                    CPointer = sfWindowBase_createUnicode(mode, (IntPtr)titlePtr, style, state);
                 }
             }
         }
@@ -152,17 +163,16 @@ namespace SFML.Window
         /// <summary>
         /// Change the window's icon
         /// </summary>
-        /// <param name="width">Icon's width, in pixels</param>
-        /// <param name="height">Icon's height, in pixels</param>
+        /// <param name="size">Icon's width and height, in pixels</param>
         /// <param name="pixels">Array of pixels, format must be RGBA 32 bits</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetIcon(uint width, uint height, byte[] pixels)
+        public virtual void SetIcon(Vector2u size, byte[] pixels)
         {
             unsafe
             {
                 fixed (byte* pixelsPtr = pixels)
                 {
-                    sfWindowBase_setIcon(CPointer, width, height, pixelsPtr);
+                    sfWindowBase_setIcon(CPointer, size, pixelsPtr);
                 }
             }
         }
@@ -238,7 +248,7 @@ namespace SFML.Window
         /// OS-specific handle of the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public virtual IntPtr SystemHandle => sfWindowBase_getSystemHandle(CPointer);
+        public virtual IntPtr NativeHandle => sfWindowBase_getNativeHandle(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -246,9 +256,18 @@ namespace SFML.Window
         /// event handler
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public void WaitAndDispatchEvents()
+        public void WaitAndDispatchEvents() => WaitAndDispatchEvents(Time.Zero);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Wait for a new event and dispatch it to the corresponding
+        /// event handler
+        /// </summary>
+        /// <param name="timeout">Maximum time to wait (<see cref="Time.Zero"/> for infinite)</param>
+        ////////////////////////////////////////////////////////////
+        public void WaitAndDispatchEvents(Time timeout)
         {
-            if (WaitEvent(out var e))
+            if (WaitEvent(timeout, out var e))
             {
                 CallEventHandler(e);
             }
@@ -338,10 +357,11 @@ namespace SFML.Window
         /// <summary>
         /// Internal function to get the next event (blocking)
         /// </summary>
+        /// <param name="timeout">Maximum time to wait (<see cref="Time.Zero"/> for infinite)</param>
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
         /// <returns>False if any error occurred</returns>
         ////////////////////////////////////////////////////////////
-        protected virtual bool WaitEvent(out Event eventToFill) => sfWindowBase_waitEvent(CPointer, out eventToFill);
+        protected virtual bool WaitEvent(Time timeout, out Event eventToFill) => sfWindowBase_waitEvent(CPointer, timeout, out eventToFill);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -452,13 +472,9 @@ namespace SFML.Window
                     MouseMoved?.Invoke(this, new MouseMoveEventArgs(e.MouseMove));
                     break;
 
-                // Disable CS0618 (Obsolete Warning).  This Event will be removed in SFML.NET 3.0, but should remain supported until then.
-#pragma warning disable CS0618
-                case EventType.MouseWheelMoved:
-                    MouseWheelMoved?.Invoke(this, new MouseWheelEventArgs(e.MouseWheel));
+                case EventType.MouseMovedRaw:
+                    MouseMovedRaw?.Invoke(this, new MouseMoveRawEventArgs(e.MouseMoveRaw));
                     break;
-                // restore CS0618
-#pragma warning restore CS0618
 
                 case EventType.MouseWheelScrolled:
                     MouseWheelScrolled?.Invoke(this, new MouseWheelScrollEventArgs(e.MouseWheelScroll));
@@ -514,10 +530,6 @@ namespace SFML.Window
         /// <summary>Event handler for the KeyReleased event</summary>
         public event EventHandler<KeyEventArgs> KeyReleased;
 
-        /// <summary>Event handler for the MouseWheelMoved event</summary>
-        [Obsolete("Use MouseWheelScrolled")]
-        public event EventHandler<MouseWheelEventArgs> MouseWheelMoved;
-
         /// <summary>Event handler for the MouseWheelScrolled event</summary>
         public event EventHandler<MouseWheelScrollEventArgs> MouseWheelScrolled;
 
@@ -529,6 +541,9 @@ namespace SFML.Window
 
         /// <summary>Event handler for the MouseMoved event</summary>
         public event EventHandler<MouseMoveEventArgs> MouseMoved;
+
+        /// <summary>Event handler for the MouseMovedRaw event</summary>
+        public event EventHandler<MouseMoveRawEventArgs> MouseMovedRaw;
 
         /// <summary>Event handler for the MouseEntered event</summary>
         public event EventHandler MouseEntered;
@@ -565,7 +580,7 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindowBase_createUnicode(VideoMode mode, IntPtr title, Styles style);
+        private static extern IntPtr sfWindowBase_createUnicode(VideoMode mode, IntPtr title, Styles style, State state);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfWindowBase_createFromHandle(IntPtr handle);
@@ -577,13 +592,16 @@ namespace SFML.Window
         private static extern void sfWindowBase_close(IntPtr cPointer);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfWindowBase_isOpen(IntPtr cPointer);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfWindowBase_pollEvent(IntPtr cPointer, out Event evt);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfWindowBase_waitEvent(IntPtr cPointer, out Event evt);
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool sfWindowBase_waitEvent(IntPtr cPointer, Time timeout, out Event evt);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfWindowBase_getPosition(IntPtr cPointer);
@@ -601,7 +619,7 @@ namespace SFML.Window
         private static extern void sfWindowBase_setUnicodeTitle(IntPtr cPointer, IntPtr title);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfWindowBase_setIcon(IntPtr cPointer, uint width, uint height, byte* pixels);
+        private static extern unsafe void sfWindowBase_setIcon(IntPtr cPointer, Vector2u size, byte* pixels);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindowBase_setVisible(IntPtr cPointer, bool visible);
@@ -625,12 +643,14 @@ namespace SFML.Window
         private static extern void sfWindowBase_requestFocus(IntPtr cPointer);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfWindowBase_hasFocus(IntPtr cPointer);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfWindowBase_getSystemHandle(IntPtr cPointer);
+        private static extern IntPtr sfWindowBase_getNativeHandle(IntPtr cPointer);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfWindowBase_createVulkanSurface(IntPtr cPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

@@ -16,7 +16,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BBA7B74-E003-4D9B-826A-43BD6BA48111}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		SFML.Module.props = SFML.Module.props
+		SFML.NuGet.props = SFML.NuGet.props
+		SFML.CodeStyle.props = SFML.CodeStyle.props
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML.System.Test", "test\SFML.System.Test\SFML.System.Test.csproj", "{958AC8B0-2D99-4C65-97C1-2979A090C82D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D98B564D-6F79-4429-87C3-ECDDC54F731B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,11 +95,26 @@ Global
 		{88DD6B5D-3013-4737-A77C-EC2563FCED38}.Release|x64.Build.0 = Release|x64
 		{88DD6B5D-3013-4737-A77C-EC2563FCED38}.Release|x86.ActiveCfg = Release|x86
 		{88DD6B5D-3013-4737-A77C-EC2563FCED38}.Release|x86.Build.0 = Release|x86
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Debug|x64.ActiveCfg = Debug|x64
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Debug|x64.Build.0 = Debug|x64
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Debug|x86.ActiveCfg = Debug|x86
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Debug|x86.Build.0 = Debug|x86
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Release|x64.ActiveCfg = Release|x64
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Release|x64.Build.0 = Release|x64
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Release|x86.ActiveCfg = Release|x86
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {384AFDD8-7EEF-462A-B496-B5F71D0EEF1D}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{958AC8B0-2D99-4C65-97C1-2979A090C82D} = {D98B564D-6F79-4429-87C3-ECDDC54F731B}
 	EndGlobalSection
 EndGlobal

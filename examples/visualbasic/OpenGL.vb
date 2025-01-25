@@ -20,7 +20,7 @@ Friend Module OpenGL
         }
 
         ' Create main window
-        window = New RenderWindow(New VideoMode(800, 600), "SFML graphics with OpenGL (Visual Basic)", Styles.Default, contextSettings)
+        window = New RenderWindow(New VideoMode((800, 600)), "SFML graphics with OpenGL (Visual Basic)", Styles.Default, State.Windowed, contextSettings)
         window.SetVerticalSyncEnabled(True)
 
         ' Initialize OpenTK
@@ -31,7 +31,7 @@ Friend Module OpenGL
         Dim background = New Sprite(New Texture("resources/background.jpg"))
 
         ' Create a text to display on top of the OpenGL object
-        Dim text = New Text("SFML / OpenGL demo", New Font("resources/sansation.ttf")) With {
+        Dim text = New Text(New Font("resources/sansation.ttf"), "SFML / OpenGL demo") With {
             .Position = New Vector2f(250, 450),
             .FillColor = New SFML.Graphics.Color(255, 255, 255, 170)
         }
@@ -196,7 +196,7 @@ Friend Module OpenGL
     ''' Function called when the window is resized
     ''' </summary>
     Public Sub App_Resized(sender As Object, e As SizeEventArgs) Handles window.Resized
-        GL.Viewport(0, 0, e.Width, e.Height)
+        GL.Viewport(0, 0, e.Size.X, e.Size.Y)
     End Sub
 
 End Module

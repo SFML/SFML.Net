@@ -331,9 +331,11 @@ namespace SFML.Graphics
         private static extern uint sfVertexBuffer_getVertexCount(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern unsafe bool sfVertexBuffer_update(IntPtr cPointer, Vertex* vertices, uint vertexCount, uint offset);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfVertexBuffer_updateFromVertexBuffer(IntPtr cPointer, IntPtr other);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -358,6 +360,7 @@ namespace SFML.Graphics
         private static extern void sfVertexBuffer_bind(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfVertexBuffer_isAvailable();
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

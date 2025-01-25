@@ -17,13 +17,13 @@ namespace SFML.Graphics
     {
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Create the window with default style and creation settings
+        /// Create the window with default style, state and creation settings
         /// </summary>
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         ////////////////////////////////////////////////////////////
         public RenderWindow(VideoMode mode, string title) :
-            this(mode, title, Styles.Default, new ContextSettings(0, 0))
+            this(mode, title, Styles.Default, State.Windowed, new ContextSettings(0, 0))
         {
         }
 
@@ -34,9 +34,10 @@ namespace SFML.Graphics
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
+        /// <param name="state">Window state</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(VideoMode mode, string title, Styles style) :
-            this(mode, title, style, new ContextSettings(0, 0))
+        public RenderWindow(VideoMode mode, string title, Styles style, State state) :
+            this(mode, title, style, state, new ContextSettings(0, 0))
         {
         }
 
@@ -47,9 +48,10 @@ namespace SFML.Graphics
         /// <param name="mode">Video mode to use</param>
         /// <param name="title">Title of the window</param>
         /// <param name="style">Window style (Resize | Close by default)</param>
+        /// <param name="state">Window state</param>
         /// <param name="settings">Creation parameters</param>
         ////////////////////////////////////////////////////////////
-        public RenderWindow(VideoMode mode, string title, Styles style, ContextSettings settings) :
+        public RenderWindow(VideoMode mode, string title, Styles style, State state, ContextSettings settings) :
             base(IntPtr.Zero, 0)
         {
             // Copy the string to a null-terminated UTF-32 byte array
@@ -59,7 +61,7 @@ namespace SFML.Graphics
             {
                 fixed (byte* titlePtr = titleAsUtf32)
                 {
-                    CPointer = sfRenderWindow_createUnicode(mode, (IntPtr)titlePtr, style, ref settings);
+                    CPointer = sfRenderWindow_createUnicode(mode, (IntPtr)titlePtr, style, state, ref settings);
                 }
             }
             Initialize();
@@ -165,17 +167,16 @@ namespace SFML.Graphics
         /// <summary>
         /// Change the window's icon
         /// </summary>
-        /// <param name="width">Icon's width, in pixels</param>
-        /// <param name="height">Icon's height, in pixels</param>
+        /// <param name="size">Icon's width and height, in pixels</param>
         /// <param name="pixels">Array of pixels, format must be RGBA 32 bits</param>
         ////////////////////////////////////////////////////////////
-        public override void SetIcon(uint width, uint height, byte[] pixels)
+        public override void SetIcon(Vector2u size, byte[] pixels)
         {
             unsafe
             {
                 fixed (byte* pixelsPtr = pixels)
                 {
-                    sfRenderWindow_setIcon(CPointer, width, height, pixelsPtr);
+                    sfRenderWindow_setIcon(CPointer, size, pixelsPtr);
                 }
             }
         }
@@ -304,7 +305,7 @@ namespace SFML.Graphics
         /// OS-specific handle of the window
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public override IntPtr SystemHandle => sfRenderWindow_getSystemHandle(CPointer);
+        public override IntPtr NativeHandle => sfRenderWindow_getNativeHandle(CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -320,6 +321,30 @@ namespace SFML.Graphics
         /// <param name="color">Color to use to clear the window</param>
         ////////////////////////////////////////////////////////////
         public void Clear(Color color) => sfRenderWindow_clear(CPointer, color);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Clear the entire target with a single color and stencil value
+        /// <para/>
+        /// The specified stencil value is truncated to the bit
+        /// width of the current stencil buffer.
+        /// </summary>
+        /// <param name="color">Fill color to use to clear the render target</param> 
+        /// <param name="stencilValue">Stencil value to clear to</param>
+        ////////////////////////////////////////////////////////////
+        public void Clear(Color color, StencilValue stencilValue) => sfRenderWindow_clearColorAndStencil(CPointer, color, stencilValue);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Clear the stencil buffer to a specific value
+        /// <para/>
+        /// The specified value is truncated to the bit width of
+        /// the current stencil buffer.
+        /// </summary>
+        /// <param name="stencilValue">Stencil value to clear to</param>
+        ////////////////////////////////////////////////////////////
+        public void ClearStencil(StencilValue stencilValue) => sfRenderWindow_clearStencil(CPointer, stencilValue);
+
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -352,6 +377,20 @@ namespace SFML.Graphics
         /// <returns>Viewport rectangle, expressed in pixels in the current target</returns>
         ////////////////////////////////////////////////////////////
         public IntRect GetViewport(View view) => sfRenderWindow_getViewport(CPointer, view.CPointer);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Get the scissor rectangle of a view, applied to this render target
+        /// <para/>
+        /// The scissor rectangle is defined in the view as a ratio. This
+        /// function simply applies this ratio to the current dimensions
+        /// of the render target to calculate the pixels rectangle
+        /// that the scissor rectangle actually covers in the target.
+        /// </summary>
+        /// <param name="view">The view for which we want to compute the scissor rectangle</param>
+        /// <returns>Scissor rectangle, expressed in pixels</returns>
+        ////////////////////////////////////////////////////////////
+        public IntRect GetScissor(View view) => sfRenderWindow_getScissor(CPointer, view.CPointer);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -578,24 +617,6 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Capture the current contents of the window into an image.
-        /// </summary>
-        /// 
-        /// <remarks>
-        /// Deprecated. Use <see cref="Texture"/> and <see cref="Texture.Update(RenderWindow)"/>
-        /// instead:
-        /// <code>
-        ///    Texture texture = new Texture(window.Size);
-        ///    texture.update(window);
-        ///    Image img = texture.CopyToImage();
-        ///    </code>
-        /// </remarks>
-        ////////////////////////////////////////////////////////////
-        [Obsolete("Use Texture and Texture.Update(RenderWindow)")]
-        public Image Capture() => new Image(sfRenderWindow_capture(CPointer));
-
-        ////////////////////////////////////////////////////////////
-        /// <summary>
         /// Provide a string describing the object
         /// </summary>
         /// <returns>String description of the object</returns>
@@ -628,10 +649,11 @@ namespace SFML.Graphics
         /// <summary>
         /// Internal function to get the next event (blocking)
         /// </summary>
+        /// <param name="timeout">Maximum time to wait (<see cref="Time.Zero"/> for infinite)</param>
         /// <param name="eventToFill">Variable to fill with the raw pointer to the event structure</param>
         /// <returns>False if any error occurred</returns>
         ////////////////////////////////////////////////////////////
-        protected override bool WaitEvent(out Event eventToFill) => sfRenderWindow_waitEvent(CPointer, out eventToFill);
+        protected override bool WaitEvent(Time timeout, out Event eventToFill) => sfRenderWindow_waitEvent(CPointer, timeout, out eventToFill);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -697,7 +719,7 @@ namespace SFML.Graphics
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderWindow_createUnicode(VideoMode mode, IntPtr title, Styles style, ref ContextSettings settings);
+        private static extern IntPtr sfRenderWindow_createUnicode(VideoMode mode, IntPtr title, Styles style, State state, ref ContextSettings settings);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfRenderWindow_createFromHandle(IntPtr handle, ref ContextSettings settings);
@@ -709,16 +731,19 @@ namespace SFML.Graphics
         private static extern void sfRenderWindow_close(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderWindow_isOpen(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern ContextSettings sfRenderWindow_getSettings(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderWindow_pollEvent(IntPtr cPointer, out Event evt);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern bool sfRenderWindow_waitEvent(IntPtr cPointer, out Event evt);
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool sfRenderWindow_waitEvent(IntPtr cPointer, Time timeout, out Event evt);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfRenderWindow_getPosition(IntPtr cPointer);
@@ -730,6 +755,7 @@ namespace SFML.Graphics
         private static extern Vector2u sfRenderWindow_getSize(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderWindow_isSrgb(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -739,7 +765,7 @@ namespace SFML.Graphics
         private static extern void sfRenderWindow_setUnicodeTitle(IntPtr cPointer, IntPtr title);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe void sfRenderWindow_setIcon(IntPtr cPointer, uint width, uint height, byte* pixels);
+        private static extern unsafe void sfRenderWindow_setIcon(IntPtr cPointer, Vector2u size, byte* pixels);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_setVisible(IntPtr cPointer, bool visible);
@@ -766,22 +792,30 @@ namespace SFML.Graphics
         private static extern void sfRenderWindow_setJoystickThreshold(IntPtr cPointer, float threshold);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderWindow_setActive(IntPtr cPointer, bool active);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_requestFocus(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderWindow_hasFocus(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_display(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderWindow_getSystemHandle(IntPtr cPointer);
+        private static extern IntPtr sfRenderWindow_getNativeHandle(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_clear(IntPtr cPointer, Color clearColor);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderWindow_clearStencil(IntPtr cPointer, StencilValue stencilValue);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern void sfRenderWindow_clearColorAndStencil(IntPtr cPointer, Color clearColor, StencilValue stencilValue);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_setView(IntPtr cPointer, IntPtr view);
@@ -794,6 +828,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntRect sfRenderWindow_getViewport(IntPtr cPointer, IntPtr targetView);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern IntRect sfRenderWindow_getScissor(IntPtr cPointer, IntPtr targetView);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2f sfRenderWindow_mapPixelToCoords(IntPtr cPointer, Vector2i point, IntPtr view);
@@ -814,9 +851,6 @@ namespace SFML.Graphics
         private static extern void sfRenderWindow_resetGLStates(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfRenderWindow_capture(IntPtr cPointer);
-
-        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern Vector2i sfMouse_getPositionRenderWindow(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -826,6 +860,7 @@ namespace SFML.Graphics
         private static extern Vector2i sfTouch_getPositionRenderWindow(uint finger, IntPtr relativeTo);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfRenderWindow_createVulkanSurface(IntPtr cPointer, IntPtr vkInstance, out IntPtr surface, IntPtr vkAllocator);
         #endregion
     }

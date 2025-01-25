@@ -18,22 +18,20 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the image with black color
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
+        /// <param name="size">Width and height of the image</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(uint width, uint height) : this(width, height, Color.Black) { }
+        public Image(Vector2u size) : this(size, Color.Black) { }
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Construct the image from a single color
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
+        /// <param name="size">Width and height of the image</param>
         /// <param name="color">Color to fill the image with</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(uint width, uint height, Color color) : base(sfImage_createFromColor(width, height, color))
+        public Image(Vector2u size, Color color) : base(sfImage_createFromColor(size, color))
         {
             if (IsInvalid)
             {
@@ -128,7 +126,7 @@ namespace SFML.Graphics
             {
                 fixed (Color* pixelsPtr = transposed)
                 {
-                    CPointer = sfImage_createFromPixels(width, height, (byte*)pixelsPtr);
+                    CPointer = sfImage_createFromPixels(new Vector2u(width, height), (byte*)pixelsPtr);
                 }
             }
 
@@ -142,19 +140,18 @@ namespace SFML.Graphics
         /// <summary>
         /// Construct the image directly from an array of pixels
         /// </summary>
-        /// <param name="width">Image width</param>
-        /// <param name="height">Image height</param>
+        /// <param name="size">Width and height of the image</param>
         /// <param name="pixels">array containing the pixels</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(uint width, uint height, byte[] pixels) :
+        public Image(Vector2u size, byte[] pixels) :
             base(IntPtr.Zero)
         {
             unsafe
             {
                 fixed (byte* pixelsPtr = pixels)
                 {
-                    CPointer = sfImage_createFromPixels(width, height, pixelsPtr);
+                    CPointer = sfImage_createFromPixels(size, pixelsPtr);
                 }
             }
 
@@ -232,10 +229,9 @@ namespace SFML.Graphics
         /// be used at initialization time
         /// </summary>
         /// <param name="source">Source image to copy</param>
-        /// <param name="destX">X coordinate of the destination position</param>
-        /// <param name="destY">Y coordinate of the destination position</param>
+        /// <param name="dest">Coordinates of the destination position</param>
         ////////////////////////////////////////////////////////////
-        public void Copy(Image source, uint destX, uint destY) => Copy(source, destX, destY, new IntRect(0, 0, 0, 0));
+        public void Copy(Image source, Vector2u dest) => Copy(source, dest, new IntRect((0, 0), (0, 0)));
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -244,11 +240,10 @@ namespace SFML.Graphics
         /// be used at initialization time
         /// </summary>
         /// <param name="source">Source image to copy</param>
-        /// <param name="destX">X coordinate of the destination position</param>
-        /// <param name="destY">Y coordinate of the destination position</param>
+        /// <param name="dest">Coordinates of the destination position</param>
         /// <param name="sourceRect">Sub-rectangle of the source image to copy</param>
         ////////////////////////////////////////////////////////////
-        public void Copy(Image source, uint destX, uint destY, IntRect sourceRect) => Copy(source, destX, destY, sourceRect, false);
+        public void Copy(Image source, Vector2u dest, IntRect sourceRect) => Copy(source, dest, sourceRect, false);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -257,32 +252,29 @@ namespace SFML.Graphics
         /// be used at initialization time
         /// </summary>
         /// <param name="source">Source image to copy</param>
-        /// <param name="destX">X coordinate of the destination position</param>
-        /// <param name="destY">Y coordinate of the destination position</param>
+        /// <param name="dest">Coordinates of the destination position</param>
         /// <param name="sourceRect">Sub-rectangle of the source image to copy</param>
         /// <param name="applyAlpha">Should the copy take in account the source transparency?</param>
         ////////////////////////////////////////////////////////////
-        public void Copy(Image source, uint destX, uint destY, IntRect sourceRect, bool applyAlpha) => sfImage_copyImage(CPointer, source.CPointer, destX, destY, sourceRect, applyAlpha);
+        public void Copy(Image source, Vector2u dest, IntRect sourceRect, bool applyAlpha) => sfImage_copyImage(CPointer, source.CPointer, dest, sourceRect, applyAlpha);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Get a pixel from the image
         /// </summary>
-        /// <param name="x">X coordinate of pixel in the image</param>
-        /// <param name="y">Y coordinate of pixel in the image</param>
+        /// <param name="coords">Coordinates of pixel to change</param>
         /// <returns>Color of pixel (x, y)</returns>
         ////////////////////////////////////////////////////////////
-        public Color GetPixel(uint x, uint y) => sfImage_getPixel(CPointer, x, y);
+        public Color GetPixel(Vector2u coords) => sfImage_getPixel(CPointer, coords);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Change the color of a pixel
         /// </summary>
-        /// <param name="x">X coordinate of pixel in the image</param>
-        /// <param name="y">Y coordinate of pixel in the image</param>
+        /// <param name="coords">Coordinates of pixel to change</param>
         /// <param name="color">New color for pixel (x, y)</param>
         ////////////////////////////////////////////////////////////
-        public void SetPixel(uint x, uint y, Color color) => sfImage_setPixel(CPointer, x, y, color);
+        public void SetPixel(Vector2u coords, Color color) => sfImage_setPixel(CPointer, coords, color);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -357,10 +349,10 @@ namespace SFML.Graphics
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern IntPtr sfImage_createFromColor(uint width, uint height, Color col);
+        private static extern IntPtr sfImage_createFromColor(Vector2u size, Color col);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern unsafe IntPtr sfImage_createFromPixels(uint width, uint height, byte* pixels);
+        private static extern unsafe IntPtr sfImage_createFromPixels(Vector2u size, byte* pixels);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfImage_createFromFile(string filename);
@@ -378,22 +370,24 @@ namespace SFML.Graphics
         private static extern void sfImage_destroy(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfImage_saveToFile(IntPtr cPointer, string filename);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfImage_saveToMemory(IntPtr cPointer, IntPtr bufferOutput, string format);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfImage_createMaskFromColor(IntPtr cPointer, Color col, byte alpha);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_copyImage(IntPtr cPointer, IntPtr source, uint destX, uint destY, IntRect sourceRect, bool applyAlpha);
+        private static extern void sfImage_copyImage(IntPtr cPointer, IntPtr source, Vector2u dest, IntRect sourceRect, bool applyAlpha);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern void sfImage_setPixel(IntPtr cPointer, uint x, uint y, Color col);
+        private static extern void sfImage_setPixel(IntPtr cPointer, Vector2u coords, Color col);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-        private static extern Color sfImage_getPixel(IntPtr cPointer, uint x, uint y);
+        private static extern Color sfImage_getPixel(IntPtr cPointer, Vector2u coords);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern IntPtr sfImage_getPixelsPtr(IntPtr cPointer);

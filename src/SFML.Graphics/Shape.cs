@@ -91,6 +91,19 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Get the geometric center of the shape
+        ///
+        /// The returned point is in local coordinates, that is,
+        /// the shape's transforms (position, rotation, scale) are
+        /// not taken into account.
+        /// 
+        /// </summary>
+        /// <returns>The geometric center of the shape</returns>
+        ////////////////////////////////////////////////////////////
+        public virtual Vector2f GetGeometricCenter() => sfShape_getGeometricCenter(CPointer);
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Get the local bounding rectangle of the entity.
         ///
         /// The returned rectangle is in local coordinates, which means
@@ -257,6 +270,9 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern float sfShape_getOutlineThickness(IntPtr cPointer);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern Vector2f sfShape_getGeometricCenter(IntPtr cPointer);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern FloatRect sfShape_getLocalBounds(IntPtr cPointer);

@@ -17,7 +17,18 @@ namespace SFML.Graphics
         /// <param name="blendMode">Blend mode to use</param>
         ////////////////////////////////////////////////////////////
         public RenderStates(BlendMode blendMode) :
-            this(blendMode, Transform.Identity, null, null)
+            this(blendMode, StencilMode.Default, Transform.Identity, CoordinateType.Pixels, null, null)
+        {
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Construct a default set of render states with a custom stencil mode
+        /// </summary>
+        /// <param name="stencilMode">Stencil mode to use</param>
+        ////////////////////////////////////////////////////////////
+        public RenderStates(StencilMode stencilMode) :
+            this(BlendMode.Alpha, stencilMode, Transform.Identity, CoordinateType.Pixels, null, null)
         {
         }
 
@@ -28,7 +39,7 @@ namespace SFML.Graphics
         /// <param name="transform">Transform to use</param>
         ////////////////////////////////////////////////////////////
         public RenderStates(Transform transform) :
-            this(BlendMode.Alpha, transform, null, null)
+            this(BlendMode.Alpha, StencilMode.Default, transform, CoordinateType.Pixels, null, null)
         {
         }
 
@@ -39,7 +50,7 @@ namespace SFML.Graphics
         /// <param name="texture">Texture to use</param>
         ////////////////////////////////////////////////////////////
         public RenderStates(Texture texture) :
-            this(BlendMode.Alpha, Transform.Identity, texture, null)
+            this(BlendMode.Alpha, StencilMode.Default, Transform.Identity, CoordinateType.Pixels, texture, null)
         {
         }
 
@@ -50,7 +61,7 @@ namespace SFML.Graphics
         /// <param name="shader">Shader to use</param>
         ////////////////////////////////////////////////////////////
         public RenderStates(Shader shader) :
-            this(BlendMode.Alpha, Transform.Identity, null, shader)
+            this(BlendMode.Alpha, StencilMode.Default, Transform.Identity, CoordinateType.Pixels, null, shader)
         {
         }
 
@@ -59,14 +70,18 @@ namespace SFML.Graphics
         /// Construct a set of render states with all its attributes
         /// </summary>
         /// <param name="blendMode">Blend mode to use</param>
+        /// <param name="stencilMode">Stencil mode to use</param>
         /// <param name="transform">Transform to use</param>
+        /// <param name="coordinateType">Coordinate type to use</param>
         /// <param name="texture">Texture to use</param>
         /// <param name="shader">Shader to use</param>
         ////////////////////////////////////////////////////////////
-        public RenderStates(BlendMode blendMode, Transform transform, Texture texture, Shader shader)
+        public RenderStates(BlendMode blendMode, StencilMode stencilMode, Transform transform, CoordinateType coordinateType, Texture texture, Shader shader)
         {
             BlendMode = blendMode;
+            StencilMode = stencilMode;
             Transform = transform;
+            CoordinateType = coordinateType;
             Texture = texture;
             Shader = shader;
         }
@@ -80,7 +95,9 @@ namespace SFML.Graphics
         public RenderStates(RenderStates copy)
         {
             BlendMode = copy.BlendMode;
+            StencilMode = copy.StencilMode;
             Transform = copy.Transform;
+            CoordinateType = copy.CoordinateType;
             Texture = copy.Texture;
             Shader = copy.Shader;
         }
@@ -88,13 +105,19 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         /// <summary>Special instance holding the default render states</summary>
         ////////////////////////////////////////////////////////////
-        public static RenderStates Default => new RenderStates(BlendMode.Alpha, Transform.Identity, null, null);
+        public static RenderStates Default => new RenderStates(BlendMode.Alpha, StencilMode.Default, Transform.Identity, CoordinateType.Pixels, null, null);
 
         /// <summary>Blending mode</summary>
         public BlendMode BlendMode;
 
+        /// <summary>Stencil mode</summary>
+        public StencilMode StencilMode;
+
         /// <summary>Transform</summary>
         public Transform Transform;
+
+        /// <summary>Texture coordinate type</summary>
+        public CoordinateType CoordinateType;
 
         /// <summary>Texture</summary>
         public Texture Texture;
@@ -108,7 +131,9 @@ namespace SFML.Graphics
             var data = new MarshalData
             {
                 BlendMode = BlendMode,
+                StencilMode = StencilMode,
                 Transform = Transform,
+                CoordinateType = CoordinateType,
                 Texture = Texture != null ? Texture.CPointer : IntPtr.Zero,
                 Shader = Shader != null ? Shader.CPointer : IntPtr.Zero
             };
@@ -120,7 +145,9 @@ namespace SFML.Graphics
         internal struct MarshalData
         {
             public BlendMode BlendMode;
+            public StencilMode StencilMode;
             public Transform Transform;
+            public CoordinateType CoordinateType;
             public IntPtr Texture;
             public IntPtr Shader;
         }

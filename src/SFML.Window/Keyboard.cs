@@ -226,34 +226,15 @@ namespace SFML.Window
             /// <summary>The F15 key</summary>
             F15,
             /// <summary>The Pause key</summary>
-            Pause,
-
-            /// <summary>The total number of keyboard keys</summary>
-            KeyCount, // Keep last
-
-            // Deprecated backwards compatible stuff
-            /// <summary>DEPRECATED: Use Grave</summary>
-            [Obsolete("Replace with Grave")]
-            Tilde = Grave,
-            /// <summary>DEPRECATED: Use Hyphen</summary>
-            [Obsolete("Replace with Hyphen")]
-            Dash = Hyphen,
-            /// <summary>DEPRECATED: Use Backspace</summary>
-            [Obsolete("Replace with Backspace")]
-            BackSpace = Backspace,
-            /// <summary>DEPRECATED: Use Enter</summary>
-            [Obsolete("Replace with Enter")]
-            Return = Enter,
-            /// <summary>DEPRECATED: Use Backslash</summary>
-            [Obsolete("Replace with Backslash")]
-            BackSlash = Backslash,
-            /// <summary>DEPRECATED: Use Semicolon</summary>
-            [Obsolete("Replace with Semicolon")]
-            SemiColon = Semicolon,
-            /// <summary>DEPRECATED: Use Apostrophe</summary>
-            [Obsolete("Replace with Apostrophe")]
-            Quote = Apostrophe
+            Pause
         };
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// The total number of keyboard keys, ignoring <see cref="Key.Unknown"/>
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static readonly uint KeyCount = (uint)Key.Pause + 1;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -566,10 +547,14 @@ namespace SFML.Window
             LaunchMail,
             /// <summary>Keyboard Launch Media Select key</summary>
             LaunchMediaSelect,
-
-            /// <summary>Keep last -- the total number of scancodes</summary>
-            ScancodeCount
         }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// The total number of scancodes, ignoring <see cref="Scancode.Unknown"/>
+        /// </summary>
+        ////////////////////////////////////////////////////////////
+        public static readonly uint ScancodeCount = (uint)Scancode.LaunchMediaSelect + 1;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -659,9 +644,11 @@ namespace SFML.Window
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfKeyboard_isKeyPressed(Key key);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool sfKeyboard_isScancodePressed(Scancode code);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
