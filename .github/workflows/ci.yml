@@ -41,6 +41,7 @@ jobs:
         run: dotnet new globaljson --sdk-version ${{ steps.setup-dotnet.outputs.dotnet-version }} --force
       - name: Verify SDK Installation
         run: dotnet --info
+        continue-on-error: true
 
       - name: Install SFML.Net Dependencies
         run: dotnet restore
