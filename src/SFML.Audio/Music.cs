@@ -49,7 +49,8 @@ namespace SFML.Audio
         public Music(Stream stream) :
             base(IntPtr.Zero)
         {
-            // Stream needs to stay alive as long as the music is alive
+            // Stream needs to stay alive as long as the Music instance is alive
+
             // Disposing of it can only be done in Music's Dispose method
             myStream = new StreamAdaptor(stream);
             CPointer = sfMusic_createFromStream(myStream.InputStreamPtr);
@@ -76,7 +77,7 @@ namespace SFML.Audio
         public Music(byte[] bytes) :
             base(IntPtr.Zero)
         {
-            // Memory needs to stay pinned as long as the font is alive
+            // Memory needs to stay pinned as long as the Music instance is alive
             // Freeing the handle can only be done in Music's Dispose method
             myBytesPin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             CPointer = sfMusic_createFromMemory(myBytesPin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
