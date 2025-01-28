@@ -42,7 +42,6 @@ namespace SFML.Graphics
         public Font(Stream stream) : base(IntPtr.Zero)
         {
             // Stream needs to stay alive as long as the Font instance is alive
-
             // Disposing of it can only be done in Font's Dispose method
             myStream = new StreamAdaptor(stream);
             CPointer = sfFont_createFromStream(myStream.InputStreamPtr);
@@ -64,7 +63,6 @@ namespace SFML.Graphics
             base(IntPtr.Zero)
         {
             // Memory needs to stay pinned as long as the Font instance is alive
-
             // Freeing the handle can only be done in Font's Dispose method
             myBytesPin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
             CPointer = sfFont_createFromMemory(myBytesPin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);

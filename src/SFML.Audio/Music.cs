@@ -50,7 +50,6 @@ namespace SFML.Audio
             base(IntPtr.Zero)
         {
             // Stream needs to stay alive as long as the Music instance is alive
-
             // Disposing of it can only be done in Music's Dispose method
             myStream = new StreamAdaptor(stream);
             CPointer = sfMusic_createFromStream(myStream.InputStreamPtr);
