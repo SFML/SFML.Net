@@ -46,7 +46,7 @@ namespace SFML.Audio
         /// </summary>
         /// <param name="stream">Source stream to read from</param>
         ////////////////////////////////////////////////////////////
-        public Music(Stream stream) :
+        public Music(Stream stream) :  // TODO this stream needs to stay alive
             base(IntPtr.Zero)
         {
             _stream = new StreamAdaptor(stream);
@@ -71,7 +71,7 @@ namespace SFML.Audio
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Music(byte[] bytes) :
+        public Music(byte[] bytes) :  // TODO this memory needs to stay alive
             base(IntPtr.Zero)
         {
             unsafe
@@ -140,21 +140,21 @@ namespace SFML.Audio
         /// position during spatialisation.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public SoundChannel[] ChannelMap
+        public ReadOnlySpan<SoundChannel> ChannelMap
         {
             get
             {
                 unsafe
                 {
                     var channels = sfMusic_getChannelMap(CPointer, out var count);
-                    var arr = new SoundChannel[(int)count];
+                    Array.Resize(ref _channels, (int)count);
 
-                    for (var i = 0; i < arr.Length; i++)
+                    for (var i = 0; i < _channels.Length; i++)
                     {
-                        arr[i] = channels[i];
+                        _channels[i] = channels[i];
                     }
 
-                    return arr;
+                    return _channels;
                 }
             }
         }
@@ -498,17 +498,16 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public void SetEffectProcessor(EffectProcessor effectProcessor)
         {
-            _effectProcessor = (inputFrames, inputFrameCount, outputFrames, outputFrameCount, frameChannelCount) =>
+            unsafe
             {
-                var inputFramesArray = new float[inputFrameCount];
-                var outputFramesArray = new float[outputFrameCount];
+                _effectProcessor = (float* inputFrames, ref uint inputFrameCount, float* outputFrames, ref uint outputFrameCount, uint frameChannelCount) =>
+                {
+                    var inputBuffer = new ReadOnlySpan<float>(inputFrames, (int)inputFrameCount);
+                    var outputBuffer = new Span<float>(outputFrames, (int)outputFrameCount);
 
-                Marshal.Copy(inputFrames, inputFramesArray, 0, inputFramesArray.Length);
-                var written = effectProcessor(inputFramesArray, outputFramesArray, frameChannelCount);
-                Marshal.Copy(outputFramesArray, 0, outputFrames, outputFramesArray.Length);
-
-                return written;
-            };
+                    return effectProcessor(inputBuffer, out inputFrameCount, outputBuffer, out outputFrameCount, frameChannelCount);
+                };
+            }
 
             sfMusic_setEffectProcessor(CPointer, Marshal.GetFunctionPointerForDelegate(_effectProcessor));
         }
@@ -560,6 +559,7 @@ namespace SFML.Audio
 
         private readonly StreamAdaptor _stream;
         private EffectProcessorInternal _effectProcessor;
+        private SoundChannel[] _channels;
 
         /// <summary>
         /// Structure defining a Time range. 

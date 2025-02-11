@@ -351,7 +351,7 @@ namespace SFML.Graphics
         /// <param name="name">Name of the uniform variable in GLSL</param>
         /// <param name="array">array of <c>float</c> values</param>
         ////////////////////////////////////////////////////////////
-        public unsafe void SetUniformArray(string name, float[] array)
+        public unsafe void SetUniformArray(string name, ReadOnlySpan<float> array)
         {
             fixed (float* data = array)
             {
@@ -366,7 +366,7 @@ namespace SFML.Graphics
         /// <param name="name">Name of the uniform variable in GLSL</param>
         /// <param name="array">array of <c>vec2</c> values</param>
         ////////////////////////////////////////////////////////////
-        public unsafe void SetUniformArray(string name, Glsl.Vec2[] array)
+        public unsafe void SetUniformArray(string name, ReadOnlySpan<Glsl.Vec2> array)
         {
             fixed (Glsl.Vec2* data = array)
             {
@@ -381,7 +381,7 @@ namespace SFML.Graphics
         /// <param name="name">Name of the uniform variable in GLSL</param>
         /// <param name="array">array of <c>vec3</c> values</param>
         ////////////////////////////////////////////////////////////
-        public unsafe void SetUniformArray(string name, Glsl.Vec3[] array)
+        public unsafe void SetUniformArray(string name, ReadOnlySpan<Glsl.Vec3> array)
         {
             fixed (Glsl.Vec3* data = array)
             {
@@ -396,7 +396,7 @@ namespace SFML.Graphics
         /// <param name="name">Name of the uniform variable in GLSL</param>
         /// <param name="array">array of <c>vec4</c> values</param>
         ////////////////////////////////////////////////////////////
-        public unsafe void SetUniformArray(string name, Glsl.Vec4[] array)
+        public unsafe void SetUniformArray(string name, ReadOnlySpan<Glsl.Vec4> array)
         {
             fixed (Glsl.Vec4* data = array)
             {
@@ -411,7 +411,7 @@ namespace SFML.Graphics
         /// <param name="name">Name of the uniform variable in GLSL</param>
         /// <param name="array">array of <c>mat3</c> values</param>
         ////////////////////////////////////////////////////////////
-        public unsafe void SetUniformArray(string name, Glsl.Mat3[] array)
+        public unsafe void SetUniformArray(string name, ReadOnlySpan<Glsl.Mat3> array)
         {
             fixed (Glsl.Mat3* data = array)
             {
@@ -426,7 +426,7 @@ namespace SFML.Graphics
         /// <param name="name">Name of the uniform variable in GLSL</param>
         /// <param name="array">array of <c>mat4</c> values</param>
         ////////////////////////////////////////////////////////////
-        public unsafe void SetUniformArray(string name, Glsl.Mat4[] array)
+        public unsafe void SetUniformArray(string name, ReadOnlySpan<Glsl.Mat4> array)
         {
             fixed (Glsl.Mat4* data = array)
             {
