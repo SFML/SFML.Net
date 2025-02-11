@@ -40,21 +40,22 @@ namespace SFML.Window
         /// </summary>
         /// <returns>Vulkan instance extensions required for graphics</returns>
         ////////////////////////////////////////////////////////////
-        public static string[] GetGraphicsRequiredInstanceExtensions()
+        public static ReadOnlySpan<string> GetGraphicsRequiredInstanceExtensions()
         {
             unsafe
             {
                 var extensionsPtr = sfVulkan_getGraphicsRequiredInstanceExtensions(out var count);
-                var extensions = new string[(int)count];
+                Array.Resize(ref _vulkanExtensions, (int)count);
 
-                for (var i = 0; i < (int)count; ++i)
+                for (var i = 0; i < _vulkanExtensions.Length; i++)
                 {
-                    extensions[i] = Marshal.PtrToStringAnsi(extensionsPtr[i]);
+                    _vulkanExtensions[i] = Marshal.PtrToStringAnsi(extensionsPtr[i]);
                 }
 
-                return extensions;
+                return _vulkanExtensions;
             }
         }
+        private static string[] _vulkanExtensions;
 
         #region Imports
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

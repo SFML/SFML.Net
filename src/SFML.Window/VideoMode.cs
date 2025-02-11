@@ -52,23 +52,25 @@ namespace SFML.Window
         /// Get the list of all the supported fullscreen video modes
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public static VideoMode[] FullscreenModes
+        public static ReadOnlySpan<VideoMode> FullscreenModes
         {
             get
             {
                 unsafe
                 {
                     var modesPtr = sfVideoMode_getFullscreenModes(out var count);
-                    var modes = new VideoMode[(int)count];
-                    for (var i = 0; i < (int)count; ++i)
+                    Array.Resize(ref _fullscreenModes, (int)count);
+
+                    for (var i = 0; i < _fullscreenModes.Length; i++)
                     {
-                        modes[i] = modesPtr[i];
+                        _fullscreenModes[i] = modesPtr[i];
                     }
 
-                    return modes;
+                    return _fullscreenModes;
                 }
             }
         }
+        private static VideoMode[] _fullscreenModes;
 
         ////////////////////////////////////////////////////////////
         /// <summary>

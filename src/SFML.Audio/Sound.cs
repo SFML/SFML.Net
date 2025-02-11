@@ -403,17 +403,16 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         public void SetEffectProcessor(EffectProcessor effectProcessor)
         {
-            _effectProcessor = (inputFrames, inputFrameCount, outputFrames, outputFrameCount, frameChannelCount) =>
+            unsafe
             {
-                var inputFramesArray = new float[inputFrameCount];
-                var outputFramesArray = new float[outputFrameCount];
+                _effectProcessor = (float* inputFrames, ref uint inputFrameCount, float* outputFrames, ref uint outputFrameCount, uint frameChannelCount) =>
+                {
+                    var inputBuffer = new ReadOnlySpan<float>(inputFrames, (int)inputFrameCount);
+                    var outputBuffer = new Span<float>(outputFrames, (int)outputFrameCount);
 
-                Marshal.Copy(inputFrames, inputFramesArray, 0, inputFramesArray.Length);
-                var written = effectProcessor(inputFramesArray, outputFramesArray, frameChannelCount);
-                Marshal.Copy(outputFramesArray, 0, outputFrames, outputFramesArray.Length);
-
-                return written;
-            };
+                    return effectProcessor(inputBuffer, out inputFrameCount, outputBuffer, out outputFrameCount, frameChannelCount);
+                };
+            }
 
             sfSound_setEffectProcessor(CPointer, Marshal.GetFunctionPointerForDelegate(_effectProcessor));
         }
