@@ -41,10 +41,10 @@ namespace SFML.Graphics
         ////////////////////////////////////////////////////////////
         public Font(Stream stream) : base(IntPtr.Zero)
         {
-            using (var adaptor = new StreamAdaptor(stream))
-            {
-                CPointer = sfFont_createFromStream(adaptor.InputStreamPtr);
-            }
+            // Stream needs to stay alive as long as the Font instance is alive
+            // Disposing of it can only be done in Font's Dispose method
+            _myStream = new StreamAdaptor(stream);
+            CPointer = sfFont_createFromStream(_myStream.InputStreamPtr);
 
             if (IsInvalid)
             {
@@ -62,16 +62,14 @@ namespace SFML.Graphics
         public Font(byte[] bytes) :
             base(IntPtr.Zero)
         {
-            unsafe
-            {
-                fixed (void* ptr = bytes)
-                {
-                    CPointer = sfFont_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
-                }
-            }
+            // Memory needs to stay pinned as long as the Font instance is alive
+            // Freeing the handle can only be done in Font's Dispose method
+            _myBytesPin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            CPointer = sfFont_createFromMemory(_myBytesPin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
 
             if (IsInvalid)
             {
+                _myBytesPin.Free();
                 throw new LoadingFailedException("font");
             }
         }
@@ -245,6 +243,13 @@ namespace SFML.Graphics
                 {
                     texture.Dispose();
                 }
+
+                _myStream?.Dispose();
+            }
+
+            if (_myBytesPin.IsAllocated)
+            {
+                _myBytesPin.Free();
             }
 
             if (!disposing)
@@ -285,6 +290,8 @@ namespace SFML.Graphics
         }
 
         private readonly Dictionary<uint, Texture> _textures = new Dictionary<uint, Texture>();
+        private readonly StreamAdaptor _myStream;
+        private GCHandle _myBytesPin;
 
         #region Imports
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
