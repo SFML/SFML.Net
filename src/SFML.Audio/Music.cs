@@ -49,6 +49,8 @@ namespace SFML.Audio
         public Music(Stream stream) :
             base(IntPtr.Zero)
         {
+            // Stream needs to stay alive as long as the Music instance is alive
+            // Disposing of it can only be done in Music's Dispose method
             _stream = new StreamAdaptor(stream);
             CPointer = sfMusic_createFromStream(_stream.InputStreamPtr);
 
@@ -74,16 +76,14 @@ namespace SFML.Audio
         public Music(byte[] bytes) :
             base(IntPtr.Zero)
         {
-            unsafe
-            {
-                fixed (void* ptr = bytes)
-                {
-                    CPointer = sfMusic_createFromMemory((IntPtr)ptr, (UIntPtr)bytes.Length);
-                }
-            }
+            // Memory needs to stay pinned as long as the Music instance is alive
+            // Freeing the handle can only be done in Music's Dispose method
+            _bytesPin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+            CPointer = sfMusic_createFromMemory(_bytesPin.AddrOfPinnedObject(), (UIntPtr)bytes.Length);
 
             if (IsInvalid)
             {
+                _bytesPin.Free();
                 throw new LoadingFailedException("music");
             }
         }
@@ -555,10 +555,16 @@ namespace SFML.Audio
                 _stream?.Dispose();
             }
 
+            if (_bytesPin.IsAllocated)
+            {
+                _bytesPin.Free();
+            }
+
             sfMusic_destroy(CPointer);
         }
 
         private readonly StreamAdaptor _stream;
+        private GCHandle _bytesPin;
         private EffectProcessorInternal _effectProcessor;
 
         /// <summary>
