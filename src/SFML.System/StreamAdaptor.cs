@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace SFML.System
 {
@@ -81,6 +82,13 @@ namespace SFML.System
     ////////////////////////////////////////////////////////////
     public class StreamAdaptor : IDisposable
     {
+#if !NETSTANDARD2_1_OR_GREATER
+        [ThreadStatic]
+        private static readonly byte[] _readBuffer;
+
+        static StreamAdaptor() => _readBuffer = new byte[1024];
+#endif
+
         ////////////////////////////////////////////////////////////
         /// <summary>
         /// Construct from a System.IO.Stream
@@ -150,10 +158,31 @@ namespace SFML.System
         ////////////////////////////////////////////////////////////
         private long Read(IntPtr data, UIntPtr size, IntPtr userData)
         {
-            var buffer = new byte[(int)size];
-            var count = _stream.Read(buffer, 0, (int)size);
-            Marshal.Copy(buffer, 0, data, count);
-            return count;
+#if NETSTANDARD2_1_OR_GREATER
+            unsafe
+            {
+                var buffer = new Span<byte>(data.ToPointer(), (int)size);
+                var count = _stream.Read(buffer);
+                return count;
+            }
+#else
+            var totalBytesRead = 0;
+
+            while (totalBytesRead < (long)size)
+            {
+                var bytesRead = _stream.Read(_readBuffer, 0, Math.Min((int)size - totalBytesRead, _readBuffer.Length));
+
+                if (bytesRead == 0)
+                {
+                    break;
+                }
+
+                Marshal.Copy(_readBuffer, 0, data + totalBytesRead, bytesRead);
+                totalBytesRead += bytesRead;
+            }
+
+            return totalBytesRead;
+#endif
         }
 
         ////////////////////////////////////////////////////////////

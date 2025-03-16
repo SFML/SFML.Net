@@ -28,11 +28,11 @@ namespace SFML.System
 
         ////////////////////////////////////////////////////////////
         /// <summary>
-        /// Get a copy of the buffer data
+        /// Get the buffer data
         /// </summary>
-        /// <returns>A byte array containing the buffer data</returns>
+        /// <returns>A span containing the buffer data</returns>
         ////////////////////////////////////////////////////////////
-        public byte[] GetData()
+        public ReadOnlySpan<byte> GetData()
         {
             var size = sfBuffer_getSize(CPointer);
             var ptr = sfBuffer_getData(CPointer);
@@ -42,10 +42,10 @@ namespace SFML.System
                 return Array.Empty<byte>();
             }
 
-            var data = new byte[(int)size];
-            Marshal.Copy(ptr, data, 0, (int)size);
-
-            return data;
+            unsafe
+            {
+                return new ReadOnlySpan<byte>(ptr.ToPointer(), (int)size);
+            }
         }
 
         ////////////////////////////////////////////////////////////

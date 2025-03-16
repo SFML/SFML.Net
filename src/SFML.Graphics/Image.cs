@@ -82,7 +82,7 @@ namespace SFML.Graphics
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(byte[] bytes) :
+        public Image(ReadOnlySpan<byte> bytes) :
             base(IntPtr.Zero)
         {
             unsafe
@@ -144,7 +144,7 @@ namespace SFML.Graphics
         /// <param name="pixels">array containing the pixels</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Image(Vector2u size, byte[] pixels) :
+        public Image(Vector2u size, ReadOnlySpan<byte> pixels) :
             base(IntPtr.Zero)
         {
             unsafe
@@ -194,13 +194,14 @@ namespace SFML.Graphics
         /// <param name="format">Encoding format to use</param>
         /// <returns>True if saving was successful</returns>
         ////////////////////////////////////////////////////////////
-        public bool SaveToMemory(out byte[] output, string format)
+        public bool SaveToMemory(Span<byte> output, string format)
         {
             using (var buffer = new SFML.System.Buffer())
             {
                 var success = sfImage_saveToMemory(CPointer, buffer.CPointer, format);
 
-                output = success ? buffer.GetData() : Array.Empty<byte>();
+                var data = success ? buffer.GetData() : Array.Empty<byte>();
+                data.CopyTo(output);
                 return success;
             }
         }
@@ -283,14 +284,19 @@ namespace SFML.Graphics
         /// </summary>
         /// <returns>Array of pixels</returns>
         ////////////////////////////////////////////////////////////
-        public byte[] Pixels
+        public ReadOnlySpan<byte> Pixels
         {
             get
             {
+                // You can't resize images from C#, so the memory shouldn't get invalidated
                 var size = Size;
-                var pixelsPtr = new byte[size.X * size.Y * 4];
-                Marshal.Copy(sfImage_getPixelsPtr(CPointer), pixelsPtr, 0, pixelsPtr.Length);
-                return pixelsPtr;
+                var ptr = sfImage_getPixelsPtr(CPointer);
+                var pixelCount = size.X * size.Y * 4;
+
+                unsafe
+                {
+                    return new ReadOnlySpan<byte>(ptr.ToPointer(), (int)pixelCount);
+                }
             }
         }
 
