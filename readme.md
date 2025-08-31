@@ -54,3 +54,7 @@ SFML and SFML.Net are open-source projects, and they need your help to go on gro
 Don't hesitate to post suggestions or bug reports on [the forum](https://en.sfml-dev.org/forums/)
 or post new bugs/features requests on the [issue tracker](https://github.com/SFML/SFML.Net/issues/).
 You can even fork the project on GitHub, maintain your own version and send us pull requests periodically to merge your work.
+
+## External libraries used by SFML.Net
+
+* [CSFML](https://github.com/SFML/CSFML/) is under the zlib/png license
