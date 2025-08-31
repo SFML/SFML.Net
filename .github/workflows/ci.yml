@@ -23,8 +23,6 @@ jobs:
           - { name: macOS x64, os: macos-13 }
           - { name: macOS ARM64, os: macos-14 }
         dotnet:
-          - { name: .NET 6, version: "6.0.x" }
-          - { name: .NET 7, version: "7.0.x" }
           - { name: .NET 8, version: "8.0.x" }
           - { name: .NET 9, version: "9.0.x" }
 
@@ -48,7 +46,7 @@ jobs:
       - name: Build SFML.Net
         run: dotnet build --configuration Release --no-restore
       - name: Test SFML.Net
-        if: matrix.dotnet.name == '.NET 6'
+        if: matrix.dotnet.name == '.NET 8'
         run: dotnet test --configuration Release --no-restore
       - name: Pack SFML.Net
         run: dotnet pack --configuration Release -o Publish
@@ -56,7 +54,7 @@ jobs:
       - name: Install SFML.Net Examples Dependencies
         run: dotnet restore examples/Examples.sln
       - name: Build SFML.Net Examples
-        run: dotnet build --configuration Release --no-restore examples/Examples.sln 
+        run: dotnet build --configuration Release --no-restore examples/Examples.sln
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
