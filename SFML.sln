@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SFML.Module.props = SFML.Module.props
 		SFML.NuGet.props = SFML.NuGet.props
 		SFML.CodeStyle.props = SFML.CodeStyle.props
+		.github\workflows\ci.yml = .github\workflows\ci.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFML.System.Test", "test\SFML.System.Test\SFML.System.Test.csproj", "{958AC8B0-2D99-4C65-97C1-2979A090C82D}"
