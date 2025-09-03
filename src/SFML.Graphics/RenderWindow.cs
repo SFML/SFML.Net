@@ -145,6 +145,50 @@ namespace SFML.Graphics
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Set the minimum window rendering region size
+        /// </summary>
+        /// <param name="minimumSize">New minimum size, in pixels, null to reset the minimum size</param>
+        ////////////////////////////////////////////////////////////
+        public override void SetMinimumSize(Vector2u? minimumSize)
+        {
+            unsafe
+            {
+                if (minimumSize.HasValue)
+                {
+                    var minimumSizeRef = minimumSize.Value;
+                    sfRenderWindow_setMinimumSize(CPointer, &minimumSizeRef);
+                }
+                else
+                {
+                    sfRenderWindow_setMinimumSize(CPointer, null);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Set the maximum window rendering region size
+        /// </summary>
+        /// <param name="maximumSize">New maximum size, in pixels, null to reset the maximum size</param>
+        ////////////////////////////////////////////////////////////
+        public override void SetMaximumSize(Vector2u? maximumSize)
+        {
+            unsafe
+            {
+                if (maximumSize.HasValue)
+                {
+                    var maximumSizeRef = maximumSize.Value;
+                    sfRenderWindow_setMaximumSize(CPointer, &maximumSizeRef);
+                }
+                else
+                {
+                    sfRenderWindow_setMaximumSize(CPointer, null);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Change the title of the window
         /// </summary>
         /// <param name="title">New title</param>
@@ -210,7 +254,7 @@ namespace SFML.Graphics
         /// Grab or release the mouse cursor
         /// </summary>
         /// <param name="grabbed">True to grab, false to release</param>
-        /// 
+        ///
         /// <remarks>
         /// If set, grabs the mouse cursor inside this window's client
         /// area so it may no longer be moved outside its bounds.
@@ -329,7 +373,7 @@ namespace SFML.Graphics
         /// The specified stencil value is truncated to the bit
         /// width of the current stencil buffer.
         /// </summary>
-        /// <param name="color">Fill color to use to clear the render target</param> 
+        /// <param name="color">Fill color to use to clear the render target</param>
         /// <param name="stencilValue">Stencil value to clear to</param>
         ////////////////////////////////////////////////////////////
         public void Clear(Color color, StencilValue stencilValue) => sfRenderWindow_clearColorAndStencil(CPointer, color, stencilValue);
@@ -548,7 +592,7 @@ namespace SFML.Graphics
         /// <summary>
         /// Save the current OpenGL render states and matrices.
         /// </summary>
-        /// 
+        ///
         /// <example>
         /// // OpenGL code here...
         /// window.PushGLStates();
@@ -602,7 +646,7 @@ namespace SFML.Graphics
         /// states needed by SFML are set, so that subsequent Draw()
         /// calls will work as expected.
         /// </remarks>
-        /// 
+        ///
         /// <example>
         /// // OpenGL code here...
         /// glPushAttrib(...);
@@ -760,6 +804,12 @@ namespace SFML.Graphics
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_setSize(IntPtr cPointer, Vector2u size);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfRenderWindow_setMinimumSize(IntPtr cPointer, Vector2u* minimumSize);
+
+        [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfRenderWindow_setMaximumSize(IntPtr cPointer, Vector2u* maximumSize);
 
         [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfRenderWindow_setUnicodeTitle(IntPtr cPointer, IntPtr title);

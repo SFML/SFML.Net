@@ -164,6 +164,50 @@ namespace SFML.Window
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Set the minimum window rendering region size
+        /// </summary>
+        /// <param name="minimumSize">New minimum size, in pixels, null to reset the minimum size</param>
+        ////////////////////////////////////////////////////////////
+        public override void SetMinimumSize(Vector2u? minimumSize)
+        {
+            unsafe
+            {
+                if (minimumSize.HasValue)
+                {
+                    var minimumSizeRef = minimumSize.Value;
+                    sfWindow_setMinimumSize(CPointer, &minimumSizeRef);
+                }
+                else
+                {
+                    sfWindow_setMinimumSize(CPointer, null);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Set the maximum window rendering region size
+        /// </summary>
+        /// <param name="maximumSize">New maximum size, in pixels, null to reset the maximum size</param>
+        ////////////////////////////////////////////////////////////
+        public override void SetMaximumSize(Vector2u? maximumSize)
+        {
+            unsafe
+            {
+                if (maximumSize.HasValue)
+                {
+                    var maximumSizeRef = maximumSize.Value;
+                    sfWindow_setMaximumSize(CPointer, &maximumSizeRef);
+                }
+                else
+                {
+                    sfWindow_setMaximumSize(CPointer, null);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Change the window's icon
         /// </summary>
         /// <param name="size">Icon's width and height, in pixels</param>
@@ -201,7 +245,7 @@ namespace SFML.Window
         /// Grab or release the mouse cursor
         /// </summary>
         /// <param name="grabbed">True to grab, false to release</param>
-        /// 
+        ///
         /// <remarks>
         /// If set, grabs the mouse cursor inside this window's client
         /// area so it may no longer be moved outside its bounds.
@@ -440,6 +484,12 @@ namespace SFML.Window
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindow_setSize(IntPtr cPointer, Vector2u size);
+
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfWindow_setMinimumSize(IntPtr cPointer, Vector2u* minimumSize);
+
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfWindow_setMaximumSize(IntPtr cPointer, Vector2u* maximumSize);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindow_setUnicodeTitle(IntPtr cPointer, IntPtr title);

@@ -141,6 +141,50 @@ namespace SFML.Window
 
         ////////////////////////////////////////////////////////////
         /// <summary>
+        /// Set the minimum window rendering region size
+        /// </summary>
+        /// <param name="minimumSize">New minimum size, in pixels, null to reset the minimum size</param>
+        ////////////////////////////////////////////////////////////
+        public virtual void SetMinimumSize(Vector2u? minimumSize)
+        {
+            unsafe
+            {
+                if (minimumSize.HasValue)
+                {
+                    var minimumSizeRef = minimumSize.Value;
+                    sfWindowBase_setMinimumSize(CPointer, &minimumSizeRef);
+                }
+                else
+                {
+                    sfWindowBase_setMinimumSize(CPointer, null);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Set the maximum window rendering region size
+        /// </summary>
+        /// <param name="maximumSize">New maximum size, in pixels, null to reset the maximum size</param>
+        ////////////////////////////////////////////////////////////
+        public virtual void SetMaximumSize(Vector2u? maximumSize)
+        {
+            unsafe
+            {
+                if (maximumSize.HasValue)
+                {
+                    var maximumSizeRef = maximumSize.Value;
+                    sfWindowBase_setMaximumSize(CPointer, &maximumSizeRef);
+                }
+                else
+                {
+                    sfWindowBase_setMaximumSize(CPointer, null);
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        /// <summary>
         /// Change the title of the window
         /// </summary>
         /// <param name="title">New title</param>
@@ -614,6 +658,12 @@ namespace SFML.Window
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindowBase_setSize(IntPtr cPointer, Vector2u size);
+
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfWindowBase_setMinimumSize(IntPtr cPointer, Vector2u* minimumSize);
+
+        [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+        private static extern unsafe void sfWindowBase_setMaximumSize(IntPtr cPointer, Vector2u* maximumSize);
 
         [DllImport(CSFML.Window, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
         private static extern void sfWindowBase_setUnicodeTitle(IntPtr cPointer, IntPtr title);
