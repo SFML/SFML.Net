@@ -8,7 +8,7 @@
     <RootNamespace>shader</RootNamespace>
     <AssemblyName>shader</AssemblyName>
     <Configurations>Debug;Release</Configurations>
-    <Version>2.6.0</Version>
+    <Version>3.0.0</Version>
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
