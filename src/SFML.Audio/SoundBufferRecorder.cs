@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SFML.Audio
@@ -59,9 +60,12 @@ namespace SFML.Audio
         /// <param name="samples">Array of samples to process</param>
         /// <returns>False to stop recording audio data, true to continue</returns>
         ////////////////////////////////////////////////////////////
-        protected override bool OnProcessSamples(short[] samples)
+        protected override bool OnProcessSamples(ReadOnlySpan<short> samples)
         {
-            _samplesArray.AddRange(samples);
+            for (var i = 0; i < samples.Length; i++)
+            {
+                _samplesArray.Add(samples[i]);
+            }
             return true;
         }
 

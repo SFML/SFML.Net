@@ -39,7 +39,7 @@ namespace SFML.Graphics
         /// <param name="stream">Source stream to read from</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Font(Stream stream) : base(IntPtr.Zero)
+        public Font(Stream stream) : base(IntPtr.Zero)  // TODO this stream needs to stay alive
         {
             // Stream needs to stay alive as long as the Font instance is alive
             // Disposing of it can only be done in Font's Dispose method
@@ -59,7 +59,7 @@ namespace SFML.Graphics
         /// <param name="bytes">Byte array containing the file contents</param>
         /// <exception cref="LoadingFailedException" />
         ////////////////////////////////////////////////////////////
-        public Font(byte[] bytes) :
+        public Font(byte[] bytes) : // TODO this memory needs to stay alive
             base(IntPtr.Zero)
         {
             // Memory needs to stay pinned as long as the Font instance is alive

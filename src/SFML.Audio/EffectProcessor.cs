@@ -84,8 +84,8 @@ namespace SFML.Audio
     /// occur.
     /// </summary>
     ////////////////////////////////////////////////////////////
-    public delegate long EffectProcessor(float[] inputFrames, float[] outputFrames, uint frameChannelCount);
+    public delegate long EffectProcessor(ReadOnlySpan<float> inputFrames, out uint inputFramesRead, Span<float> outputFrames, out uint outputFramesWritten, uint frameChannelCount);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate long EffectProcessorInternal(IntPtr inputFrames, uint inputFrameCount, IntPtr outputFrames, uint outputFrameCount, uint frameChannelCount);
+    internal unsafe delegate long EffectProcessorInternal(float* inputFrames, ref uint inputFrameCount, float* outputFrames, ref uint outputFrameCount, uint frameChannelCount);
 }

@@ -97,21 +97,21 @@ namespace SFML.Audio
         /// position during spatialisation.
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public SoundChannel[] ChannelMap
+        public ReadOnlySpan<SoundChannel> ChannelMap
         {
             get
             {
                 unsafe
                 {
                     var channels = sfSoundRecorder_getChannelMap(CPointer, out var count);
-                    var arr = new SoundChannel[(int)count];
+                    Array.Resize(ref _channels, (int)count);
 
-                    for (var i = 0; i < arr.Length; i++)
+                    for (var i = 0; i < _channels.Length; i++)
                     {
-                        arr[i] = channels[i];
+                        _channels[i] = channels[i];
                     }
 
-                    return arr;
+                    return _channels;
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace SFML.Audio
         /// <param name="samples">Array of samples to process</param>
         /// <returns>False to stop recording audio data, true to continue</returns>
         ////////////////////////////////////////////////////////////
-        protected abstract bool OnProcessSamples(short[] samples);
+        protected abstract bool OnProcessSamples(ReadOnlySpan<short> samples);
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -195,23 +195,25 @@ namespace SFML.Audio
         /// Get the list of the names of all available audio capture devices
         /// </summary>
         ////////////////////////////////////////////////////////////
-        public static string[] AvailableDevices
+        public static ReadOnlySpan<string> AvailableDevices
         {
             get
             {
                 unsafe
                 {
                     var devicesPtr = sfSoundRecorder_getAvailableDevices(out var count);
-                    var devices = new string[(int)count];
-                    for (var i = 0; i < (int)count; ++i)
+                    Array.Resize(ref _availableDevices, (int)count);
+
+                    for (var i = 0; i < _availableDevices.Length; i++)
                     {
-                        devices[i] = Marshal.PtrToStringAnsi(devicesPtr[i]);
+                        _availableDevices[i] = Marshal.PtrToStringAnsi(devicesPtr[i]);
                     }
 
-                    return devices;
+                    return _availableDevices;
                 }
             }
         }
+        private static string[] _availableDevices;
 
         ////////////////////////////////////////////////////////////
         /// <summary>
@@ -267,10 +269,10 @@ namespace SFML.Audio
         ////////////////////////////////////////////////////////////
         private bool ProcessSamples(IntPtr samples, UIntPtr nbSamples, IntPtr userData)
         {
-            var samplesArray = new short[(int)nbSamples];
-            Marshal.Copy(samples, samplesArray, 0, samplesArray.Length);
-
-            return OnProcessSamples(samplesArray);
+            unsafe
+            {
+                return OnProcessSamples(new ReadOnlySpan<short>((void*)samples, (int)nbSamples));
+            }
         }
 
         ////////////////////////////////////////////////////////////
@@ -294,6 +296,7 @@ namespace SFML.Audio
         private readonly StartCallback _startCallback;
         private readonly ProcessCallback _processCallback;
         private readonly StopCallback _stopCallback;
+        private SoundChannel[] _channels;
 
         #region Imports
         [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

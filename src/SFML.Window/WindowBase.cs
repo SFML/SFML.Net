@@ -210,7 +210,7 @@ namespace SFML.Window
         /// <param name="size">Icon's width and height, in pixels</param>
         /// <param name="pixels">Array of pixels, format must be RGBA 32 bits</param>
         ////////////////////////////////////////////////////////////
-        public virtual void SetIcon(Vector2u size, byte[] pixels)
+        public virtual void SetIcon(Vector2u size, ReadOnlySpan<byte> pixels)
         {
             unsafe
             {
