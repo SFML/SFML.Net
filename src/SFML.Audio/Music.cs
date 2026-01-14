@@ -286,8 +286,8 @@ public class Music : ObjectBase
     ////////////////////////////////////////////////////////////
     public Vector3f Direction
     {
-        get => sfMusic_getPosition(CPointer);
-        set => sfMusic_setPosition(CPointer, value);
+        get => sfMusic_getDirection(CPointer);
+        set => sfMusic_setDirection(CPointer, value);
     }
 
     ////////////////////////////////////////////////////////////
