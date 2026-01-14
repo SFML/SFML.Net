@@ -125,6 +125,11 @@ dotnet_style_prefer_conditional_expression_over_return = false:suggestion
 dotnet_style_coalesce_expression = true:warning
 dotnet_style_null_propagation = true:warning
 
+# Use primary constructor
+# https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0290
+dotnet_style_prefer_primary_constructors = false
+dotnet_diagnostic.IDE0290.severity = silent
+
 # C# Code Style Settings
 [*.{cs,csx,cake}]
 

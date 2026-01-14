@@ -2,10 +2,6 @@ namespace SFML.System.Test;
 
 public class Vector2iTests
 {
-    private const float Eps = 1e-5f;
-    private const float EpsRelaxed = 15e-5f;
-    private const float Sqrt2Div2 = 0.7071067811865475f;
-
     [Fact]
     public void DefaultConstructor()
     {
@@ -32,8 +28,8 @@ public class Vector2iTests
         Assert.Equal(-2, negatedVec.Y);
     }
 
-    private static readonly Vector2i _lhs = new Vector2i(2, 5);
-    private static readonly Vector2i _rhs = new Vector2i(8, 3);
+    private static readonly Vector2i _lhs = new(2, 5);
+    private static readonly Vector2i _rhs = new(8, 3);
 
     [Fact]
     public void OperatorAddAssign()
@@ -73,7 +69,7 @@ public class Vector2iTests
         Assert.Equal(2, vec.Y);
     }
 
-    private static readonly Vector2i _vecMul = new Vector2i(26, 12);
+    private static readonly Vector2i _vecMul = new(26, 12);
     private static readonly int _intMul = 2;
 
     [Fact]
@@ -119,9 +115,9 @@ public class Vector2iTests
         Assert.Equal(6, vec.Y);
     }
 
-    private static readonly Vector2i _equalFirst = new Vector2i(1, 5);
-    private static readonly Vector2i _equalSecond = new Vector2i(1, 5);
-    private static readonly Vector2i _different = new Vector2i(6, 9);
+    private static readonly Vector2i _equalFirst = new(1, 5);
+    private static readonly Vector2i _equalSecond = new(1, 5);
+    private static readonly Vector2i _different = new(6, 9);
 
     [Fact]
     public void OperatorEq()
