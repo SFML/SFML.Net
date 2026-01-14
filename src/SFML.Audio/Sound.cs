@@ -223,8 +223,8 @@ public class Sound : ObjectBase
     ////////////////////////////////////////////////////////////
     public Vector3f Direction
     {
-        get => sfSound_getPosition(CPointer);
-        set => sfSound_setPosition(CPointer, value);
+        get => sfSound_getDirection(CPointer);
+        set => sfSound_setDirection(CPointer, value);
     }
 
     ////////////////////////////////////////////////////////////

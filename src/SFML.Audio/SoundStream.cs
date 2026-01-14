@@ -213,8 +213,8 @@ public abstract class SoundStream : ObjectBase
     ////////////////////////////////////////////////////////////
     public Vector3f Direction
     {
-        get => sfSoundStream_getPosition(CPointer);
-        set => sfSoundStream_setPosition(CPointer, value);
+        get => sfSoundStream_getDirection(CPointer);
+        set => sfSoundStream_setDirection(CPointer, value);
     }
 
     ////////////////////////////////////////////////////////////
