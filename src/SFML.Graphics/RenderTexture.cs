@@ -8,7 +8,7 @@ namespace SFML.Graphics;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// Target for off-screen 2D rendering into an texture
+/// Target for off-screen 2D rendering into a texture
 /// </summary>
 ////////////////////////////////////////////////////////////
 public class RenderTexture : ObjectBase, IRenderTarget
@@ -153,7 +153,7 @@ public class RenderTexture : ObjectBase, IRenderTarget
     ///
     /// Initially, both coordinate systems (world units and target pixels)
     /// match perfectly. But if you define a custom view or resize your
-    /// render-target, this assertion is not true anymore, ie. a point
+    /// render-target, this assertion is not true anymore, i.e. a point
     /// located at (10, 50) in your render-target may map to the point
     /// (150, 75) in your 2D world -- if the view is translated by (140, 25).
     ///
@@ -195,7 +195,7 @@ public class RenderTexture : ObjectBase, IRenderTarget
     ///
     /// Initially, both coordinate systems (world units and target pixels)
     /// match perfectly. But if you define a custom view or resize your
-    /// render-target, this assertion is not true anymore, ie. a point
+    /// render-target, this assertion is not true anymore, i.e. a point
     /// located at (150, 75) in your 2D world may map to the pixel
     /// (10, 50) of your render-target -- if the view is translated by (140, 25).
     ///
@@ -390,7 +390,7 @@ public class RenderTexture : ObjectBase, IRenderTarget
     ///
     /// Note that this function is quite expensive: it saves all the
     /// possible OpenGL states and matrices, even the ones you
-    /// don't care about. Therefore it should be used wisely.
+    /// don't care about. Therefore, it should be used wisely.
     /// It is provided for convenience, but the best results will
     /// be achieved if you handle OpenGL states yourself (because
     /// you know which states have really changed, and need to be

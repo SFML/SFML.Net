@@ -35,11 +35,11 @@ namespace SFML.Audio;
 /// <para/>
 /// Attempting to read more frames than the input frame
 /// count or write more frames than the output frame count
-/// will result in undefined behaviour.
+/// will result in undefined behavior.
 /// <para/>
 /// Attempting to read more frames than the input frame
 /// count or write more frames than the output frame count
-/// will result in undefined behaviour.
+/// will result in undefined behavior.
 /// <para/>
 /// It is important to note that the channel count of the
 /// audio engine currently sourcing data from this sound

@@ -6,7 +6,7 @@ namespace SFML.Graphics;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// IntRect is an utility class for manipulating 2D rectangles
+/// IntRect is a utility class for manipulating 2D rectangles
 /// with integer coordinates
 /// </summary>
 ////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ public struct IntRect : IEquatable<IntRect>
         var interRight = Math.Min(r1MaxX, r2MaxX);
         var interBottom = Math.Min(r1MaxY, r2MaxY);
 
-        // If the intersection is valid (positive non zero area), then there is an intersection
+        // If the intersection is valid (positive non-zero area), then there is an intersection
         if (interLeft < interRight && interTop < interBottom)
         {
             return new IntRect((interLeft, interTop), (interRight - interLeft, interBottom - interTop));
@@ -149,7 +149,7 @@ public struct IntRect : IEquatable<IntRect>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ public struct IntRect : IEquatable<IntRect>
     /// <summary>
     /// Explicit casting to another rectangle type
     /// </summary>
-    /// <param name="r">Rectangle being casted</param>
+    /// <param name="r">Rectangle being cast</param>
     /// <returns>Casting result</returns>
     ////////////////////////////////////////////////////////////
     public static explicit operator FloatRect(IntRect r) => new(
@@ -219,7 +219,7 @@ public struct IntRect : IEquatable<IntRect>
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// FloatRect is an utility class for manipulating 2D rectangles
+/// FloatRect is a utility class for manipulating 2D rectangles
 /// with float coordinates
 /// </summary>
 ////////////////////////////////////////////////////////////
@@ -303,7 +303,7 @@ public struct FloatRect : IEquatable<FloatRect>
         var interRight = Math.Min(r1MaxX, r2MaxX);
         var interBottom = Math.Min(r1MaxY, r2MaxY);
 
-        // If the intersection is valid (positive non zero area), then there is an intersection
+        // If the intersection is valid (positive non-zero area), then there is an intersection
         if (interLeft < interRight && interTop < interBottom)
         {
             return new FloatRect((interLeft, interTop), (interRight - interLeft, interBottom - interTop));
@@ -357,7 +357,7 @@ public struct FloatRect : IEquatable<FloatRect>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////
@@ -396,7 +396,7 @@ public struct FloatRect : IEquatable<FloatRect>
     /// <summary>
     /// Explicit casting to another rectangle type
     /// </summary>
-    /// <param name="r">Rectangle being casted</param>
+    /// <param name="r">Rectangle being cast</param>
     /// <returns>Casting result</returns>
     ////////////////////////////////////////////////////////////
     public static explicit operator IntRect(FloatRect r) => new(

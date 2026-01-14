@@ -7,7 +7,7 @@ namespace SFML.Graphics;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// This class defines a view (position, size, etc.) ;
+/// This class defines a view (position, size, etc.);
 /// you can consider it as a 2D camera
 /// </summary>
 /// <remarks>
@@ -112,7 +112,7 @@ public class View : ObjectBase
     /// The scissor rectangle, expressed as a factor (between 0 and 1) of
     /// the RenderTarget, specifies the region of the RenderTarget whose
     /// pixels are able to be modified by draw or clear operations.
-    /// Any pixels which lie outside of the scissor rectangle will
+    /// Any pixels which lie outside the scissor rectangle will
     /// not be modified by draw or clear operations.
     /// For example, a scissor rectangle which only allows modifications
     /// to the right side of the target would be defined

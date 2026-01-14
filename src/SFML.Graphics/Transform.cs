@@ -167,7 +167,7 @@ public struct Transform
     /// <summary>
     /// Generates a hash code by XORing together the internal 3x3 matrix.
     /// </summary>
-    /// <returns>XOR'd Hash of floats contained.</returns>
+    /// <returns>XOR-ed Hash of floats contained.</returns>
     ////////////////////////////////////////////////////////////
     public override int GetHashCode()
     {

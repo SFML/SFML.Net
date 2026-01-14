@@ -179,7 +179,7 @@ public struct BlendMode : IEquatable<BlendMode>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////

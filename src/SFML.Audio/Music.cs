@@ -424,7 +424,7 @@ public class Music : ObjectBase
     /// <summary>
     /// Maximum gain of the sound
     /// <para/>
-    /// When the sound is closer from the listener than
+    /// When the sound is closer to the listener than
     /// the "minimum distance" the attenuated gain is clamped
     /// so it cannot go above the maximum gain value.
     /// </summary>
@@ -546,7 +546,7 @@ public class Music : ObjectBase
     /// <summary>
     /// Handle the destruction of the object
     /// </summary>
-    /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+    /// <param name="disposing">Is the GC disposing the object, or is it an explicit call?</param>
     ////////////////////////////////////////////////////////////
     protected override void Destroy(bool disposing)
     {

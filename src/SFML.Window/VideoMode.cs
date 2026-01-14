@@ -41,7 +41,7 @@ public struct VideoMode
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Tell whether or not the video mode is supported
+    /// Tell whether the video mode is supported
     /// </summary>
     /// <returns>True if the video mode is valid, false otherwise</returns>
     ////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ public struct VideoMode
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@ namespace SFML.System;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// Vector3f is an utility class for manipulating 3 dimensional
+/// Vector3f is a utility class for manipulating 3-dimensional
 /// vectors with float components
 /// </summary>
 ////////////////////////////////////////////////////////////
@@ -213,7 +213,7 @@ public struct Vector3f : IEquatable<Vector3f>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////

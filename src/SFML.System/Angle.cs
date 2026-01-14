@@ -205,7 +205,7 @@ public readonly struct Angle : IEquatable<Angle>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Overload of binary - operator to substract two angle values
+    /// Overload of binary - operator to subtract two angle values
     /// </summary>
     /// <param name="left">Left operand (an angle)</param>
     /// <param name="right">Right operand (an angle)</param>
@@ -306,7 +306,7 @@ public readonly struct Angle : IEquatable<Angle>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////

@@ -56,10 +56,10 @@ public enum StencilUpdateOperation
     /// <summary>If the stencil test passes, the value in the stencil buffer is set to the new value</summary>
     Replace,
 
-    /// <summary>If the stencil test passes, the value in the stencil buffer is incremented and if required clamped</summary>
+    /// <summary>If the stencil test passes, the value in the stencil buffer is incremented and, if required, clamped</summary>
     Increment,
 
-    /// <summary>If the stencil test passes, the value in the stencil buffer is decremented and if required clamped</summary>
+    /// <summary>If the stencil test passes, the value in the stencil buffer is decremented and, if required, clamped</summary>
     Decrement,
 
     /// <summary>If the stencil test passes, the value in the stencil buffer is bitwise inverted</summary>
@@ -160,7 +160,7 @@ public struct StencilMode
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////

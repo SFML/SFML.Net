@@ -100,7 +100,7 @@ public class WindowBase : ObjectBase
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Tell whether or not the window is opened (ie. has been created).
+    /// Tell whether the window is opened (i.e. has been created).
     /// Note that a hidden window (Show(false))
     /// will still return true
     /// </summary>
@@ -111,7 +111,7 @@ public class WindowBase : ObjectBase
     ////////////////////////////////////////////////////////////
     /// <summary>
     /// Close (destroy) the window.
-    /// The Window instance remains valid and you can call
+    /// The Window instance remains valid, and you can call
     /// Create to recreate the window
     /// </summary>
     ////////////////////////////////////////////////////////////
@@ -280,7 +280,7 @@ public class WindowBase : ObjectBase
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Change the joystick threshold, ie. the value below which
+    /// Change the joystick threshold, i.e. the value below which
     /// no move event will be generated
     /// </summary>
     /// <param name="threshold">New threshold, in range [0, 100]</param>
