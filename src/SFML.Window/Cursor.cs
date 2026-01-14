@@ -7,7 +7,7 @@ namespace SFML.Window;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// Cursor defines the appearance of a system cursor. 
+/// Cursor defines the appearance of a system cursor.
 /// </summary>
 ////////////////////////////////////////////////////////////
 public class Cursor : ObjectBase
@@ -20,147 +20,147 @@ public class Cursor : ObjectBase
         /// <summary>
         /// Arrow cursor (default)
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         Arrow,
         /// <summary>
         /// Busy arrow cursor
         /// Windows: Yes
-        /// Mac OS:  No
+        /// macOS:  No
         /// Linux:   No
         /// </summary>
         ArrowWait,
         /// <summary>
         /// Busy cursor
         /// Windows: Yes
-        /// Mac OS:  No
+        /// macOS:  No
         /// Linux:   Yes
         /// </summary>
         Wait,
         /// <summary>
         /// I-beam, cursor when hovering over a field allowing text entry
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         Text,
         /// <summary>
         /// Pointing hand cursor
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         Hand,
         /// <summary>
         /// Horizontal double arrow cursor
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeHorizontal,
         /// <summary>
         /// Vertical double arrow cursor
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeVertical,
         /// <summary>
         /// Double arrow cursor going from top-left to bottom-right
         /// Windows: Yes
-        /// Mac OS:  No
+        /// macOS:  No
         /// Linux:   No
         /// </summary>
         SizeTopLeftBottomRight,
         /// <summary>
         /// Double arrow cursor going from bottom-left to top-right
         /// Windows: Yes
-        /// Mac OS:  No
+        /// macOS:  No
         /// Linux:   No
         /// </summary>
         SizeBottomLeftTopRight,
         /// <summary>
         /// Left arrow cursor on Linux, same as SizeHorizontal on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeLeft,
         /// <summary>
         /// Right arrow cursor on Linux, same as SizeHorizontal on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeRight,
         /// <summary>
         /// Up arrow cursor on Linux, same as SizeVertical on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeTop,
         /// <summary>
         /// Down arrow cursor on Linux, same as SizeVertical on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeBottom,
         /// <summary>
         /// Top-left arrow cursor on Linux, same as SizeTopLeftBottomRight on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeTopLeft,
         /// <summary>
         /// Bottom-right arrow cursor on Linux, same as SizeTopLeftBottomRight on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeBottomRight,
         /// <summary>
         /// Bottom-left arrow cursor on Linux, same as SizeBottomLeftTopRight on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeBottomLeft,
         /// <summary>
         /// Top-right arrow cursor on Linux, same as SizeBottomLeftTopRight on other platforms
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         SizeTopRight,
         /// <summary>
         /// Combination of SizeHorizontal and SizeVertical
         /// Windows: Yes
-        /// Mac OS:  No
+        /// macOS:  No
         /// Linux:   Yes
         /// </summary>
         SizeAll,
         /// <summary>
         /// Crosshair cursor
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         Cross,
         /// <summary>
         /// Help cursor
         /// Windows: Yes
-        /// Mac OS:  No
+        /// macOS:  No
         /// Linux:   Yes
         /// </summary>
         Help,
         /// <summary>
         /// Action not allowed cursor
         /// Windows: Yes
-        /// Mac OS:  Yes
+        /// macOS:  Yes
         /// Linux:   Yes
         /// </summary>
         NotAllowed

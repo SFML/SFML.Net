@@ -455,7 +455,7 @@ public class Shader : ObjectBase
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Tell whether or not the system supports shaders.
+    /// Tell whether the system supports shaders.
     /// </summary>
     ///
     /// <remarks>
@@ -468,7 +468,7 @@ public class Shader : ObjectBase
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Tell whether or not the system supports geometry shaders.
+    /// Tell whether the system supports geometry shaders.
     /// </summary>
     ///
     /// <remarks>

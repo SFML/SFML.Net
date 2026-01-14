@@ -5,7 +5,7 @@ namespace SFML.System;
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// Vector2f is an utility class for manipulating 2 dimensional
+/// Vector2f is a utility class for manipulating 2-dimensional
 /// vectors with float components
 /// </summary>
 ////////////////////////////////////////////////////////////
@@ -313,7 +313,7 @@ public struct Vector2f : IEquatable<Vector2f>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////
@@ -352,7 +352,7 @@ public struct Vector2f : IEquatable<Vector2f>
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// Vector2i is an utility class for manipulating 2 dimensional
+/// Vector2i is a utility class for manipulating 2-dimensional
 /// vectors with integer components
 /// </summary>
 ////////////////////////////////////////////////////////////
@@ -566,7 +566,7 @@ public struct Vector2i : IEquatable<Vector2i>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////
@@ -607,7 +607,7 @@ public struct Vector2i : IEquatable<Vector2i>
 
 ////////////////////////////////////////////////////////////
 /// <summary>
-/// Vector2u is an utility class for manipulating 2 dimensional
+/// Vector2u is a utility class for manipulating 2-dimensional
 /// vectors with unsigned integer components
 /// </summary>
 ////////////////////////////////////////////////////////////
@@ -799,7 +799,7 @@ public struct Vector2u : IEquatable<Vector2u>
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Provide a integer describing the object
+    /// Provide an integer describing the object
     /// </summary>
     /// <returns>Integer description of the object</returns>
     ////////////////////////////////////////////////////////////

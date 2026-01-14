@@ -123,5 +123,5 @@ public class Vector2uTests
         Assert.False(_equalFirst != _equalSecond);
     }
 
-    // TODO Structured bindigns (tuples?)
+    // TODO Structured bindings (tuples?)
 }

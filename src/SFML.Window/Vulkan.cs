@@ -10,12 +10,12 @@ public static class Vulkan
 {
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Tell whether or not the system supports Vulkan
+    /// Tell whether the system supports Vulkan
     ///
     /// This function should always be called before using
     /// the Vulkan features. If it returns false, then
     /// any attempt to use Vulkan will fail.
-    /// 
+    ///
     /// If only compute is required, set <paramref name="requireGraphics"/>
     /// to false to skip checking for the extensions necessary
     /// for graphics rendering.

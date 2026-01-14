@@ -197,7 +197,7 @@ public class Vector2fTests
         Assert.False(_equalFirst != _equalSecond);
     }
 
-    // TODO Structured bindigns (tuples?)
+    // TODO Structured bindings (tuples?)
 
     [Theory]
     [InlineData(2.4f, 3.0f, 3.84187f, 14.7599650969f, 0.624695f, 0.780869f)]
@@ -247,7 +247,7 @@ public class Vector2fTests
     }
 
     [Fact]
-    public void ProductsAndQuotinents()
+    public void ProductsAndQuotients()
     {
         var v = new Vector2f(2.4f, 3.0f);
         var w = new Vector2f(-0.7f, -2.2f);

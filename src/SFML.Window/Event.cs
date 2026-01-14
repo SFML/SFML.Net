@@ -245,7 +245,7 @@ public struct SizeEvent
 [StructLayout(LayoutKind.Sequential)]
 public struct TouchEvent
 {
-    /// <summary>Index of the finger in case of multi-touch events</summary>
+    /// <summary>Index of the finger in case of multitouch events</summary>
     public uint Finger;
 
     /// <summary>Position of the touch, relative to the left of the owner window</summary>

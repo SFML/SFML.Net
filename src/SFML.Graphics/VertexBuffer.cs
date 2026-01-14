@@ -41,7 +41,7 @@ public class VertexBuffer : ObjectBase, IDrawable
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Whether or not the system supports <see cref="VertexBuffer"/>s
+    /// Whether the system supports <see cref="VertexBuffer"/>s
     /// </summary>
     /// <remarks>
     /// This function should always be called before using

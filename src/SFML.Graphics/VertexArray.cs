@@ -69,7 +69,7 @@ public class VertexArray : ObjectBase, IDrawable
     /// </summary>
     /// <remarks>
     /// This function doesn't check index, it must be in range
-    /// [0, VertexCount - 1]. The behaviour is undefined
+    /// [0, VertexCount - 1]. The behavior is undefined
     /// otherwise. See <see cref="VertexCount"/>.
     /// </remarks>
     /// <param name="index">Index of the vertex to get</param>

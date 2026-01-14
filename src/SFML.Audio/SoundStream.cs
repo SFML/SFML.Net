@@ -351,7 +351,7 @@ public abstract class SoundStream : ObjectBase
     /// <summary>
     /// Maximum gain of the sound
     /// <para/>
-    /// When the sound is closer from the listener than
+    /// When the sound is closer to the listener than
     /// the "minimum distance" the attenuated gain is clamped
     /// so it cannot go above the maximum gain value.
     /// </summary>

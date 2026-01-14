@@ -125,7 +125,7 @@ public struct RenderStates
     /// <summary>Shader</summary>
     public Shader Shader;
 
-    // Return a marshalled version of the instance, that can directly be passed to the C API
+    // Return a marshaled version of the instance, that can directly be passed to the C API
     internal MarshalData Marshal()
     {
         var data = new MarshalData

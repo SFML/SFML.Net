@@ -112,7 +112,7 @@ public class Image : ObjectBase
         var width = (uint)pixels.GetLength(0);
         var height = (uint)pixels.GetLength(1);
 
-        // Transpose the array (.Net gives dimensions in reverse order of what SFML expects)
+        // Transpose the array (.NET gives dimensions in reverse order of what SFML expects)
         var transposed = new Color[height, width];
         for (var x = 0; x < width; ++x)
         {
@@ -205,7 +205,7 @@ public class Image : ObjectBase
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Create a transparency mask from a specified colorkey
+    /// Create a transparency mask from a specified color key
     /// </summary>
     /// <param name="color">Color to become transparent</param>
     ////////////////////////////////////////////////////////////
@@ -213,7 +213,7 @@ public class Image : ObjectBase
 
     ////////////////////////////////////////////////////////////
     /// <summary>
-    /// Create a transparency mask from a specified colorkey
+    /// Create a transparency mask from a specified color key
     /// </summary>
     /// <param name="color">Color to become transparent</param>
     /// <param name="alpha">Alpha value to use for transparent pixels</param>
@@ -341,7 +341,7 @@ public class Image : ObjectBase
     /// <summary>
     /// Handle the destruction of the object
     /// </summary>
-    /// <param name="disposing">Is the GC disposing the object, or is it an explicit call ?</param>
+    /// <param name="disposing">Is the GC disposing the object, or is it an explicit call?</param>
     ////////////////////////////////////////////////////////////
     protected override void Destroy(bool disposing) => sfImage_destroy(CPointer);
 

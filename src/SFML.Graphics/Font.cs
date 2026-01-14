@@ -12,7 +12,7 @@ namespace SFML.Graphics;
 /// <summary>
 /// Font is the low-level class for loading and
 /// manipulating character fonts. This class is meant to
-/// be used by String2D
+/// be used by Text.
 /// </summary>
 ////////////////////////////////////////////////////////////
 public class Font : ObjectBase
@@ -180,7 +180,7 @@ public class Font : ObjectBase
     /// Enable or disable the smooth filter
     ///
     /// When the filter is activated, the font appears smoother
-    /// so that pixels are less noticeable. However if you want
+    /// so that pixels are less noticeable. However, if you want
     /// the font to look exactly the same as its source file,
     /// you should disable it.
     /// The smooth filter is enabled by default.
