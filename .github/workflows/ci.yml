@@ -18,10 +18,11 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - { name: Linux, os: ubuntu-22.04 }
-          - { name: Windows, os: windows-2022 }
-          - { name: macOS x64, os: macos-13 }
-          - { name: macOS ARM64, os: macos-14 }
+          - { name: Linux x64, os: ubuntu-24.04 }
+          - { name: Linux arm64, os: ubuntu-24.04-arm }
+          - { name: Windows x64, os: windows-2025 }
+          - { name: Windows arm64, os: windows-11-arm }
+          - { name: macOS, os: macos-15 }
         dotnet:
           - { name: .NET 8, version: "8.0.x" }
           - { name: .NET 9, version: "9.0.x" }
@@ -29,11 +30,11 @@ jobs:
 
     steps:
       - name: Check out SFML.Net
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup .NET ${{ matrix.dotnet.version }} SDK
         id: setup-dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ matrix.dotnet.version }}
       - name: Enforce SDK Version
@@ -58,7 +59,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore examples/Examples.sln
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: SFML.Net (${{ matrix.platform.name }} ${{ matrix.dotnet.name }})
           path: Publish/SFML.*.*.nupkg
