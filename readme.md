@@ -7,11 +7,7 @@ The network module is not provided in the SFML.Net binding as .NET provides supe
 
 ## State of Development
 
-Development is focused on the next major version in the `master` branch. No more features are planned for the 2.x release series.
-
-* The [`master`](https://github.com/SFML/SFML.Net/tree/master) branch contains work in progress for the next major version SFML.Net 3. As such it's considered unstable, but any testing and feedback is highly appreciated.
-* The [`2.6.0`](https://github.com/SFML/SFML.Net/tree/2.6.0) tag is the latest official SFML.Net release and will be the last minor release in the 2.x series.
-* The [`2.6.x`](https://github.com/SFML/SFML.Net/tree/2.6.x) contains the latest bugfix work on SFML.Net 2.6.x, matching CSFML's and SFML's `2.6.x` branches.
+Development is focused on version 3 in the `master` branch. No more features are planned for the 2.x release series.
 
 ## Authors
 
