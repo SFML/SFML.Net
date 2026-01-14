@@ -92,8 +92,8 @@ public class Vector2fTests
         Assert.Equal(-2, negatedVec.Y);
     }
 
-    private static readonly Vector2f _lhs = new Vector2f(2, 5);
-    private static readonly Vector2f _rhs = new Vector2f(8, 3);
+    private static readonly Vector2f _lhs = new(2, 5);
+    private static readonly Vector2f _rhs = new(8, 3);
 
     [Fact]
     public void OperatorAddAssign()
@@ -133,7 +133,7 @@ public class Vector2fTests
         Assert.Equal(2, vec.Y);
     }
 
-    private static readonly Vector2f _vecMul = new Vector2f(26, 12);
+    private static readonly Vector2f _vecMul = new(26, 12);
     private static readonly float _floatMul = 2;
 
     [Fact]
@@ -179,9 +179,9 @@ public class Vector2fTests
         Assert.Equal(6, vec.Y);
     }
 
-    private static readonly Vector2f _equalFirst = new Vector2f(1, 5);
-    private static readonly Vector2f _equalSecond = new Vector2f(1, 5);
-    private static readonly Vector2f _different = new Vector2f(6, 9);
+    private static readonly Vector2f _equalFirst = new(1, 5);
+    private static readonly Vector2f _equalSecond = new(1, 5);
+    private static readonly Vector2f _different = new(6, 9);
 
     [Fact]
     public void OperatorEq()

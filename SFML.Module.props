@@ -6,6 +6,8 @@
   <Import Project="SFML.CodeStyle.props" />
 
   <PropertyGroup>
+    <LangVersion>12</LangVersion>
+
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
