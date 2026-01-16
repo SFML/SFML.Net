@@ -1,12 +1,22 @@
 Imports System.Runtime.InteropServices
+Imports OpenTK
 Imports SFML.System
 Imports SFML.Window
 Imports SFML.Graphics
-Imports OpenTK
-Imports OpenTK.Graphics
 Imports OpenTk.Graphics.OpenGL
 
 Friend Module OpenGL
+    Private Class SfmlBindingsContext
+        Implements IBindingsContext
+
+        Public Function GetProcAddress(procName As String) As IntPtr _
+            Implements IBindingsContext.GetProcAddress
+
+            Return Context.GetFunction(procName)
+        End Function
+
+    End Class
+
     Private WithEvents window As RenderWindow
 
     ''' <summary>
@@ -24,8 +34,7 @@ Friend Module OpenGL
         window.SetVerticalSyncEnabled(True)
 
         ' Initialize OpenTK
-        Dim unused1 = Toolkit.Init()
-        Dim context As New GraphicsContext(New ContextHandle(IntPtr.Zero), Nothing)
+        GL.LoadBindings(New SfmlBindingsContext())
 
         ' Create a sprite for the background
         Dim background = New Sprite(New Texture("resources/background.jpg"))

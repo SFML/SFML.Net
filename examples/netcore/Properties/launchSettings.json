@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "netcore": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    }
-  }
-}
