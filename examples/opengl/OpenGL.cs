@@ -49,6 +49,11 @@ internal static class Program
             FillColor = new SFML.Graphics.Color(255, 255, 255, 170)
         };
 
+        var test = text.Font.GetInfo();
+        Console.WriteLine(test);
+        Console.WriteLine(text.Font.GetAscent(32));
+        Console.WriteLine(text.Font.GetDescent(32));
+
         // Make the window the active target for OpenGL calls
         _ = window.SetActive();
 
