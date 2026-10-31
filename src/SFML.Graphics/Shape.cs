@@ -67,6 +67,36 @@ public abstract class Shape : Transformable, IDrawable
         set => sfShape_setOutlineThickness(CPointer, value);
     }
 
+    /// <summary>
+    /// Set the limit on the ratio between miter length and outline thickness of a shape
+    ///
+    /// Outline segments around each corner are joined either
+    /// with a miter or a bevel join.
+    /// - A miter join is formed by extending outline segments until
+    ///   they intersect. The distance between the point of
+    ///   intersection and the shape's corner is the miter length.
+    /// - A bevel join is formed by connecting outline segments with
+    ///   a straight line perpendicular to the corner's bisector.
+    ///
+    /// The miter limit is used to determine whether outline segments
+    /// around a corner are joined with a bevel or a miter.
+    /// When the ratio between the miter length and outline thickness
+    /// exceeds the miter limit, a bevel is used instead of a miter.
+    ///
+    /// The miter limit is linked to the maximum inner angle of a
+    /// corner below which a bevel is used by the following formula:
+    ///
+    /// miterLimit = 1 / sin(angle / 2)
+    ///
+    /// The miter limit must be greater than or equal to 1.
+    /// By default, the miter limit is 10.
+    /// </summary>
+    public float MiterLimit
+    {
+        get => sfShape_getMiterLimit(CPointer);
+        set => sfShape_setMiterLimit(CPointer, value);
+    }
+
     ////////////////////////////////////////////////////////////
     /// <summary>
     /// Get the total number of points of the shape
@@ -285,5 +315,11 @@ public abstract class Shape : Transformable, IDrawable
 
     [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern void sfRenderTexture_drawShape(IntPtr cPointer, IntPtr shape, ref RenderStates.MarshalData states);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern float sfShape_getMiterLimit(IntPtr cPointer);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern float sfShape_setMiterLimit(IntPtr cPointer, float miterLimit);
     #endregion
 }
