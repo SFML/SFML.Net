@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSFML" Version="[3.0.0, 3.1)" />
+    <PackageReference Include="CSFML" Version="3.1.0" />
   </ItemGroup>
 
 </Project>
