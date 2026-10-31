@@ -36,6 +36,9 @@ internal class SimpleWindow
             FillColor = SFML.Graphics.Color.Blue
         };
 
+        circle.MiterLimit = 2;
+        Console.WriteLine(circle.MiterLimit);
+
         // Start the game loop
         while (window.IsOpen)
         {
