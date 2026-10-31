@@ -259,6 +259,7 @@ public class Text : Transformable, IDrawable
     /// <param name="index">Index of the character</param>
     /// <returns>Position of the Index-th character (end of text if Index is out of range)</returns>
     ////////////////////////////////////////////////////////////
+    [Obsolete("Use GetShapedGlyphs instead")]
     public Vector2f FindCharacterPos(uint index) => sfText_findCharacterPos(CPointer, (UIntPtr)index);
 
     ////////////////////////////////////////////////////////////

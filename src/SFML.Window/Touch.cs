@@ -10,6 +10,7 @@ namespace SFML.Window;
 /// Give access to the real-time state of the touches
 /// </summary>
 ////////////////////////////////////////////////////////////
+[Obsolete("Use Touch Events instead")]
 public static class Touch
 {
     ////////////////////////////////////////////////////////////
