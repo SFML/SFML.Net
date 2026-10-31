@@ -34,28 +34,7 @@ public readonly struct Version
     /// <summary>
     /// String representation of the SFML version, e.g. 3.1.0 or 3.1.0-dev
     /// </summary>
-    public string String
-    {
-        get
-        {
-            // Find its length (find the terminating 0)
-            uint length = 0;
-            unsafe
-            {
-                for (var ptr = (byte*)_versionPointer.ToPointer(); *ptr != 0; ++ptr)
-                {
-                    length++;
-                }
-            }
-
-            // Copy it to a byte array
-            var sourceBytes = new byte[length];
-            Marshal.Copy(_versionPointer, sourceBytes, 0, sourceBytes.Length);
-
-            // Convert it to a C# string
-            return Encoding.UTF8.GetString(sourceBytes);
-        }
-    }
+    public string String => Marshal.PtrToStringAnsi(_versionPointer);
 
     /// <summary>
     /// Get the version of the SFML library loaded at runtime
