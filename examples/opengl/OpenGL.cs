@@ -53,6 +53,30 @@ internal static class Program
         Console.WriteLine(test);
         Console.WriteLine(text.Font.GetAscent(32));
         Console.WriteLine(text.Font.GetDescent(32));
+        var glyphs = text.GetShapedGlyphs();
+        foreach (var glyph in glyphs)
+        {
+            Console.WriteLine($"{glyph} would be nice if it works");
+        }
+
+        foreach (var vert in text.GetVertexData())
+        {
+            Console.WriteLine(vert);
+        }
+
+        foreach (var vert in text.GetOutlineVertexData())
+        {
+            Console.WriteLine(vert);
+        }
+
+        text.SetGlyphPreProcessor((ref Text.ShapedGlyph glyph, ref uint style, ref Color color, ref Color outlineColor, ref float thickness,
+            object data) =>
+        {
+            Console.WriteLine("huuuu");
+            color = new Color((uint)Random.Shared.Next());
+            thickness += 0.01f;
+        }, null);
+        text.DisplayedString = "A test, huh!";
 
         // Make the window the active target for OpenGL calls
         _ = window.SetActive();
