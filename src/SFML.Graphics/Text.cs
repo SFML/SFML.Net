@@ -42,6 +42,142 @@ public class Text : Transformable, IDrawable
 
     ////////////////////////////////////////////////////////////
     /// <summary>
+    /// Line alignment of a multi-line text
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public enum Alignment
+    {
+        /// <summary> Automatically align lines by script direction, left-align left-to-right text and right-align right-to-left text </summary>
+        Default,
+
+        /// <summary> Force align all lines to the left, regardless of script direction </summary>
+        Left,
+
+        /// <summary> Force align all lines centrally </summary>
+        Center,
+
+        /// <summary> Force align lines to the right, regardless of script direction </summary>
+        Right
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Line alignment of a multi-line text
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public enum TextClusterGrouping
+    {
+        /// <summary> Group clusters by grapheme </summary>
+        Grapheme,
+
+        /// <summary> Group clusters by character </summary>
+        Character,
+
+        /// <summary> Do not group clusters </summary>
+        None
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Direction of the text a glyph belongs to
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public enum Direction
+    {
+        /// <summary> Unspecified </summary>
+        Unspecified,
+
+        /// <summary> Left-to-right </summary>
+        LeftToRight,
+
+        /// <summary> Right-to-left </summary>
+        RightToLeft,
+
+        /// <summary> Top-to-bottom </summary>
+        TopToBottom,
+
+        /// <summary> Bottom-to-top </summary>
+        BottomToTop
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Text Orientation
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public enum Orientation
+    {
+        /// <summary> Default (left-to-right or right-to-left depending on detected script) </summary>
+        Default,
+
+        /// <summary> Top-to-bottom </summary>
+        TopToBottom,
+
+        /// <summary> Bottom-to-top </summary>
+        BottomToTop
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Glyph that has been positioned by the shaper
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public struct ShapedGlyph
+    {
+        /// <summary> The glyph </summary>
+        public Glyph Glyph;
+
+        /// <summary> Position of the glyph within a text </summary>
+        public Vector2f Position;
+
+        /// <summary> Cluster ID </summary>
+        public uint Cluster;
+
+        /// <summary> Text direction </summary>
+        public Direction TextDirection;
+
+        /// <summary> The baseline position of the line this glyph is a part of </summary>
+        public float Baseline;
+
+        /// <summary> Starting offset of the vertex data belonging to this glyph </summary>
+        public uint VertexOffset;
+
+        /// <summary> Count of vertices belonging to this glyph </summary>
+        public uint VertexCount;
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Callback that is provided with glyph data for pre-processing
+    ///
+    /// The callback is called once per glyph whenever the text
+    /// geometry is regenerated, in the order in which the glyph
+    /// geometry is generated. The style, fill color, outline color
+    /// and outline thickness of the glyph can be modified through
+    /// the given pointers.
+    ///
+    /// To map glyphs back to the input string, use the cluster
+    /// value of the shaped glyph. See sf::Text::GlyphPreProcessor
+    /// in the SFML documentation for a detailed explanation.
+    ///
+    /// Changing the style or outline thickness might lead to
+    /// slight inconsistencies of the text bounds, changing the
+    /// fill or outline color is always safe. It is not safe to
+    /// query the text bounds from within the callback.
+    /// </summary>
+    /// <param name="shapedGlyph">The shaped glyph to pre-process</param>
+    /// <param name="style">Style of the glyph (see sfTextStyle enum)</param>
+    /// <param name="fillColor">Fill color of the glyph</param>
+    /// <param name="outlineColor">Outline color of the glyph</param>
+    /// <param name="outlineThickness">Outline thickness of the glyph</param>
+    /// <param name="userData">User data passed to sfText_setGlyphPreProcessor</param>
+    ////////////////////////////////////////////////////////////
+    // I can use EffectProcessor as a blueprint
+    public delegate void GlyphPreProcessorCallback(ref ShapedGlyph shapedGlyph, ref uint style, ref Color fillColor, ref Color outlineColor,
+        ref float outlineThickness, object userData);
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
     /// Construct the text from a <see cref="SFML.Graphics.Font"/>
     /// </summary>
     /// <param name="font">Font to use</param>
@@ -250,6 +386,43 @@ public class Text : Transformable, IDrawable
 
     ////////////////////////////////////////////////////////////
     /// <summary>
+    /// Line alignment for a multi-line text
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public Alignment LineAlignment
+    {
+        get => sfText_getLineAlignment(CPointer);
+        set => sfText_setLineAlignment(CPointer, value);
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Text orientation
+    ///
+    /// Vertical text orientations require the font to provide
+    /// vertical metrics, see <see cref="Font.Info"/>
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public Orientation TextOrientation
+    {
+        get => sfText_getTextOrientation(CPointer);
+        set => sfText_setTextOrientation(CPointer, value);
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Cluster grouping algorithm in use
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public TextClusterGrouping ClusterGrouping
+    {
+        get => sfText_getClusterGrouping(CPointer);
+        set => sfText_setClusterGrouping(CPointer, value);
+    }
+
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
     /// Return the visual position of the Index-th character of the text,
     /// in coordinates relative to the text
     /// </summary>
@@ -261,6 +434,94 @@ public class Text : Transformable, IDrawable
     ////////////////////////////////////////////////////////////
     [Obsolete("Use GetShapedGlyphs instead")]
     public Vector2f FindCharacterPos(uint index) => sfText_findCharacterPos(CPointer, (UIntPtr)index);
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Get the shaped glyphs that make up a text
+    /// </summary>
+    /// <returns>Array of shaped glyphs</returns>
+    ////////////////////////////////////////////////////////////
+    public ShapedGlyph[] GetShapedGlyphs()
+    {
+        unsafe
+        {
+            ulong length = 0;
+            var rawGlyphs = sfText_getShapedGlyphs(CPointer, ref length);
+            var glyphs = new ShapedGlyph[length];
+            for (ulong i = 0; i < length; i++)
+            {
+                glyphs[i] = rawGlyphs[i];
+            }
+            return glyphs;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Set the glyph pre-processor to be called per glyph
+    ///
+    /// The glyph pre-processor is called with glyph data to be
+    /// pre-processed whenever the text geometry is regenerated.
+    /// </summary>
+    /// <param name="callback">The glyph pre-processor to be called per glyph, pass null to disable pre-processing</param>
+    /// <param name="userData">User data that will be passed to the glyph pre-processor</param>
+    ////////////////////////////////////////////////////////////
+    public void SetGlyphPreProcessor(GlyphPreProcessorCallback callback, object userData)
+    {
+        if (callback is null)
+        {
+            sfText_setGlyphPreProcessor(CPointer, IntPtr.Zero, IntPtr.Zero);
+            return;
+        }
+        _internalGlyphPreProcessorCallback = (ref ShapedGlyph glyph, ref uint style, ref Color color, ref Color outlineColor, ref float thickness,
+            IntPtr data) =>
+        {
+            callback(ref glyph, ref style, ref color, ref outlineColor, ref thickness, userData);
+        };
+        sfText_setGlyphPreProcessor(CPointer, Marshal.GetFunctionPointerForDelegate(_internalGlyphPreProcessorCallback), IntPtr.Zero);
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Get the vertex data of the text
+    /// </summary>
+    /// <returns></returns>
+    ////////////////////////////////////////////////////////////
+    public Vertex[] GetVertexData()
+    {
+        unsafe
+        {
+            ulong length = 0;
+            var rawVerts = sfText_getVertexData(CPointer, ref length);
+            var vertices = new Vertex[length];
+            for (ulong i = 0; i < length; i++)
+            {
+                vertices[i] = rawVerts[i];
+            }
+            return vertices;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Get the outline vertex data of the text
+    /// </summary>
+    /// <returns></returns>
+    ////////////////////////////////////////////////////////////
+    public Vertex[] GetOutlineVertexData()
+    {
+        unsafe
+        {
+            ulong length = 0;
+            var rawVerts = sfText_getOutlineVertexData(CPointer, ref length);
+            var vertices = new Vertex[length];
+            for (ulong i = 0; i < length; i++)
+            {
+                vertices[i] = rawVerts[i];
+            }
+            return vertices;
+        }
+    }
 
     ////////////////////////////////////////////////////////////
     /// <summary>
@@ -344,6 +605,12 @@ public class Text : Transformable, IDrawable
     protected override void Destroy(bool disposing) => sfText_destroy(CPointer);
 
     private Font _font;
+    private InternalGlyphPreProcessorCallback _internalGlyphPreProcessorCallback;
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate void InternalGlyphPreProcessorCallback(ref ShapedGlyph shapedGlyph, ref uint style, ref Color fillColor, ref Color outlineColor,
+        ref float outlineThickness, IntPtr userData);
+
 
     #region Imports
     [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -417,5 +684,35 @@ public class Text : Transformable, IDrawable
 
     [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern FloatRect sfText_getLocalBounds(IntPtr cPointer);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern Alignment sfText_getLineAlignment(IntPtr cPointer);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern Orientation sfText_getTextOrientation(IntPtr cPointer);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern void sfText_setLineAlignment(IntPtr cPointer, Alignment lineAlignment);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern void sfText_setTextOrientation(IntPtr cPointer, Orientation textOrientation);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern unsafe ShapedGlyph* sfText_getShapedGlyphs(IntPtr cPointer, ref ulong count);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern TextClusterGrouping sfText_getClusterGrouping(IntPtr cPointer);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern void sfText_setClusterGrouping(IntPtr cPointer, TextClusterGrouping clusterGrouping);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern void sfText_setGlyphPreProcessor(IntPtr cPointer, IntPtr callback, IntPtr userData);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern unsafe Vertex* sfText_getVertexData(IntPtr cPointer, ref ulong count);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern unsafe Vertex* sfText_getOutlineVertexData(IntPtr cPointer, ref ulong count);
     #endregion
 }
