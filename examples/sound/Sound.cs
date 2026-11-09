@@ -11,6 +11,19 @@ internal static class Program
     /// </summary>
     private static void Main()
     {
+        Console.WriteLine(PlaybackDevice.GetDefaultDevice());
+        foreach (var device in PlaybackDevice.GetAvailableDevices())
+        {
+            Console.WriteLine(device);
+            Console.WriteLine(PlaybackDevice.SetDevice(device));
+        }
+
+        Console.WriteLine(PlaybackDevice.GetDevice());
+        Console.WriteLine(PlaybackDevice.SetDeviceToDefault());
+        Console.WriteLine(PlaybackDevice.GetDevice());
+        Console.WriteLine(PlaybackDevice.SetDeviceToNull());
+        Console.WriteLine(PlaybackDevice.GetDevice());
+
         // Play a sound
         PlaySound();
         Console.Clear();
