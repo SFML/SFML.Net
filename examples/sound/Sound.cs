@@ -11,6 +11,10 @@ internal static class Program
     /// </summary>
     private static void Main()
     {
+        var buffer = new SoundBuffer("resources/canary.wav");
+        // Create a sound instance and play it
+        var sound = new Sound(buffer);
+        sound.Play();
         Console.WriteLine(PlaybackDevice.GetDefaultDevice());
         foreach (var device in PlaybackDevice.GetAvailableDevices())
         {
@@ -23,6 +27,8 @@ internal static class Program
         Console.WriteLine(PlaybackDevice.GetDevice());
         Console.WriteLine(PlaybackDevice.SetDeviceToNull());
         Console.WriteLine(PlaybackDevice.GetDevice());
+
+        sound.Stop();
 
         // Play a sound
         PlaySound();
