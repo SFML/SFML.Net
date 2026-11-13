@@ -69,6 +69,17 @@ public abstract class Shape : Transformable, IDrawable
 
     ////////////////////////////////////////////////////////////
     /// <summary>
+    /// Set the limit on the ratio between miter length and outline thickness of a shape
+    /// </summary>
+    ////////////////////////////////////////////////////////////
+    public float MiterLimit
+    {
+        get => sfShape_getMiterLimit(CPointer);
+        set => sfShape_setMiterLimit(CPointer, value);
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// <summary>
     /// Get the total number of points of the shape
     /// </summary>
     /// <returns>The total point count</returns>
@@ -285,5 +296,11 @@ public abstract class Shape : Transformable, IDrawable
 
     [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern void sfRenderTexture_drawShape(IntPtr cPointer, IntPtr shape, ref RenderStates.MarshalData states);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern float sfShape_getMiterLimit(IntPtr cPointer);
+
+    [DllImport(CSFML.Graphics, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+    private static extern float sfShape_setMiterLimit(IntPtr cPointer, float miterLimit);
     #endregion
 }

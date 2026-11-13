@@ -11,6 +11,25 @@ internal static class Program
     /// </summary>
     private static void Main()
     {
+        var buffer = new SoundBuffer("resources/canary.wav");
+        // Create a sound instance and play it
+        var sound = new Sound(buffer);
+        sound.Play();
+        Console.WriteLine(PlaybackDevice.GetDefaultDevice());
+        foreach (var device in PlaybackDevice.GetAvailableDevices())
+        {
+            Console.WriteLine(device);
+            Console.WriteLine(PlaybackDevice.SetDevice(device));
+        }
+
+        Console.WriteLine(PlaybackDevice.GetDevice());
+        Console.WriteLine(PlaybackDevice.SetDeviceToDefault());
+        Console.WriteLine(PlaybackDevice.GetDevice());
+        Console.WriteLine(PlaybackDevice.SetDeviceToNull());
+        Console.WriteLine(PlaybackDevice.GetDevice());
+
+        sound.Stop();
+
         // Play a sound
         PlaySound();
         Console.Clear();

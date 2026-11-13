@@ -1,4 +1,5 @@
 using System;
+using Version = SFML.System.Version;
 
 namespace window;
 
@@ -6,6 +7,13 @@ internal static class Program
 {
     private static void Main()
     {
+        var version = Version.GetVersion();
+        Console.WriteLine(version.Major);
+        Console.WriteLine(version.Minor);
+        Console.WriteLine(version.Patch);
+        Console.WriteLine(version.IsRelease);
+        Console.WriteLine(version.String);
+
         Console.WriteLine("Press ESC key to close window");
         var window = new SimpleWindow();
         window.Run();
@@ -27,6 +35,9 @@ internal class SimpleWindow
         {
             FillColor = SFML.Graphics.Color.Blue
         };
+
+        circle.MiterLimit = 2;
+        Console.WriteLine(circle.MiterLimit);
 
         // Start the game loop
         while (window.IsOpen)
