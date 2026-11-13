@@ -63,7 +63,11 @@ public static class PlaybackDevice
     /// Get the name of the default audio playback device
     /// </summary>
     /// <returns>The name of the default audio playback device or NULL if there is none</returns>
-    public static string GetDefaultDevice() => sfPlaybackDevice_getDefaultDevice();
+    public static string GetDefaultDevice()
+    {
+        var device = sfPlaybackDevice_getDefaultDevice();
+        return device == IntPtr.Zero ? null : Marshal.PtrToStringAnsi(device);
+    }
 
     /// <summary>
     /// Set the audio playback device
@@ -88,7 +92,11 @@ public static class PlaybackDevice
     /// Get the name of the current audio playback device
     /// </summary>
     /// <returns></returns>
-    public static string GetDevice() => sfPlaybackDevice_getDevice();
+    public static string GetDevice()
+    {
+        var device = sfPlaybackDevice_getDevice();
+        return device == IntPtr.Zero ? null : Marshal.PtrToStringAnsi(device);
+    }
 
 
     #region Imports
@@ -97,8 +105,7 @@ public static class PlaybackDevice
     private static extern unsafe IntPtr* sfPlaybackDevice_getAvailableDevices(ref ulong count);
 
     [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    [return: MarshalAs(UnmanagedType.LPStr)]
-    private static extern string sfPlaybackDevice_getDefaultDevice();
+    private static extern IntPtr sfPlaybackDevice_getDefaultDevice();
 
     [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
     private static extern bool sfPlaybackDevice_setDevice(string device);
@@ -110,8 +117,7 @@ public static class PlaybackDevice
     private static extern bool sfPlaybackDevice_setDeviceToNull();
 
     [DllImport(CSFML.Audio, CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-    [return: MarshalAs(UnmanagedType.LPStr)]
-    private static extern string sfPlaybackDevice_getDevice();
+    private static extern IntPtr sfPlaybackDevice_getDevice();
 
     #endregion
 }
